@@ -1,0 +1,24 @@
+{
+  "name": "mojave",
+  "description": "A library of commonly used JavaScript tools and helpers by Becklyn",
+  "keywords": [
+    "becklyn",
+    "library",
+    "widgets"
+  ],
+  "version": "0.0.1-alpha.1",
+  "author": {
+    "name": "Jannik Zschiesche",
+    "email": "jz@becklyn.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/Becklyn/mojave.git"
+  },
+  "homepage": "https://github.com/Becklyn/mojave",
+  "bugs": {
+    "url": "https://github.com/Becklyn/mojave/issues"
+  },
+  "main": "index.js",
+  "license": "BSD-3-Clause"
+}

@@ -37,6 +37,8 @@ Place all test case files under `tests/cases/` as regular `.js` files.
 You have all [QUnit](https://qunitjs.com/) globals available.
 Also the library itself is loaded in the `window.mojave` global. For details, please take a look at `tests/build/complete-library-build.js`.
 
+Please note that all test case files need to work in all supported browsers, so ES2015 features are not supported.
+
 
 ### Working on the project
 

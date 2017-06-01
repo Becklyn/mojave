@@ -19,5 +19,8 @@
     "bugs": {
         "url": "https://github.com/Becklyn/mojave/issues"
     },
-    "license": "BSD-3-Clause"
+    "license": "BSD-3-Clause",
+    "devDependencies": {
+        "qunitjs": "^2.3.2"
+    }
 }

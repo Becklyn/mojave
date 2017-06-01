@@ -14,16 +14,19 @@ foreach ($iterator as $file)
         continue;
     }
 
-    $module = "";
+    $relativeName = substr($file->getPathname(), strlen(TESTS_DIRECTORY));
+    $moduleName = addslashes($relativeName);
+    $testContent = file_get_contents($file->getPathname());
 
-    if (1 === preg_match('~' . preg_quote(TESTS_DIRECTORY, '~') . '(?<module>.*?)/~', $file->getPathname(), $matches))
-    {
-        $module = $matches["module"];
-    }
+    $contents .= <<<TEST
+(function () { 
+    QUnit.module("{$moduleName}", function () {
+        {$testContent}
+    });
+})();
 
-    $module = 'QUnit.module("' . addslashes($module) . '");' . "\n\n";
 
-    $contents .= "(function () {\n" . $module . file_get_contents($file->getPathname()) . "\n})();\n\n";
+TEST;
 }
 
 

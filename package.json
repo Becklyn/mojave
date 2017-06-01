@@ -21,6 +21,7 @@
     },
     "license": "BSD-3-Clause",
     "devDependencies": {
+        "kaba": "^2.0.0-beta.3",
         "qunitjs": "^2.3.2"
     }
 }

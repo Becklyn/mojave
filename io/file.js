@@ -13,10 +13,10 @@ export const UNITS = ['B', 'kB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
  */
 export function formatSize (size)
 {
-    const neg = size < 0;
-    const prefix = neg ? "-" : "";
+    const isNegative = size < 0;
+    const prefix = isNegative ? "-" : "";
 
-    if (neg)
+    if (isNegative)
     {
         size = -size;
     }

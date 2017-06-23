@@ -28,7 +28,7 @@ export function formatSize (size)
 
     const exponent = Math.min(Math.floor(Math.log(size) / Math.log(1000)), UNITS.length - 1);
     let sizeFormatted = Number((size / Math.pow(1000, exponent)).toPrecision(3));
-    sizeFormatted = ("" + sizeFormatted).replace(".", ",");
+    sizeFormatted = ("" + sizeFormatted).replace(".", ","); // eslint-disable-line prefer-template
     const unit = UNITS[exponent];
 
     return `${prefix}${sizeFormatted} ${unit}`;

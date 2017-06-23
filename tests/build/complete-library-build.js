@@ -1,15 +1,12 @@
-import * as dateCompare from "../../date/compare";
-import * as dateFormat from "../../date/format";
-import * as ioFile from "../../io/file";
-import * as timing from "../../timing/timing";
+/* eslint global-require: 0 */
 
 window.mojave = {
-    timing: timing,
+    timing: require("../../timing/timing"),
     date: {
-        compare: dateCompare,
-        format: dateFormat,
+        compare: require("../../date/compare"),
+        format: require("../../date/format"),
     },
     io: {
-        file: ioFile,
-    }
+        file: require("../../io/file"),
+    },
 };

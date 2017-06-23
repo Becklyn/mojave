@@ -1,12 +1,19 @@
-/* eslint global-require: 0 */
+import * as dateCompare from "../../date/compare";
+import * as dateFormat from "../../date/format";
+import * as ioFile from "../../io/file";
+import * as timing from "../../timing/timing";
+import UrlSlug from "../../url/Slug";
 
 window.mojave = {
-    timing: require("../../timing/timing"),
+    timing: timing,
     date: {
-        compare: require("../../date/compare"),
-        format: require("../../date/format"),
+        compare: dateCompare,
+        format: dateFormat,
     },
     io: {
-        file: require("../../io/file"),
+        file: ioFile,
+    },
+    url: {
+        Slug: UrlSlug,
     },
 };

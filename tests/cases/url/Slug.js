@@ -49,7 +49,7 @@ QUnit.test(
         // test defaults
         const instance = new Slug([], /z/);
         [
-            ["abc def", "abc-def"],
+            ["abc def", "abc def"],
             ["abczdef", "abc-def"],
         ]
             .forEach(

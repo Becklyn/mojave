@@ -27,7 +27,6 @@ export default class Slug
             : /[^a-z0-9\-._~(),;!]/g;
 
         transforms = transforms.concat([
-            [/[ #?/]/, "-"],
             [/ä/, "ae"],
             [/[áâà]/, "a"],
             [/ö/, "oe"],

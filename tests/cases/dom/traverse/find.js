@@ -44,32 +44,3 @@ QUnit.test(
         assert.ok(result[3].classList.contains("element3"), "contains .element3");
     }
 );
-
-
-QUnit.test(
-    "global find() + find order",
-    function (assert)
-    {
-        const find = mojave.dom.traverse.find;
-
-        const result = find(".test-element-find");
-
-        assert.equal(result.length, 4, "found 4 elements");
-        assert.ok(result[0].classList.contains("element1"), "contains .element1");
-        assert.ok(result[1].classList.contains("element2"), "contains .element2");
-        assert.ok(result[2].classList.contains("element2-1"), "contains .element2-1");
-        assert.ok(result[3].classList.contains("element3"), "contains .element3");
-    }
-);
-
-
-QUnit.test(
-    "findOne() matches first result",
-    function (assert)
-    {
-        const findOne = mojave.dom.traverse.findOne;
-
-        const result = findOne(".test-element-find");
-        assert.ok(result.classList.contains("element1"), "contains .element1");
-    }
-);

@@ -3,6 +3,20 @@ import {isElement} from "./utils";
 
 
 /**
+ * Returns whether the given element is - in fact - an HTMLElement and
+ * it matches the optional selector
+ *
+ * @param {Node|HTMLElement} element
+ * @param {?string} selector
+ * @return {boolean}
+ */
+function elementMatches (element, selector)
+{
+    return isElement(element) && (null === selector || element.matches(selector));
+}
+
+
+/**
  * Finds all DOM elements matching the selector
  *
  * @param {string} selector
@@ -42,7 +56,7 @@ export function children (parent, selector = null)
 
     while (child)
     {
-        if (isElement(child) && (null === selector || child.matches(selector)))
+        if (elementMatches(child, selector))
         {
             list.push(child);
         }
@@ -52,3 +66,79 @@ export function children (parent, selector = null)
 
     return list;
 }
+
+
+/**
+ * Returns the nearest previous sibling matching
+ * (optionally matching the given selector)
+ *
+ * @param {HTMLElement} element
+ * @param {?string} selector
+ * @return {?HTMLElement}
+ */
+export function prev (element, selector = null)
+{
+    let sibling;
+
+    while (sibling = element.previousSibling)
+    {
+        if (elementMatches(sibling, selector))
+        {
+            return sibling;
+        }
+    }
+
+    return null;
+}
+
+
+/**
+ * Returns the nearest next sibling
+ * (optionally matching the given selector)
+ *
+ * @param {HTMLElement} element
+ * @param {?string} selector
+ * @return {?HTMLElement}
+ */
+export function next (element, selector = null)
+{
+    let sibling;
+
+    while (sibling = element.nextSibling)
+    {
+        if (elementMatches(sibling, selector))
+        {
+            return sibling;
+        }
+    }
+
+    return null;
+}
+
+
+/**
+ * Returns all siblings
+ * (optionally matching the given selector)
+ *
+ * @param {HTMLElement} element
+ * @param {?string} selector
+ * @return {HTMLElement[]}
+ */
+export function siblings (element, selector = null)
+{
+    let sibling = element.parentNode.firstChild;
+    const list = [];
+
+    while (sibling)
+    {
+        if (sibling !== element && elementMatches(sibling, selector))
+        {
+            list.push(element);
+        }
+
+        sibling = element.nextSibling;
+    }
+
+    return list;
+}
+

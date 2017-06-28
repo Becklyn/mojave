@@ -4,13 +4,13 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width">
         <title>mojave tests</title>
-        <link rel="stylesheet" href="../node_modules/qunitjs/qunit/qunit.css">
+        <link rel="stylesheet" href="load.php?file=qunit-css">
     </head>
     <body>
         <div id="qunit"></div>
         <div id="qunit-fixture"></div>
-        <script src="../node_modules/qunitjs/qunit/qunit.js"></script>
-        <script src="dist/complete-library-build.js"></script>
-        <script src="all-tests.php"></script>
+        <script src="load.php?file=qunit-js"></script>
+        <script src="load.php?file=lib-build"></script>
+        <script src="load.php?file=test-cases"></script>
     </body>
 </html>

@@ -27,7 +27,13 @@ You can also start a watcher to continuously build the library:
 kaba -d
 ```
 
-Now open the directory `tests/` in a web browser. You need to have a working PHP installation (as it is used to bundle all test files).
+Run the tests webserver
+
+```bash
+php -S localhost:8000 -t tests/
+```
+
+Now open your the testpage http://localhost:8000  in a web browser.
 
 
 ### Test case files
@@ -46,4 +52,4 @@ Please note that all test case files need to work in all supported browsers, so 
 2. If you added a new file, update the bundle build in `tests/build/complete-library-build.js`
 3. Bundle the library via `kaba`
 4. Write your tests in `tests/cases/`
-5. Open the QUnit page under `/tests/` and check whether all tests work correctly.
+5. Open the QUnit page in your browser and check whether all tests work correctly.

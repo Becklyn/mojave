@@ -20,9 +20,15 @@ foreach ($iterator as $file)
 
     $contents .= <<<TEST
 (function () { 
-    QUnit.module("{$moduleName}", function () {
-        {$testContent}
-    });
+QUnit.module("{$moduleName}", function () {
+
+// ----- MODULE START -----
+
+{$testContent}
+
+// ----- MODULE END -----
+
+});
 })();
 
 

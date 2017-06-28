@@ -43,7 +43,7 @@ export function findOne (selector, context = document)
 
 
 /**
- * Filters a list of DOM elements
+ * Filters a list of DOM elements that match the given selector
  *
  * @param {HTMLElement[]} list
  * @param {string} selector
@@ -53,6 +53,21 @@ export function filter (list, selector)
 {
     return list.filter(
         (e) => e.matches(selector)
+    );
+}
+
+
+/**
+ * Filters a list of DOM elements that DO NOT match the given selector
+ *
+ * @param {HTMLElement[]} list
+ * @param {string} selector
+ * @return {HTMLElement[]}
+ */
+export function not (list, selector)
+{
+    return list.filter(
+        (e) => !e.matches(selector)
     );
 }
 

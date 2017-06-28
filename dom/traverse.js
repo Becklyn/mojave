@@ -25,10 +25,10 @@ function elementMatches (element, selector)
  */
 function fetchSiblings (element, selector, method, onlyFirst)
 {
-    let sibling;
+    let sibling = element[method];
     const list = [];
 
-    while (sibling = element[method])
+    while (sibling)
     {
         if (elementMatches(sibling, selector))
         {
@@ -39,6 +39,8 @@ function fetchSiblings (element, selector, method, onlyFirst)
 
             list.push(sibling);
         }
+
+        sibling = element[method];
     }
 
     return onlyFirst ? null : list;

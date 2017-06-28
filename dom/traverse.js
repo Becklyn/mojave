@@ -15,6 +15,35 @@ function elementMatches (element, selector)
     return isElement(element) && (null === selector || element.matches(selector));
 }
 
+/**
+ *
+ * @param {HTMLElement} element
+ * @param {?string} selector
+ * @param {string} method
+ * @param {boolean} onlyFirst
+ * @return {HTMLElement[]|HTMLElement}
+ */
+function fetchSiblings (element, selector, method, onlyFirst)
+{
+    let sibling;
+    const list = [];
+
+    while (sibling = element[method])
+    {
+        if (elementMatches(sibling, selector))
+        {
+            if (onlyFirst)
+            {
+                return sibling;
+            }
+
+            list.push(sibling);
+        }
+    }
+
+    return onlyFirst ? null : list;
+}
+
 
 /**
  * Finds all DOM elements matching the selector
@@ -108,17 +137,7 @@ export function children (parent, selector = null)
  */
 export function prev (element, selector = null)
 {
-    let sibling;
-
-    while (sibling = element.previousSibling)
-    {
-        if (elementMatches(sibling, selector))
-        {
-            return sibling;
-        }
-    }
-
-    return null;
+    return fetchSiblings(element, selector, "previousSibling", true);
 }
 
 
@@ -132,17 +151,7 @@ export function prev (element, selector = null)
  */
 export function next (element, selector = null)
 {
-    let sibling;
-
-    while (sibling = element.nextSibling)
-    {
-        if (elementMatches(sibling, selector))
-        {
-            return sibling;
-        }
-    }
-
-    return null;
+    return fetchSiblings(element, selector, "nextSibling", true);
 }
 
 
@@ -158,18 +167,7 @@ export function next (element, selector = null)
  */
 export function prevAll (element, selector = null)
 {
-    let sibling;
-    const list = [];
-
-    while (sibling = element.previousSibling)
-    {
-        if (elementMatches(sibling, selector))
-        {
-            list.push(sibling);
-        }
-    }
-
-    return list;
+    return fetchSiblings(element, selector, "previousSibling", false);
 }
 
 
@@ -185,18 +183,7 @@ export function prevAll (element, selector = null)
  */
 export function nextAll (element, selector = null)
 {
-    let sibling;
-    const list = [];
-
-    while (sibling = element.nextSibling)
-    {
-        if (elementMatches(sibling, selector))
-        {
-            list.push(sibling);
-        }
-    }
-
-    return list;
+    return fetchSiblings(element, selector, "nextSibling", false);
 }
 
 

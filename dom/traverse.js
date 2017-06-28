@@ -123,7 +123,7 @@ export function prev (element, selector = null)
 
 
 /**
- * Returns the nearest next sibling
+ * Returns the nearest following sibling
  * (optionally matching the given selector)
  *
  * @param {HTMLElement} element
@@ -143,6 +143,60 @@ export function next (element, selector = null)
     }
 
     return null;
+}
+
+
+/**
+ * Returns all previous siblings
+ * (optionally matching the given selector)
+ *
+ * The nearest sibling is the first element in the list.
+ *
+ * @param {HTMLElement} element
+ * @param {?string} selector
+ * @return {HTMLElement[]}
+ */
+export function prevAll (element, selector = null)
+{
+    let sibling;
+    const list = [];
+
+    while (sibling = element.previousSibling)
+    {
+        if (elementMatches(sibling, selector))
+        {
+            list.push(sibling);
+        }
+    }
+
+    return list;
+}
+
+
+/**
+ * Returns all following siblings
+ * (optionally matching the given selector)
+ *
+ * The nearest sibling is the first element in the list.
+ *
+ * @param {HTMLElement} element
+ * @param {?string} selector
+ * @return {HTMLElement[]}
+ */
+export function nextAll (element, selector = null)
+{
+    let sibling;
+    const list = [];
+
+    while (sibling = element.nextSibling)
+    {
+        if (elementMatches(sibling, selector))
+        {
+            list.push(sibling);
+        }
+    }
+
+    return list;
 }
 
 

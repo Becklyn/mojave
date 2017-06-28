@@ -212,3 +212,29 @@ export function siblings (element, selector = null)
 
     return list;
 }
+
+
+/**
+ * Returns the closest parent that matches the selector
+ *
+ * @param {HTMLElement} element
+ * @param {string} selector
+ * @return {?HTMLElement}
+ */
+export function closest (element, selector)
+{
+    let parent = element.parentNode;
+
+    /** @type {HTMLElement} node */
+    while (parent)
+    {
+        if (parent.matches(selector))
+        {
+            return parent;
+        }
+
+        parent = parent.parentNode;
+    }
+
+    return null;
+}

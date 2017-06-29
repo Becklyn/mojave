@@ -26,7 +26,7 @@ QUnit.test(
 
         assert.equal(result.length, 2, "found 2 elements");
         assert.ok(result[0].classList.contains("element1"), "contains .element1");
-        assert.ok(result[0].classList.contains("element3"), "contains .element3");
+        assert.ok(result[1].classList.contains("element3"), "contains .element3");
     }
 );
 
@@ -42,7 +42,7 @@ QUnit.test(
 
         assert.equal(result.length, 2, "found 2 elements");
         assert.ok(result[0].classList.contains("element2"), "contains .element2");
-        assert.ok(result[0].classList.contains("element3"), "contains .element3");
+        assert.ok(result[1].classList.contains("element3"), "contains .element3");
     }
 );
 
@@ -58,7 +58,7 @@ QUnit.test(
 
         assert.equal(result.length, 2, "found 2 elements");
         assert.ok(result[0].classList.contains("element1"), "contains .element1");
-        assert.ok(result[0].classList.contains("element2"), "contains .element2");
+        assert.ok(result[1].classList.contains("element2"), "contains .element2");
     }
 );
 

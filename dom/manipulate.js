@@ -68,3 +68,15 @@ export function remove (element)
 {
     element.parentNode.removeChild(element);
 }
+
+
+/**
+ * Replaces the given element with the replacement element
+ *
+ * @param {HTMLElement} element
+ * @param {HTMLElement} replacement
+ */
+export function replace (element, replacement)
+{
+    element.parentNode.replaceChild(replacement, element);
+}

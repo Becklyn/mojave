@@ -40,7 +40,7 @@ function fetchSiblings (element, selector, method, onlyFirst)
             list.push(sibling);
         }
 
-        sibling = element[method];
+        sibling = sibling[method];
     }
 
     return onlyFirst ? null : list;
@@ -209,7 +209,7 @@ export function siblings (element, selector = null)
             list.push(element);
         }
 
-        sibling = element.nextSibling;
+        sibling = sibling.nextSibling;
     }
 
     return list;

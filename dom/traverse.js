@@ -206,7 +206,7 @@ export function siblings (element, selector = null)
     {
         if (sibling !== element && elementMatches(sibling, selector))
         {
-            list.push(element);
+            list.push(sibling);
         }
 
         sibling = sibling.nextSibling;

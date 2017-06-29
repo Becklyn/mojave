@@ -5,9 +5,14 @@ QUnit.module(
         {
             document.getElementById("qunit-fixture").innerHTML =
                 '<div class="test-element-next element1"></div>' +
-                '<div class="test-element-next element2"></div>' +
+                '<div class="test-element-next element2">'+
+                    '<div class="test-element-next element2-1"></div>' +
+                '</div>' +
                 'Some text' +
-                '<div class="test-element-next element3"></div>';
+                '<div class="test-element-next element3"></div>' +
+                '<div class="test-element-next element4"></div>' +
+                '<div class="test-element-next element5"></div>' +
+                '<div class="test-element-next element6"></div>';
         }
     }
 );
@@ -33,7 +38,7 @@ QUnit.test(
     function (assert)
     {
         const next = mojave.dom.traverse.next;
-        const element = document.querySelector(".test-element-next.element3");
+        const element = document.querySelector(".test-element-next.element6");
 
         const result = next(element);
 

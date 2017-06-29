@@ -5,9 +5,14 @@ QUnit.module(
         {
             document.getElementById("qunit-fixture").innerHTML =
                 '<div class="test-element-prev element1"></div>' +
-                '<div class="test-element-prev element2"></div>' +
+                '<div class="test-element-prev element2">'+
+                    '<div class="test-element-prev element2-1"></div>' +
+                '</div>' +
                 'Some text' +
-                '<div class="test-element-prev element3"></div>';
+                '<div class="test-element-prev element3"></div>' +
+                '<div class="test-element-prev element4"></div>' +
+                '<div class="test-element-prev element5"></div>' +
+                '<div class="test-element-prev element6"></div>';
         }
     }
 );
@@ -18,12 +23,12 @@ QUnit.test(
     function (assert)
     {
         const prev = mojave.dom.traverse.prev;
-        const element = document.querySelector(".test-element-prev.element2");
+        const element = document.querySelector(".test-element-prev.element3");
 
         const result = prev(element);
 
         assert.ok(result, "found 1 element");
-        assert.ok(result.classList.contains("element1"), "contains .element1");
+        assert.ok(result.classList.contains("element2"), "contains .element2");
     }
 );
 
@@ -47,11 +52,11 @@ QUnit.test(
     function (assert)
     {
         const prev = mojave.dom.traverse.prev;
-        const element = document.querySelector(".test-element-prev.element3");
+        const element = document.querySelector(".test-element-prev.element6");
 
-        const result = prev(element, ".element1");
+        const result = prev(element, ".element2");
 
         assert.ok(result, "found 1 element");
-        assert.ok(result.classList.contains("element1"), "contains .element1");
+        assert.ok(result.classList.contains("element2"), "contains .element2");
     }
 );

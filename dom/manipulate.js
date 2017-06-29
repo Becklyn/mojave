@@ -13,7 +13,7 @@ export function createElement (type, attributes = {})
 
     if (typeof attributes.css !== "undefined")
     {
-        css(element, attributes.css);
+        setCss(element, attributes.css);
     }
 
     if (typeof attributes.text !== "undefined")

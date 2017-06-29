@@ -58,3 +58,13 @@ export function setAttrs (element, attributes)
     );
 }
 
+
+/**
+ * Removes the given element
+ *
+ * @param {HTMLElement} element
+ */
+export function remove (element)
+{
+    element.parentNode.removeChild(element);
+}

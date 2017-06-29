@@ -42,7 +42,7 @@ QUnit.test(
 
         const result = prev(element);
 
-        assert.notOk(result, "found 0 elements");
+        assert.ok(null === result, "found 0 elements");
     }
 );
 

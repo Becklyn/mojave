@@ -40,10 +40,13 @@ export default class Slug
         for (let i = 0; i < transforms.length; i++)
         {
             let from = transforms[i][0];
+            const flags = typeof flags === "string"
+                ? flags
+                : "";
 
-            if (-1 === from.flags.indexOf("g"))
+            if (-1 === flags.indexOf("g"))
             {
-                from = new RegExp(from.source, `${from.flags}g`);
+                from = new RegExp(from.source, `${flags}g`);
             }
 
             this.transforms.push([

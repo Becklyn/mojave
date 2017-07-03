@@ -9,14 +9,15 @@ QUnit.module(
                     '<div class="test-element-filter element2-1"></div>' +
                 '</div>' +
                 'Some text' +
-                '<div class="test-element-filter element3"></div>';
+                '<div class="test-element-filter element3"></div>' +
+                '<div class="test-element-filter element4"></div>';
         }
     }
 );
 
 
 QUnit.test(
-    "global filter()",
+    "filter() on element with specific class",
     function (assert)
     {
         const filter = mojave.dom.traverse.filter;

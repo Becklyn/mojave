@@ -4,15 +4,15 @@ QUnit.module(
         beforeEach: function ()
         {
             document.getElementById("qunit-fixture").innerHTML =
-                '<div class="test-element-nextAll element1"></div>' +
-                '<div class="test-element-nextAll test-class-nextAll element2">' +
-                    '<div class="test-element-nextAll element2-1"></div>' +
+                '<div class="test-element element1"></div>' +
+                '<div class="test-element test-class element2">' +
+                    '<div class="test-element element2-1"></div>' +
                 '</div>' +
                 'Some text' +
-                '<div class="test-element-nextAll test-class-nextAll element3"></div>' +
-                '<div class="test-element-nextAll element4"></div>' +
-                '<div class="test-element-nextAll element5"></div>' +
-                '<div class="test-element-nextAll element6"></div>';
+                '<div class="test-element test-class element3"></div>' +
+                '<div class="test-element element4"></div>' +
+                '<div class="test-element element5"></div>' +
+                '<div class="test-element element6"></div>';
         }
     }
 );
@@ -23,13 +23,13 @@ QUnit.test(
     function (assert)
     {
         const nextAll = mojave.dom.traverse.nextAll;
-        const element = document.querySelector(".test-element-nextAll.element4");
+        const element = document.querySelector(".element4");
 
         const result = nextAll(element);
 
         assert.equal(result.length, 2, "found 2 elements");
-        assert.ok(result[0].classList.contains("element5"), "contains .element5");
-        assert.ok(result[1].classList.contains("element6"), "contains .element6");
+        assert.ok(result[0].classList.found("element5"), "found .element5");
+        assert.ok(result[1].classList.found("element6"), "found .element6");
     }
 );
 
@@ -39,16 +39,16 @@ QUnit.test(
     function (assert)
     {
         const nextAll = mojave.dom.traverse.nextAll;
-        const element = document.querySelector(".test-element-nextAll.element1");
+        const element = document.querySelector(".element1");
 
         const result = nextAll(element);
 
         assert.equal(result.length, 5, "found 5 elements");
-        assert.ok(result[0].classList.contains("element2"), "contains .element2");
-        assert.ok(result[1].classList.contains("element3"), "contains .element3");
-        assert.ok(result[2].classList.contains("element4"), "contains .element4");
-        assert.ok(result[3].classList.contains("element5"), "contains .element5");
-        assert.ok(result[4].classList.contains("element6"), "contains .element6");
+        assert.ok(result[0].classList.found("element2"), "found .element2");
+        assert.ok(result[1].classList.found("element3"), "found .element3");
+        assert.ok(result[2].classList.found("element4"), "found .element4");
+        assert.ok(result[3].classList.found("element5"), "found .element5");
+        assert.ok(result[4].classList.found("element6"), "found .element6");
     }
 );
 
@@ -58,7 +58,7 @@ QUnit.test(
     function (assert)
     {
         const nextAll = mojave.dom.traverse.nextAll;
-        const element = document.querySelector(".test-element-nextAll.element6");
+        const element = document.querySelector(".element6");
 
         const result = nextAll(element);
 
@@ -73,12 +73,12 @@ QUnit.test(
     function (assert)
     {
         const nextAll = mojave.dom.traverse.nextAll;
-        const element = document.querySelector(".test-element-nextAll.element1");
+        const element = document.querySelector(".element1");
 
-        const result = nextAll(element, ".test-class-nextAll");
+        const result = nextAll(element, ".test-class");
 
         assert.equal(result.length, 2, "found 2 elements");
-        assert.ok(result[0].classList.contains("element2"), "contains .element2");
-        assert.ok(result[1].classList.contains("element3"), "contains .element3");
+        assert.ok(result[0].classList.found("element2"), "found .element2");
+        assert.ok(result[1].classList.found("element3"), "found .element3");
     }
 );

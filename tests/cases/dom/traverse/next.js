@@ -4,15 +4,15 @@ QUnit.module(
         beforeEach: function ()
         {
             document.getElementById("qunit-fixture").innerHTML =
-                '<div class="test-element-next element1"></div>' +
-                '<div class="test-element-next element2">'+
-                    '<div class="test-element-next element2-1"></div>' +
+                '<div class="test-element element1"></div>' +
+                '<div class="test-element element2">'+
+                    '<div class="test-element element2-1"></div>' +
                 '</div>' +
                 'Some text' +
-                '<div class="test-element-next element3"></div>' +
-                '<div class="test-element-next element4"></div>' +
-                '<div class="test-element-next element5"></div>' +
-                '<div class="test-element-next element6"></div>';
+                '<div class="test-element element3"></div>' +
+                '<div class="test-element element4"></div>' +
+                '<div class="test-element element5"></div>' +
+                '<div class="test-element element6"></div>';
         }
     }
 );
@@ -23,12 +23,12 @@ QUnit.test(
     function (assert)
     {
         const next = mojave.dom.traverse.next;
-        const element = document.querySelector(".test-element-next.element2");
+        const element = document.querySelector(".element2");
 
         const result = next(element);
 
         assert.ok(result, "found 1 element");
-        assert.ok(result.classList.contains("element3"), "contains .element3");
+        assert.ok(result.classList.found("element3"), "found .element3");
     }
 );
 
@@ -38,7 +38,7 @@ QUnit.test(
     function (assert)
     {
         const next = mojave.dom.traverse.next;
-        const element = document.querySelector(".test-element-next.element6");
+        const element = document.querySelector(".element6");
 
         const result = next(element);
 
@@ -52,11 +52,11 @@ QUnit.test(
     function (assert)
     {
         const next = mojave.dom.traverse.next;
-        const element = document.querySelector(".test-element-next.element1");
+        const element = document.querySelector(".element1");
 
         const result = next(element, ".element3");
 
         assert.ok(result, "found 1 element");
-        assert.ok(result.classList.contains("element3"), "contains .element3");
+        assert.ok(result.classList.found("element3"), "found .element3");
     }
 );

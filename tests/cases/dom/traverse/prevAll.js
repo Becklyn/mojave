@@ -4,15 +4,15 @@ QUnit.module(
         beforeEach: function ()
         {
             document.getElementById("qunit-fixture").innerHTML =
-                '<div class="test-element-prevAll element1"></div>' +
-                '<div class="test-element-prevAll test-class-prevAll element2">' +
-                    '<div class="test-element-prevAll element2-1"></div>' +
+                '<div class="test-element element1"></div>' +
+                '<div class="test-element test-class element2">' +
+                    '<div class="test-element element2-1"></div>' +
                 '</div>' +
                 'Some text' +
-                '<div class="test-element-prevAll test-class-prevAll element3"></div>' +
-                '<div class="test-element-prevAll element4"></div>' +
-                '<div class="test-element-prevAll element5"></div>' +
-                '<div class="test-element-prevAll element6"></div>';
+                '<div class="test-element test-class element3"></div>' +
+                '<div class="test-element element4"></div>' +
+                '<div class="test-element element5"></div>' +
+                '<div class="test-element element6"></div>';
         }
     }
 );
@@ -23,12 +23,12 @@ QUnit.test(
     function (assert)
     {
         const prevAll = mojave.dom.traverse.prevAll;
-        const element = document.querySelector(".test-element-prevAll.element2");
+        const element = document.querySelector(".element2");
 
         const result = prevAll(element);
 
         assert.equal(result.length, 1, "found 1 element");
-        assert.ok(result[0].classList.contains("element1"), "contains .element1");
+        assert.ok(result[0].classList.found("element1"), "found .element1");
     }
 );
 
@@ -38,16 +38,16 @@ QUnit.test(
     function (assert)
     {
         const prevAll = mojave.dom.traverse.prevAll;
-        const element = document.querySelector(".test-element-prevAll.element6");
+        const element = document.querySelector(".element6");
 
         const result = prevAll(element);
 
         assert.equal(result.length, 5, "found 5 elements");
-        assert.ok(result[0].classList.contains("element5"), "contains .element5");
-        assert.ok(result[1].classList.contains("element4"), "contains .element4");
-        assert.ok(result[2].classList.contains("element3"), "contains .element3");
-        assert.ok(result[3].classList.contains("element2"), "contains .element2");
-        assert.ok(result[4].classList.contains("element1"), "contains .element1");
+        assert.ok(result[0].classList.found("element5"), "found .element5");
+        assert.ok(result[1].classList.found("element4"), "found .element4");
+        assert.ok(result[2].classList.found("element3"), "found .element3");
+        assert.ok(result[3].classList.found("element2"), "found .element2");
+        assert.ok(result[4].classList.found("element1"), "found .element1");
     }
 );
 
@@ -57,7 +57,7 @@ QUnit.test(
     function (assert)
     {
         const prevAll = mojave.dom.traverse.prevAll;
-        const element = document.querySelector(".test-element-prevAll.element1");
+        const element = document.querySelector(".element1");
 
         const result = prevAll(element);
 
@@ -72,12 +72,12 @@ QUnit.test(
     function (assert)
     {
         const prevAll = mojave.dom.traverse.prevAll;
-        const element = document.querySelector(".test-element-prevAll.element4");
+        const element = document.querySelector(".element4");
 
-        const result = prevAll(element, ".test-class-prevAll");
+        const result = prevAll(element, ".test-class");
 
         assert.equal(result.length, 2, "found 2 elements");
-        assert.ok(result[0].classList.contains("element3"), "contains .element3");
-        assert.ok(result[1].classList.contains("element2"), "contains .element2");
+        assert.ok(result[0].classList.found("element3"), "found .element3");
+        assert.ok(result[1].classList.found("element2"), "found .element2");
     }
 );

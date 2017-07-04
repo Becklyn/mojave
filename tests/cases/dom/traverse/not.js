@@ -45,7 +45,7 @@ QUnit.test(
         const find = mojave.dom.traverse.find;
         const not = mojave.dom.traverse.not;
         const elements = find(".test-element");
-        const selector = ".test-element-not > :first-child";
+        const selector = ".test-element > :first-child";
 
         const result = not(elements, selector);
 

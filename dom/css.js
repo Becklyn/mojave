@@ -1,6 +1,6 @@
 const CUSTOM_PROPERTY_REGEX = /^--/;
 const DEFAULT_STYLES = document.createElement("div").style;
-const PREFIXES = ["Webkit", "Moz", "ms"];
+const VENDOR_PREFIXES = ["Webkit", "Moz", "ms"];
 const propertyNameCache = {};
 // DOM properties that should NOT have "px" added when numeric
 const IS_NON_DIMENSIONAL = /acit|ex(?:s|g|n|p|$)|rph|ows|mnc|ntw|ine[ch]|zoo|^ord/i;
@@ -9,37 +9,37 @@ const IS_NON_DIMENSIONAL = /acit|ex(?:s|g|n|p|$)|rph|ows|mnc|ntw|ine[ch]|zoo|^or
 /**
  * Returns the normalized (like vendor-prefixed) name of the given CSS property
  *
- * @param {string} name
+ * @param {string} property
  * @return {string}
  */
-function normalizeName (name)
+function normalizeProperty (property)
 {
-    if (propertyNameCache[name])
+    if (propertyNameCache[property])
     {
-        return propertyNameCache[name];
+        return propertyNameCache[property];
     }
 
     // if the property already exists, just use it
-    if (name in DEFAULT_STYLES)
+    if (property in DEFAULT_STYLES)
     {
-        return name;
+        return property;
     }
 
-    const capitalizedName = name[0].toUpperCase() + name.slice(1);
+    const capitalized = property[0].toUpperCase() + property.slice(1);
 
-    for (let i = 0; i < PREFIXES.length; i++)
+    for (let i = 0; i < VENDOR_PREFIXES.length; i++)
     {
-        const prefixedName = `${PREFIXES[i]}${capitalizedName}`;
+        const prefixedName = `${VENDOR_PREFIXES[i]}${capitalized}`;
 
         if (prefixedName in DEFAULT_STYLES)
         {
-            propertyNameCache[name] = prefixedName;
+            propertyNameCache[property] = prefixedName;
             return prefixedName;
         }
     }
 
-    propertyNameCache[name] = name;
-    return name;
+    propertyNameCache[property] = property;
+    return property;
 }
 
 
@@ -58,26 +58,26 @@ export function setCss (elements, styles)
         const element = elements[i];
         const style = element.style;
 
-        for (let key in styles)
+        for (let property in styles)
         {
-            if (!styles.hasOwnProperty(key))
+            if (!styles.hasOwnProperty(property))
             {
                 continue;
             }
 
             // add "px" to all numbers of dimensional values
-            const value = typeof styles[key] === "number" && false === IS_NON_DIMENSIONAL.test(key)
-                ? `${styles[key]}px`
-                : styles[key];
+            const value = typeof styles[property] === "number" && false === IS_NON_DIMENSIONAL.test(property)
+                ? `${styles[property]}px`
+                : styles[property];
 
             if (CUSTOM_PROPERTY_REGEX.test(element))
             {
-                style.setProperty(key, value);
+                style.setProperty(property, value);
             }
             else
             {
-                key = normalizeName(key);
-                style[key] = value;
+                property = normalizeProperty(property);
+                style[property] = value;
             }
         }
     }

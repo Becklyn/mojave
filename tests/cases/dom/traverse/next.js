@@ -60,3 +60,17 @@ QUnit.test(
         assert.ok(result.classList.contains("element3"), "found .element3");
     }
 );
+
+
+QUnit.test(
+    "next() with a selector where nothing matches",
+    function (assert)
+    {
+        const next = mojave.dom.traverse.next;
+        const element = document.querySelector(".element1");
+
+        const result = next(element, ".missing");
+
+        assert.ok(null === result, "found 0 elements");
+    }
+);

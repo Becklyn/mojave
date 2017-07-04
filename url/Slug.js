@@ -40,8 +40,8 @@ export default class Slug
         for (let i = 0; i < transforms.length; i++)
         {
             let from = transforms[i][0];
-            const flags = typeof flags === "string"
-                ? flags
+            const flags = typeof from.flags === "string"
+                ? from.flags
                 : "";
 
             if (-1 === flags.indexOf("g"))

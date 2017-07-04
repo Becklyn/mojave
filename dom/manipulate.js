@@ -5,6 +5,8 @@ import {setCss} from "./css";
  *
  * @param {string} type
  * @param {{html: string, text: string, css: {}}|Object} attributes
+ *
+ * @returns {HTMLElement}
  */
 export function createElement (type, attributes = {})
 {

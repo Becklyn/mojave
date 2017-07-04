@@ -48,7 +48,7 @@ QUnit.test(
 
         const result = not(elements, ".missing");
 
-        assert.equal(filteredElements, elements, "no item was filtered as not item was matched for removal");
+        assert.equal(filteredElements, elements, "no item was filtered as no item was matched for removal");
     }
 );
 

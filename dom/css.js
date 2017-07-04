@@ -2,15 +2,17 @@ const CUSTOM_PROPERTY_REGEX = /^--/;
 const DEFAULT_STYLES = document.createElement("div").style;
 const PREFIXES = ["Webkit", "Moz", "ms"];
 const propertyNameCache = {};
+// DOM properties that should NOT have "px" added when numeric
+const IS_NON_DIMENSIONAL = /acit|ex(?:s|g|n|p|$)|rph|ows|mnc|ntw|ine[ch]|zoo|^ord/i;
 
 
 /**
- * Returns the vendor prefixed name of the given CSS property
+ * Returns the normalized (like vendor-prefixed) name of the given CSS property
  *
  * @param {string} name
  * @return {string}
  */
-function prefixedName (name)
+function normalizeName (name)
 {
     if (propertyNameCache[name])
     {
@@ -31,11 +33,13 @@ function prefixedName (name)
 
         if (prefixedName in DEFAULT_STYLES)
         {
-            return propertyNameCache[name] = prefixedName;
+            propertyNameCache[name] = prefixedName;
+            return prefixedName;
         }
     }
 
-    return propertyNameCache[name] = name;
+    propertyNameCache[name] = name;
+    return name;
 }
 
 
@@ -61,14 +65,18 @@ export function setCss (elements, styles)
                 continue;
             }
 
+            const value = typeof styles[key] === "number" && false === IS_NON_DIMENSIONAL.test(key)
+                ? `${styles[key]}px`
+                : styles[key];
+
             if (CUSTOM_PROPERTY_REGEX.test(element))
             {
-                style.setProperty(key, styles[key]);
+                style.setProperty(key, value);
             }
             else
             {
-                key = prefixedName(key);
-                style[key] = styles[key];
+                key = normalizeName(key);
+                style[key] = value;
             }
         }
     }

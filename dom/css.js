@@ -1,6 +1,7 @@
 const CUSTOM_PROPERTY_REGEX = /^--/;
 const DEFAULT_STYLES = document.createElement("div").style;
 const PREFIXES = ["Webkit", "Moz", "ms"];
+const propertyNameCache = {};
 
 
 /**
@@ -11,6 +12,11 @@ const PREFIXES = ["Webkit", "Moz", "ms"];
  */
 function prefixedName (name)
 {
+    if (propertyNameCache[name])
+    {
+        return propertyNameCache[name];
+    }
+
     // if the property already exists, just use it
     if (name in DEFAULT_STYLES)
     {
@@ -25,11 +31,11 @@ function prefixedName (name)
 
         if (prefixedName in DEFAULT_STYLES)
         {
-            return prefixedName;
+            return propertyNameCache[name] = prefixedName;
         }
     }
 
-    return name;
+    return propertyNameCache[name] = name;
 }
 
 

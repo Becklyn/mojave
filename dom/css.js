@@ -65,6 +65,7 @@ export function setCss (elements, styles)
                 continue;
             }
 
+            // add "px" to all numbers of dimensional values
             const value = typeof styles[key] === "number" && false === IS_NON_DIMENSIONAL.test(key)
                 ? `${styles[key]}px`
                 : styles[key];

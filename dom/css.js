@@ -70,7 +70,7 @@ export function setCss (elements, styles)
                 ? `${styles[property]}px`
                 : styles[property];
 
-            if (CUSTOM_PROPERTY_REGEX.test(element))
+            if (CUSTOM_PROPERTY_REGEX.test(property))
             {
                 style.setProperty(property, value);
             }

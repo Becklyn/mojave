@@ -82,3 +82,57 @@ export function setCss (elements, styles)
         }
     }
 }
+
+
+/**
+ * Returns the computed styles for the given element
+ *
+ * @param {HTMLElement} element
+ * @param {?string} pseudoElement
+ * @return {CssStyle}
+ */
+function getComputedStyles (element, pseudoElement)
+{
+    // @legacy IE <= 11
+    // IE throws on elements created in popups
+    let view = element.ownerDocument.defaultView;
+
+    if (!view || !view.opener)
+    {
+        view = window;
+    }
+
+    return view.getComputedStyle(element, pseudoElement);
+}
+
+
+/**
+ * Returns the CSS property value for the given propery and element
+ *
+ * @param {HTMLElement} element
+ * @param {string} property
+ * @param {?string} pseudoElement
+ * @return {string}
+ */
+export function getCss (element, property, pseudoElement = null)
+{
+    if (CUSTOM_PROPERTY_REGEX.test(property))
+    {
+        property = normalizeProperty(property);
+    }
+
+    const styles = getComputedStyles(element, pseudoElement);
+    // getPropertyValue is needed for:
+    //   .css('--customProperty) (#3144)
+    const value = styles.getPropertyValue(property) || styles[property];
+
+    // always return a value for opacity, the default is "1"
+    if ("opacity" === property)
+    {
+        return value === "" ? "1" : value;
+    }
+
+    return value !== undefined
+        ? value + ""
+        : value;
+}

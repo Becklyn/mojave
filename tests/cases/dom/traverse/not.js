@@ -39,21 +39,16 @@ QUnit.test(
 
 
 QUnit.test(
-    "not() on elements that are children",
+    "not() on non-existent selector",
     function (assert)
     {
         const find = mojave.dom.traverse.find;
         const not = mojave.dom.traverse.not;
         const elements = find(".test-element");
-        const selector = ".test-element > :first-child";
 
-        const result = not(elements, selector);
+        const result = not(elements, ".missing");
 
-        assert.equal(result.length, 4, "found 4 elements");
-        assert.ok(result[0].classList.contains("element1"), "found .element1");
-        assert.ok(result[1].classList.contains("element2"), "found .element2");
-        assert.ok(result[2].classList.contains("element3"), "found .element3");
-        assert.ok(result[3].classList.contains("element4"), "found .element4");
+        assert.equal(filteredElements, elements, "no item was filtered as not item was matched for removal");
     }
 );
 

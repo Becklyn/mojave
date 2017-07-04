@@ -28,7 +28,7 @@ QUnit.test(
         const result = prev(element);
 
         assert.ok(result, "found 1 element");
-        assert.ok(result.classList.found("element2"), "found .element2");
+        assert.ok(result.classList.contains("element2"), "found .element2");
     }
 );
 
@@ -57,6 +57,6 @@ QUnit.test(
         const result = prev(element, ".element2");
 
         assert.ok(result, "found 1 element");
-        assert.ok(result.classList.found("element2"), "found .element2");
+        assert.ok(result.classList.contains("element2"), "found .element2");
     }
 );

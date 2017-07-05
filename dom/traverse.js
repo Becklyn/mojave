@@ -1,5 +1,4 @@
 import "../polyfill/dom";
-import {isElement} from "./utils";
 
 
 /**
@@ -12,7 +11,7 @@ import {isElement} from "./utils";
  */
 function elementMatches (element, selector)
 {
-    return isElement(element) && (null === selector || element.matches(selector));
+    return (null === selector || element.matches(selector));
 }
 
 /**
@@ -89,16 +88,30 @@ export function filter (list, selector)
 
 
 /**
- * Filters a list of DOM elements that DO NOT match the given selector
+ * Filters a list of DOM elements that DO NOT match the given selector,
+ * are not the given node or are not in the given node list.
  *
  * @param {HTMLElement[]} list
- * @param {string} selector
+ * @param {string|HTMLElement|HTMLElement[]} selector
  * @return {HTMLElement[]}
  */
 export function not (list, selector)
 {
+    if (typeof selector === "string")
+    {
+        return list.filter(
+            (e) => !e.matches(selector)
+        );
+    }
+    else if (Array.isArray(selector))
+    {
+        return list.filter(
+            (e) => -1 !== selector.indexOf(e)
+        );
+    }
+
     return list.filter(
-        (e) => !e.matches(selector)
+        (e) => e !== selector
     );
 }
 
@@ -113,7 +126,7 @@ export function not (list, selector)
 export function children (parent, selector = null)
 {
     const list = [];
-    let child = parent.firstChild;
+    let child = parent.firstElementChild;
 
     while (child)
     {
@@ -122,7 +135,7 @@ export function children (parent, selector = null)
             list.push(child);
         }
 
-        child = child.nextSibling;
+        child = child.nextElementSibling;
     }
 
     return list;
@@ -139,7 +152,7 @@ export function children (parent, selector = null)
  */
 export function prev (element, selector = null)
 {
-    return fetchSiblings(element, selector, "previousSibling", true);
+    return fetchSiblings(element, selector, "previousElementSibling", true);
 }
 
 
@@ -153,7 +166,7 @@ export function prev (element, selector = null)
  */
 export function next (element, selector = null)
 {
-    return fetchSiblings(element, selector, "nextSibling", true);
+    return fetchSiblings(element, selector, "nextElementSibling", true);
 }
 
 
@@ -169,7 +182,7 @@ export function next (element, selector = null)
  */
 export function prevAll (element, selector = null)
 {
-    return fetchSiblings(element, selector, "previousSibling", false);
+    return fetchSiblings(element, selector, "previousElementSibling", false);
 }
 
 
@@ -185,7 +198,7 @@ export function prevAll (element, selector = null)
  */
 export function nextAll (element, selector = null)
 {
-    return fetchSiblings(element, selector, "nextSibling", false);
+    return fetchSiblings(element, selector, "nextElementSibling", false);
 }
 
 
@@ -199,7 +212,7 @@ export function nextAll (element, selector = null)
  */
 export function siblings (element, selector = null)
 {
-    let sibling = element.parentNode.firstChild;
+    let sibling = element.parentNode.firstElementChild;
     const list = [];
 
     while (sibling)
@@ -209,7 +222,7 @@ export function siblings (element, selector = null)
             list.push(sibling);
         }
 
-        sibling = sibling.nextSibling;
+        sibling = sibling.nextElementSibling;
     }
 
     return list;

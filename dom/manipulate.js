@@ -32,7 +32,7 @@ function parseHtml (html)
  */
 export function createElement (type, attributes = {})
 {
-    let element = (-1 !== type.indexOf("<"))
+    const element = (-1 !== type.indexOf("<"))
         ? parseHtml(type)
         : document.createElement(type);
 

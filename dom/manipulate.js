@@ -1,4 +1,7 @@
 import {setCss} from "./css";
+import {isElement} from "./utils";
+
+const SPECIAL_ATTRIBUTE_SETTERS = /^(html|text|css)$/;
 
 /**
  * Creates an element with the given attributes
@@ -39,25 +42,42 @@ export function createElement (type, attributes = {})
  */
 export function setAttrs (element, attributes)
 {
-    Object.keys(attributes).forEach(
-        (key) => {
-            const value = attributes[key];
-
-            if (/^(html|text|css)$/.test(key))
-            {
-                return;
-            }
-
-            if (value === null || value === false)
-            {
-                element.removeAttribute(key);
-            }
-            else
-            {
-                element.setAttribute(key, attributes[key]);
-            }
+    for (const key in attributes)
+    {
+        if (!attributes.hasOwnProperty(key))
+        {
+            continue;
         }
-    );
+
+        const value = attributes[key];
+
+        if (SPECIAL_ATTRIBUTE_SETTERS.test(key))
+        {
+            return;
+        }
+
+        if (value === null || value === false)
+        {
+            element.removeAttribute(key);
+        }
+        else
+        {
+            element.setAttribute(key, "" + attributes[key]);
+        }
+    }
+}
+
+
+/**
+ * Returns the attribute value for the given html node
+ *
+ * @param {HTMLElement} element
+ * @param {string} attribute
+ * @return {?string}
+ */
+export function getAttr (element, attribute)
+{
+    return element.getAttribute(attribute);
 }
 
 

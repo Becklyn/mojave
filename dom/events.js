@@ -10,7 +10,7 @@
 export function on (element, type, handler)
 {
     const list = Array.isArray(element) ? element : [element];
-    const types = Array.isArray(type) ? type : [type];
+    const types = Array.isArray(type) ? type : type.trim().split(/ +/);
 
     for (let i = 0; i < list.length; i++)
     {
@@ -47,7 +47,7 @@ export function on (element, type, handler)
 export function off (element, type, handler)
 {
     const list = Array.isArray(element) ? element : [element];
-    const types = Array.isArray(type) ? type : [type];
+    const types = Array.isArray(type) ? type : type.trim().split(/ +/);
 
     for (let i = 0; i < list.length; i++)
     {

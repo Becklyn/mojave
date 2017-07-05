@@ -1,6 +1,6 @@
 import * as dateCompare from "../../date/compare";
 import * as dateFormat from "../../date/format";
-import * as domClasses from "../../dom/classes";
+import * as domAttr from "../../dom/attr";
 import * as domCSS from "../../dom/css";
 import * as domEvents from "../../dom/events";
 import * as domManipulate from "../../dom/manipulate";
@@ -18,7 +18,7 @@ window.mojave = {
         format: dateFormat,
     },
     dom: {
-        classes: domClasses,
+        attr: domAttr,
         css: domCSS,
         events: domEvents,
         manipulate: domManipulate,

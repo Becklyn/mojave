@@ -110,6 +110,11 @@ export function getAttr (element, attribute)
  */
 export function remove (element)
 {
+    if (null === element)
+    {
+        return;
+    }
+
     const list = Array.isArray(element) ? element : [element];
 
     for (let i = 0; i < list.length; i++)

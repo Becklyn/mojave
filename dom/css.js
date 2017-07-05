@@ -116,7 +116,7 @@ function getComputedStyles (element, pseudoElement)
  */
 export function getCss (element, property, pseudoElement = null)
 {
-    if (CUSTOM_PROPERTY_REGEX.test(property))
+    if (!CUSTOM_PROPERTY_REGEX.test(property))
     {
         property = normalizeProperty(property);
     }

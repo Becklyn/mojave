@@ -139,14 +139,20 @@ export function setData (element, key, value)
  */
 export function getData (element, key)
 {
-    key = normalizeDataKey(key);
+    const normalizedKey = normalizeDataKey(key);
 
-    if (typeof element._data === "object" && typeof element._data[key] !== "undefined")
+    if (typeof element._data === "object" && typeof element._data[normalizedKey] !== "undefined")
     {
-        return element._data[key];
+        return element._data[normalizedKey];
     }
 
-    const value = element.dataset[key];
+    // @legacy IE <= 10 doesn't support dataset
+    if (true || typeof element.dataset === "undefined")
+    {
+        return getAttr(element, `data-${key}`);
+    }
+
+    const value = element.dataset[normalizedKey];
     return value === undefined
         ? null
         : value;

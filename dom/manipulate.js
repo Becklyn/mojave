@@ -1,4 +1,4 @@
-import {setCss} from "./css";
+import {setStyles} from "./css";
 import {isElement} from "./utils";
 
 const SPECIAL_ATTRIBUTE_SETTERS = /^(html|text|css)$/;
@@ -18,7 +18,7 @@ export function createElement (type, attributes = {})
 
     if (typeof attributes.css !== "undefined")
     {
-        setCss(element, attributes.css);
+        setStyles(element, attributes.css);
     }
 
     if (typeof attributes.text !== "undefined")

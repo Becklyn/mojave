@@ -49,7 +49,7 @@ function normalizeProperty (property)
  * @param {HTMLElement|HTMLElement[]} elements
  * @param {Object} styles
  */
-export function setCss (elements, styles)
+export function setStyles (elements, styles)
 {
     elements = Array.isArray(elements) ? elements : [elements];
 
@@ -114,7 +114,7 @@ function getComputedStyles (element, pseudoElement)
  * @param {?string} pseudoElement
  * @return {string}
  */
-export function getCss (element, property, pseudoElement = null)
+export function getStyle (element, property, pseudoElement = null)
 {
     if (!CUSTOM_PROPERTY_REGEX.test(property))
     {

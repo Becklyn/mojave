@@ -8,7 +8,8 @@ const IS_NON_DIMENSIONAL = /acit|ex(?:s|g|n|p|$)|rph|ows|mnc|ntw|ine[ch]|zoo|^or
 
 /**
  * Returns the normalized (like vendor-prefixed) name of the given CSS property
- *
+ * 
+ * @private
  * @param {string} property
  * @return {string}
  */
@@ -135,4 +136,43 @@ export function getStyle (element, property, pseudoElement = null)
     return value !== undefined
         ? value + ""
         : value;
+}
+
+
+/**
+ * Updates the display value of the given element
+ *
+ * @private
+ * @param {HTMLElement|HTMLElement[]} element
+ * @param {string} style
+ */
+function updateDisplay (element, style)
+{
+    const list = Array.isArray(element) ? element : [element];
+
+    for (let i = 0; i < list.length; i++)
+    {
+        list[i].style.display = style;
+    }
+}
+
+/**
+ * Hides the given element(s)
+ *
+ * @param {HTMLElement|HTMLElement[]} element
+ */
+export function hide (element)
+{
+    updateDisplay(element, "none");
+}
+
+
+/**
+ * Hides the given element(s)
+ *
+ * @param {HTMLElement|HTMLElement[]} element
+ */
+export function show (element)
+{
+    updateDisplay(element, "");
 }

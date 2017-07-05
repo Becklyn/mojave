@@ -1,4 +1,5 @@
 /**
+ * Checks whether the given node is an HTMLElement
  *
  * @param {Node} node
  * @return {boolean}

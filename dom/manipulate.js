@@ -160,7 +160,7 @@ export function replace (element, replacement)
  * @param {Node} insertInto                      The parent element the item is inserted to.
  * @param {?Node} insertReference                The reference element for the .insertBefore() call.
  */
-function insertElement (reference, insert, adjacentPosition, insertInto, insertReference)
+function insertElement (reference, insert, adjacentPosition, insertInto, insertReference) // eslint-disable-line max-params
 {
     if (typeof insert === "string")
     {

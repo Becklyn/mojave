@@ -123,7 +123,7 @@ export function getStyle (element, property, pseudoElement = null)
 
     const styles = getComputedStyles(element, pseudoElement);
     // getPropertyValue is needed for:
-    //   .css('--customProperty) (#3144)
+    //   getStyle(el, '--customProperty')
     const value = styles.getPropertyValue(property) || styles[property];
 
     // always return a value for opacity, the default is "1"

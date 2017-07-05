@@ -62,13 +62,18 @@ export function setAttrs (element, attributes)
 
 
 /**
- * Removes the given element
+ * Removes the given element(s)
  *
- * @param {HTMLElement} element
+ * @param {HTMLElement|HTMLElement[]} element
  */
 export function remove (element)
 {
-    element.parentNode.removeChild(element);
+    const list = Array.isArray(element) ? element : [element];
+
+    for (let i = 0; i < list.length; i++)
+    {
+        list[i].parentNode.removeChild(list[i]);
+    }
 }
 
 

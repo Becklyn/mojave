@@ -95,6 +95,20 @@ export function remove (element)
     }
 }
 
+/**
+ * Empties the given element(s)
+ * @param {HTMLElement|HTMLElement[]} element
+ */
+export function empty (element)
+{
+    const list = Array.isArray(element) ? element : [element];
+
+    for (let i = 0; i < list.length; i++)
+    {
+        list[i].innerHTML = "";
+    }
+}
+
 
 /**
  * Replaces the given element with the replacement element

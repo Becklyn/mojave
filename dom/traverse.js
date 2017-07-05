@@ -89,16 +89,24 @@ export function filter (list, selector)
 
 
 /**
- * Filters a list of DOM elements that DO NOT match the given selector
+ * Filters a list of DOM elements that DO NOT match the given selector or are
+ * not the given node.
  *
  * @param {HTMLElement[]} list
- * @param {string} selector
+ * @param {string|HTMLElement} selector
  * @return {HTMLElement[]}
  */
 export function not (list, selector)
 {
+    if (typeof selector === "string")
+    {
+        return list.filter(
+            (e) => !e.matches(selector)
+        );
+    }
+
     return list.filter(
-        (e) => !e.matches(selector)
+        (e) => e !== selector
     );
 }
 

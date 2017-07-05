@@ -7,7 +7,7 @@
 export function addClass (element, classes)
 {
     const list = Array.isArray(element) ? element : [element];
-    const classList = Array.isArray(classes) ? classes : [classes];
+    const classList = Array.isArray(classes) ? classes : classes.trim().split(/ +/);
 
     for (let i = 0; i < list.length; i++)
     {
@@ -28,7 +28,7 @@ export function addClass (element, classes)
 export function removeClass (element, classes)
 {
     const list = Array.isArray(element) ? element : [element];
-    const classList = Array.isArray(classes) ? classes : [classes];
+    const classList = Array.isArray(classes) ? classes : classes.trim().split(/ +/);
 
     for (let i = 0; i < list.length; i++)
     {

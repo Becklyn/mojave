@@ -8,7 +8,7 @@ const IS_NON_DIMENSIONAL = /acit|ex(?:s|g|n|p|$)|rph|ows|mnc|ntw|ine[ch]|zoo|^or
 
 /**
  * Returns the normalized (like vendor-prefixed) name of the given CSS property
- * 
+ *
  * @private
  * @param {string} property
  * @return {string}

@@ -1,6 +1,6 @@
+import {setAttrs} from "./attr";
 import {setStyles} from "./css";
 
-const SPECIAL_ATTRIBUTE_SETTERS = /^(html|text|css)$/;
 
 /**
  * Parses the HTML to an HTMLElement
@@ -53,53 +53,6 @@ export function createElement (type, attributes = {})
     }
 
     return element;
-}
-
-
-/**
- * Sets all attributes on the given element
- *
- * @param {HTMLElement} element
- * @param {Object.<string, string>} attributes
- */
-export function setAttrs (element, attributes)
-{
-    for (const key in attributes)
-    {
-        if (!attributes.hasOwnProperty(key))
-        {
-            continue;
-        }
-
-        const value = attributes[key];
-
-        if (SPECIAL_ATTRIBUTE_SETTERS.test(key))
-        {
-            return;
-        }
-
-        if (value === null || value === false)
-        {
-            element.removeAttribute(key);
-        }
-        else
-        {
-            element.setAttribute(key, "" + attributes[key]);
-        }
-    }
-}
-
-
-/**
- * Returns the attribute value for the given html node
- *
- * @param {HTMLElement} element
- * @param {string} attribute
- * @return {?string}
- */
-export function getAttr (element, attribute)
-{
-    return element.getAttribute(attribute);
 }
 
 

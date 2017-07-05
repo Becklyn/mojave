@@ -2,6 +2,56 @@
 
 import {splitStringValue} from "./utils";
 
+const SPECIAL_ATTRIBUTE_SETTERS = /^(html|text|css)$/;
+
+
+/**
+ * Sets all attributes on the given element
+ *
+ * @param {HTMLElement} element
+ * @param {Object.<string, string>} attributes
+ */
+export function setAttrs (element, attributes)
+{
+    for (const key in attributes)
+    {
+        if (!attributes.hasOwnProperty(key))
+        {
+            continue;
+        }
+
+        const value = attributes[key];
+
+        if (SPECIAL_ATTRIBUTE_SETTERS.test(key))
+        {
+            return;
+        }
+
+        if (value === null || value === false)
+        {
+            element.removeAttribute(key);
+        }
+        else
+        {
+            element.setAttribute(key, "" + attributes[key]);
+        }
+    }
+}
+
+
+/**
+ * Returns the attribute value for the given html node
+ *
+ * @param {HTMLElement} element
+ * @param {string} attribute
+ * @return {?string}
+ */
+export function getAttr (element, attribute)
+{
+    return element.getAttribute(attribute);
+}
+
+
 /**
  * Adds all given classes to the element
  *

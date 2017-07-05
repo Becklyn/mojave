@@ -1,10 +1,11 @@
 /* eslint-disable no-underscore-dangle */
 
 /**
+ * Registers an event listener for the given events
  *
  * @param {HTMLElement|HTMLElement[]} element
  * @param {string|string[]} type
- * @param {function():*} handler
+ * @param {function(*):*} handler
  */
 export function on (element, type, handler)
 {
@@ -37,10 +38,11 @@ export function on (element, type, handler)
 
 
 /**
+ * Removes an event listener for the given events
  *
  * @param {HTMLElement|HTMLElement[]} element
  * @param {string|string[]} type
- * @param {function():*} handler
+ * @param {function(*):*} handler
  */
 export function off (element, type, handler)
 {
@@ -67,4 +69,28 @@ export function off (element, type, handler)
             }
         }
     }
+}
+
+/**
+ * Registers an event listener, that it automatically is removed after it was executed once.
+ *
+ * Returns the intermediate function, so that the event listener can be removed:
+ *
+ *      const intermediate = once(element, event, handler);
+ *      off(element, event, intermediate);
+ *
+ * @param {HTMLElement} element
+ * @param {string} type
+ * @param {function(*):*} handler
+ * @return {function():*}
+ */
+export function once (element, type, handler)
+{
+    const intermediate = (...args) => {
+        handler(...args);
+        off(element, type, intermediate);
+    };
+    on(element, type, intermediate);
+
+    return intermediate;
 }

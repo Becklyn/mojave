@@ -89,11 +89,11 @@ export function filter (list, selector)
 
 
 /**
- * Filters a list of DOM elements that DO NOT match the given selector or are
- * not the given node.
+ * Filters a list of DOM elements that DO NOT match the given selector,
+ * are not the given node or are not in the given node list.
  *
  * @param {HTMLElement[]} list
- * @param {string|HTMLElement} selector
+ * @param {string|HTMLElement|HTMLElement[]} selector
  * @return {HTMLElement[]}
  */
 export function not (list, selector)
@@ -102,6 +102,12 @@ export function not (list, selector)
     {
         return list.filter(
             (e) => !e.matches(selector)
+        );
+    }
+    else if (Array.isArray(selector))
+    {
+        return list.filter(
+            (e) => -1 !== selector.indexOf(e)
         );
     }
 

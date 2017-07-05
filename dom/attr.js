@@ -1,3 +1,5 @@
+/* eslint-disable no-underscore-dangle */
+
 import {splitStringValue} from "./utils";
 
 /**
@@ -39,4 +41,63 @@ export function removeClass (element, classes)
             list[i].classList.remove(classList[j]);
         }
     }
+}
+
+
+/**
+ * Normalizes the key for *Data functions
+ *
+ * @private
+ * @param {string} key
+ * @return {string}
+ */
+function normalizeDataKey (key)
+{
+    return key.replace(
+        /-([a-z])/g,
+        (matches) => matches[1].toUpperCase()
+    );
+}
+
+
+/**
+ * Sets the data on the given element
+ *
+ * @param {HTMLElement} element
+ * @param {string} key
+ * @param {*} value
+ */
+export function setData (element, key, value)
+{
+    key = normalizeDataKey(key);
+
+    if (typeof element._data === "undefined")
+    {
+        element._data = {};
+    }
+
+    element._data[key] = value;
+}
+
+
+/**
+ * Loads the data from the element
+ *
+ * @param {HTMLElement} element
+ * @param {string} key
+ * @return {*}
+ */
+export function getData (element, key)
+{
+    key = normalizeDataKey(key);
+
+    if (typeof element._data === "object" && typeof element._data[key] !== "undefined")
+    {
+        return element._data[key];
+    }
+
+    const value = element.dataset[key];
+    return value === undefined
+        ? null
+        : value;
 }

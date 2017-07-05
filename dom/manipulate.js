@@ -3,6 +3,26 @@ import {setStyles} from "./css";
 const SPECIAL_ATTRIBUTE_SETTERS = /^(html|text|css)$/;
 
 /**
+ * Parses the HTML to an HTMLElement
+ *
+ * @param {string} html
+ * @return {HTMLElement}
+ */
+function parseHtml (html)
+{
+    const doc = document.implementation.createHTMLDocument();
+    doc.body.innerHTML = html;
+    const children = doc.body.children;
+
+    if (children.length > 1)
+    {
+        throw new Error("Can't parse HTML with more than one root elements.");
+    }
+
+    return children[0];
+}
+
+/**
  * Creates an element with the given attributes
  *
  * @param {string} type
@@ -12,7 +32,10 @@ const SPECIAL_ATTRIBUTE_SETTERS = /^(html|text|css)$/;
  */
 export function createElement (type, attributes = {})
 {
-    const element = document.createElement(type);
+    let element = (-1 !== type.indexOf("<"))
+        ? parseHtml(type)
+        : document.createElement(type);
+
     setAttrs(element, attributes);
 
     if (typeof attributes.css !== "undefined")

@@ -71,6 +71,7 @@ export function off (element, type, handler)
     }
 }
 
+
 /**
  * Registers an event listener, that it automatically is removed after it was executed once.
  *

@@ -106,3 +106,100 @@ export function replace (element, replacement)
 {
     element.parentNode.replaceChild(replacement, element);
 }
+
+
+/**
+ * Inserts the given element(s)/HTML string at the given position.
+ *
+ * @private
+ * @param {HTMLElement} reference                       The reference element from which the position is calculated.
+ * @param {string|HTMLElement|HTMLElement[]} insert     The elements to insert. Can be an HTML string.
+ * @param {string} adjacentPosition                     The argument for the .insertAdjacentHTML() call.
+ * @param {Node} insertInto                      The parent element the item is inserted to.
+ * @param {?Node} insertReference                The reference element for the .insertBefore() call.
+ */
+function insertElement (reference, insert, adjacentPosition, insertInto, insertReference)
+{
+    if (typeof insert === "string")
+    {
+        reference.insertAdjacentHTML(adjacentPosition, insert);
+    }
+
+    const list = Array.isArray(insert) ? insert : [insert];
+
+    for (let i = 0; i < list.length; i++)
+    {
+        insertInto.insertBefore(list[i], insertReference);
+    }
+}
+
+/**
+ * Inserts the given element/HTML string at the end of the reference element.
+ *
+ * @param {HTMLElement} reference
+ * @param {string|HTMLElement|HTMLElement[]} insert
+ */
+export function append (reference, insert)
+{
+    insertElement(
+        reference,
+        insert,
+        "beforeend",
+        reference,
+        null
+    );
+}
+
+
+/**
+ * Inserts the given element/HTML string at the beginning of the reference element.
+ *
+ * @param {HTMLElement} reference
+ * @param {string|HTMLElement|HTMLElement[]} insert
+ */
+export function prepend (reference, insert)
+{
+    insertElement(
+        reference,
+        insert,
+        "afterbegin",
+        reference,
+        reference.firstChild
+    );
+}
+
+
+/**
+ * Inserts the given element/HTML string just before the reference element.
+ *
+ * @param {HTMLElement} reference
+ * @param {string|HTMLElement|HTMLElement[]} insert
+ */
+export function before (reference, insert)
+{
+    insertElement(
+        reference,
+        insert,
+        "afterbegin",
+        reference.parentNode,
+        reference
+    );
+}
+
+
+/**
+ * Inserts the given element/HTML string just after the reference element.
+ *
+ * @param {HTMLElement} reference
+ * @param {string|HTMLElement|HTMLElement[]} insert
+ */
+export function after (reference, insert)
+{
+    insertElement(
+        reference,
+        insert,
+        "afterend",
+        reference.parentNode,
+        reference.nextSibling
+    );
+}

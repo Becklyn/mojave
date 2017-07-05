@@ -1,5 +1,7 @@
 /* eslint-disable no-underscore-dangle */
 
+import {splitStringValue} from "./utils";
+
 /**
  * Registers an event listener for the given events
  *
@@ -10,7 +12,7 @@
 export function on (element, type, handler)
 {
     const list = Array.isArray(element) ? element : [element];
-    const types = Array.isArray(type) ? type : type.trim().split(/ +/);
+    const types = splitStringValue(type);
 
     for (let i = 0; i < list.length; i++)
     {
@@ -47,7 +49,7 @@ export function on (element, type, handler)
 export function off (element, type, handler)
 {
     const list = Array.isArray(element) ? element : [element];
-    const types = Array.isArray(type) ? type : type.trim().split(/ +/);
+    const types = splitStringValue(type);
 
     for (let i = 0; i < list.length; i++)
     {

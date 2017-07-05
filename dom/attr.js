@@ -1,3 +1,5 @@
+import {splitStringValue} from "./utils";
+
 /**
  * Adds all given classes to the element
  *
@@ -7,7 +9,7 @@
 export function addClass (element, classes)
 {
     const list = Array.isArray(element) ? element : [element];
-    const classList = Array.isArray(classes) ? classes : classes.trim().split(/ +/);
+    const classList = splitStringValue(classes);
 
     for (let i = 0; i < list.length; i++)
     {
@@ -28,7 +30,7 @@ export function addClass (element, classes)
 export function removeClass (element, classes)
 {
     const list = Array.isArray(element) ? element : [element];
-    const classList = Array.isArray(classes) ? classes : classes.trim().split(/ +/);
+    const classList = splitStringValue(classes);
 
     for (let i = 0; i < list.length; i++)
     {

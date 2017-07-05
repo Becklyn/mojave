@@ -176,3 +176,35 @@ export function show (element)
 {
     updateDisplay(element, "");
 }
+
+
+/**
+ * Returns the position of the element
+ *
+ * @param {HTMLElement} element
+ * @return {{top: number, left: number}}
+ */
+export function position (element)
+{
+    return {
+        top: element.offsetTop,
+        left: element.offsetLeft,
+    };
+}
+
+
+/**
+ * Returns the global offset of the element
+ *
+ * @param {HTMLElement} element
+ * @return {{top: number, left: number}}
+ */
+export function offset (element)
+{
+    const rect = element.getBoundingClientRect();
+
+    return {
+        top: rect.top - document.body.scrollTop,
+        left: rect.left - document.body.scrollLeft,
+    };
+}

@@ -1,6 +1,6 @@
 const CUSTOM_PROPERTY_REGEX = /^--/;
 const DEFAULT_STYLES = document.createElement("div").style;
-const VENDOR_PREFIXES = ["Webkit", "Moz", "ms"];
+const VENDOR_PREFIXES = ["-webkit-", "-moz-", "-o-", "-ms-"];
 const propertyNameCache = {};
 // DOM properties that should NOT have "px" added when numeric
 const IS_NON_DIMENSIONAL = /acit|ex(?:s|g|n|p|$)|rph|ows|mnc|ntw|ine[ch]|zoo|^ord/i;
@@ -26,11 +26,9 @@ function normalizeProperty (property)
         return property;
     }
 
-    const capitalized = property[0].toUpperCase() + property.slice(1);
-
     for (let i = 0; i < VENDOR_PREFIXES.length; i++)
     {
-        const prefixedName = `${VENDOR_PREFIXES[i]}${capitalized}`;
+        const prefixedName = `${VENDOR_PREFIXES[i]}${property}`;
 
         if (prefixedName in DEFAULT_STYLES)
         {

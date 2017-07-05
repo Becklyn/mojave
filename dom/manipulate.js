@@ -10,7 +10,7 @@ const SPECIAL_ATTRIBUTE_SETTERS = /^(html|text|css)$/;
  */
 function parseHtml (html)
 {
-    const doc = document.implementation.createHTMLDocument();
+    const doc = document.implementation.createHTMLDocument("");
     doc.body.innerHTML = html;
     const children = doc.body.children;
 

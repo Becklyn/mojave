@@ -1,5 +1,4 @@
 import {setStyles} from "./css";
-import {isElement} from "./utils";
 
 const SPECIAL_ATTRIBUTE_SETTERS = /^(html|text|css)$/;
 

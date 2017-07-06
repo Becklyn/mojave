@@ -125,3 +125,46 @@ export function live (element, selector, type, handler)
 
     return intermediate;
 }
+
+
+/**
+ * Dispatches an event
+ *
+ * @param {HTMLElement} element
+ * @param {string} type
+ * @param {*} data
+ */
+export function trigger (element, type, data = null)
+{
+    const event = createEvent(type, {
+        bubbles: true,
+        cancelable: true,
+        preventDefault: false,
+        detail: data,
+    });
+
+    element.dispatchEvent(event);
+}
+
+
+/**
+ * Creates an event
+ *
+ * @private
+ * @param {string} type
+ * @param {CustomEventInit|{bubbles: boolean, cancelable: boolean, preventDefault: boolean, detail: *}} args
+ * @return {CustomEvent}
+ */
+function createEvent (type, args)
+{
+    // @legacy IE <= 11 doesn't support the global CustomEvent
+    if (typeof window.CustomEvent !== "function")
+    {
+        /** @type {CustomEvent|Event} event */
+        const event = document.createEvent('CustomEvent');
+        event.initCustomEvent(type, args.bubbles, args.cancelable, args.detail);
+        return event;
+    }
+
+    return new CustomEvent(type, args);
+}

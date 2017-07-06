@@ -1,4 +1,4 @@
-QUnit.module("dom/traverse/prev",
+QUnit.module("dom/traverse/prev()",
     {
         beforeEach: function ()
         {

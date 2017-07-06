@@ -1,4 +1,4 @@
-QUnit.module("dom/traverse/not",
+QUnit.module("dom/traverse/not()",
     {
         beforeEach: function ()
         {

@@ -47,27 +47,3 @@ QUnit.test(
         assert.equal(result.length, 0, ".missing not found");
     }
 );
-
-
-QUnit.test(
-    "remove() on non-existent element (workaround)",
-    function (assert)
-    {
-        const find = mojave.dom.traverse.find;
-        const element = document.querySelector(".missing");
-        const removing = mojave.dom.manipulate.remove;
-
-        let removed;
-        if (element !== null) {
-            removing(element);
-            removed = true;
-        } else {
-            removed = false;
-        }
-
-        const result = find(".missing");
-
-        assert.ok(false === removed, "couldn't remove element, element doesn't exist");
-        assert.equal(result.length, 0, ".missing not found");
-    }
-);

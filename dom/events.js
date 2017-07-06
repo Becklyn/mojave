@@ -97,3 +97,31 @@ export function once (element, type, handler)
 
     return intermediate;
 }
+
+
+/**
+ * Registers an event listener, that it automatically is removed after it was executed once.
+ *
+ * Returns the intermediate function, so that the event listener can be removed:
+ *
+ *      const intermediate = once(element, event, handler);
+ *      off(element, event, intermediate);
+ *
+ * @param {HTMLElement} element
+ * @param {string} selector
+ * @param {string} type
+ * @param {function(*):*} handler
+ * @return {function():*}
+ */
+export function live (element, selector, type, handler)
+{
+    const intermediate = (event) => {
+        if (event.target.matches(selector))
+        {
+            handler(event);
+        }
+    };
+    on(element, type, intermediate);
+
+    return intermediate;
+}

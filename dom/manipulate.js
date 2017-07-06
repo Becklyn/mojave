@@ -22,6 +22,7 @@ function parseHtml (html)
     return children[0];
 }
 
+
 /**
  * Creates an element with the given attributes
  *
@@ -76,6 +77,7 @@ export function remove (element)
     }
 }
 
+
 /**
  * Empties the given element(s)
  * @param {HTMLElement|HTMLElement[]} element
@@ -127,6 +129,7 @@ function insertElement (reference, insert, adjacentPosition, insertInto, insertR
         insertInto.insertBefore(list[i], insertReference);
     }
 }
+
 
 /**
  * Inserts the given element/HTML string at the end of the reference element.

@@ -10,3 +10,5 @@ import "../cases/dom/traverse/not";
 import "../cases/dom/traverse/prev";
 import "../cases/dom/traverse/prevAll";
 import "../cases/dom/traverse/siblings";
+
+QUnit.config.testTimeout = 1000;

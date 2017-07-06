@@ -147,7 +147,7 @@ export function getData (element, key)
     }
 
     // @legacy IE <= 10 doesn't support dataset
-    if (true || typeof element.dataset === "undefined")
+    if (typeof element.dataset === "undefined")
     {
         return getAttr(element, `data-${key}`);
     }

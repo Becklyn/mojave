@@ -27,13 +27,8 @@ You can also start a watcher to continuously build the library:
 kaba -d
 ```
 
-Run the tests webserver
 
-```bash
-php -S localhost:8000 -t tests/
-```
-
-Now open your the testpage http://localhost:8000  in a web browser.
+Now open the file in `tests/index.html` in a web browser.
 
 
 ### Test case files
@@ -43,7 +38,8 @@ Place all test case files under `tests/cases/` as regular `.js` files.
 You have all [QUnit](https://qunitjs.com/) globals available.
 Also the library itself is loaded in the `window.mojave` global. For details, please take a look at `tests/build/complete-library-build.js`.
 
-Please note that all test case files need to work in all supported browsers, so ES2015 features are not supported.
+The tests files are built using `tests/build/all-tests.js`, so if you add a new test case file, you must add an import there.
+This build is compiled using kaba, so you can use regular modern JS.
 
 
 ### Working on the project

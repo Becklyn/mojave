@@ -21,9 +21,9 @@ QUnit.test(
     {
         const find = mojave.dom.traverse.find;
         const element = document.querySelector(".element2");
-        const removing = mojave.dom.manipulate.remove;
+        const remove = mojave.dom.manipulate.remove;
 
-        removing(element);
+        remove(element);
 
         const result = find(".element2");
 
@@ -38,9 +38,9 @@ QUnit.test(
     {
         const find = mojave.dom.traverse.find;
         const element = document.querySelector(".missing");
-        const removing = mojave.dom.manipulate.remove;
+        const remove = mojave.dom.manipulate.remove;
 
-        removing(element);
+        remove(element);
 
         const result = find(".missing");
 

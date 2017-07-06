@@ -1,5 +1,4 @@
-QUnit.module(
-    "children()",
+QUnit.module("dom/traverse/children",
     {
         beforeEach: function ()
         {

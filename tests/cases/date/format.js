@@ -1,3 +1,5 @@
+QUnit.module("date/format");
+
 QUnit.test(
     "relativeFormat() tests",
     function (assert)

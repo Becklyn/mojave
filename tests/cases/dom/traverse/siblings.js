@@ -1,5 +1,4 @@
-QUnit.module(
-    "siblings()",
+QUnit.module("dom/traverse/siblings",
     {
         beforeEach: function ()
         {

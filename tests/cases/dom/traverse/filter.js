@@ -1,5 +1,4 @@
-QUnit.module(
-    "filter()",
+QUnit.module("dom/traverse/filter",
     {
         beforeEach: function ()
         {

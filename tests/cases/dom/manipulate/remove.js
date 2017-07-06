@@ -1,5 +1,4 @@
-QUnit.module(
-    "remove()",
+QUnit.module("dom/manipulate/remove",
     {
         beforeEach: function ()
         {

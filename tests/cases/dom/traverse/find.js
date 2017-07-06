@@ -1,5 +1,4 @@
-QUnit.module(
-    "find()",
+QUnit.module("dom/traverse/find",
     {
         beforeEach: function ()
         {

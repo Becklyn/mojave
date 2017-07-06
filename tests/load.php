@@ -41,7 +41,7 @@ function displayFile (string $key) : void
             break;
 
         case "test-cases":
-            renderFile(loadTestCases(), "js");
+            renderFile(loadFile(__DIR__ . "/dist/all-tests.js"), "js");
             break;
 
         case "lib-build":
@@ -59,49 +59,6 @@ function displayFile (string $key) : void
  * Exception in case the loading of files failed
  */
 class NotFoundException extends Exception {}
-
-
-/**
- * Loads all tests
- */
-function loadTestCases () : string
-{
-    $contents = "";
-
-    $directory = new RecursiveDirectoryIterator(TESTS_DIRECTORY);
-    $iterator = new RecursiveIteratorIterator($directory);
-
-    /** @var SplFileInfo $file */
-    foreach ($iterator as $file)
-    {
-        if (!$file->isFile() || "js" !== $file->getExtension())
-        {
-            continue;
-        }
-
-        $relativeName = substr($file->getPathname(), strlen(TESTS_DIRECTORY));
-        $moduleName = addslashes($relativeName);
-        $testContent = file_get_contents($file->getPathname());
-
-        $contents .= <<<TEST
-(function () { 
-QUnit.module("{$moduleName}", function () {
-
-// ----- MODULE START -----
-
-{$testContent}
-
-// ----- MODULE END -----
-
-});
-})();
-
-
-TEST;
-    }
-
-    return $contents;
-}
 
 /**
  * Loads a qunit file

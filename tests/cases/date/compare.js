@@ -1,3 +1,5 @@
+QUnit.module("date/compare");
+
 QUnit.test(
     "isSameDay() tests",
     function (assert)

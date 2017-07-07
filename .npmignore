@@ -1,3 +1,6 @@
+/.travis.yml
+/browserstack.json
+/kabafile.js
 /node_modules
 /tests
-/kabafile.js
+

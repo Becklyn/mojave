@@ -2,11 +2,71 @@
 // Generated on Fri Jul 07 2017 16:49:19 GMT+0200 (CEST)
 
 const customLaunchers = {
-    sl_chrome: {
+    win_chrome: {
         base: 'SauceLabs',
         browserName: 'chrome',
         platform: 'Windows 8',
         version: '59.0'
+    },
+    win_firefox: {
+        base: 'SauceLabs',
+        browserName: 'firefox',
+        platform: 'Windows 10',
+        version: '54.0'
+    },
+    win_edge: {
+        base: 'SauceLabs',
+        browserName: 'MicrosoftEdge',
+        platform: 'Windows 10',
+        version: '14.14393'
+    },
+    win_ie11: {
+        base: 'SauceLabs',
+        browserName: 'internet explorer',
+        platform: 'Windows 10',
+        version: '11.103'
+    },
+    win_ie10: {
+        base: 'SauceLabs',
+        browserName: 'internet explorer',
+        platform: 'Windows 8',
+        version: '10.0'
+    },
+    mac_edge: {
+        base: 'SauceLabs',
+        browserName: 'chrome',
+        platform: 'macOS 10.12',
+        version: '59.0'
+    },
+    mac_firefox: {
+        base: 'SauceLabs',
+        browserName: 'firefox',
+        platform: 'macOS 10.12',
+        version: '54.0'
+    },
+    mac_safari: {
+        base: 'SauceLabs',
+        browserName: 'safari',
+        platform: 'macOS 10.12',
+        version: '10.0'
+    },
+    ios_safari: {
+        base: 'SauceLabs',
+        browserName: 'Safari',
+        appiumVersion: '1.6.5',
+        deviceName: 'iPhone Simulator',
+        deviceOrientation: 'portrait',
+        platformVersion: '10.3',
+        platformName: 'iOS',
+    },
+    android_chrome: {
+        base: 'SauceLabs',
+        browserName: 'Chrome',
+        appiumVersion: '1.6.5',
+        deviceName: 'Android Emulator',
+        deviceOrientation: 'portrait',
+        platformVersion: '6.0',
+        platformName: 'Android',
     },
 };
 

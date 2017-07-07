@@ -8,8 +8,3 @@ before_install:
     - npm install -g kaba-cli
 before_script:
     - kaba js
-addons:
-    browserstack:
-        username: "jannikzschiesche1"
-        access_key:
-            secure: "rqd1l9o3Sfh/ZqzqG9r9TaXLiH/OUsVIXJ5TUVnQKaIOBGYZyj4xhMbCU7cOPEQ8hWx9I364dM0hruhc6x1jZ6dZkYvgPYGPxzUtz0nvCYMu/aisw2Ekm1tbrI32Ia7COqpqwogSqMtiT/vBUy4Sl6rqlKGzcihmcJ+QjOpZdqfF5d9sVFR9Lkh2Nn3LUxGcJ9avx/c9XAkejJR9RH4neBrranFZbvzw6IMdseOS1lk3wk9en/b3GTCYGABXSJXmBmav3FoTFdNoXYDIpglu7yaonJ1uDV55hgp16oKltJu6WWc/1XXcPWsHYKA61MZN6+crpVq1EdHSmGCYvk33g4OUBXZGdVGiDxpIzJZuy8TeQqcUuLMixTZv6v0SfroG+kdu83+7ghy6EdHHbiaJ4u9Shl77oGpNwt9s871kNx+picycXCAP4ALHvSYMt45WbRzGzclst4ZXmLrAhLjcWZT4lQr5uzHse2G14ss8jI1/y2y8pG1E4xDwZLunw7FcuOyqQ3YiND6rU5W9+RhD2aBVS45yUGjpB2mbS4sfjB7gb+ymYBj5orzA2Ht9AxlmPz6bJaWpCvb57G3DmToqDF6rxGVbdWEkKYH33R8t+fWEaySXaXfWMm2uoPpd5/xTrWZvkXK7sUU8UPb6omHVOBz55GyfVZDI+1sLoLbePso="

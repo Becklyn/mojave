@@ -1,3 +1,6 @@
+QUnit.module("io/file");
+
+
 QUnit.test(
     "formatSize() tests",
     function (assert)

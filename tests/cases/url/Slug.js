@@ -1,3 +1,5 @@
+QUnit.module("url/Slug");
+
 QUnit.test(
     "Slug.transform() defaults",
     function (assert)

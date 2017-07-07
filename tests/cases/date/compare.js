@@ -15,7 +15,7 @@ QUnit.test(
         assert.ok(isSameDay(new Date(2017, 11, 31, 23, 59, 50), new Date(2017, 11, 31, 0, 0, 0)), "first and last second");
 
         // different dates
-        assert.notOk(!isSameDay(new Date(2017, 11, 30, 12, 0, 0), new Date(2017, 11, 31, 12, 0, 0)), "next day");
+        assert.notOk(isSameDay(new Date(2017, 11, 30, 12, 0, 0), new Date(2017, 11, 31, 12, 0, 0)), "next day");
         assert.notOk(isSameDay(new Date(2017, 10, 31, 12, 0, 0), new Date(2017, 11, 31, 12, 0, 0)), "next month");
         assert.notOk(isSameDay(new Date(2016, 11, 31, 12, 0, 0), new Date(2017, 11, 31, 12, 0, 0)), "next year");
     }

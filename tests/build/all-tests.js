@@ -12,5 +12,8 @@ import "../cases/dom/traverse/not";
 import "../cases/dom/traverse/prev";
 import "../cases/dom/traverse/prevAll";
 import "../cases/dom/traverse/siblings";
+import "../cases/io/file";
+import "../cases/timing/debounce";
+import "../cases/url/Slug";
 
 QUnit.config.testTimeout = 1000;

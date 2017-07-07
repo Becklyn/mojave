@@ -1,3 +1,5 @@
+import QUnit from "qunitjs";
+
 QUnit.module("date/compare");
 
 QUnit.test(

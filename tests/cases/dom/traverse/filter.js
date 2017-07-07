@@ -1,3 +1,5 @@
+import QUnit from "qunitjs";
+
 QUnit.module("dom/traverse/filter()",
     {
         beforeEach: function ()

@@ -1,3 +1,5 @@
+import QUnit from "qunitjs";
+
 QUnit.module("date/format");
 
 QUnit.test(

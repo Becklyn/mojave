@@ -1,3 +1,4 @@
+import QUnit from "qunitjs";
 import {createElement} from "../../../../dom/manipulate";
 import {off, once} from "../../../../dom/events";
 

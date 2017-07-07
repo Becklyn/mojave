@@ -1,6 +1,7 @@
-QUnit.module("timing/debounce");
-
+import QUnit from "qunitjs";
 import {debounce} from "../../../timing/timing";
+
+QUnit.module("timing/debounce");
 
 /**
  * NOTE:

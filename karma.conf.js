@@ -139,7 +139,6 @@ module.exports = function (config) {
 
         sauceLabs: {
             testName: 'mojave',
-            recordScreenshots: true,
         },
         customLaunchers: customLaunchers,
     });

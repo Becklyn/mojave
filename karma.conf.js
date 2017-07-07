@@ -78,7 +78,8 @@ module.exports = function (config) {
         concurrency: Infinity,
 
         sauceLabs: {
-            testName: 'Example'
+            testName: 'mojave',
+            recordScreenshots: true,
         },
         customLaunchers: customLaunchers,
     });

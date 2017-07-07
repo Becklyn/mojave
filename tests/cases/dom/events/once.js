@@ -21,13 +21,9 @@ QUnit.test("once() callback only called once", (assert) => {
     const done = assert.async();
 
     once(el, "click", () => {
-        console.log("oh hai");
         assert.ok(true, "event listener triggered");
         done();
     });
-
-    console.log(el);
-    console.log("oh bai");
 
     el.click();
     el.click();

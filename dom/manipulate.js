@@ -117,11 +117,14 @@ export function replace (element, replacement)
  */
 function insertElement (reference, insert, adjacentPosition, insertInto, insertReference) // eslint-disable-line max-params
 {
+    // if element to insert is string
     if (typeof insert === "string")
     {
         reference.insertAdjacentHTML(adjacentPosition, insert);
+        return;
     }
 
+    // if element to insert is HTMLElement or HTMLElement[]
     const list = Array.isArray(insert) ? insert : [insert];
 
     for (let i = 0; i < list.length; i++)

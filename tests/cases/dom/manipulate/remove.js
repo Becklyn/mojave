@@ -3,7 +3,7 @@ import {remove} from "../../../../dom/manipulate";
 
 QUnit.module("dom/manipulate/remove()",
     {
-        beforeEach: function ()
+        beforeEach: () =>
         {
             document.getElementById("qunit-fixture").innerHTML = `
                 <div id="parent">
@@ -12,33 +12,75 @@ QUnit.module("dom/manipulate/remove()",
                     <div id="third"></div>
                 </div>
             `;
-        }
+        },
     }
 );
 
 
 QUnit.test(
-    "remove() on existent element",
-    function (assert)
+    "with valid node element",
+    (assert) =>
     {
         const id = "first";
         remove(document.getElementById(id));
 
         assert.ok(document.getElementById("parent"), "parent still exists");
         assert.notOk(document.getElementById(id), "has no occurrence");
-
-
     }
 );
 
 
 QUnit.test(
-    "remove() on non-existent element (fails)",
-    function (assert)
+    "with an array of elements",
+    (assert) =>
     {
+        const firstId = "first";
+        const secondId = "second";
+
+        remove([
+            document.getElementById(firstId),
+            document.getElementById(secondId)
+        ]);
+
+        assert.notOk(document.getElementById(firstId), "first element has no occurrence");
+        assert.notOk(document.getElementById(secondId), "second element has no occurrence");
+        assert.ok(document.getElementById("third"), "third element has not been removed");
+    }
+);
 
 
+QUnit.test(
+    "with an (query) string as an element",
+    (assert) =>
+    {
+        assert.throws(
+            () => {
+                remove("#first");
+            },
+            "function threw an error"
+        );
+    }
+);
 
+
+QUnit.test(
+    "with an empty array",
+    (assert) =>
+    {
+        assert.throws(
+            () => {
+                remove([]);
+            },
+            "function threw an error"
+        );
+    }
+);
+
+
+QUnit.test(
+    "with an invalid element",
+    (assert) =>
+    {
         assert.throws(
             () => {
                 remove(null);

@@ -21,15 +21,13 @@ QUnit.test(
     "remove() on existent element",
     function (assert)
     {
-        const find = mojave.dom.traverse.find;
-        const element = document.querySelector(".element2");
-        const remove = mojave.dom.manipulate.remove;
+        const id = "first";
+        remove(document.getElementById(id));
 
-        remove(element);
+        assert.ok(document.getElementById("parent"), "parent still exists");
+        assert.notOk(document.getElementById(id), "has no occurrence");
 
-        const result = find(".element2");
 
-        assert.equal(result.length, 0, ".element2 successfully removed");
     }
 );
 
@@ -38,14 +36,14 @@ QUnit.test(
     "remove() on non-existent element (fails)",
     function (assert)
     {
-        const find = mojave.dom.traverse.find;
-        const element = document.querySelector(".missing");
-        const remove = mojave.dom.manipulate.remove;
 
-        remove(element);
 
-        const result = find(".missing");
 
-        assert.equal(result.length, 0, ".missing not found");
+        assert.throws(
+            () => {
+                remove(null);
+            },
+            "function threw an error"
+        );
     }
 );

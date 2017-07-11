@@ -1,4 +1,5 @@
 import QUnit from "qunitjs";
+import {remove} from "../../../../dom/manipulate";
 
 QUnit.module("dom/manipulate/remove()",
     {

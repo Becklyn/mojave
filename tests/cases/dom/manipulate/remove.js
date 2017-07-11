@@ -5,13 +5,13 @@ QUnit.module("dom/manipulate/remove()",
     {
         beforeEach: function ()
         {
-            document.getElementById("qunit-fixture").innerHTML =
-                '<div class="test-element element1"></div>' +
-                '<div class="test-element element2">'+
-                '<div class="test-element element2-1"></div>' +
-                '</div>' +
-                'Some text' +
-                '<div class="test-element element3"></div>';
+            document.getElementById("qunit-fixture").innerHTML = `
+                <div id="parent">
+                    <div id="first"></div>
+                    <div id="second"></div>
+                    <div id="third"></div>
+                </div>
+            `;
         }
     }
 );

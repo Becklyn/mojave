@@ -5,6 +5,7 @@ import "../cases/dom/events/once";
 import "../cases/dom/manipulate/after";
 import "../cases/dom/manipulate/append";
 import "../cases/dom/manipulate/before";
+import "../cases/dom/manipulate/createElement";
 import "../cases/dom/manipulate/remove";
 import "../cases/dom/manipulate/replace";
 import "../cases/dom/traverse/children";

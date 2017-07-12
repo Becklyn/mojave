@@ -181,7 +181,7 @@ export function before (reference, insert)
     insertElement(
         reference,
         insert,
-        "afterbegin",
+        "beforebegin",
         reference.parentNode,
         reference
     );

@@ -22,11 +22,10 @@ QUnit.test(
     {
         const parent = document.getElementById("test-parent");
         const prependingChild = document.createElement("div");
-        const className = "identifier";
-        prependingChild.classList.add(className);
+        prependingChild.classList.add("className");
         prepend(parent, prependingChild);
 
-        assert.equal(document.getElementsByClassName(className).length, 1, "has one occurrence");
+        assert.equal(document.getElementsByClassName("className").length, 1, "has one occurrence");
         assert.equal(parent.firstElementChild, prependingChild, "is first element");
     }
 );
@@ -37,10 +36,9 @@ QUnit.test(
     (assert) =>
     {
         const parent = document.getElementById("test-parent");
-        const className = "identifier";
-        prepend(parent, `<div class="${className}"></div>`);
+        prepend(parent, `<div class="className"></div>`);
 
-        assert.ok(parent.firstElementChild.classList.contains(className), "is first element");
+        assert.ok(parent.firstElementChild.classList.contains("className"), "is first element");
     }
 );
 

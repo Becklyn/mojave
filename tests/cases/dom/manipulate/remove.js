@@ -1,50 +1,83 @@
 import QUnit from "qunitjs";
+import {remove} from "../../../../dom/manipulate";
 
 QUnit.module("dom/manipulate/remove()",
     {
-        beforeEach: function ()
+        beforeEach: () =>
         {
-            document.getElementById("qunit-fixture").innerHTML =
-                '<div class="test-element element1"></div>' +
-                '<div class="test-element element2">'+
-                '<div class="test-element element2-1"></div>' +
-                '</div>' +
-                'Some text' +
-                '<div class="test-element element3"></div>';
-        }
+            document.getElementById("qunit-fixture").innerHTML = `
+                <div id="parent">
+                    <div id="first"></div>
+                    <div id="second"></div>
+                    <div id="third"></div>
+                </div>
+            `;
+        },
     }
 );
 
 
 QUnit.test(
-    "remove() on existent element",
-    function (assert)
+    "with valid node element",
+    (assert) =>
     {
-        const find = mojave.dom.traverse.find;
-        const element = document.querySelector(".element2");
-        const remove = mojave.dom.manipulate.remove;
+        const id = "first";
+        remove(document.getElementById(id));
 
-        remove(element);
-
-        const result = find(".element2");
-
-        assert.equal(result.length, 0, ".element2 successfully removed");
+        assert.ok(document.getElementById("parent"), "parent still exists");
+        assert.notOk(document.getElementById(id), "has no occurrence");
     }
 );
 
 
 QUnit.test(
-    "remove() on non-existent element (fails)",
-    function (assert)
+    "with an array of elements",
+    (assert) =>
     {
-        const find = mojave.dom.traverse.find;
-        const element = document.querySelector(".missing");
-        const remove = mojave.dom.manipulate.remove;
+        const firstId = "first";
+        const secondId = "second";
 
-        remove(element);
+        remove([
+            document.getElementById(firstId),
+            document.getElementById(secondId)
+        ]);
 
-        const result = find(".missing");
+        assert.notOk(document.getElementById(firstId), "first element has no occurrence");
+        assert.notOk(document.getElementById(secondId), "second element has no occurrence");
+        assert.ok(document.getElementById("third"), "third element has not been removed");
+    }
+);
 
-        assert.equal(result.length, 0, ".missing not found");
+
+QUnit.test(
+    "with an (query) string as an element",
+    (assert) =>
+    {
+        assert.throws(
+            () => {
+                remove("#first");
+            },
+            "function threw an error"
+        );
+    }
+);
+
+
+QUnit.test(
+    "with an empty array",
+    (assert) =>
+    {
+        remove([]);
+        assert.ok(true, "the previous code should have run successfully");
+    }
+);
+
+
+QUnit.test(
+    "with an invalid element",
+    (assert) =>
+    {
+        remove(null);
+        assert.ok(true, "the previous code should have run successfully");
     }
 );

@@ -67,12 +67,8 @@ QUnit.test(
     "with an empty array",
     (assert) =>
     {
-        assert.throws(
-            () => {
-                remove([]);
-            },
-            "function threw an error"
-        );
+        remove([]);
+        assert.ok(true, "the previous code should have run successfully");
     }
 );
 
@@ -81,11 +77,7 @@ QUnit.test(
     "with an invalid element",
     (assert) =>
     {
-        assert.throws(
-            () => {
-                remove(null);
-            },
-            "function threw an error"
-        );
+        remove(null);
+        assert.ok(true, "the previous code should have run successfully");
     }
 );

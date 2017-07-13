@@ -92,11 +92,7 @@ QUnit.test(
     "with node as reference and empty string as an insert",
     (assert) =>
     {
-        assert.throws(
-            () => {
-                before(document.getElementById("testParentElement"), "");
-            },
-            "function threw an error"
-        );
+        before(find(".second")[0], "");
+        assert.ok(true, "the previous code should have run successfully");
     }
 );

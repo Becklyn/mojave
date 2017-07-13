@@ -1,14 +1,7 @@
 import QUnit from "qunitjs";
 import {createElement} from "../../../../dom/manipulate";
 
-QUnit.module("dom/manipulate/createElement()",
-    {
-        beforeEach: () =>
-        {
-            document.getElementById("qunit-fixture").innerHTML = "";
-        },
-    }
-);
+QUnit.module("dom/manipulate/createElement()");
 
 
 QUnit.test(

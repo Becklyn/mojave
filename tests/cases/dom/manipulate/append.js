@@ -22,11 +22,10 @@ QUnit.test(
     {
         const parent = document.getElementById("test-parent");
         const appendingChild = document.createElement("div");
-        const className = "identifier";
-        appendingChild.classList.add(className);
+        appendingChild.classList.add("className");
         append(parent, appendingChild);
 
-        assert.equal(document.getElementsByClassName(className).length, 1, "has one occurrence");
+        assert.equal(document.getElementsByClassName("className").length, 1, "has one occurrence");
         assert.equal(parent.lastElementChild, appendingChild, "is last element");
     }
 );
@@ -37,10 +36,9 @@ QUnit.test(
     (assert) =>
     {
         const parent = document.getElementById("test-parent");
-        const className = "identifier";
-        append(parent, `<div class="${className}"></div>`);
+        append(parent, `<div class="className"></div>`);
 
-        assert.ok(parent.lastElementChild.classList.contains(className), "is last element");
+        assert.ok(parent.lastElementChild.classList.contains("className"), "is last element");
     }
 );
 
@@ -50,12 +48,11 @@ QUnit.test(
     (assert) =>
     {
         const parent = document.getElementById("test-parent");
-        const appendingChild = document.createElement("div");
-        const secondAppendingChild = document.createElement("div");
-        append(parent, [appendingChild, secondAppendingChild]);
+        const appendingChildren = [document.createElement("div"), document.createElement("div")];
+        append(parent, appendingChildren);
 
-        assert.equal(parent.children[parent.children.length - 2], appendingChild, "is second to last element");
-        assert.equal(parent.lastElementChild, secondAppendingChild, "is last element");
+        assert.equal(parent.children[2], appendingChildren[0], "is second to last element");
+        assert.equal(parent.children[3], appendingChildren[1], "is last element");
     }
 );
 

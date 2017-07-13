@@ -52,7 +52,7 @@ QUnit.test(
         const secondPrependingChild = document.createElement("div");
         prepend(parent, [prependingChild, secondPrependingChild]);
 
-        assert.equal(parent.firstElementChild, prependingChild, "is first element");
+        assert.equal(parent.children[0], prependingChild, "is first element");
         assert.equal(parent.children[1], secondPrependingChild, "is second element");
     }
 );

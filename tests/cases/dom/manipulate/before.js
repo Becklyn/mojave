@@ -1,5 +1,6 @@
 import QUnit from "qunitjs";
 import {before} from "../../../../dom/manipulate";
+import {find} from "../../../../dom/traverse";
 
 QUnit.module("dom/manipulate/before()",
     {
@@ -20,16 +21,13 @@ QUnit.test(
     "with node as reference and insert",
     (assert) =>
     {
-        const parent = document.getElementById("test-parent");
+        const children = document.getElementById("test-parent").children;
         const insert = document.createElement("div");
-        const reference = document.getElementsByClassName("second")[0];
+        const reference = children[1];
         before(reference, insert);
 
-        assert.equal(
-            Array.prototype.indexOf.call(parent.children, insert),
-            Array.prototype.indexOf.call(parent.children, reference) - 1,
-            "is before the reference element"
-        );
+        assert.equal(children[1], insert, "is at the spot of the reference element");
+        assert.equal(children[2], reference, "reference element still exists and is positioned right after the insert");
     }
 );
 
@@ -38,15 +36,10 @@ QUnit.test(
     "with node as reference and html string as an insert",
     (assert) =>
     {
-        const parent = document.getElementById("test-parent");
-        const reference = document.getElementsByClassName("second")[0];
-        const className = "identifierForMyTest";
-        before(reference, `<div class="${className}"></div>`);
+        const children = document.getElementById("test-parent").children;
+        before(children[1], `<div class="test"></div>`);
 
-        assert.ok(
-            parent.children[Array.prototype.indexOf.call(parent.children, reference) - 1].classList.contains(className),
-            "is before the reference element"
-        );
+        assert.ok(children[1].classList.contains("test"), "is before the reference element");
     }
 );
 
@@ -55,21 +48,14 @@ QUnit.test(
     "with node as reference and an array of nodes as inserts",
     (assert) =>
     {
-        const parent = document.getElementById("test-parent");
-        const reference = document.getElementsByClassName("second")[0];
+        const children = document.getElementById("test-parent").children;
+        const reference = children[1];
         const insertArray = [document.createElement("div"), document.createElement("div")];
         before(reference, insertArray);
 
-        assert.equal(
-            Array.prototype.indexOf.call(parent.children, insertArray[0]),
-            Array.prototype.indexOf.call(parent.children, reference) - insertArray.length,
-            "first element of array is before the reference element"
-        );
-        assert.equal(
-            Array.prototype.indexOf.call(parent.children, insertArray[1]),
-            Array.prototype.indexOf.call(parent.children, reference) - (insertArray.length - 1),
-            "second element of array is after first element of array and is before the reference element"
-        );
+        assert.equal(children[1], insertArray[0], "first insert is at the spot of the reference element");
+        assert.equal(children[2], insertArray[1], "second insert is after the first insert");
+        assert.equal(children[3], reference, "reference element still exists and is positioned right after the inserts");
     }
 );
 
@@ -80,7 +66,7 @@ QUnit.test(
     {
         assert.throws(
             () => {
-                before(document.getElementsByClassName("second")[0], null);
+                before(document.getElementById("test-parent").children[0], null);
             },
             "function threw an error"
         );

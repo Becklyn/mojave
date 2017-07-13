@@ -19,17 +19,13 @@ QUnit.test(
     "with valid node elements",
     (assert) =>
     {
-        const elements = document.getElementById("qunit-fixture").children;
-        const reference = document.getElementById("test");
+        const children = document.getElementById("qunit-fixture").children;
         const replacement = document.createElement("p");
-        const index = Array.prototype.indexOf.call(elements, reference);
-        const lengthBefore = elements.length;
-        replace(reference, replacement);
+        const lengthBefore = children.length;
+        replace(children[2], replacement);
 
-        const element = elements[index];
-        assert.equal(elements.length, lengthBefore, "the amount of elements did not change");
-        assert.notEqual(element, reference, "old element does not exist anymore");
-        assert.equal(element, replacement, "element was replaced");
+        assert.equal(children.length, lengthBefore, "the amount of elements did not change");
+        assert.equal(children[2], replacement, "element was replaced");
     }
 );
 

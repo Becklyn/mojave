@@ -35,7 +35,7 @@ QUnit.test(
 
 
 QUnit.test(
-    "with node as reference and html string as a child",
+    "with node as reference and html string as an insert",
     (assert) =>
     {
         const parent = document.getElementById("test-parent");
@@ -52,7 +52,7 @@ QUnit.test(
 
 
 QUnit.test(
-    "with node as reference and an array of nodes as children",
+    "with node as reference and an array of nodes as inserts",
     (assert) =>
     {
         const parent = document.getElementById("test-parent");
@@ -75,7 +75,7 @@ QUnit.test(
 
 
 QUnit.test(
-    "with node as reference and an invalid child",
+    "with node as reference and an invalid insert",
     (assert) =>
     {
         assert.throws(
@@ -89,7 +89,7 @@ QUnit.test(
 
 
 QUnit.test(
-    "with invalid reference and a node as a child",
+    "with invalid reference and a node as an insert",
     (assert) =>
     {
         assert.throws(
@@ -103,7 +103,7 @@ QUnit.test(
 
 
 QUnit.test(
-    "with node as reference and empty string as a child",
+    "with node as reference and empty string as an insert",
     (assert) =>
     {
         assert.throws(

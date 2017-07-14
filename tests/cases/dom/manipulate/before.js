@@ -1,12 +1,12 @@
+import {before, createElement} from "../../../../dom/manipulate";
+import {find, findOne} from "../../../../dom/traverse";
 import QUnit from "qunitjs";
-import {before} from "../../../../dom/manipulate";
-import {find} from "../../../../dom/traverse";
 
 QUnit.module("dom/manipulate/before()",
     {
         beforeEach: () =>
         {
-            document.getElementById("qunit-fixture").innerHTML = `
+            findOne("#qunit-fixture").innerHTML = `
                 <div id="test-parent">
                     <div class="first"></div>
                     <div class="second"></div>
@@ -21,8 +21,8 @@ QUnit.test(
     "with node as reference and insert",
     (assert) =>
     {
-        const children = document.getElementById("test-parent").children;
-        const insert = document.createElement("div");
+        const children = findOne("#test-parent").children;
+        const insert = createElement("div");
         const reference = children[1];
         before(reference, insert);
 
@@ -36,7 +36,7 @@ QUnit.test(
     "with node as reference and html string as an insert",
     (assert) =>
     {
-        const children = document.getElementById("test-parent").children;
+        const children = findOne("#test-parent").children;
         before(children[1], `<div class="test"></div>`);
 
         assert.ok(children[1].classList.contains("test"), "is before the reference element");
@@ -48,7 +48,7 @@ QUnit.test(
     "with node as reference and an array of nodes as inserts",
     (assert) =>
     {
-        const children = document.getElementById("test-parent").children;
+        const children = findOne("#test-parent").children;
         const reference = children[1];
         const insertArray = [document.createElement("div"), document.createElement("div")];
         before(reference, insertArray);
@@ -66,7 +66,7 @@ QUnit.test(
     {
         assert.throws(
             () => {
-                before(document.getElementById("test-parent").children[0], null);
+                before(findOne("test-parent").children[0], null);
             },
             "function threw an error"
         );

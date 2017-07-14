@@ -1,10 +1,11 @@
+import {findOne, next} from "../../../../dom/traverse";
 import QUnit from "qunitjs";
 
 QUnit.module("dom/traverse/next()",
     {
         beforeEach: () =>
         {
-            document.getElementById("qunit-fixture").innerHTML = `
+            findOne("#qunit-fixture").innerHTML = `
                 <div class="test-element element1"></div>
                 <div class="test-element element2">
                     <div class="test-element element2-1"></div>
@@ -24,8 +25,7 @@ QUnit.test(
     "next() with an element in the middle, without selector",
     (assert) =>
     {
-        const next = mojave.dom.traverse.next;
-        const element = document.querySelector(".element2");
+        const element = findOne(".element2");
 
         const result = next(element);
 
@@ -39,8 +39,7 @@ QUnit.test(
     "next() with an element at the end, without selector",
     (assert) =>
     {
-        const next = mojave.dom.traverse.next;
-        const element = document.querySelector(".element6");
+        const element = findOne(".element6");
 
         const result = next(element);
 
@@ -53,8 +52,7 @@ QUnit.test(
     "next() with an element at the start, with selector",
     (assert) =>
     {
-        const next = mojave.dom.traverse.next;
-        const element = document.querySelector(".element1");
+        const element = findOne(".element1");
 
         const result = next(element, ".element3");
 
@@ -68,8 +66,7 @@ QUnit.test(
     "next() with a selector where nothing matches",
     (assert) =>
     {
-        const next = mojave.dom.traverse.next;
-        const element = document.querySelector(".element1");
+        const element = findOne(".element1");
 
         const result = next(element, ".missing");
 

@@ -1,10 +1,11 @@
+import {findOne, siblings} from "../../../../dom/traverse";
 import QUnit from "qunitjs";
 
 QUnit.module("dom/traverse/siblings()",
     {
         beforeEach: () =>
         {
-            document.getElementById("qunit-fixture").innerHTML = `
+            findOne("#qunit-fixture").innerHTML = `
                 <div class="test-element-find element1"></div>
                 <div class="test-element-find element2">
                     <div class="test-element-find element2-1"></div>
@@ -21,8 +22,7 @@ QUnit.test(
     "siblings() with an element in the middle",
     (assert) =>
     {
-        const siblings = mojave.dom.traverse.siblings;
-        const element = document.querySelector(".test-element-find.element2");
+        const element = findOne(".test-element-find.element2");
 
         const result = siblings(element);
 
@@ -37,8 +37,7 @@ QUnit.test(
     "siblings() with an element at the start",
     (assert) =>
     {
-        const siblings = mojave.dom.traverse.siblings;
-        const element = document.querySelector(".test-element-find.element1");
+        const element = findOne(".test-element-find.element1");
 
         const result = siblings(element);
 
@@ -53,8 +52,7 @@ QUnit.test(
     "siblings() with an element at the end",
     (assert) =>
     {
-        const siblings = mojave.dom.traverse.siblings;
-        const element = document.querySelector(".test-element-find.element3");
+        const element = findOne(".test-element-find.element3");
 
         const result = siblings(element);
 
@@ -69,8 +67,7 @@ QUnit.test(
     "siblings() with an element without siblings",
     (assert) =>
     {
-        const siblings = mojave.dom.traverse.siblings;
-        const element = document.querySelector(".test-element-find.element2-1");
+        const element = findOne(".test-element-find.element2-1");
 
         const result = siblings(element);
 

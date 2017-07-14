@@ -1,10 +1,11 @@
+import {find, findOne} from "../../../../dom/traverse";
 import QUnit from "qunitjs";
 
 QUnit.module("dom/traverse/find()",
     {
         beforeEach: () =>
         {
-            document.getElementById("qunit-fixture").innerHTML = `
+            findOne("#qunit-fixture").innerHTML = `
                 <div class="test-element-find element1"></div>
                 <div class="test-element-find element2">
                     <div class="test-element-find element2-1"></div>
@@ -21,8 +22,6 @@ QUnit.test(
     "global find()",
     (assert) =>
     {
-        const find = mojave.dom.traverse.find;
-
         const result = find(".test-element-find.element1");
 
         assert.equal(result.length, 1, "found 1 element");
@@ -35,8 +34,6 @@ QUnit.test(
     "global find() + find order",
     (assert) =>
     {
-        const find = mojave.dom.traverse.find;
-
         const result = find(".test-element-find");
 
         assert.equal(result.length, 4, "found 4 elements");

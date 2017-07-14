@@ -1,20 +1,21 @@
+import {findOne, nextAll} from "../../../../dom/traverse";
 import QUnit from "qunitjs";
 
 QUnit.module("dom/traverse/nextAll()",
     {
         beforeEach: () =>
         {
-           document.getElementById("qunit-fixture").innerHTML = `
-               <div class="test-element element1"></div>
-               <div class="test-element test-class element2">
-                   <div class="test-element element2-1"></div>
-               </div>
-               Some text
+            findOne("#qunit-fixture").innerHTML = `
+                <div class="test-element element1"></div>
+                <div class="test-element test-class element2">
+                    <div class="test-element element2-1"></div>
+                </div>
+                Some text
                <div class="test-element test-class element3"></div>
-               <div class="test-element element4"></div>
-               <div class="test-element element5"></div>
-               <div class="test-element element6"></div>
-           `;
+                <div class="test-element element4"></div>
+                <div class="test-element element5"></div>
+                <div class="test-element element6"></div>
+            `;
         },
     }
 );
@@ -24,8 +25,7 @@ QUnit.test(
     "nextAll() with an element in the middle, without selector",
     (assert) =>
     {
-        const nextAll = mojave.dom.traverse.nextAll;
-        const element = document.querySelector(".element4");
+        const element = findOne(".element4");
 
         const result = nextAll(element);
 
@@ -40,8 +40,7 @@ QUnit.test(
     "nextAll() with an element at the start, without selector",
     (assert) =>
     {
-        const nextAll = mojave.dom.traverse.nextAll;
-        const element = document.querySelector(".element1");
+        const element = findOne(".element1");
 
         const result = nextAll(element);
 
@@ -59,8 +58,7 @@ QUnit.test(
     "nextAll() with an element at the end, without selector",
     (assert) =>
     {
-        const nextAll = mojave.dom.traverse.nextAll;
-        const element = document.querySelector(".element6");
+        const element = findOne(".element6");
 
         const result = nextAll(element);
 
@@ -74,8 +72,7 @@ QUnit.test(
     "nextAll() with an element at the start, with selector",
     (assert) =>
     {
-        const nextAll = mojave.dom.traverse.nextAll;
-        const element = document.querySelector(".element1");
+        const element = findOne(".element1");
 
         const result = nextAll(element, ".test-class");
 

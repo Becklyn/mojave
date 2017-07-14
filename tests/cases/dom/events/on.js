@@ -1,6 +1,6 @@
-import {on} from "../../../../dom/events";
 import QUnit from "qunitjs";
 import {findOne} from "../../../../dom/traverse";
+import {on} from "../../../../dom/events";
 
 QUnit.module("dom/events/on()", {
     beforeEach ()

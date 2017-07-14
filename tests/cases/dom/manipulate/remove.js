@@ -21,11 +21,10 @@ QUnit.test(
     "with valid node element",
     (assert) =>
     {
-        const id = "first";
-        remove(document.getElementById(id));
+        remove(document.getElementById("first"));
 
         assert.ok(document.getElementById("parent"), "parent still exists");
-        assert.notOk(document.getElementById(id), "has no occurrence");
+        assert.notOk(document.getElementById("first"), "has no occurrence");
     }
 );
 
@@ -34,16 +33,13 @@ QUnit.test(
     "with an array of elements",
     (assert) =>
     {
-        const firstId = "first";
-        const secondId = "second";
-
         remove([
-            document.getElementById(firstId),
-            document.getElementById(secondId)
+            document.getElementById("first"),
+            document.getElementById("second")
         ]);
 
-        assert.notOk(document.getElementById(firstId), "first element has no occurrence");
-        assert.notOk(document.getElementById(secondId), "second element has no occurrence");
+        assert.notOk(document.getElementById("first"), "first element has no occurrence");
+        assert.notOk(document.getElementById("second"), "second element has no occurrence");
         assert.ok(document.getElementById("third"), "third element has not been removed");
     }
 );

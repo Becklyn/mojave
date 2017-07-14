@@ -7,7 +7,9 @@ QUnit.module("dom/manipulate/empty()",
         beforeEach: () =>
         {
             document.getElementById("qunit-fixture").innerHTML = `
-                <p class="test">content</p>
+                <div class="test">
+                    <p>content</p>
+                </div>
                 <p class="test">content</p>
             `;
         },
@@ -24,6 +26,7 @@ QUnit.test(
         assert.notEqual(element.innerHTML.length, 0, "element contains something before the empty() was executed");
         empty(element);
         assert.equal(element.innerHTML, "", "element is empty");
+        assert.equal(element.children.length, 0, "element contains no children");
     }
 );
 

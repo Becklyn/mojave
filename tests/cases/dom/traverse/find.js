@@ -2,7 +2,7 @@ import QUnit from "qunitjs";
 
 QUnit.module("dom/traverse/find()",
     {
-        beforeEach: function ()
+        beforeEach: () =>
         {
             document.getElementById("qunit-fixture").innerHTML = `
                 <div class="test-element-find element1"></div>
@@ -19,7 +19,7 @@ QUnit.module("dom/traverse/find()",
 
 QUnit.test(
     "global find()",
-    function (assert)
+    (assert) =>
     {
         const find = mojave.dom.traverse.find;
 
@@ -33,7 +33,7 @@ QUnit.test(
 
 QUnit.test(
     "global find() + find order",
-    function (assert)
+    (assert) =>
     {
         const find = mojave.dom.traverse.find;
 

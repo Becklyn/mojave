@@ -2,7 +2,7 @@ import QUnit from "qunitjs";
 
 QUnit.module("dom/traverse/prevAll()",
     {
-        beforeEach: function ()
+        beforeEach: () =>
         {
             document.getElementById("qunit-fixture").innerHTML = `
                 <div class="test-element element1"></div>
@@ -22,7 +22,7 @@ QUnit.module("dom/traverse/prevAll()",
 
 QUnit.test(
     "prevAll() with an element in the middle, without selector",
-    function (assert)
+    (assert) =>
     {
         const prevAll = mojave.dom.traverse.prevAll;
         const element = document.querySelector(".element2");
@@ -37,7 +37,7 @@ QUnit.test(
 
 QUnit.test(
     "prevAll() with an element at the end, without selector",
-    function (assert)
+    (assert) =>
     {
         const prevAll = mojave.dom.traverse.prevAll;
         const element = document.querySelector(".element6");
@@ -56,7 +56,7 @@ QUnit.test(
 
 QUnit.test(
     "prevAll() with an element at the start, without selector",
-    function (assert)
+    (assert) =>
     {
         const prevAll = mojave.dom.traverse.prevAll;
         const element = document.querySelector(".element1");
@@ -68,10 +68,9 @@ QUnit.test(
 );
 
 
-
 QUnit.test(
     "prevAll() with an element at the end, with selector",
-    function (assert)
+    (assert) =>
     {
         const prevAll = mojave.dom.traverse.prevAll;
         const element = document.querySelector(".element4");

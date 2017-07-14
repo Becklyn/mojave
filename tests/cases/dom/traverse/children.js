@@ -2,7 +2,7 @@ import QUnit from "qunitjs";
 
 QUnit.module("dom/traverse/children()",
     {
-        beforeEach: function ()
+        beforeEach: () =>
         {
             document.getElementById("qunit-fixture").innerHTML = `
                 <div class="element1"></div>
@@ -16,7 +16,7 @@ QUnit.module("dom/traverse/children()",
 
 QUnit.test(
     "children() without selector",
-    function (assert)
+    (assert) =>
     {
         const children = mojave.dom.traverse.children;
         const fixture = document.getElementById("qunit-fixture");
@@ -32,7 +32,7 @@ QUnit.test(
 
 QUnit.test(
     "children() with selector",
-    function (assert)
+    (assert) =>
     {
         const children = mojave.dom.traverse.children;
         const fixture = document.getElementById("qunit-fixture");

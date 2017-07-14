@@ -1,4 +1,5 @@
 import QUnit from "qunitjs";
+import Slug from "../../../url/Slug";
 
 QUnit.module("url/Slug");
 
@@ -6,8 +7,6 @@ QUnit.test(
     "Slug.transform() defaults",
     function (assert)
     {
-        const Slug = mojave.url.Slug;
-
         // test defaults
         const instance = new Slug();
         [
@@ -30,8 +29,6 @@ QUnit.test(
     "Slug.transform() custom transforms",
     function (assert)
     {
-        const Slug = mojave.url.Slug;
-
         // test defaults
         const instance = new Slug([
             [/z/, "a"],
@@ -50,8 +47,6 @@ QUnit.test(
     "Slug.transform() custom sanitizer",
     function (assert)
     {
-        const Slug = mojave.url.Slug;
-
         // test defaults
         const instance = new Slug([], /z/);
         [

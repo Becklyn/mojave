@@ -5,7 +5,7 @@ QUnit.module("date/compare");
 
 QUnit.test(
     "isSameDay() tests",
-    function (assert)
+    (assert) =>
     {
         assert.ok(isSameDay(new Date(2017, 11, 31, 12, 0, 0), new Date(2017, 11, 31, 12, 0, 0)), "exact same date");
 
@@ -25,7 +25,7 @@ QUnit.test(
 
 QUnit.test(
     "isSameTimestamp() tests",
-    function (assert)
+    (assert) =>
     {
         assert.ok(isSameTimestamp(new Date(2017, 11, 31, 12, 0, 0), new Date(2017, 11, 31, 12, 0, 0)), "exact same date");
 

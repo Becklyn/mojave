@@ -5,7 +5,7 @@ QUnit.module("url/Slug");
 
 QUnit.test(
     "Slug.transform() defaults",
-    function (assert)
+    (assert) =>
     {
         // test defaults
         const instance = new Slug();
@@ -27,7 +27,7 @@ QUnit.test(
 
 QUnit.test(
     "Slug.transform() custom transforms",
-    function (assert)
+    (assert) =>
     {
         // test defaults
         const instance = new Slug([
@@ -45,7 +45,7 @@ QUnit.test(
 
 QUnit.test(
     "Slug.transform() custom sanitizer",
-    function (assert)
+    (assert) =>
     {
         // test defaults
         const instance = new Slug([], /z/);

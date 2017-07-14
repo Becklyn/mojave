@@ -4,17 +4,18 @@ QUnit.module("dom/traverse/nextAll()",
     {
         beforeEach: function ()
         {
-            document.getElementById("qunit-fixture").innerHTML =
-                '<div class="test-element element1"></div>' +
-                '<div class="test-element test-class element2">' +
-                    '<div class="test-element element2-1"></div>' +
-                '</div>' +
-                'Some text' +
-                '<div class="test-element test-class element3"></div>' +
-                '<div class="test-element element4"></div>' +
-                '<div class="test-element element5"></div>' +
-                '<div class="test-element element6"></div>';
-        }
+           document.getElementById("qunit-fixture").innerHTML = `
+               <div class="test-element element1"></div>
+               <div class="test-element test-class element2">
+                   <div class="test-element element2-1"></div>
+               </div>
+               Some text
+               <div class="test-element test-class element3"></div>
+               <div class="test-element element4"></div>
+               <div class="test-element element5"></div>
+               <div class="test-element element6"></div>
+           `;
+        },
     }
 );
 

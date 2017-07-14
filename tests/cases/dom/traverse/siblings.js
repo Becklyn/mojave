@@ -4,14 +4,15 @@ QUnit.module("dom/traverse/siblings()",
     {
         beforeEach: function ()
         {
-            document.getElementById("qunit-fixture").innerHTML =
-                '<div class="test-element-find element1"></div>' +
-                '<div class="test-element-find element2">'+
-                    '<div class="test-element-find element2-1"></div>' +
-                '</div>' +
-                'Some text' +
-                '<div class="test-element-find element3"></div>';
-        }
+            document.getElementById("qunit-fixture").innerHTML = `
+                <div class="test-element-find element1"></div>
+                <div class="test-element-find element2">
+                    <div class="test-element-find element2-1"></div>
+                </div>
+                Some text
+                <div class="test-element-find element3"></div>
+            `;
+        },
     }
 );
 

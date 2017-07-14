@@ -1,11 +1,12 @@
+import {children, find, findOne} from "../../../../dom/traverse";
+import {createElement, prepend} from "../../../../dom/manipulate";
 import QUnit from "qunitjs";
-import {prepend} from "../../../../dom/manipulate";
 
 QUnit.module("dom/manipulate/prepend()",
     {
         beforeEach: () =>
         {
-            document.getElementById("qunit-fixture").innerHTML = `
+            findOne("#qunit-fixture").innerHTML = `
                 <div id="test-parent">
                     <div class="first"></div>
                     <div class="second"></div>
@@ -20,12 +21,11 @@ QUnit.test(
     "with node as parent and child",
     (assert) =>
     {
-        const parent = document.getElementById("test-parent");
-        const prependingChild = document.createElement("div");
-        prependingChild.classList.add("className");
+        const parent = findOne("#test-parent");
+        const prependingChild = createElement(`<div class="className"></div>`);
         prepend(parent, prependingChild);
 
-        assert.equal(document.getElementsByClassName("className").length, 1, "has one occurrence");
+        assert.equal(find(".className").length, 1, "has one occurrence");
         assert.equal(parent.firstElementChild, prependingChild, "is first element");
     }
 );
@@ -35,7 +35,7 @@ QUnit.test(
     "with node as parent and html string as a child",
     (assert) =>
     {
-        const parent = document.getElementById("test-parent");
+        const parent = findOne("#test-parent");
         prepend(parent, `<div class="className"></div>`);
 
         assert.ok(parent.firstElementChild.classList.contains("className"), "is first element");
@@ -47,13 +47,13 @@ QUnit.test(
     "with node as parent and an array of nodes as children",
     (assert) =>
     {
-        const parent = document.getElementById("test-parent");
-        const prependingChild = document.createElement("div");
-        const secondPrependingChild = document.createElement("div");
+        const parent = findOne("#test-parent");
+        const prependingChildren = [createElement("div"), createElement("div")]
         prepend(parent, [prependingChild, secondPrependingChild]);
 
-        assert.equal(parent.children[0], prependingChild, "is first element");
-        assert.equal(parent.children[1], secondPrependingChild, "is second element");
+        const childElements = children(parent);
+        assert.equal(childElements[0], prependingChildren[0], "is first element");
+        assert.equal(childElements[1], prependingChildren[1], "is second element");
     }
 );
 
@@ -64,7 +64,7 @@ QUnit.test(
     {
         assert.throws(
             () => {
-                prepend(document.getElementById("test-parent"), null);
+                prepend(findOne("#test-parent"), null);
             },
             "function threw an error"
         );
@@ -78,7 +78,7 @@ QUnit.test(
     {
         assert.throws(
             () => {
-                prepend(null, document.createElement("div"));
+                prepend(null, createElement("div"));
             },
             "function threw an error"
         );

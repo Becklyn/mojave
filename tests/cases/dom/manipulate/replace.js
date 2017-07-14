@@ -1,11 +1,12 @@
+import {createElement, replace} from "../../../../dom/manipulate";
 import QUnit from "qunitjs";
-import {replace} from "../../../../dom/manipulate";
+import {findOne} from "../../../../dom/traverse";
 
 QUnit.module("dom/manipulate/replace()",
     {
         beforeEach: () =>
         {
-            document.getElementById("qunit-fixture").innerHTML = `
+            findOne("#qunit-fixture").innerHTML = `
                 <div id="before"></div>
                 <div id="test"></div>
                 <div id="after"></div>
@@ -19,8 +20,8 @@ QUnit.test(
     "with valid node elements",
     (assert) =>
     {
-        const children = document.getElementById("qunit-fixture").children;
-        const replacement = document.createElement("p");
+        const children = findOne("#qunit-fixture").children;
+        const replacement = createElement("p");
         const lengthBefore = children.length;
         replace(children[2], replacement);
 
@@ -36,7 +37,7 @@ QUnit.test(
     {
         assert.throws(
             () => {
-                replace(document.createElement("div"), "#test");
+                replace(createElement("div"), "#test");
             },
             "function threw an error"
         );
@@ -50,7 +51,7 @@ QUnit.test(
     {
         assert.throws(
             () => {
-                replace(document.createElement("div"), null);
+                replace(createElement("div"), null);
             },
             "function threw an error"
         );
@@ -64,7 +65,7 @@ QUnit.test(
     {
         assert.throws(
             () => {
-                replace(`<div class="replacement"></div>`, document.getElementById("test"));
+                replace(`<div class="replacement"></div>`, findOne("#test"));
             },
             "function threw an error"
         );

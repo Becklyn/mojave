@@ -4,15 +4,16 @@ QUnit.module("dom/traverse/filter()",
     {
         beforeEach: function ()
         {
-            document.getElementById("qunit-fixture").innerHTML =
-                '<div class="test-element element1"></div>' +
-                '<div class="test-element test-class element2">'+
-                    '<div class="test-element element2-1"></div>' +
-                '</div>' +
-                'Some text' +
-                '<div class="test-element element3"></div>' +
-                '<div class="test-element test-class element4"></div>';
-        }
+            document.getElementById("qunit-fixture").innerHTML = `
+                <div class="test-element element1"></div>
+                <div class="test-element test-class element2">
+                    <div class="test-element element2-1"></div>
+                </div>
+                Some text
+                <div class="test-element element3"></div>
+                <div class="test-element test-class element4"></div>
+            `;
+        },
     }
 );
 

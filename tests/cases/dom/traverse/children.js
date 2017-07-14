@@ -4,17 +4,12 @@ QUnit.module("dom/traverse/children()",
     {
         beforeEach: function ()
         {
-            const child1 = document.createElement("div");
-            child1.classList.add("element1");
-
-            const child2 = document.createElement("div");
-            child2.classList.add("element2");
-
-            const fixture = document.getElementById("qunit-fixture");
-            fixture.appendChild(child1);
-            fixture.appendChild(child2);
-            fixture.appendChild(document.createTextNode("Test123"));
-        }
+            document.getElementById("qunit-fixture").innerHTML = `
+                <div class="element1"></div>
+                <div class="element2"></div>
+                Test123
+            `;
+        },
     }
 );
 

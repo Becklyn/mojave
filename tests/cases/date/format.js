@@ -5,7 +5,7 @@ QUnit.module("date/format");
 
 QUnit.test(
     "relativeFormat() tests",
-    function (assert)
+    (assert) =>
     {
         const referenceDate = new Date(2017, 11, 31, 12, 0, 0);
 

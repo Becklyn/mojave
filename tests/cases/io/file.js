@@ -6,7 +6,7 @@ QUnit.module("io/file");
 
 QUnit.test(
     "formatSize() tests",
-    function (assert)
+    (assert) =>
     {
         assert.equal(formatSize(0), '0 B');
         assert.equal(formatSize(-0), '0 B');

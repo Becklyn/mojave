@@ -2,7 +2,7 @@ import QUnit from "qunitjs";
 
 QUnit.module("dom/traverse/siblings()",
     {
-        beforeEach: function ()
+        beforeEach: () =>
         {
             document.getElementById("qunit-fixture").innerHTML = `
                 <div class="test-element-find element1"></div>
@@ -19,7 +19,7 @@ QUnit.module("dom/traverse/siblings()",
 
 QUnit.test(
     "siblings() with an element in the middle",
-    function (assert)
+    (assert) =>
     {
         const siblings = mojave.dom.traverse.siblings;
         const element = document.querySelector(".test-element-find.element2");
@@ -35,7 +35,7 @@ QUnit.test(
 
 QUnit.test(
     "siblings() with an element at the start",
-    function (assert)
+    (assert) =>
     {
         const siblings = mojave.dom.traverse.siblings;
         const element = document.querySelector(".test-element-find.element1");
@@ -51,7 +51,7 @@ QUnit.test(
 
 QUnit.test(
     "siblings() with an element at the end",
-    function (assert)
+    (assert) =>
     {
         const siblings = mojave.dom.traverse.siblings;
         const element = document.querySelector(".test-element-find.element3");
@@ -67,7 +67,7 @@ QUnit.test(
 
 QUnit.test(
     "siblings() with an element without siblings",
-    function (assert)
+    (assert) =>
     {
         const siblings = mojave.dom.traverse.siblings;
         const element = document.querySelector(".test-element-find.element2-1");

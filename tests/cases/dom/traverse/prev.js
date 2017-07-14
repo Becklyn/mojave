@@ -2,7 +2,7 @@ import QUnit from "qunitjs";
 
 QUnit.module("dom/traverse/prev()",
     {
-        beforeEach: function ()
+        beforeEach: () =>
         {
             document.getElementById("qunit-fixture").innerHTML = `
                 <div class="test-element element1"></div>
@@ -22,7 +22,7 @@ QUnit.module("dom/traverse/prev()",
 
 QUnit.test(
     "prev() with an element in the middle, without selector",
-    function (assert)
+    (assert) =>
     {
         const prev = mojave.dom.traverse.prev;
         const element = document.querySelector(".element3");
@@ -37,7 +37,7 @@ QUnit.test(
 
 QUnit.test(
     "prev() with an element at the start, without selector",
-    function (assert)
+    (assert) =>
     {
         const prev = mojave.dom.traverse.prev;
         const element = document.querySelector(".element1");
@@ -51,7 +51,7 @@ QUnit.test(
 
 QUnit.test(
     "prev() with an element at the end, with selector",
-    function (assert)
+    (assert) =>
     {
         const prev = mojave.dom.traverse.prev;
         const element = document.querySelector(".element6");

@@ -2,7 +2,7 @@ import QUnit from "qunitjs";
 
 QUnit.module("dom/traverse/filter()",
     {
-        beforeEach: function ()
+        beforeEach: () =>
         {
             document.getElementById("qunit-fixture").innerHTML = `
                 <div class="test-element element1"></div>
@@ -20,7 +20,7 @@ QUnit.module("dom/traverse/filter()",
 
 QUnit.test(
     "filter() on element with specific class",
-    function (assert)
+    (assert) =>
     {
         const find = mojave.dom.traverse.find;
         const filter = mojave.dom.traverse.filter;
@@ -36,7 +36,7 @@ QUnit.test(
 
 QUnit.test(
     "filter() on multiple elements with specific class",
-    function (assert)
+    (assert) =>
     {
         const find = mojave.dom.traverse.find;
         const filter = mojave.dom.traverse.filter;
@@ -53,7 +53,7 @@ QUnit.test(
 
 QUnit.test(
     "filter() on element with a wrong class",
-    function (assert)
+    (assert) =>
     {
         const find = mojave.dom.traverse.find;
         const filter = mojave.dom.traverse.filter;

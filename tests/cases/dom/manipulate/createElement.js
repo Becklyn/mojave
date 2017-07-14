@@ -65,14 +65,14 @@ QUnit.test(
                 class: "className",
                 width: 100,
                 css: {
-                    "display": "none",
+                    display: "none",
                 },
             }
         );
 
         assert.ok(element, "created <div> with the expected class");
         assert.equal(element.getAttribute("width"), 100, "width attribute has the expected value");
-        assert.equal(element.getAttribute("style"), "display: none;", "style attribute has the expected value");
+        assert.equal(element.style.display, "none", "style attribute has the expected value");
     }
 );
 

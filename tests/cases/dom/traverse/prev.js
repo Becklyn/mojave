@@ -1,10 +1,11 @@
+import {findOne, prev} from "../../../../dom/traverse";
 import QUnit from "qunitjs";
 
 QUnit.module("dom/traverse/prev()",
     {
         beforeEach: () =>
         {
-            document.getElementById("qunit-fixture").innerHTML = `
+            findOne("#qunit-fixture").innerHTML = `
                 <div class="test-element element1"></div>
                 <div class="test-element element2">
                     <div class="test-element element2-1"></div>
@@ -24,8 +25,7 @@ QUnit.test(
     "prev() with an element in the middle, without selector",
     (assert) =>
     {
-        const prev = mojave.dom.traverse.prev;
-        const element = document.querySelector(".element3");
+        const element = findOne(".element3");
 
         const result = prev(element);
 
@@ -39,8 +39,7 @@ QUnit.test(
     "prev() with an element at the start, without selector",
     (assert) =>
     {
-        const prev = mojave.dom.traverse.prev;
-        const element = document.querySelector(".element1");
+        const element = findOne(".element1");
 
         const result = prev(element);
 
@@ -53,8 +52,7 @@ QUnit.test(
     "prev() with an element at the end, with selector",
     (assert) =>
     {
-        const prev = mojave.dom.traverse.prev;
-        const element = document.querySelector(".element6");
+        const element = findOne(".element6");
 
         const result = prev(element, ".element2");
 

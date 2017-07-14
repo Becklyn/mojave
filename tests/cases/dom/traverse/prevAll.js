@@ -1,10 +1,11 @@
+import {findOne, prevAll} from "../../../../dom/traverse";
 import QUnit from "qunitjs";
 
 QUnit.module("dom/traverse/prevAll()",
     {
         beforeEach: () =>
         {
-            document.getElementById("qunit-fixture").innerHTML = `
+            findOne("#qunit-fixture").innerHTML = `
                 <div class="test-element element1"></div>
                 <div class="test-element test-class element2">
                     <div class="test-element element2-1"></div>
@@ -24,8 +25,7 @@ QUnit.test(
     "prevAll() with an element in the middle, without selector",
     (assert) =>
     {
-        const prevAll = mojave.dom.traverse.prevAll;
-        const element = document.querySelector(".element2");
+        const element = findOne(".element2");
 
         const result = prevAll(element);
 
@@ -39,8 +39,7 @@ QUnit.test(
     "prevAll() with an element at the end, without selector",
     (assert) =>
     {
-        const prevAll = mojave.dom.traverse.prevAll;
-        const element = document.querySelector(".element6");
+        const element = findOne(".element6");
 
         const result = prevAll(element);
 
@@ -58,8 +57,7 @@ QUnit.test(
     "prevAll() with an element at the start, without selector",
     (assert) =>
     {
-        const prevAll = mojave.dom.traverse.prevAll;
-        const element = document.querySelector(".element1");
+        const element = findOne(".element1");
 
         const result = prevAll(element);
 
@@ -72,8 +70,7 @@ QUnit.test(
     "prevAll() with an element at the end, with selector",
     (assert) =>
     {
-        const prevAll = mojave.dom.traverse.prevAll;
-        const element = document.querySelector(".element4");
+        const element = findOne(".element4");
 
         const result = prevAll(element, ".test-class");
 

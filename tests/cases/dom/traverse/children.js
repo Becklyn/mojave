@@ -1,10 +1,11 @@
+import {children, findOne} from "../../../../dom/traverse";
 import QUnit from "qunitjs";
 
 QUnit.module("dom/traverse/children()",
     {
         beforeEach: () =>
         {
-            document.getElementById("qunit-fixture").innerHTML = `
+            findOne("#qunit-fixture").innerHTML = `
                 <div class="element1"></div>
                 <div class="element2"></div>
                 Test123
@@ -18,9 +19,7 @@ QUnit.test(
     "children() without selector",
     (assert) =>
     {
-        const children = mojave.dom.traverse.children;
-        const fixture = document.getElementById("qunit-fixture");
-
+        const fixture = findOne("#qunit-fixture");
 
         const result = children(fixture);
         assert.equal(result.length, 2, "has 2 children");
@@ -34,9 +33,7 @@ QUnit.test(
     "children() with selector",
     (assert) =>
     {
-        const children = mojave.dom.traverse.children;
-        const fixture = document.getElementById("qunit-fixture");
-
+        const fixture = findOne("#qunit-fixture");
 
         const result = children(fixture, ".element2");
         assert.equal(result.length, 1, "only one match");

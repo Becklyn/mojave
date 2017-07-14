@@ -1,10 +1,11 @@
+import {find, findOne, not} from "../../../../dom/traverse";
 import QUnit from "qunitjs";
 
 QUnit.module("dom/traverse/not()",
     {
         beforeEach: () =>
         {
-            document.getElementById("qunit-fixture").innerHTML = `
+            findOne("#qunit-fixture").innerHTML = `
                 <div class="test-element element1"></div>
                 <div class="test-element element2">
                     <div class="test-element element2-1"></div>
@@ -24,8 +25,6 @@ QUnit.test(
     "not() on element with specific class",
     (assert) =>
     {
-        const find = mojave.dom.traverse.find;
-        const not = mojave.dom.traverse.not;
         const elements = find(".test-element");
 
         const result = not(elements, ".element2");
@@ -44,8 +43,6 @@ QUnit.test(
     "not() on non-existent selector",
     (assert) =>
     {
-        const find = mojave.dom.traverse.find;
-        const not = mojave.dom.traverse.not;
         const elements = find(".test-element");
 
         const result = not(elements, ".missing");
@@ -59,8 +56,6 @@ QUnit.test(
     "not() without selector",
     (assert) =>
     {
-        const find = mojave.dom.traverse.find;
-        const not = mojave.dom.traverse.not;
         const elements = find(".test-element");
 
         const result = not(elements);

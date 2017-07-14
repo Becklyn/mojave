@@ -1,12 +1,12 @@
+import {find, findOne} from "../../../../dom/traverse";
 import QUnit from "qunitjs";
 import {empty} from "../../../../dom/manipulate";
-import {find} from "../../../../dom/traverse";
 
 QUnit.module("dom/manipulate/empty()",
     {
         beforeEach: () =>
         {
-            document.getElementById("qunit-fixture").innerHTML = `
+            findOne("#qunit-fixture").innerHTML = `
                 <div class="test">
                     <p>content</p>
                 </div>

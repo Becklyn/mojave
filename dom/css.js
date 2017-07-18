@@ -4,6 +4,7 @@ const VENDOR_PREFIXES = ["-webkit-", "-moz-", "-o-", "-ms-"];
 const propertyNameCache = {};
 // DOM properties that should NOT have "px" added when numeric
 const IS_NON_DIMENSIONAL = /acit|ex(?:s|g|n|p|$)|rph|ows|mnc|ntw|ine[ch]|zoo|^ord/i;
+const DIRECTLY_ACCESSIBLE_SETTERS = /scroll(Top|Left)/i;
 
 
 /**
@@ -64,10 +65,20 @@ export function setStyles (elements, styles)
                 continue;
             }
 
+            let value = styles[property];
+
+            // handle directly accessible setters
+            if (DIRECTLY_ACCESSIBLE_SETTERS.test(property))
+            {
+                element[property] = value;
+                continue;
+            }
+
             // add "px" to all numbers of dimensional values
-            const value = typeof styles[property] === "number" && false === IS_NON_DIMENSIONAL.test(property)
-                ? `${styles[property]}px`
-                : styles[property];
+            if (typeof styles[property] === "number" && false === IS_NON_DIMENSIONAL.test(property))
+            {
+                value += "px";
+            }
 
             if (CUSTOM_PROPERTY_REGEX.test(property))
             {
@@ -115,6 +126,11 @@ function getComputedStyles (element, pseudoElement)
  */
 export function getStyle (element, property, pseudoElement = null)
 {
+    if (DIRECTLY_ACCESSIBLE_SETTERS.test(property))
+    {
+        return element[property];
+    }
+
     if (!CUSTOM_PROPERTY_REGEX.test(property))
     {
         property = normalizeProperty(property);

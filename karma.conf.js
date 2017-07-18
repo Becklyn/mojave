@@ -137,6 +137,9 @@ module.exports = function (config) {
         // how many browser should be started simultaneous
         concurrency: Infinity,
 
+        // use high timeout to better handle long running iOS tasks
+        captureTimeout: 180000,
+
         sauceLabs: {
             testName: 'mojave',
         },

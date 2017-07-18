@@ -5,7 +5,7 @@ import {splitStringValue} from "./utils";
 /**
  * Registers an event listener for the given events
  *
- * @param {HTMLElement|HTMLElement[]} element
+ * @param {Window|HTMLElement|HTMLElement[]} element
  * @param {string|string[]} type
  * @param {function(*):*} handler
  */
@@ -42,7 +42,7 @@ export function on (element, type, handler)
 /**
  * Removes an event listener for the given events
  *
- * @param {HTMLElement|HTMLElement[]} element
+ * @param {Window|HTMLElement|HTMLElement[]} element
  * @param {string|string[]} type
  * @param {function(*):*} handler
  */
@@ -82,7 +82,7 @@ export function off (element, type, handler)
  *      const intermediate = once(element, event, handler);
  *      off(element, event, intermediate);
  *
- * @param {HTMLElement} element
+ * @param {Window|HTMLElement} element
  * @param {string} type
  * @param {function(*):*} handler
  * @return {function():*}
@@ -107,7 +107,7 @@ export function once (element, type, handler)
  *      const intermediate = live(element, selector, type, handler);
  *      off(element, event, intermediate);
  *
- * @param {HTMLElement} element
+ * @param {Window|HTMLElement} element
  * @param {string} selector
  * @param {string} type
  * @param {function(*):*} handler
@@ -130,7 +130,7 @@ export function live (element, selector, type, handler)
 /**
  * Dispatches an event
  *
- * @param {HTMLElement} element
+ * @param {Window|HTMLElement} element
  * @param {string} type
  * @param {*} data
  */

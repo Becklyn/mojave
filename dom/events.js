@@ -104,7 +104,7 @@ export function once (element, type, handler)
  *
  * Returns the intermediate function, so that the event listener can be removed:
  *
- *      const intermediate = once(element, event, handler);
+ *      const intermediate = live(element, selector, type, handler);
  *      off(element, event, intermediate);
  *
  * @param {HTMLElement} element

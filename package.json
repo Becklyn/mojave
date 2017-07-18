@@ -23,12 +23,15 @@
     "devDependencies": {
         "kaba": "^2.0.0-beta.3",
         "karma": "^1.7.0",
-        "karma-sauce-launcher": "^1.1.0",
         "karma-qunit": "^1.2.1",
+        "karma-sauce-launcher": "^1.1.0",
         "qunitjs": "^2.3.2",
         "saucelabs": "^1.4.0"
     },
     "scripts": {
         "test": "node_modules/.bin/karma start"
+    },
+    "dependencies": {
+        "mitt": "^1.1.2"
     }
 }

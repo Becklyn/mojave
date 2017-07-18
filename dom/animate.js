@@ -1,10 +1,22 @@
 /**
  * @typedef {{
  *      ?easing: string|function(number):number,
+ *      ?stopPrevious: boolean,
  * }} mojave.AnimationOptions
+ *
+ * @typedef {{
+ *      ?easing: string|function(number):number,
+ *      currentFrame: ?number,
+ *      emitter: mitt,
+ * }} mojave.AnimationContext
+ *
+ * @typedef {{
+ *      stop: function(),
+ * }} mojave.AnimationDirector
  */
 
 import {getStyle, setStyles} from "./css";
+import mitt from "mitt";
 
 // taken from https://gist.github.com/gre/1650294
 export const EASE_LINEAR = (t) => t;
@@ -29,12 +41,18 @@ export const EASE_IN_OUT_QUINT = (t) => t<.5 ? 16*t*t*t*t*t : 1+16*(--t)*t*t*t*t
  * @param {Object.<string, *>} properties
  * @param {number} duration
  * @param {mojave.AnimationOptions} options
+ * @return {mojave.AnimationDirector}
  */
 export function animate (element, properties, duration, options = {})
 {
     let values = null;
 
-    animateCallback(
+    if (typeof options.stopPrevious !== "undefined" && options.stopPrevious)
+    {
+        stopAnimation(element);
+    }
+
+    const director = animateCallback(
         (progress) => {
             if (null === values)
             {
@@ -79,6 +97,14 @@ export function animate (element, properties, duration, options = {})
         duration,
         options
     );
+
+    director.on("finished", () => {
+        element._currentAnimation = null;
+    });
+
+    element._currentAnimation = director;
+
+    return director;
 }
 
 
@@ -89,22 +115,44 @@ export function animate (element, properties, duration, options = {})
  * @param {function(number)} callback
  * @param {number} duration
  * @param {mojave.AnimationOptions} options
+ * @return {mojave.AnimationDirector}
  */
-export function animateCallback (callback, duration, options = {})
+export function animateCallback (callback, duration, options = {stopPrevious: true})
 {
+    /** @type {mojave.AnimationContext} context */
+    const context = {};
+
     if (typeof options.easing === "undefined")
     {
-        options.easing = EASE_IN_OUT_CUBIC;
+        context.easing = EASE_IN_OUT_CUBIC;
     }
-
-    if (typeof options.easing !== "function")
+    else
     {
-        throw new Error("Option `easing` must be a function.");
+        if (typeof options.easing !== "function")
+        {
+            throw new Error("Option `easing` must be a function.");
+        }
+
+        context.easing = options.easing;
     }
 
+    context.currentFrame = null;
+    context.emitter = mitt();
+
+    const animationDirector = {
+        stop ()
+        {
+            window.cancelAnimationFrame(context.currentFrame);
+        },
+        on: context.emitter.on.bind(context.emitter),
+    };
+
+    context.emitter.emit("start");
     window.requestAnimationFrame(
-        (time) => runAnimationStep(time, time, callback, duration, options)
+        (time) => runAnimationStep(time, time, callback, duration, context)
     );
+
+    return animationDirector;
 }
 
 
@@ -116,22 +164,32 @@ export function animateCallback (callback, duration, options = {})
  * @param {number} start
  * @param {function(number)} callback
  * @param {number} duration
- * @param {mojave.AnimationOptions} options
+ * @param {mojave.AnimationContext} context
  */
-function runAnimationStep (time, start, callback, duration, options)
+function runAnimationStep (time, start, callback, duration, context)
 {
     const linearProgress = Math.min(1, (time - start) / duration);
-    const easedProgress = options.easing(linearProgress);
+    const easedProgress = context.easing(linearProgress);
     callback(easedProgress);
 
     if (linearProgress < 1)
     {
-        window.requestAnimationFrame(
-            (time) => runAnimationStep(time, start, callback, duration, options)
+        context.currentFrame = window.requestAnimationFrame(
+            (time) => runAnimationStep(time, start, callback, duration, context)
         );
     }
     else
     {
-        console.log("finished");
+        context.emitter.emit("finished");
+    }
+}
+
+
+export function stopAnimation (element)
+{
+    if (typeof element._currentAnimation !== "undefined" && element._currentAnimation !== null)
+    {
+        element._currentAnimation.stop();
+        element._currentAnimation = null;
     }
 }

@@ -100,7 +100,7 @@ export function once (element, type, handler)
 
 
 /**
- * Registers an event listener, that it automatically is removed after it was executed once.
+ * Registers an delegated event listener, that reacts to events thrown on specific child elements.
  *
  * Returns the intermediate function, so that the event listener can be removed:
  *

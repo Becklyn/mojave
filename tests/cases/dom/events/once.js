@@ -1,3 +1,5 @@
+/* eslint-disable no-underscore-dangle, no-empty-function */
+
 import {off, once, trigger} from "../../../../dom/events";
 import QUnit from "qunitjs";
 import {createElement} from "../../../../dom/manipulate";

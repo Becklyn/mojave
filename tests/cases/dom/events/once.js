@@ -1,4 +1,4 @@
-import {off, once} from "../../../../dom/events";
+import {off, once, trigger} from "../../../../dom/events";
 import QUnit from "qunitjs";
 import {createElement} from "../../../../dom/manipulate";
 
@@ -20,6 +20,25 @@ QUnit.test(
 
         element.click();
         element.click();
+    }
+);
+
+
+QUnit.test(
+    "once() called with custom event",
+    (assert) =>
+    {
+        assert.expect(1);
+        const element = createElement("div");
+        const done = assert.async();
+
+        once(element, "customEvent", () => {
+            assert.step("event listener triggered");
+            done();
+        });
+
+        trigger(element, "customEvent");
+        trigger(element, "customEvent");
     }
 );
 
@@ -51,7 +70,7 @@ QUnit.test(
 
 
 QUnit.test(
-    "once removes event listener",
+    "once() removes event listener",
     (assert) =>
     {
         assert.expect(3);
@@ -95,5 +114,70 @@ QUnit.test(
         assert.equal(element._listeners.click.length, 0, "listener was successfully removed");
 
         element.click();
+    }
+);
+
+
+QUnit.test(
+    "once(custom event) parsing an arbitrary object",
+    (assert) =>
+    {
+        assert.expect(1);
+        const element = createElement("div");
+        const object = {some: "object"};
+
+        once(element, "customEvent", (event) => {
+            assert.equal(event.detail, object, "event listener triggered");
+        });
+
+        trigger(element, "customEvent", object);
+    }
+);
+
+
+QUnit.test(
+    "once(custom event) multiple event handler triggered by one event",
+    (assert) =>
+    {
+        assert.expect(6);
+        const element = createElement("div");
+        const order = ["first handler", "second handler", "third handler", "fourth handler", "fifth handler"];
+
+        order.forEach((value) => {
+            once(element, "customEvent", () => {
+                assert.step(value);
+            });
+        });
+
+        trigger(element, "customEvent");
+        assert.verifySteps(order, "tests ran in the right order");
+    }
+);
+
+
+QUnit.test(
+    "once() with an invalid element",
+    (assert) =>
+    {
+        assert.throws(
+            () => {
+                once(null, "customEvent", () => {});
+            },
+            "function threw an error"
+        );
+    }
+);
+
+
+QUnit.test(
+    "once() with an invalid event",
+    (assert) =>
+    {
+        assert.throws(
+            () => {
+                once(createElement("div"), null, () => {});
+            },
+            "function throws an error"
+        );
     }
 );

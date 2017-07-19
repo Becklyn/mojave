@@ -15,7 +15,7 @@
  * }} mojave.AnimationDirector
  */
 
-import {getStyle, setStyles} from "./css";
+import {getStyle, setStyles} from "./dom/css";
 import mitt from "mitt";
 
 // taken from https://gist.github.com/gre/1650294

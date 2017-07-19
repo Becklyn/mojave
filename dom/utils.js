@@ -18,7 +18,11 @@ export function isElement (node)
  */
 export function splitStringValue (value)
 {
-    return Array.isArray(value)
-        ? value
+    if (Array.isArray(value))
+    {
+        return value;
+    }
+    return value === ""
+        ? []
         : value.trim().split(/ +/);
 }

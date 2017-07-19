@@ -1,51 +1,41 @@
 import {off, once} from "../../../../dom/events";
 import QUnit from "qunitjs";
-import {findOne} from "../../../../dom/traverse";
+import {createElement} from "../../../../dom/manipulate";
 
-QUnit.module("dom/events/once()", {
-    beforeEach ()
-    {
-        document.getElementById("qunit-fixture").innerHTML = `
-            <div class="example">
-                <button type="button" id="button"></button>
-                <input type="text" id="input-element">
-            </div>
-        `;
-    },
-});
+QUnit.module("dom/events/once()");
 
 
 QUnit.test("once() callback only called once", (assert) => {
     assert.expect(1);
-    const el = findOne("#button");
+    const element = createElement("div");
     const done = assert.async();
 
-    once(el, "click", () => {
+    once(element, "click", () => {
         assert.ok(true, "event listener triggered");
         done();
     });
 
-    el.click();
-    el.click();
+    element.click();
+    element.click();
 });
 
 
 QUnit.test("once() removes event listener after execution", (assert) => {
     assert.expect(3);
-    const el = findOne("#button");
+    const element = createElement("div");
     const done = assert.async();
 
-    assert.equal(el._listeners, undefined, "listeners not defined");
+    assert.equal(element._listeners, undefined, "listeners not defined");
 
-    once(el, "click", () => {});
+    once(element, "click", () => {});
 
-    assert.equal(el._listeners.click.length, 1, "1 listener registered");
+    assert.equal(element._listeners.click.length, 1, "1 listener registered");
 
-    el.click();
+    element.click();
 
     window.setTimeout(
         () => {
-            assert.equal(el._listeners.click.length, 0, "listener was successfully removed");
+            assert.equal(element._listeners.click.length, 0, "listener was successfully removed");
             done();
         }
     );
@@ -54,20 +44,20 @@ QUnit.test("once() removes event listener after execution", (assert) => {
 
 QUnit.test("once removes event listener", (assert) => {
     assert.expect(3);
-    const el = findOne("#button");
+    const element = createElement("div");
     const done = assert.async();
 
-    assert.equal(el._listeners, undefined, "listeners not defined");
+    assert.equal(element._listeners, undefined, "listeners not defined");
 
-    once(el, "click", () => {});
+    once(element, "click", () => {});
 
-    assert.equal(el._listeners.click.length, 1, "1 listener registered");
+    assert.equal(element._listeners.click.length, 1, "1 listener registered");
 
-    el.click();
+    element.click();
 
     window.setTimeout(
         () => {
-            assert.equal(el._listeners.click.length, 0, "listener was successfully removed");
+            assert.equal(element._listeners.click.length, 0, "listener was successfully removed");
             done();
         }
     );
@@ -77,19 +67,19 @@ QUnit.test("once removes event listener", (assert) => {
 
 QUnit.test("once() can be unregistered", (assert) => {
     assert.expect(3);
-    const el = findOne("#button");
+    const element = createElement("div");
 
-    assert.equal(el._listeners, undefined, "listeners not defined");
+    assert.equal(element._listeners, undefined, "listeners not defined");
 
-    const token = once(el, "click", () => {
+    const token = once(element, "click", () => {
         assert.ok(false, "event listener triggered although it should have been removed");
         done();
     });
 
-    assert.equal(el._listeners.click.length, 1, "1 listener registered");
+    assert.equal(element._listeners.click.length, 1, "1 listener registered");
 
-    off(el, "click", token);
-    assert.equal(el._listeners.click.length, 0, "listener was successfully removed");
+    off(element, "click", token);
+    assert.equal(element._listeners.click.length, 0, "listener was successfully removed");
 
-    el.click();
+    element.click();
 });

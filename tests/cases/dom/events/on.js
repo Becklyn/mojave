@@ -1,29 +1,23 @@
 import QUnit from "qunitjs";
-import {findOne} from "../../../../dom/traverse";
+import {createElement} from "../../../../dom/manipulate";
 import {on} from "../../../../dom/events";
 
-QUnit.module("dom/events/on()", {
-    beforeEach ()
+QUnit.module("dom/events/on()");
+
+
+QUnit.test(
+    "on(click)",
+    (assert) =>
     {
-        document.getElementById("qunit-fixture").innerHTML = `
-            <div class="example">
-                <button type="button" id="button"></button>
-                <input type="text" id="input-element">
-            </div>
-        `;
-    },
-});
+        assert.expect(1);
+        const element = createElement("div");
+        const done = assert.async();
 
+        on(element, "click", () => {
+            assert.ok(true, "event listener triggered");
+            done();
+        });
 
-QUnit.test("on(click)", (assert) => {
-    assert.expect(1);
-    const button = findOne("#button");
-    const done = assert.async();
-
-    on(button, "click", () => {
-        assert.ok(true, "event listener triggered");
-        done();
-    });
-
-    button.click();
-});
+        element.click();
+    }
+);

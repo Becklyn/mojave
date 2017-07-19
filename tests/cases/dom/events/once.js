@@ -14,7 +14,7 @@ QUnit.test(
         const done = assert.async();
 
         once(element, "click", () => {
-            assert.ok(true, "event listener triggered");
+            assert.step("event listener triggered");
             done();
         });
 
@@ -86,8 +86,7 @@ QUnit.test(
         assert.equal(element._listeners, undefined, "listeners not defined");
 
         const token = once(element, "click", () => {
-            assert.ok(false, "event listener triggered although it should have been removed");
-            done();
+            assert.step("event listener triggered although it should have been removed");
         });
 
         assert.equal(element._listeners.click.length, 1, "1 listener registered");

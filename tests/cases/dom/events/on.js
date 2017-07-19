@@ -14,7 +14,7 @@ QUnit.test(
         const done = assert.async();
 
         on(element, "click", () => {
-            assert.ok(true, "event listener triggered");
+            assert.step("event listener triggered");
             done();
         });
 

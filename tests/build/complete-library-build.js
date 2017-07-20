@@ -7,7 +7,7 @@ import * as domManipulate from "../../dom/manipulate";
 import * as domTraverse from "../../dom/traverse";
 import * as domUtils from "../../dom/utils";
 import * as ioFile from "../../io/file";
-import * as timing from "../../timing/timing";
+import * as timing from "../../timing";
 import UrlSlug from "../../url/Slug";
 
 

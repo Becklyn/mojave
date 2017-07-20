@@ -8,20 +8,20 @@
  *
  * @typedef {{
  *      currentFrame: ?number,
- *      emitter: mitt,
  *      easing: function(number):number,
  *      duration: number,
  *      ?stopPrevious: boolean,
+ *      onAnimationFinished: function(),
  * }} mojave.AnimationContext
  *
  * @typedef {{
  *      stop: function(),
- * }} mojave.AnimationDirector
+ * }|Promise} mojave.AnimationDirector
  */
 
+import "./polyfill/promise";
 import {getStyle, setStyles} from "./dom/css";
 import extend from "deep-extend";
-import mitt from "mitt";
 
 // taken from https://gist.github.com/gre/1650294
 export const EASE_LINEAR = (t) => t;
@@ -51,7 +51,8 @@ export function animate (element, properties, options = {})
 {
     let values = null;
 
-    if (typeof options.stopPrevious !== "undefined" && options.stopPrevious)
+    // stop previous animation by default
+    if (typeof options.stopPrevious === "undefined" || true === options.stopPrevious)
     {
         stopAnimation(element);
     }
@@ -64,50 +65,28 @@ export function animate (element, properties, options = {})
                 // if first run:
                 //  - parse current properties
                 //  - no update needed, as the progress is 0 in the first run
-                values = {};
-
-                for (const property in properties)
-                {
-                    if (!properties.hasOwnProperty(property))
-                    {
-                        continue;
-                    }
-
-                    const start = getStyle(element, property);
-                    values[property] = {
-                        start: start,
-                        delta: properties[property] - start,
-                    };
-                }
+                values = fetchPropertyValues(element, properties);
             }
             else
             {
-                // sequential runs
+                // consecutive runs
                 //  - update values
-                const updates = {};
-
-                for (const property in properties)
-                {
-                    if (!properties.hasOwnProperty(property))
-                    {
-                        continue;
-                    }
-
-                    updates[property] = values[property].start + (values[property].delta * progress);
-                }
-
-                setStyles(element, updates);
+                applyAllInterpolatedValues(element, values, progress);
             }
         },
         options
     );
 
-    director.on("finished", () => {
-        element._currentAnimation = null;
-    });
-
+    // store the director in the element that is currently animated
     element._currentAnimation = director;
 
+    // register the done callback to remove the director from the element
+    const onDone = () => {
+        element._currentAnimation = null;
+    };
+    director.then(onDone, onDone);
+
+    // return the director
     return director;
 }
 
@@ -122,6 +101,13 @@ export function animate (element, properties, options = {})
  */
 export function animateCallback (callback, options = {})
 {
+    // Build animation director + promise
+    let onAnimationFinished, onAnimationAborted;
+    const animationDirector = new Promise((resolve, reject) => {
+        onAnimationFinished = resolve;
+        onAnimationAborted = reject;
+    });
+
     // first set default options,
     // then merge with given options,
     // then merge with context-specific parameters
@@ -131,24 +117,20 @@ export function animateCallback (callback, options = {})
         easing: EASE_IN_OUT_CUBIC,
     }, options, {
         currentFrame: null,
-        emitter: mitt(),
+        onAnimationFinished: onAnimationFinished,
     });
 
-    context.currentFrame = null;
-    context.emitter = mitt();
-
-    const animationDirector = {
-        stop ()
-        {
-            window.cancelAnimationFrame(context.currentFrame);
-        },
-        on: context.emitter.on.bind(context.emitter),
-    };
-
-    context.emitter.emit("start");
-    window.requestAnimationFrame(
+    // register first animation frame
+    context.currentFrame = window.requestAnimationFrame(
         (time) => runAnimationStep(time, time, callback, context)
     );
+
+    // add stop() method to animation director (the context needs to be initialized)
+    animationDirector.stop = () =>
+    {
+        onAnimationAborted();
+        window.cancelAnimationFrame(context.currentFrame);
+    };
 
     return animationDirector;
 }
@@ -177,7 +159,7 @@ function runAnimationStep (time, start, callback, context)
     }
     else
     {
-        context.emitter.emit("finished");
+        context.onAnimationFinished();
     }
 }
 
@@ -189,4 +171,59 @@ export function stopAnimation (element)
         element._currentAnimation.stop();
         element._currentAnimation = null;
     }
+}
+
+
+
+/**
+ * Fetches the current values of all the given properties.
+ *
+ * @param {HTMLElement|Window} element
+ * @param {Object.<string, *>} properties
+ * @return {Object.<string, {start: number, delta: number}>}
+ */
+function fetchPropertyValues (element, properties)
+{
+    const values = {};
+
+    for (const property in properties)
+    {
+        if (!properties.hasOwnProperty(property))
+        {
+            continue;
+        }
+
+        const start = getStyle(element, property);
+        values[property] = {
+            start: start,
+            delta: properties[property] - start,
+        };
+    }
+
+    return values;
+}
+
+/**
+ * First this function calculates the new interpolated value according to the current progress.
+ * Then all values are applied to the given element.
+ *
+ * @param {HTMLElement|Window} element
+ * @param {Object.<string, {start: number, delta: number}>} initialValues
+ * @param {number} progress
+ */
+function applyAllInterpolatedValues (element, initialValues, progress)
+{
+    const updates = {};
+
+    for (const property in initialValues)
+    {
+        if (!initialValues.hasOwnProperty(property))
+        {
+            continue;
+        }
+
+        updates[property] = initialValues[property].start + (initialValues[property].delta * progress);
+    }
+
+    setStyles(element, updates);
 }

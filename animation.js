@@ -1,13 +1,17 @@
+/* eslint-disable no-underscore-dangle */
 /**
  * @typedef {{
  *      ?easing: string|function(number):number,
  *      ?stopPrevious: boolean,
+ *      ?duration: number,
  * }} mojave.AnimationOptions
  *
  * @typedef {{
- *      ?easing: string|function(number):number,
  *      currentFrame: ?number,
  *      emitter: mitt,
+ *      easing: function(number):number,
+ *      duration: number,
+ *      ?stopPrevious: boolean,
  * }} mojave.AnimationContext
  *
  * @typedef {{
@@ -16,6 +20,7 @@
  */
 
 import {getStyle, setStyles} from "./dom/css";
+import extend from "deep-extend";
 import mitt from "mitt";
 
 // taken from https://gist.github.com/gre/1650294
@@ -39,11 +44,10 @@ export const EASE_IN_OUT_QUINT = (t) => t<.5 ? 16*t*t*t*t*t : 1+16*(--t)*t*t*t*t
  *
  * @param {HTMLElement} element
  * @param {Object.<string, *>} properties
- * @param {number} duration
  * @param {mojave.AnimationOptions} options
  * @return {mojave.AnimationDirector}
  */
-export function animate (element, properties, duration, options = {})
+export function animate (element, properties, options = {})
 {
     let values = null;
 
@@ -53,7 +57,8 @@ export function animate (element, properties, duration, options = {})
     }
 
     const director = animateCallback(
-        (progress) => {
+        (progress) =>
+        {
             if (null === values)
             {
                 // if first run:
@@ -94,7 +99,6 @@ export function animate (element, properties, duration, options = {})
                 setStyles(element, updates);
             }
         },
-        duration,
         options
     );
 
@@ -113,28 +117,22 @@ export function animate (element, properties, duration, options = {})
  *
  *
  * @param {function(number)} callback
- * @param {number} duration
  * @param {mojave.AnimationOptions} options
  * @return {mojave.AnimationDirector}
  */
-export function animateCallback (callback, duration, options = {stopPrevious: true})
+export function animateCallback (callback, options = {})
 {
+    // first set default options,
+    // then merge with given options,
+    // then merge with context-specific parameters
     /** @type {mojave.AnimationContext} context */
-    const context = {};
-
-    if (typeof options.easing === "undefined")
-    {
-        context.easing = EASE_IN_OUT_CUBIC;
-    }
-    else
-    {
-        if (typeof options.easing !== "function")
-        {
-            throw new Error("Option `easing` must be a function.");
-        }
-
-        context.easing = options.easing;
-    }
+    const context = extend({
+        duration: 400,
+        easing: EASE_IN_OUT_CUBIC,
+    }, options, {
+        currentFrame: null,
+        emitter: mitt(),
+    });
 
     context.currentFrame = null;
     context.emitter = mitt();
@@ -149,7 +147,7 @@ export function animateCallback (callback, duration, options = {stopPrevious: tr
 
     context.emitter.emit("start");
     window.requestAnimationFrame(
-        (time) => runAnimationStep(time, time, callback, duration, context)
+        (time) => runAnimationStep(time, time, callback, context)
     );
 
     return animationDirector;
@@ -163,19 +161,18 @@ export function animateCallback (callback, duration, options = {stopPrevious: tr
  * @param {number} time
  * @param {number} start
  * @param {function(number)} callback
- * @param {number} duration
  * @param {mojave.AnimationContext} context
  */
-function runAnimationStep (time, start, callback, duration, context)
+function runAnimationStep (time, start, callback, context)
 {
-    const linearProgress = Math.min(1, (time - start) / duration);
+    const linearProgress = Math.min(1, (time - start) / context.duration);
     const easedProgress = context.easing(linearProgress);
     callback(easedProgress);
 
     if (linearProgress < 1)
     {
         context.currentFrame = window.requestAnimationFrame(
-            (time) => runAnimationStep(time, start, callback, duration, context)
+            (time) => runAnimationStep(time, start, callback, context)
         );
     }
     else

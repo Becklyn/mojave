@@ -5,6 +5,7 @@ const propertyNameCache = {};
 // DOM properties that should NOT have "px" added when numeric
 const IS_NON_DIMENSIONAL = /acit|ex(?:s|g|n|p|$)|rph|ows|mnc|ntw|ine[ch]|zoo|^ord/i;
 const DIRECTLY_ACCESSIBLE_SETTERS = /scroll(Top|Left)/i;
+const HAS_PIXELS_UNIT = /px$/;
 
 
 /**
@@ -47,7 +48,7 @@ function normalizeProperty (property)
  * Sets all styles on the element
  *
  * @param {HTMLElement|HTMLElement[]} elements
- * @param {Object} styles
+ * @param {Object.<string, (string|number)>} styles
  */
 export function setStyles (elements, styles)
 {
@@ -122,7 +123,7 @@ function getComputedStyles (element, pseudoElement)
  * @param {HTMLElement} element
  * @param {string} property
  * @param {?string} pseudoElement
- * @return {string}
+ * @return {string|number}
  */
 export function getStyle (element, property, pseudoElement = null)
 {
@@ -147,9 +148,13 @@ export function getStyle (element, property, pseudoElement = null)
         return value === "" ? "1" : value;
     }
 
-    return value !== undefined
-        ? value + ""
-        : value;
+
+    if (value !== undefined && !IS_NON_DIMENSIONAL.test(property) && typeof value === "string" && HAS_PIXELS_UNIT.test(value))
+    {
+        return parseInt(value.replace(HAS_PIXELS_UNIT, ""), 10);
+    }
+
+    return value;
 }
 
 

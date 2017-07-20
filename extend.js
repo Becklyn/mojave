@@ -1,5 +1,3 @@
-const hasOwnProp = Object.prototype.hasOwnProperty;
-
 /**
  * Merges the given objects.
  *

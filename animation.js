@@ -21,7 +21,7 @@
 
 import "./polyfill/promise";
 import {getStyle, setStyles} from "./dom/css";
-import extend from "deep-extend";
+import {merge} from "./extend";
 
 // taken from https://gist.github.com/gre/1650294
 export const EASE_LINEAR = (t) => t;
@@ -112,7 +112,7 @@ export function animateCallback (callback, options = {})
     // then merge with given options,
     // then merge with context-specific parameters
     /** @type {mojave.AnimationContext} context */
-    const context = extend({
+    const context = merge({
         duration: 400,
         easing: EASE_IN_OUT_CUBIC,
     }, options, {

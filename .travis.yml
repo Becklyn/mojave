@@ -5,4 +5,4 @@ node_js:
 before_install:
     - npm install -g kaba-cli
 before_script:
-    - kaba js
+    - kaba

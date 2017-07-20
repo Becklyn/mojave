@@ -22,12 +22,17 @@ QUnit.test(
             {
                 target: "a",
                 sources: [1],
-                expected: 1,
+                expected: "a",
+            },
+            {
+                target: true,
+                sources: [false],
+                expected: false,
             },
             {
                 target: ["a"],
                 sources: ["b"],
-                expected: "b",
+                expected: ["a"],
             },
             {
                 target: ["a"],
@@ -37,7 +42,7 @@ QUnit.test(
             {
                 target: {a: 1},
                 sources: [["b"]],
-                expected: ["b"],
+                expected: {a: 1},
             },
             {
                 target: {a: 1},
@@ -55,9 +60,9 @@ QUnit.test(
                 expected: {a: 1, b: ["a", "b"], c: 4},
             },
             {
-                target: {a: 1, b: {c: 4, d: 5}},
-                sources: [{b: {c: 6, e: 7}}],
-                expected: {a: 1, b: {c: 6, d: 5, e: 7}},
+                target: {a: 1, b: {c: 4, d: 5}, f: true},
+                sources: [{b: {c: 6, e: 7}, f: false}],
+                expected: {a: 1, b: {c: 6, d: 5, e: 7}, f: false},
             },
             {
                 target: "a",

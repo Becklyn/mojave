@@ -1,7 +1,11 @@
 const hasOwnProp = Object.prototype.hasOwnProperty;
 
 /**
- * Merges the given objects
+ * Merges the given objects.
+ *
+ * Is a simplified "deep extend" functionality. Useful for merging configuration parameters.
+ * If the sources don't (syntactically) match or are incompatible with the target,
+ * the sources are just ignored.
  *
  * @param {*} target
  * @param {...*} sources
@@ -57,10 +61,12 @@ export function merge (target, ...sources)
 
             return target;
         }
+
+        // if these are scalar types (number, boolean, string) just replace the target
+        return source;
     }
 
-    // just completely replace the target with the source
+    // just completely ignore the source if it is incompatible with the target
     //      - if the types don't match
-    //      - if the types can't be combined
-    return source;
+    return target;
 }

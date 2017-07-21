@@ -2,70 +2,115 @@
 // Generated on Fri Jul 07 2017 16:49:19 GMT+0200 (CEST)
 
 const customLaunchers = {
-    win_chrome: {
+    // Chrome (Windows)
+    win_chrome_latest: {
         base: 'SauceLabs',
         browserName: 'chrome',
         platform: 'Windows 8',
-        version: '59.0'
+        version: 'latest'
     },
-    win_firefox: {
+    win_chrome_latest_1: {
+        base: 'SauceLabs',
+        browserName: 'chrome',
+        platform: 'Windows 8',
+        version: 'latest-1'
+    },
+
+    // Firefox (Windows)
+    win_firefox_latest: {
         base: 'SauceLabs',
         browserName: 'firefox',
         platform: 'Windows 10',
-        version: '54.0'
+        version: 'latest'
     },
-    win_edge: {
+    win_firefox_latest_1: {
+        base: 'SauceLabs',
+        browserName: 'firefox',
+        platform: 'Windows 10',
+        version: 'latest-1'
+    },
+
+    // Edge
+    win_edge_latest: {
         base: 'SauceLabs',
         browserName: 'MicrosoftEdge',
         platform: 'Windows 10',
-        version: '14.14393'
+        version: 'latest'
     },
+    // Edge "latest-1" is not supported
+
+    // IE 11
     win_ie11: {
         base: 'SauceLabs',
         browserName: 'internet explorer',
         platform: 'Windows 10',
         version: '11.103'
     },
+
+    // IE 10
     win_ie10: {
         base: 'SauceLabs',
         browserName: 'internet explorer',
         platform: 'Windows 8',
         version: '10.0'
     },
-    mac_edge: {
+
+    // Chrome (macOS)
+    mac_chrome_latest: {
         base: 'SauceLabs',
         browserName: 'chrome',
         platform: 'macOS 10.12',
-        version: '59.0'
+        version: 'latest'
     },
-    mac_firefox: {
+    mac_chrome_latest_1: {
+        base: 'SauceLabs',
+        browserName: 'chrome',
+        platform: 'macOS 10.12',
+        version: 'latest-1'
+    },
+
+    // Firefox (Windows)
+    mac_firefox_latest: {
         base: 'SauceLabs',
         browserName: 'firefox',
         platform: 'macOS 10.12',
-        version: '54.0'
+        version: 'latest'
     },
-    mac_safari: {
+    mac_firefox_latest_1: {
+        base: 'SauceLabs',
+        browserName: 'firefox',
+        platform: 'macOS 10.12',
+        version: 'latest-1'
+    },
+
+    // Safari
+    mac_safari_latest: {
         base: 'SauceLabs',
         browserName: 'safari',
         platform: 'macOS 10.12',
-        version: '10.0'
+        version: 'latest'
     },
-    ios_safari: {
+    // Safari "latest-1" is not supported
+
+    // Safari (iOS)
+    ios_safari_latest: {
         base: 'SauceLabs',
         browserName: 'Safari',
         appiumVersion: '1.6.5',
         deviceName: 'iPhone Simulator',
         deviceOrientation: 'portrait',
-        platformVersion: '10.3',
+        platformVersion: 'latest',
         platformName: 'iOS',
     },
-    android_chrome: {
+
+    // Chrome (Android)
+    android_chrome_latest: {
         base: 'SauceLabs',
         browserName: 'Chrome',
         appiumVersion: '1.6.5',
         deviceName: 'Android Emulator',
         deviceOrientation: 'portrait',
-        platformVersion: '6.0',
+        platformVersion: 'latest',
         platformName: 'Android',
     },
 };

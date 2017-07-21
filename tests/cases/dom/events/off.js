@@ -1,11 +1,21 @@
 /* eslint-disable no-empty-function */
 
-
 import {live, off} from "../../../../dom/events";
 import QUnit from "qunitjs";
-import {createElement} from "../../../../dom/manipulate";
+import {findOne} from "../../../../dom/traverse";
 
-QUnit.module("dom/events/off()");
+
+QUnit.module("dom/events/off()", {
+    beforeEach ()
+    {
+        findOne("#qunit-fixture").innerHTML = `
+            <div class="example">
+                <button type="button" id="button"></button>
+                <input type="text" id="input-element">
+            </div>
+        `;
+    }
+});
 
 
 QUnit.test(
@@ -13,7 +23,7 @@ QUnit.test(
     (assert) =>
     {
         assert.expect(2);
-        const element = createElement("div");
+        const element = findOne(".example");
 
         const intermediate = live(element, "*", "click", () => {
             assert.step("event listener was triggered");
@@ -47,7 +57,7 @@ QUnit.test(
     {
         assert.throws(
             () => {
-                off(createElement("div"), null, () => {});
+                off(findOne(".example"), null, () => {});
             },
             "function threw an error"
         );

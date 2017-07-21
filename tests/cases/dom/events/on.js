@@ -1,6 +1,5 @@
 import {off, on, trigger} from "../../../../dom/events";
 import QUnit from "qunitjs";
-import {createElement} from "../../../../dom/manipulate";
 import {findOne} from "../../../../dom/traverse";
 
 QUnit.module("dom/events/on()", {
@@ -35,24 +34,6 @@ QUnit.test(
 
 
 QUnit.test(
-    "on(click) with newly created DOM node",
-    (assert) =>
-    {
-        assert.expect(1);
-        const element = createElement("div");
-        const done = assert.async();
-
-        on(element, "click", () => {
-            assert.step("event listener triggered");
-            done();
-        });
-
-        element.click();
-    }
-);
-
-
-QUnit.test(
     "on(custom event) with existing DOM node",
     (assert) =>
     {
@@ -67,29 +48,12 @@ QUnit.test(
     }
 );
 
-
-QUnit.test(
-    "on(custom event) with newly created DOM node",
-    (assert) =>
-    {
-        assert.expect(1);
-        const element = createElement("div");
-
-        on(element, "customEvent", () => {
-            assert.step("event listener triggered");
-        });
-
-        trigger(element, "customEvent");
-    }
-);
-
-
 QUnit.test(
     "on(custom event) parsing an arbitrary object",
     (assert) =>
     {
         assert.expect(1);
-        const element = createElement("div");
+        const element = findOne(".example");
         const object = {some: "object"};
 
         on(element, "customEvent", (event) => {
@@ -106,7 +70,7 @@ QUnit.test(
     (assert) =>
     {
         assert.expect(5);
-        const element = createElement("div");
+        const element = findOne(".example");
 
         on(element, "customEvent", () => {
             assert.step("event listener triggered");
@@ -124,7 +88,7 @@ QUnit.test(
     "on(custom event) multiple event handler triggered by one event",
     (assert) =>
     {
-        const element = createElement("div");
+        const element = findOne(".example");
         const order = ["first handler", "second handler", "third handler", "fourth handler", "fifth handler"];
 
         order.forEach((value) => {
@@ -144,7 +108,7 @@ QUnit.test(
     (assert) =>
     {
         assert.expect(1);
-        const element = createElement("div");
+        const element = findOne(".example");
         const handler = () => {
             assert.step("handler is called once");
         };
@@ -163,7 +127,7 @@ QUnit.test(
     {
         assert.throws(
             () => {
-                on(createElement("div"), null, () => {});
+                on(findOne(".example"), null, () => {});
             },
             "function threw an error"
         );

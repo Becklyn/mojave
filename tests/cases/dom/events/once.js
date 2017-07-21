@@ -2,9 +2,20 @@
 
 import {off, once, trigger} from "../../../../dom/events";
 import QUnit from "qunitjs";
-import {createElement} from "../../../../dom/manipulate";
+import {findOne} from "../../../../dom/traverse";
 
-QUnit.module("dom/events/once()");
+
+QUnit.module("dom/events/once()", {
+    beforeEach ()
+    {
+        findOne("#qunit-fixture").innerHTML = `
+            <div class="example">
+                <button type="button" id="button"></button>
+                <input type="text" id="input-element">
+            </div>
+        `;
+    }
+});
 
 
 QUnit.test(
@@ -12,7 +23,7 @@ QUnit.test(
     (assert) =>
     {
         assert.expect(1);
-        const element = createElement("div");
+        const element = findOne(".example");
         const done = assert.async();
 
         once(element, "click", () => {
@@ -31,7 +42,7 @@ QUnit.test(
     (assert) =>
     {
         assert.expect(1);
-        const element = createElement("div");
+        const element = findOne(".example");
         const done = assert.async();
 
         once(element, "customEvent", () => {
@@ -50,7 +61,7 @@ QUnit.test(
     (assert) =>
     {
         assert.expect(3);
-        const element = createElement("div");
+        const element = findOne(".example");
         const done = assert.async();
 
         assert.equal(element._listeners, undefined, "listeners not defined");
@@ -76,7 +87,7 @@ QUnit.test(
     (assert) =>
     {
         assert.expect(3);
-        const element = createElement("div");
+        const element = findOne(".example");
 
         assert.equal(element._listeners, undefined, "listeners not defined");
 
@@ -99,7 +110,7 @@ QUnit.test(
     (assert) =>
     {
         assert.expect(1);
-        const element = createElement("div");
+        const element = findOne(".example");
         const object = {some: "object"};
 
         once(element, "customEvent", (event) => {
@@ -116,7 +127,7 @@ QUnit.test(
     (assert) =>
     {
         assert.expect(6);
-        const element = createElement("div");
+        const element = findOne(".example");
         const order = ["first handler", "second handler", "third handler", "fourth handler", "fifth handler"];
 
         order.forEach((value) => {
@@ -151,7 +162,7 @@ QUnit.test(
     {
         assert.throws(
             () => {
-                once(createElement("div"), null, () => {});
+                once(findOne(".example"), null, () => {});
             },
             "function throws an error"
         );

@@ -13,13 +13,13 @@ QUnit.test(
     "only call debounced function once if called in short order",
     function (assert)
     {
-        assert.expect(2);
+        assert.expect(1);
         const done = assert.async();
         let called = 0;
         const debounced = debounce(
             () => {
                 assert.step("debounce called");
-                called += 1;
+                done(); // it should only be called once, so the first call is the last one
             },
             100
         );
@@ -27,11 +27,6 @@ QUnit.test(
         debounced();
         debounced();
         debounced();
-
-        window.setTimeout(function () {
-            assert.equal(called, 1, "the debounced function should only been called once");
-            done();
-        }, 600);
     }
 );
 
@@ -42,14 +37,12 @@ QUnit.test(
     {
         assert.expect(3);
         const done = assert.async();
-        let called = 0;
 
         const debounced = debounce(
-            () => {
+            (last = false) => {
                 assert.step("debounce called");
-                called += 1;
 
-                if (called === 3)
+                if (last)
                 {
                     done();
                 }
@@ -58,8 +51,8 @@ QUnit.test(
         );
 
         debounced();
-        window.setTimeout(debounced, 100);
-        window.setTimeout(debounced, 200);
+        window.setTimeout(debounced, 300);
+        window.setTimeout(() => debounced(true), 600);
     }
 );
 
@@ -70,22 +63,20 @@ QUnit.test(
     {
         assert.expect(2);
         const done = assert.async();
-        let called = 0;
         const debounced = debounce(
-            () => {
+            (last = false) => {
                 assert.step("debounce called");
-                called += 1;
 
-                if (called === 2)
+                if (last)
                 {
                     done();
                 }
             },
-            100
+            300
         );
 
         debounced();
         window.setTimeout(debounced, 50);
-        window.setTimeout(debounced, 200);
+        window.setTimeout(() => debounced(true), 800);
     }
 );

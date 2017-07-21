@@ -28,4 +28,4 @@ import "../cases/io/file";
 import "../cases/timing/debounce";
 import "../cases/url/Slug";
 
-QUnit.config.testTimeout = 1000;
+QUnit.config.testTimeout = 1500;

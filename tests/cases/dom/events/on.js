@@ -6,7 +6,7 @@ import {findOne} from "../../../../dom/traverse";
 QUnit.module("dom/events/on()", {
     beforeEach ()
     {
-        findOne("qunit-fixture").innerHTML = `
+        findOne("#qunit-fixture").innerHTML = `
             <div class="example">
                 <button type="button" id="button"></button>
                 <input type="text" id="input-element">

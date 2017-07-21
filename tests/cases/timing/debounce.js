@@ -13,20 +13,16 @@ QUnit.test(
     "only call debounced function once if called in short order",
     function (assert)
     {
+        assert.expect(2);
         const done = assert.async();
         let called = 0;
         const debounced = debounce(
-        () => {
-            assert.ok(true, "debounce called");
-            called += 1;
-
-            if (called === 3)
-            {
-                done();
-            }
-        },
-        100
-    );
+            () => {
+                assert.step("debounce called");
+                called += 1;
+            },
+            100
+        );
 
         debounced();
         debounced();
@@ -50,7 +46,7 @@ QUnit.test(
 
         const debounced = debounce(
             () => {
-                assert.ok(true, "debounce called");
+                assert.step("debounce called");
                 called += 1;
 
                 if (called === 3)
@@ -62,8 +58,8 @@ QUnit.test(
         );
 
         debounced();
+        window.setTimeout(debounced, 100);
         window.setTimeout(debounced, 200);
-        window.setTimeout(debounced, 400);
     }
 );
 
@@ -72,11 +68,12 @@ QUnit.test(
     "the debounce delay can be changed",
     function (assert)
     {
+        assert.expect(2);
         const done = assert.async();
         let called = 0;
         const debounced = debounce(
             () => {
-                assert.ok(true, "debounce called");
+                assert.step("debounce called");
                 called += 1;
 
                 if (called === 2)
@@ -84,11 +81,11 @@ QUnit.test(
                     done();
                 }
             },
-            300
+            100
         );
 
         debounced();
-        window.setTimeout(debounced, 100);
-        window.setTimeout(debounced, 500);
+        window.setTimeout(debounced, 50);
+        window.setTimeout(debounced, 200);
     }
 );

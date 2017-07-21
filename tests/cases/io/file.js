@@ -1,14 +1,13 @@
 import QUnit from "qunitjs";
+import {formatSize} from "../../../io/file";
 
 QUnit.module("io/file");
 
 
 QUnit.test(
     "formatSize() tests",
-    function (assert)
+    (assert) =>
     {
-        const formatSize = mojave.io.file.formatSize;
-
         assert.equal(formatSize(0), '0 B');
         assert.equal(formatSize(-0), '0 B');
 

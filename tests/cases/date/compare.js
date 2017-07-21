@@ -1,13 +1,12 @@
+import {isSameDay, isSameTimestamp} from "../../../date/compare";
 import QUnit from "qunitjs";
 
 QUnit.module("date/compare");
 
 QUnit.test(
     "isSameDay() tests",
-    function (assert)
+    (assert) =>
     {
-        const isSameDay = mojave.date.compare.isSameDay;
-
         assert.ok(isSameDay(new Date(2017, 11, 31, 12, 0, 0), new Date(2017, 11, 31, 12, 0, 0)), "exact same date");
 
         const instance = new Date();
@@ -26,10 +25,8 @@ QUnit.test(
 
 QUnit.test(
     "isSameTimestamp() tests",
-    function (assert)
+    (assert) =>
     {
-        const isSameTimestamp = mojave.date.compare.isSameTimestamp;
-
         assert.ok(isSameTimestamp(new Date(2017, 11, 31, 12, 0, 0), new Date(2017, 11, 31, 12, 0, 0)), "exact same date");
 
         const instance = new Date();

@@ -81,7 +81,7 @@ QUnit.test(
     {
         assert.throws(
             () => {
-                const element = clone("#qunit-fixture");
+                clone("#qunit-fixture");
             },
             "function threw an error",
         );
@@ -95,7 +95,7 @@ QUnit.test(
     {
         assert.throws(
             () => {
-                const element = clone(null);
+                clone(null);
             },
             "function threw an error",
         );

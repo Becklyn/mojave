@@ -101,13 +101,6 @@ export function animate (element, properties, options = {})
  */
 export function animateCallback (callback, options = {})
 {
-    // Build animation director + promise
-    let onAnimationFinished, onAnimationAborted;
-    const animationDirector = new Promise((resolve, reject) => {
-        onAnimationFinished = resolve;
-        onAnimationAborted = reject;
-    });
-
     // first set default options,
     // then merge with given options,
     // then merge with context-specific parameters
@@ -115,9 +108,16 @@ export function animateCallback (callback, options = {})
     const context = merge({
         duration: 400,
         easing: EASE_IN_OUT_CUBIC,
-    }, options, {
-        currentFrame: null,
-        onAnimationFinished: onAnimationFinished,
+    }, options);
+
+    // set internal parameters
+    context.currentFrame = null;
+
+    // Build animation director + promise
+    let onAnimationAborted;
+    const animationDirector = new Promise((resolve, reject) => {
+        context.onAnimationFinished = resolve;
+        onAnimationAborted = reject;
     });
 
     // register first animation frame

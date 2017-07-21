@@ -14,6 +14,8 @@ import "../cases/dom/traverse/prev";
 import "../cases/dom/traverse/prevAll";
 import "../cases/dom/traverse/siblings";
 import "../cases/extend/merge";
+import "../cases/dom/utils/isElement";
+import "../cases/dom/utils/splitStringValue";
 import "../cases/io/file";
 import "../cases/timing/debounce";
 import "../cases/url/Slug";

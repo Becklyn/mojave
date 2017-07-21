@@ -1,95 +1,170 @@
-import {off, once} from "../../../../dom/events";
+/* eslint-disable no-underscore-dangle, no-empty-function */
+
+import {off, once, trigger} from "../../../../dom/events";
 import QUnit from "qunitjs";
 import {findOne} from "../../../../dom/traverse";
+
 
 QUnit.module("dom/events/once()", {
     beforeEach ()
     {
-        document.getElementById("qunit-fixture").innerHTML = `
+        findOne("#qunit-fixture").innerHTML = `
             <div class="example">
                 <button type="button" id="button"></button>
                 <input type="text" id="input-element">
             </div>
         `;
-    },
+    }
 });
 
 
-QUnit.test("once() callback only called once", (assert) => {
-    assert.expect(1);
-    const el = findOne("#button");
-    const done = assert.async();
+QUnit.test(
+    "once() callback only called once",
+    (assert) =>
+    {
+        assert.expect(1);
+        const element = findOne(".example");
+        const done = assert.async();
 
-    once(el, "click", () => {
-        assert.ok(true, "event listener triggered");
-        done();
-    });
-
-    el.click();
-    el.click();
-});
-
-
-QUnit.test("once() removes event listener after execution", (assert) => {
-    assert.expect(3);
-    const el = findOne("#button");
-    const done = assert.async();
-
-    assert.equal(el._listeners, undefined, "listeners not defined");
-
-    once(el, "click", () => {});
-
-    assert.equal(el._listeners.click.length, 1, "1 listener registered");
-
-    el.click();
-
-    window.setTimeout(
-        () => {
-            assert.equal(el._listeners.click.length, 0, "listener was successfully removed");
+        once(element, "click", () => {
+            assert.step("event listener triggered");
             done();
-        }
-    );
-});
+        });
+
+        element.click();
+        element.click();
+    }
+);
 
 
-QUnit.test("once removes event listener", (assert) => {
-    assert.expect(3);
-    const el = findOne("#button");
-    const done = assert.async();
+QUnit.test(
+    "once() called with custom event",
+    (assert) =>
+    {
+        assert.expect(1);
+        const element = findOne(".example");
+        const done = assert.async();
 
-    assert.equal(el._listeners, undefined, "listeners not defined");
-
-    once(el, "click", () => {});
-
-    assert.equal(el._listeners.click.length, 1, "1 listener registered");
-
-    el.click();
-
-    window.setTimeout(
-        () => {
-            assert.equal(el._listeners.click.length, 0, "listener was successfully removed");
+        once(element, "customEvent", () => {
+            assert.step("event listener triggered");
             done();
-        }
-    );
-});
+        });
+
+        trigger(element, "customEvent");
+        trigger(element, "customEvent");
+    }
+);
 
 
+QUnit.test(
+    "once() removes event listener after execution",
+    (assert) =>
+    {
+        assert.expect(3);
+        const element = findOne(".example");
+        const done = assert.async();
 
-QUnit.test("once() can be unregistered", (assert) => {
-    assert.expect(3);
-    const el = findOne("#button");
+        assert.equal(element._listeners, undefined, "listeners not defined");
 
-    assert.equal(el._listeners, undefined, "listeners not defined");
+        once(element, "click", () => {});
 
-    const token = once(el, "click", () => {
-        assert.ok(false, "event listener triggered although it should have been removed");
-        done();
-    });
+        assert.equal(element._listeners.click.length, 1, "1 listener registered");
 
-    assert.equal(el._listeners.click.length, 1, "1 listener registered");
+        element.click();
 
-    off(el, "click", token);
-    assert.equal(el._listeners.click.length, 0, "listener was successfully removed");
+        window.setTimeout(
+            () => {
+                assert.equal(element._listeners.click.length, 0, "listener was successfully removed");
+                done();
+            }
+        );
+    }
+);
 
-    el.click();
-});
+
+QUnit.test(
+    "once() can be unregistered",
+    (assert) =>
+    {
+        assert.expect(3);
+        const element = findOne(".example");
+
+        assert.equal(element._listeners, undefined, "listeners not defined");
+
+        const token = once(element, "click", () => {
+            assert.step("event listener triggered although it should have been removed");
+        });
+
+        assert.equal(element._listeners.click.length, 1, "1 listener registered");
+
+        off(element, "click", token);
+        assert.equal(element._listeners.click.length, 0, "listener was successfully removed");
+
+        element.click();
+    }
+);
+
+
+QUnit.test(
+    "once(custom event) parsing an arbitrary object",
+    (assert) =>
+    {
+        assert.expect(1);
+        const element = findOne(".example");
+        const object = {some: "object"};
+
+        once(element, "customEvent", (event) => {
+            assert.equal(event.detail, object, "event listener triggered");
+        });
+
+        trigger(element, "customEvent", object);
+    }
+);
+
+
+QUnit.test(
+    "once(custom event) multiple event handler triggered by one event",
+    (assert) =>
+    {
+        assert.expect(6);
+        const element = findOne(".example");
+        const order = ["first handler", "second handler", "third handler", "fourth handler", "fifth handler"];
+
+        order.forEach((value) => {
+            once(element, "customEvent", () => {
+                assert.step(value);
+            });
+        });
+
+        trigger(element, "customEvent");
+        assert.verifySteps(order, "tests ran in the right order");
+    }
+);
+
+
+QUnit.test(
+    "once() with an invalid element",
+    (assert) =>
+    {
+        assert.throws(
+            () => {
+                once(null, "customEvent", () => {});
+            },
+            "function threw an error"
+        );
+    }
+);
+
+
+QUnit.test(
+    "once() with an invalid event",
+    (assert) =>
+    {
+        assert.throws(
+            () => {
+                once(findOne(".example"), null, () => {});
+            },
+            "function throws an error"
+        );
+    }
+);

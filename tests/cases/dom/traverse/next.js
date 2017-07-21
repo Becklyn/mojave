@@ -1,30 +1,31 @@
+import {findOne, next} from "../../../../dom/traverse";
 import QUnit from "qunitjs";
 
 QUnit.module("dom/traverse/next()",
     {
-        beforeEach: function ()
+        beforeEach: () =>
         {
-            document.getElementById("qunit-fixture").innerHTML =
-                '<div class="test-element element1"></div>' +
-                '<div class="test-element element2">'+
-                    '<div class="test-element element2-1"></div>' +
-                '</div>' +
-                'Some text' +
-                '<div class="test-element element3"></div>' +
-                '<div class="test-element element4"></div>' +
-                '<div class="test-element element5"></div>' +
-                '<div class="test-element element6"></div>';
-        }
+            findOne("#qunit-fixture").innerHTML = `
+                <div class="test-element element1"></div>
+                <div class="test-element element2">
+                    <div class="test-element element2-1"></div>
+                </div>
+                Some text
+                <div class="test-element element3"></div>
+                <div class="test-element element4"></div>
+                <div class="test-element element5"></div>
+                <div class="test-element element6"></div>
+            `;
+        },
     }
 );
 
 
 QUnit.test(
     "next() with an element in the middle, without selector",
-    function (assert)
+    (assert) =>
     {
-        const next = mojave.dom.traverse.next;
-        const element = document.querySelector(".element2");
+        const element = findOne(".element2");
 
         const result = next(element);
 
@@ -36,10 +37,9 @@ QUnit.test(
 
 QUnit.test(
     "next() with an element at the end, without selector",
-    function (assert)
+    (assert) =>
     {
-        const next = mojave.dom.traverse.next;
-        const element = document.querySelector(".element6");
+        const element = findOne(".element6");
 
         const result = next(element);
 
@@ -50,10 +50,9 @@ QUnit.test(
 
 QUnit.test(
     "next() with an element at the start, with selector",
-    function (assert)
+    (assert) =>
     {
-        const next = mojave.dom.traverse.next;
-        const element = document.querySelector(".element1");
+        const element = findOne(".element1");
 
         const result = next(element, ".element3");
 
@@ -65,10 +64,9 @@ QUnit.test(
 
 QUnit.test(
     "next() with a selector where nothing matches",
-    function (assert)
+    (assert) =>
     {
-        const next = mojave.dom.traverse.next;
-        const element = document.querySelector(".element1");
+        const element = findOne(".element1");
 
         const result = next(element, ".missing");
 

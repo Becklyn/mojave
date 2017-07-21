@@ -1,31 +1,25 @@
+import {children, findOne} from "../../../../dom/traverse";
 import QUnit from "qunitjs";
 
 QUnit.module("dom/traverse/children()",
     {
-        beforeEach: function ()
+        beforeEach: () =>
         {
-            const child1 = document.createElement("div");
-            child1.classList.add("element1");
-
-            const child2 = document.createElement("div");
-            child2.classList.add("element2");
-
-            const fixture = document.getElementById("qunit-fixture");
-            fixture.appendChild(child1);
-            fixture.appendChild(child2);
-            fixture.appendChild(document.createTextNode("Test123"));
-        }
+            findOne("#qunit-fixture").innerHTML = `
+                <div class="element1"></div>
+                <div class="element2"></div>
+                Test123
+            `;
+        },
     }
 );
 
 
 QUnit.test(
     "children() without selector",
-    function (assert)
+    (assert) =>
     {
-        const children = mojave.dom.traverse.children;
-        const fixture = document.getElementById("qunit-fixture");
-
+        const fixture = findOne("#qunit-fixture");
 
         const result = children(fixture);
         assert.equal(result.length, 2, "has 2 children");
@@ -37,11 +31,9 @@ QUnit.test(
 
 QUnit.test(
     "children() with selector",
-    function (assert)
+    (assert) =>
     {
-        const children = mojave.dom.traverse.children;
-        const fixture = document.getElementById("qunit-fixture");
-
+        const fixture = findOne("#qunit-fixture");
 
         const result = children(fixture, ".element2");
         assert.equal(result.length, 1, "only one match");

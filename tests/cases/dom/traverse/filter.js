@@ -1,28 +1,28 @@
+import {filter, find, findOne} from "../../../../dom/traverse";
 import QUnit from "qunitjs";
 
 QUnit.module("dom/traverse/filter()",
     {
-        beforeEach: function ()
+        beforeEach: () =>
         {
-            document.getElementById("qunit-fixture").innerHTML =
-                '<div class="test-element element1"></div>' +
-                '<div class="test-element test-class element2">'+
-                    '<div class="test-element element2-1"></div>' +
-                '</div>' +
-                'Some text' +
-                '<div class="test-element element3"></div>' +
-                '<div class="test-element test-class element4"></div>';
-        }
+            findOne("#qunit-fixture").innerHTML = `
+                <div class="test-element element1"></div>
+                <div class="test-element test-class element2">
+                    <div class="test-element element2-1"></div>
+                </div>
+                Some text
+                <div class="test-element element3"></div>
+                <div class="test-element test-class element4"></div>
+            `;
+        },
     }
 );
 
 
 QUnit.test(
     "filter() on element with specific class",
-    function (assert)
+    (assert) =>
     {
-        const find = mojave.dom.traverse.find;
-        const filter = mojave.dom.traverse.filter;
         const elements = find(".test-element");
 
         const result = filter(elements, ".element2");
@@ -35,10 +35,8 @@ QUnit.test(
 
 QUnit.test(
     "filter() on multiple elements with specific class",
-    function (assert)
+    (assert) =>
     {
-        const find = mojave.dom.traverse.find;
-        const filter = mojave.dom.traverse.filter;
         const elements = find(".test-element");
 
         const result = filter(elements, ".test-class");
@@ -52,10 +50,8 @@ QUnit.test(
 
 QUnit.test(
     "filter() on element with a wrong class",
-    function (assert)
+    (assert) =>
     {
-        const find = mojave.dom.traverse.find;
-        const filter = mojave.dom.traverse.filter;
         const elements = find(".test-element");
 
         const result = filter(elements, ".no-element");

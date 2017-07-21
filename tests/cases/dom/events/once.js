@@ -72,32 +72,6 @@ QUnit.test(
 
 
 QUnit.test(
-    "once() removes event listener",
-    (assert) =>
-    {
-        assert.expect(3);
-        const element = createElement("div");
-        const done = assert.async();
-
-        assert.equal(element._listeners, undefined, "listeners not defined");
-
-        once(element, "click", () => {});
-
-        assert.equal(element._listeners.click.length, 1, "1 listener registered");
-
-        element.click();
-
-        window.setTimeout(
-            () => {
-                assert.equal(element._listeners.click.length, 0, "listener was successfully removed");
-                done();
-            }
-        );
-    }
-);
-
-
-QUnit.test(
     "once() can be unregistered",
     (assert) =>
     {

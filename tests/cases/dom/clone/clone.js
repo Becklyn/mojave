@@ -2,17 +2,14 @@ import {on, trigger} from "../../../../dom/events";
 import QUnit from "qunitjs";
 import {children} from "../../../../dom/traverse";
 import {clone} from "../../../../dom/clone";
-import {createElement} from "../../../../dom/manipulate";
+import {findOne} from "../../../../dom/traverse";
 import {getAttr} from "../../../../dom/attr";
 
-QUnit.module("dom/clone/clone()");
-
-QUnit.test(
-    "with created node element",
-    (assert) =>
+QUnit.module("dom/clone/clone()", {
+    beforeEach: () =>
     {
-        const element = createElement(`
-            <div id="id" class="className.test.test2" style="display: none; visibility: hidden;" data-test="test">
+        findOne("#qunit-fixture").innerHTML = `
+            <div id="id" class="className test test2" style="display: none; visibility: hidden;" data-test="test">
                 <p class="child-1">
                     content
                 </p>
@@ -20,13 +17,20 @@ QUnit.test(
                     other content
                 </p>
             </div>
-        `);
+        `;
+    },
+});
+
+QUnit.test(
+    "with created node element",
+    (assert) =>
+    {
+        const element = findOne("#id");
         let triggered = false;
 
         on(element, "eventTrigger", () => {
             triggered = true;
         });
-
 
         const clonedElement = clone(element);
         trigger(clonedElement, "eventTrigger");

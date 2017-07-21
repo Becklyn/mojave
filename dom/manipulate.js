@@ -1,5 +1,6 @@
 import {setAttrs} from "./attr";
 import {setStyles} from "./css";
+import {isElement} from "./utils";
 
 
 /**
@@ -88,7 +89,10 @@ export function empty (element)
 
     for (let i = 0; i < list.length; i++)
     {
-        list[i].innerHTML = "";
+        if (isElement(list[i]))
+        {
+            list[i].innerHTML = "";
+        }
     }
 }
 

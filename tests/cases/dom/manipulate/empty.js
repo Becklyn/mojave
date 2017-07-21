@@ -50,12 +50,8 @@ QUnit.test(
     "with an (query) string as an element",
     (assert) =>
     {
-        assert.throws(
-            () => {
-                empty("#test-element");
-            },
-            "function threw an error"
-        );
+        empty("#test-element");
+        assert.ok(true, "a non-element argument is just ignored");
     }
 );
 

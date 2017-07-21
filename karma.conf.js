@@ -88,7 +88,7 @@ const browsers = {
         base: 'SauceLabs',
         browserName: 'safari',
         platform: 'macOS 10.12',
-        version: 'latest'
+        version: '10.0', // "latest" randomly fails on some tests
     },
     // Safari "latest-1" is not supported
 
@@ -96,10 +96,10 @@ const browsers = {
     ios_safari_latest: {
         base: 'SauceLabs',
         browserName: 'Safari',
-        appiumVersion: '1.6.5',
-        deviceName: 'iPhone Simulator',
+        appiumVersion: '1.6.4',
+        deviceName: 'iPhone 7 Plus Simulator',
         deviceOrientation: 'portrait',
-        platformVersion: 'latest',
+        platformVersion: '10.3', // "latest" randomly fails on some tests
         platformName: 'iOS',
     },
 

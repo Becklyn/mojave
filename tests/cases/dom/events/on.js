@@ -1,13 +1,41 @@
 import {off, on, trigger} from "../../../../dom/events";
 import QUnit from "qunitjs";
 import {createElement} from "../../../../dom/manipulate";
-import {on} from "../../../../dom/events";
+import {findOne} from "../../../../dom/traverse";
 
-QUnit.module("dom/events/on()");
+QUnit.module("dom/events/on()", {
+    beforeEach ()
+    {
+        findOne("qunit-fixture").innerHTML = `
+            <div class="example">
+                <button type="button" id="button"></button>
+                <input type="text" id="input-element">
+            </div>
+        `;
+    }
+});
 
 
 QUnit.test(
-    "on(click)",
+    "on(click) with existing DOM node",
+    (assert) =>
+    {
+        assert.expect(1);
+        const element = findOne("#button");
+        const done = assert.async();
+
+        on(element, "click", () => {
+            assert.step("event listener triggered");
+            done();
+        });
+
+        element.click();
+    }
+);
+
+
+QUnit.test(
+    "on(click) with newly created DOM node",
     (assert) =>
     {
         assert.expect(1);
@@ -25,7 +53,23 @@ QUnit.test(
 
 
 QUnit.test(
-    "on(custom event)",
+    "on(custom event) with existing DOM node",
+    (assert) =>
+    {
+        assert.expect(1);
+        const element = findOne("#button");
+
+        on(element, "customEvent", () => {
+            assert.step("event listener triggered");
+        });
+
+        trigger(element, "customEvent");
+    }
+);
+
+
+QUnit.test(
+    "on(custom event) with newly created DOM node",
     (assert) =>
     {
         assert.expect(1);

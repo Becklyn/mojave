@@ -43,12 +43,14 @@ QUnit.test(
 
 
         // region check element attributes
-        for(const attribute of element.attributes)
+        for (let i = 0; i < element.attributes.length; i++)
         {
+            const attribute = element.attributes.item(i).name;
+
             assert.equal(
                 getAttr(clonedElement, attribute),
                 getAttr(element, attribute),
-                `${attribute.name}-attribute was cloned`
+                `${attribute}-attribute was cloned`
             );
         }
         // endregion

@@ -5,7 +5,7 @@ QUnit.module("extend/merge()");
 
 
 QUnit.test(
-    "merge() tests",
+    "basic merge() tests",
     function (assert)
     {
         const cases = [
@@ -83,6 +83,33 @@ QUnit.test(
 
         cases.forEach((data, index) => {
             assert.deepEqual(merge(data.target, ...data.sources), data.expected, `Testcase ${index}`);
+        });
+    }
+);
+
+
+QUnit.test(
+    "merge() with functions",
+    function (assert)
+    {
+        const cases = [
+            {
+                target: () => { return 1; },
+                sources: [() => { return 2; }],
+                expected: 2,
+            },
+            {
+                target: () => { return 1; },
+                sources: ["a"],
+                expected: 1,
+            },
+        ];
+
+        cases.forEach((data, index) => {
+            const merged = merge(data.target, ...data.sources);
+            const result = merged();
+
+            assert.deepEqual(result, data.expected, `Testcase ${index}`);
         });
     }
 );

@@ -3,6 +3,7 @@ import "../cases/date/format";
 import "../cases/dom/events/on";
 import "../cases/dom/events/once";
 import "../cases/dom/manipulate/append";
+import "../cases/dom/manipulate/prepend";
 import "../cases/dom/manipulate/remove";
 import "../cases/dom/traverse/children";
 import "../cases/dom/traverse/filter";

@@ -1,11 +1,12 @@
 import QUnit from "qunitjs";
+import {findOne} from "../../../../dom/traverse";
 import {remove} from "../../../../dom/manipulate";
 
 QUnit.module("dom/manipulate/remove()",
     {
         beforeEach: () =>
         {
-            document.getElementById("qunit-fixture").innerHTML = `
+            findOne("#qunit-fixture").innerHTML = `
                 <div id="parent">
                     <div id="first"></div>
                     <div id="second"></div>
@@ -21,10 +22,10 @@ QUnit.test(
     "with valid node element",
     (assert) =>
     {
-        remove(document.getElementById("first"));
+        remove(findOne("#first"));
 
-        assert.ok(document.getElementById("parent"), "parent still exists");
-        assert.notOk(document.getElementById("first"), "has no occurrence");
+        assert.ok(findOne("#parent"), "parent still exists");
+        assert.notOk(findOne("#first"), "has no occurrence");
     }
 );
 
@@ -34,13 +35,13 @@ QUnit.test(
     (assert) =>
     {
         remove([
-            document.getElementById("first"),
-            document.getElementById("second")
+            findOne("#first"),
+            findOne("#second"),
         ]);
 
-        assert.notOk(document.getElementById("first"), "first element has no occurrence");
-        assert.notOk(document.getElementById("second"), "second element has no occurrence");
-        assert.ok(document.getElementById("third"), "third element has not been removed");
+        assert.notOk(findOne("#first"), "first element has no occurrence");
+        assert.notOk(findOne("#second"), "second element has no occurrence");
+        assert.ok(findOne("#third"), "third element has not been removed");
     }
 );
 

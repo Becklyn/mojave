@@ -2,7 +2,7 @@
 
 
 import {find, findOne} from "../../../../dom/traverse";
-import {live, off, on, trigger} from "../../../../dom/events";
+import {live, off, trigger} from "../../../../dom/events";
 import QUnit from "qunitjs";
 
 QUnit.module("dom/events/live()", {

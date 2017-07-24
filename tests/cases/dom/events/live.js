@@ -56,6 +56,23 @@ QUnit.test(
 
 
 QUnit.test(
+    "live() with non-matching selector",
+    (assert) =>
+    {
+        live(findOne("#element"), ".not-matching-class", "click", () => {
+            assert.step("event triggered on child element");
+        });
+
+        find(".child").forEach((childElement) => {
+            childElement.click();
+        });
+
+        assert.verifySteps([], "no handler was triggered on the non-matching children");
+    }
+);
+
+
+QUnit.test(
     "live(custom event)",
     (assert) =>
     {

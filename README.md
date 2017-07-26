@@ -36,7 +36,6 @@ Now open the file in `tests/index.html` in a web browser.
 Place all test case files under `tests/cases/` as regular `.js` files.
 
 You have all [QUnit](https://qunitjs.com/) globals available.
-Also the library itself is loaded in the `window.mojave` global. For details, please take a look at `tests/build/complete-library-build.js`.
 
 The tests files are built using `tests/build/all-tests.js`, so if you add a new test case file, you must add an import there.
 This build is compiled using kaba, so you can use regular modern JS.

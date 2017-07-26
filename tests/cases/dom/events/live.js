@@ -2,7 +2,7 @@
 
 
 import {find, findOne} from "../../../../dom/traverse";
-import {live, off, on, trigger} from "../../../../dom/events";
+import {live, off, trigger} from "../../../../dom/events";
 import QUnit from "qunitjs";
 
 QUnit.module("dom/events/live()", {
@@ -51,6 +51,23 @@ QUnit.test(
         find(".child").forEach((childElement) => {
             childElement.click();
         });
+    }
+);
+
+
+QUnit.test(
+    "live() with non-matching selector",
+    (assert) =>
+    {
+        live(findOne("#element"), ".not-matching-class", "click", () => {
+            assert.step("event triggered on child element");
+        });
+
+        find(".child").forEach((childElement) => {
+            childElement.click();
+        });
+
+        assert.verifySteps([], "no handler was triggered on the non-matching children");
     }
 );
 

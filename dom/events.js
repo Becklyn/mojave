@@ -115,15 +115,45 @@ export function once (element, type, handler)
  */
 export function delegate (element, selector, type, handler)
 {
-    const intermediate = (event) => {
-        if (event.target.matches(selector))
+    const intermediate = (event) =>
+    {
+        const matchedDelegatedTarget = findDelegatedTarget(element, event.target, selector);
+
+        if (null !== matchedDelegatedTarget)
         {
             handler(event);
         }
     };
+
     on(element, type, intermediate);
 
     return intermediate;
+}
+
+
+/**
+ * In a delegated event listener, this function finds the actual desired event target.
+ *
+ * @param {HTMLElement} delegateElement
+ * @param {HTMLElement} currentTarget
+ * @param {string} selector
+ * @return {?HTMLElement}
+ */
+function findDelegatedTarget (delegateElement, currentTarget, selector)
+{
+    let node = currentTarget;
+
+    while (node !== delegateElement)
+    {
+        if (node.matches(selector))
+        {
+            return node;
+        }
+
+        node = node.parentNode;
+    }
+
+    return null;
 }
 
 

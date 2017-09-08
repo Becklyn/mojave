@@ -104,7 +104,7 @@ export function once (element, type, handler)
  *
  * Returns the intermediate function, so that the event listener can be removed:
  *
- *      const intermediate = live(element, selector, type, handler);
+ *      const intermediate = delegate(element, selector, type, handler);
  *      off(element, event, intermediate);
  *
  * @param {Window|HTMLElement} element
@@ -113,7 +113,7 @@ export function once (element, type, handler)
  * @param {function(*):*} handler
  * @return {function():*}
  */
-export function live (element, selector, type, handler)
+export function delegate (element, selector, type, handler)
 {
     const intermediate = (event) => {
         if (event.target.matches(selector))

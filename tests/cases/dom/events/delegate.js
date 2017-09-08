@@ -2,10 +2,10 @@
 
 
 import {find, findOne} from "../../../../dom/traverse";
-import {live, off, trigger} from "../../../../dom/events";
+import {delegate, off, trigger} from "../../../../dom/events";
 import QUnit from "qunitjs";
 
-QUnit.module("dom/events/live()", {
+QUnit.module("dom/events/delegate()", {
     beforeEach: () =>
     {
         findOne("#qunit-fixture").innerHTML = `
@@ -19,13 +19,13 @@ QUnit.module("dom/events/live()", {
 
 
 QUnit.test(
-    "live()",
+    "delegate()",
     (assert) =>
     {
         assert.expect(2);
         const element = findOne("#element");
 
-        const intermediate = live(element, "*", "click", () => {
+        const intermediate = delegate(element, "*", "click", () => {
             assert.step("eventlistener could be removed after use");
             off(element, "click", intermediate);
         });
@@ -39,12 +39,12 @@ QUnit.test(
 
 
 QUnit.test(
-    "live() with matching selector",
+    "delegate() with matching selector",
     (assert) =>
     {
         assert.expect(2);
 
-        live(findOne("#element"), ".child", "click", () => {
+        delegate(findOne("#element"), ".child", "click", () => {
             assert.step("event triggered on child element");
         });
 
@@ -56,10 +56,10 @@ QUnit.test(
 
 
 QUnit.test(
-    "live() with non-matching selector",
+    "delegate() with non-matching selector",
     (assert) =>
     {
-        live(findOne("#element"), ".not-matching-class", "click", () => {
+        delegate(findOne("#element"), ".not-matching-class", "click", () => {
             assert.step("event triggered on child element");
         });
 
@@ -73,13 +73,13 @@ QUnit.test(
 
 
 QUnit.test(
-    "live(custom event)",
+    "delegate(custom event)",
     (assert) =>
     {
         assert.expect(1);
         const element = findOne("#element");
 
-        live(element, "*", "customEvent", () => {
+        delegate(element, "*", "customEvent", () => {
             assert.step("could call handler with a custom event");
         });
 
@@ -89,14 +89,14 @@ QUnit.test(
 
 
 QUnit.test(
-    "live(custom event) parsing an arbitrary object",
+    "delegate(custom event) parsing an arbitrary object",
     (assert) =>
     {
         assert.expect(1);
         const element = findOne("#element");
         const object = {some: "object"};
 
-        live(element, "*", "customEvent", (event) => {
+        delegate(element, "*", "customEvent", (event) => {
             assert.equal(event.detail, object, "arbitrary object was parsed");
         });
 
@@ -106,14 +106,14 @@ QUnit.test(
 
 
 QUnit.test(
-    "live(custom event) multiple event handler triggered by one event",
+    "delegate(custom event) multiple event handler triggered by one event",
     (assert) =>
     {
         const element = findOne("#element");
         const order = ["first handler", "second handler", "third handler", "fourth handler", "fifth handler"];
 
         order.forEach((value) => {
-            live(element, "*", "customEvent", () => {
+            delegate(element, "*", "customEvent", () => {
                 assert.step(value);
             });
         });
@@ -125,32 +125,32 @@ QUnit.test(
 
 
 QUnit.test(
-    "live() with an invalid element",
+    "delegate() with an invalid element",
     (assert) =>
     {
         assert.throws(() => {
-            live(null, "*", "customEvent", () => {});
+            delegate(null, "*", "customEvent", () => {});
         });
     }
 );
 
 
 QUnit.test(
-    "live() with an invalid selector",
+    "delegate() with an invalid selector",
     (assert) =>
     {
-        live(findOne("#element"), null, "customElement", () => {});
+        delegate(findOne("#element"), null, "customElement", () => {});
         assert.step("this should have worked because the behavior of the function in this case is not defined");
     }
 );
 
 
 QUnit.test(
-    "live() with an invalid event",
+    "delegate() with an invalid event",
     (assert) =>
     {
         assert.throws(() => {
-            live(findOne("#element"), "*", null, () => {});
+            delegate(findOne("#element"), "*", null, () => {});
         });
     }
 );

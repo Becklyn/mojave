@@ -2,7 +2,7 @@ import "../cases/date/compare";
 import "../cases/date/format";
 import "../cases/dom/clone/clone";
 import "../cases/dom/clone/duplicate";
-import "../cases/dom/events/live";
+import "../cases/dom/events/delegate";
 import "../cases/dom/events/off";
 import "../cases/dom/events/on";
 import "../cases/dom/events/once";

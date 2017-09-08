@@ -24,14 +24,15 @@ QUnit.test(
     {
         assert.expect(2);
         const element = findOne(".example");
+        const button = findOne("#button");
 
         const intermediate = delegate(element, "*", "click", () => {
             assert.step("event listener was triggered");
             off(element, "click", intermediate);
         });
 
-        element.click();
-        element.click();
+        button.click();
+        button.click();
         assert.step("event listener could be removed after use");
     }
 );

@@ -10,7 +10,7 @@ QUnit.module("dom/events/delegate()", {
     {
         findOne("#qunit-fixture").innerHTML = `
             <div id="element">
-                <div class="child"></div>
+                <div class="child first-child"></div>
                 <div class="child class-name"></div>
             </div>
         `;
@@ -24,6 +24,7 @@ QUnit.test(
     {
         assert.expect(2);
         const element = findOne("#element");
+        const child = findOne(".first-child");
 
         const intermediate = delegate(element, "*", "click", () => {
             assert.step("eventlistener could be removed after use");
@@ -32,8 +33,8 @@ QUnit.test(
 
         assert.equal(typeof intermediate, "function", "function was returned");
 
-        element.click();
-        element.click();
+        child.click();
+        child.click();
     }
 );
 
@@ -78,12 +79,13 @@ QUnit.test(
     {
         assert.expect(1);
         const element = findOne("#element");
+        const child = findOne(".first-child");
 
         delegate(element, "*", "customEvent", () => {
             assert.step("could call handler with a custom event");
         });
 
-        trigger(element, "customEvent");
+        trigger(child, "customEvent");
     }
 );
 
@@ -94,13 +96,14 @@ QUnit.test(
     {
         assert.expect(1);
         const element = findOne("#element");
+        const child = findOne(".first-child");
         const object = {some: "object"};
 
         delegate(element, "*", "customEvent", (event) => {
             assert.equal(event.detail, object, "arbitrary object was parsed");
         });
 
-        trigger(element, "customEvent", object);
+        trigger(child, "customEvent", object);
     }
 );
 
@@ -110,6 +113,7 @@ QUnit.test(
     (assert) =>
     {
         const element = findOne("#element");
+        const child = findOne(".first-child");
         const order = ["first handler", "second handler", "third handler", "fourth handler", "fifth handler"];
 
         order.forEach((value) => {
@@ -118,7 +122,7 @@ QUnit.test(
             });
         });
 
-        trigger(element, "customEvent");
+        trigger(child, "customEvent");
         assert.verifySteps(order, "tests ran in the right order");
     }
 );

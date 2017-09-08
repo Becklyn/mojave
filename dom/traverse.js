@@ -240,8 +240,7 @@ export function closest (element, selector)
 {
     let parent = element.parentNode;
 
-    /** @type {HTMLElement} node */
-    while (parent)
+    while (document !== parent)
     {
         if (parent.matches(selector))
         {

@@ -110,8 +110,8 @@ export function once (element, type, handler)
  * @param {Window|HTMLElement} element
  * @param {string} selector
  * @param {string} type
- * @param {function(*):*} handler
- * @return {function():*}
+ * @param {function(Event, HTMLElement)} handler
+ * @return {function(Event)}
  */
 export function delegate (element, selector, type, handler)
 {
@@ -121,7 +121,7 @@ export function delegate (element, selector, type, handler)
 
         if (null !== matchedDelegatedTarget)
         {
-            handler(event);
+            handler(event, matchedDelegatedTarget);
         }
     };
 

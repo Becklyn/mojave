@@ -143,7 +143,7 @@ function findDelegatedTarget (delegateElement, currentTarget, selector)
 {
     let node = currentTarget;
 
-    while (node !== delegateElement)
+    while (node !== delegateElement && node !== document)
     {
         if (node.matches(selector))
         {

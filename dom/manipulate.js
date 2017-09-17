@@ -1,6 +1,6 @@
+import {isElement} from "./utils";
 import {setAttrs} from "./attr";
 import {setStyles} from "./css";
-import {isElement} from "./utils";
 
 
 /**

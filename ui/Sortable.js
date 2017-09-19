@@ -1,6 +1,6 @@
 import {after, before} from "../dom/manipulate";
 import {delegate, on} from "../dom/events";
-import {find} from "../dom/traverse";
+import {closest, find} from "../dom/traverse";
 import {merge} from "../extend";
 import mitt from "mitt";
 import {setAttrs} from "../dom/attr";
@@ -72,7 +72,7 @@ export default class Sortable
      */
     init ()
     {
-        delegate(this.container, this.config.items, "mousedown", (event) => this.onInteractionStart(event));
+        delegate(this.container, `${this.config.items} ${this.config.handle}`, "mousedown", (event) => this.onInteractionStart(event));
         on(this.container, "dragstart", (event) => this.onDragStart(event));
         on(this.container, "dragover", (event) => this.onDragOver(event));
         on(this.container, "drop", (event) => this.onDragEnd(event));
@@ -87,7 +87,8 @@ export default class Sortable
      */
     onInteractionStart (event)
     {
-        setAttrs(event.target, {
+        const item = event.target.matches(this.config.items) ? event.target : closest(event.target, this.config.items);
+        setAttrs(item, {
             draggable: true,
         });
     }
@@ -133,13 +134,13 @@ export default class Sortable
 
         /** @type {HTMLElement} dropTarget */
         const dropTarget = event.target;
+        console.log(dropTarget.textContent);
         const draggedElement = this.currentInteraction.element;
 
         if (dropTarget === draggedElement)
         {
             return;
         }
-
 
         const dropRect = dropTarget.getBoundingClientRect();
         const rectDivider = dropRect.top + (dropRect.height / 2);

@@ -55,17 +55,6 @@ export default class Sortable
         this.emitter = mitt();
     }
 
-    /**
-     * @private
-     * @param {SortableConfig} config
-     *
-     * @returns {SortableConfig}
-     */
-    parseConfig (config)
-    {
-
-    }
-
 
     /**
      * Initializes the component

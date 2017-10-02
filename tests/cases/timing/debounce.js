@@ -15,7 +15,6 @@ QUnit.test(
     {
         assert.expect(1);
         const done = assert.async();
-        let called = 0;
         const debounced = debounce(
             () => {
                 assert.step("debounce called");

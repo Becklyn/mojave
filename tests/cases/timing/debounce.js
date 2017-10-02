@@ -11,14 +11,15 @@ QUnit.module("timing/debounce");
 
 QUnit.test(
     "only call debounced function once if called in short order",
-    function (assert)
+    (assert) =>
     {
         assert.expect(1);
         const done = assert.async();
         const debounced = debounce(
             () => {
                 assert.step("debounce called");
-                done(); // it should only be called once, so the first call is the last one
+                // it should only be called once, so the first call is the last one
+                done();
             },
             100
         );
@@ -32,7 +33,7 @@ QUnit.test(
 
 QUnit.test(
     "debounced functions can be called multiple times if the time between the calls is long enough",
-    function (assert)
+    (assert) =>
     {
         assert.expect(3);
         const done = assert.async();
@@ -58,7 +59,7 @@ QUnit.test(
 
 QUnit.test(
     "the debounce delay can be changed",
-    function (assert)
+    (assert) =>
     {
         assert.expect(2);
         const done = assert.async();

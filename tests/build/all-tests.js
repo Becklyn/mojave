@@ -1,3 +1,5 @@
+/* global QUnit */
+
 import "../cases/date/compare";
 import "../cases/date/format";
 import "../cases/dom/clone/clone";
@@ -27,8 +29,6 @@ import "../cases/dom/traverse/siblings";
 import "../cases/dom/utils/isElement";
 import "../cases/dom/utils/splitStringValue";
 import "../cases/extend/merge";
-import "../cases/dom/utils/isElement";
-import "../cases/dom/utils/splitStringValue";
 import "../cases/io/file";
 import "../cases/timing/debounce";
 import "../cases/url/Slug";

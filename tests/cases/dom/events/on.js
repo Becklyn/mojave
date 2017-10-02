@@ -11,7 +11,7 @@ QUnit.module("dom/events/on()", {
                 <input type="text" id="input-element">
             </div>
         `;
-    }
+    },
 });
 
 

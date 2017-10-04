@@ -15,6 +15,8 @@ import SortableInteraction from "./Sortable/SortableInteraction";
 
 /**
  * Generic sortable implementation
+ *
+ * @todo handle scrolling while dragging correctly
  */
 export default class Sortable
 {
@@ -141,7 +143,7 @@ export default class Sortable
         const orderHasChanged = this.interaction.orderHasChanged();
 
         // reset current interaction
-        const endAction = (false && event !== undefined)
+        const endAction = (event !== undefined)
             ? this.interaction.drop(event.pageX, event.pageY)
             : this.interaction.abort();
 

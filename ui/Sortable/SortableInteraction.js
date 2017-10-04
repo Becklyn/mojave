@@ -1,6 +1,6 @@
 import "../../polyfill/promise";
 import {EASE_OUT_CUBIC, animate} from "../../animation";
-import {before, remove} from "../../dom/manipulate";
+import {after, before, remove} from "../../dom/manipulate";
 import {duplicate} from "../../dom/clone";
 import {setStyles} from "../../dom/css";
 
@@ -180,6 +180,7 @@ export default class SortableInteraction
             top: this.draggedRect.top,
             width: this.draggedRect.width,
             height: this.draggedRect.height,
+            margin: 0,
         });
 
         this.updateMovementOfItems();
@@ -207,7 +208,21 @@ export default class SortableInteraction
         const top = y - this.itemDragOffset.y;
         const centerLeft = left + this.itemCenterOffset.width;
         const centerTop = top + this.itemCenterOffset.height;
-        this.findIntersection(centerLeft, centerTop);
+        const [isBefore, index] = this.findIntersection(centerLeft, centerTop);
+
+        if (null === isBefore)
+        {
+            this.deactivate(this.itemsAfter);
+            this.deactivate(this.itemsBefore);
+        }
+        else if (isBefore)
+        {
+            this.activateBefore(index);
+        }
+        else
+        {
+            this.activateAfter(index);
+        }
 
         // update position of dragged element
         setStyles(this.draggedItem, {left, top});
@@ -222,7 +237,7 @@ export default class SortableInteraction
      * @private
      * @param {number} centerLeft
      * @param {number} centerTop
-     * @returns {*}
+     * @returns {Array}
      */
     findIntersection (centerLeft, centerTop)
     {
@@ -236,7 +251,7 @@ export default class SortableInteraction
                 {
                     if (this.itemsBefore[i].rect.bottom >= centerTop)
                     {
-                        return this.activateBefore(i);
+                        return [true, i];
                     }
                 }
             }
@@ -246,16 +261,15 @@ export default class SortableInteraction
                 {
                     if (this.itemsAfter[i].rect.top > centerTop)
                     {
-                        return this.activateAfter(i - 1);
+                        return [false, i - 1];
                     }
                 }
 
-                return this.activateAfter(this.itemsAfter.length - 1);
+                return [false, this.itemsAfter.length - 1];
             }
         }
 
-        this.deactivate(this.itemsAfter);
-        this.deactivate(this.itemsBefore);
+        return [null, undefined];
     }
 
     activateBefore (index)
@@ -319,6 +333,45 @@ export default class SortableInteraction
 
 
     /**
+     *
+     * @param {number} x
+     * @param {number} y
+     */
+    drop (x, y)
+    {
+        const left = x - this.itemDragOffset.x;
+        const top = y - this.itemDragOffset.y;
+        const centerLeft = left + this.itemCenterOffset.width;
+        const centerTop = top + this.itemCenterOffset.height;
+
+        const [isBefore, index] = this.findIntersection(centerLeft, centerTop);
+
+        if (null === isBefore)
+        {
+            return this.abort();
+        }
+
+        const target = isBefore
+            ? this.itemsBefore[index]
+            : this.itemsAfter[index];
+
+        return this.resetStyles({
+            top: target.rect.top,
+            left: target.rect.left,
+        }, () => {
+            if (isBefore)
+            {
+                before(target.element, this.draggedItem);
+            }
+            else
+            {
+                after(target.element, this.draggedItem);
+            }
+        })
+    }
+
+
+    /**
      * Aborts the interaction
      *
      * @returns {Promise}
@@ -371,6 +424,7 @@ export default class SortableInteraction
                                 width: "",
                                 height: "",
                                 position: "relative",
+                                margin: "",
                             });
 
                             remove(this.placeholder);
@@ -389,6 +443,7 @@ export default class SortableInteraction
      */
     orderHasChanged ()
     {
+        // @todo implement me pliis kthxbai
         return true;
     }
 }

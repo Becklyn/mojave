@@ -158,7 +158,10 @@ export default class SortableInteraction
     }
 
 
-    setInitialState ()
+    /**
+     * Starts the interaction of the sortable
+     */
+    start ()
     {
         // prepare styles of items
         setStyles(this.allItems, {

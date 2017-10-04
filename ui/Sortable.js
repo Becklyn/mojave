@@ -89,7 +89,7 @@ export default class Sortable
         const allItems = find(this.config.items, this.container);
 
         this.interaction = new SortableInteraction(draggedItem, allItems, event.pageX, event.pageY);
-        this.interaction.setInitialState();
+        this.interaction.start();
 
         // prepare items
 

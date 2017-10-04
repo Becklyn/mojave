@@ -1,7 +1,6 @@
 import "../../polyfill/promise";
 import {EASE_OUT_CUBIC, animate} from "../../animation";
-import {after, before, remove} from "../../dom/manipulate";
-import {duplicate} from "../../dom/clone";
+import {after, before} from "../../dom/manipulate";
 import {setStyles} from "../../dom/css";
 
 /**
@@ -10,7 +9,8 @@ import {setStyles} from "../../dom/css";
  *      rect: ClientRect,
  *      isMoved: boolean,
  *      shouldBeMoved: boolean,
- *      movement: number,
+ *      initialPosition: number,
+ *      displacedPosition: number,
  * }} SortableInteractionItem
  */
 
@@ -18,13 +18,20 @@ import {setStyles} from "../../dom/css";
 export default class SortableInteraction
 {
     /**
+     * @param {HTMLElement} container
      * @param {HTMLElement} draggedItem
      * @param {HTMLElement[]} allItems
      * @param {number} interactionX
      * @param {number} interactionY
      */
-    constructor (draggedItem, allItems, interactionX, interactionY)
+    constructor (container, draggedItem, allItems, interactionX, interactionY)
     {
+        /**
+         * @private
+         * @type {HTMLElement}
+         */
+        this.container = container;
+
         /**
          * The dragged item
          *
@@ -110,31 +117,6 @@ export default class SortableInteraction
          * @type {SortableInteractionItem[]}
          */
         this.itemsAfter = this.allItems.slice(this.draggedIndex + 1).map(item => this.prepareItem(item, false));
-
-
-        /**
-         * @private
-         * @type {HTMLElement}
-         */
-        this.placeholder = this.createPlaceholder();
-    }
-
-
-    /**
-     * Creates a placeholder in place of the dragged item
-     *
-     * @private
-     * @returns {HTMLElement}
-     */
-    createPlaceholder ()
-    {
-        const placeholder = duplicate(this.draggedItem);
-        before(this.draggedItem, placeholder);
-        setStyles(placeholder, {
-            visibility: "hidden",
-        });
-
-        return placeholder;
     }
 
 
@@ -143,17 +125,18 @@ export default class SortableInteraction
      *
      * @private
      * @param {HTMLElement} item
-     * @param {boolean} movementDown
+     * @param {boolean} isBefore
      * @returns {SortableInteractionItem}
      */
-    prepareItem (item, movementDown)
+    prepareItem (item, isBefore)
     {
         return {
             element: item,
             rect: item.getBoundingClientRect(),
             isMoved: false,
             shouldBeMoved: false,
-            movement: this.movement * (movementDown ? 1 : -1),
+            initialPosition: isBefore ? 0 : this.movement,
+            displacedPosition: this.movement * (isBefore ? 1 : 0),
         };
     }
 
@@ -163,6 +146,11 @@ export default class SortableInteraction
      */
     start ()
     {
+        // force container size
+        setStyles(this.container, {
+            height: this.container.getBoundingClientRect().height,
+        });
+
         // prepare styles of items
         setStyles(this.allItems, {
             position: "relative",
@@ -171,6 +159,13 @@ export default class SortableInteraction
             "will-change": "transform",
             "box-sizing": "border-box",
         });
+
+        for (let i = 0; i < this.itemsAfter.length; i++)
+        {
+            setStyles(this.itemsAfter[i].element, {
+                transform: `translateY(${this.itemsAfter[i].initialPosition}px)`,
+            });
+        }
 
         // set style of dragged item
         setStyles(this.draggedItem, {
@@ -322,7 +317,7 @@ export default class SortableInteraction
 
             if (item.shouldBeMoved !== item.isMoved)
             {
-                const movement = item.shouldBeMoved ? item.movement : 0;
+                const movement = item.shouldBeMoved ? item.displacedPosition : item.initialPosition;
                 setStyles(item.element, {
                     transform: `translateY(${movement}px)`,
                 });
@@ -427,7 +422,10 @@ export default class SortableInteraction
                                 margin: "",
                             });
 
-                            remove(this.placeholder);
+                            setStyles(this.container, {
+                                height: "",
+                            });
+
                             resolve();
                         }
                     );

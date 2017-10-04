@@ -90,7 +90,7 @@ export default class Sortable
         const draggedItem = event.target.matches(this.config.items) ? event.target : closest(event.target, this.config.items);
         const allItems = find(this.config.items, this.container);
 
-        this.interaction = new SortableInteraction(draggedItem, allItems, event.pageX, event.pageY);
+        this.interaction = new SortableInteraction(this.container, draggedItem, allItems, event.pageX, event.pageY);
         this.interaction.start();
 
         // prepare items

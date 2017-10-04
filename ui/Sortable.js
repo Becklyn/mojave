@@ -1,9 +1,8 @@
-import {after, before} from "../dom/manipulate";
-import {delegate, on} from "../dom/events";
-import {closest, find} from "../dom/traverse";
+import {closest, find, findOne} from "../dom/traverse";
+import {delegate, off, on} from "../dom/events";
 import {merge} from "../extend";
 import mitt from "mitt";
-import {setAttrs} from "../dom/attr";
+import SortableInteraction from "./Sortable/SortableInteraction";
 
 
 /**
@@ -41,18 +40,23 @@ export default class Sortable
 
         /**
          * @private
-         * @type {?{
-         *      element: HTMLElement,
-         *      before: HTMLElement[],
-         * }}
+         * @type {?SortableInteraction}
          */
-        this.currentInteraction = null;
+        this.interaction = null;
 
         /**
          * @private
          * @type {mitt}
          */
         this.emitter = mitt();
+
+
+        // bind methods
+        this.listeners = {
+            move: this.onDragMove.bind(this),
+            end: this.onDragEnd.bind(this),
+            mouseOut: this.onMouseOut.bind(this),
+        };
     }
 
 
@@ -62,9 +66,9 @@ export default class Sortable
     init ()
     {
         delegate(this.container, `${this.config.items} ${this.config.handle}`, "mousedown", (event) => this.onInteractionStart(event));
-        on(this.container, "dragstart", (event) => this.onDragStart(event));
-        on(this.container, "dragover", (event) => this.onDragOver(event));
-        on(this.container, "drop", (event) => this.onDragEnd(event));
+        // on(this.container, "dragstart", (event) => this.onDragStart(event));
+        // on(this.container, "dragover", (event) => this.onDragOver(event));
+        // on(this.container, "drop", (event) => this.onDragEnd(event));
     }
 
 
@@ -76,120 +80,92 @@ export default class Sortable
      */
     onInteractionStart (event)
     {
-        const item = event.target.matches(this.config.items) ? event.target : closest(event.target, this.config.items);
-        setAttrs(item, {
-            draggable: true,
-        });
+        if (null !== this.interaction)
+        {
+            return;
+        }
+
+        const draggedItem = event.target.matches(this.config.items) ? event.target : closest(event.target, this.config.items);
+        const allItems = find(this.config.items, this.container);
+
+        this.interaction = new SortableInteraction(draggedItem, allItems, event.pageX, event.pageY);
+        this.interaction.setInitialState();
+
+        // prepare items
+
+        // register event listeners
+        on(document.body, "mousemove", this.listeners.move);
+        on(document.body, "mouseup", this.listeners.end);
+        on(window, "mouseout", this.listeners.mouseOut);
     }
 
 
     /**
-     * Callback on when a move started
+     * Event on when the input devices moved while dragging
      *
      * @private
      * @param {Event} event
      */
-    onDragStart (event)
+    onDragMove (event)
     {
-        // only allow at most one moved item at the same time
-        if (null !== this.currentInteraction)
-        {
-            this.onDragEnd();
-        }
-
-        this.currentInteraction = {
-            element: event.target,
-            before: find(this.config.items, this.container),
-        };
-    }
-
-
-    /**
-     * Callback on when the dragged element enters another element
-     *
-     * @private
-     * @param {DragEvent|Event} event
-     */
-    onDragOver (event)
-    {
-        // allow dropping of elements
-        event.preventDefault();
-
-        // abort if there is no drag interaction ongoing
-        if (null === this.currentInteraction)
+        if (null === this.interaction)
         {
             return;
         }
 
-        /** @type {HTMLElement} dropTarget */
-        const dropTarget = event.target;
-        console.log(dropTarget.textContent);
-        const draggedElement = this.currentInteraction.element;
+        this.interaction.onMove(event.pageX, event.pageY);
+    }
 
-        if (dropTarget === draggedElement)
+
+    /**
+     * Event on when the dragging ended
+     *
+     * @private
+     * @param {?Event} event
+     */
+    onDragEnd (event)
+    {
+        if (null === this.interaction)
         {
             return;
         }
 
-        const dropRect = dropTarget.getBoundingClientRect();
-        const rectDivider = dropRect.top + (dropRect.height / 2);
+        // remove event listeners
+        off(document.body, "mousemove", this.listeners.move);
+        off(document.body, "mouseup", this.listeners.end);
+        off(window, "mouseout", this.listeners.mouseOut);
 
-        if (event.pageY > rectDivider && dropTarget.previousElementSibling === draggedElement)
-        {
-            after(dropTarget, draggedElement);
-        }
-        else if (event.pageY < rectDivider && dropTarget.nextElementSibling === draggedElement)
-        {
-            before(dropTarget, draggedElement);
-        }
-    }
-
-
-    /**
-     * Callback on when a move ended
-     *
-     * @private
-     */
-    onDragEnd ()
-    {
-        if (null !== this.currentInteraction)
-        {
-            // check for state changes
-            this.triggerChangeEvent();
-
-            // reset state
-            setAttrs(this.currentInteraction.element, {
-                draggable: false,
-            });
-
-            this.currentInteraction = null;
-        }
-    }
-
-
-    /**
-     * Triggers the change event, if the order of the items has changed
-     *
-     * @private
-     */
-    triggerChangeEvent ()
-    {
+        // check for state changes
         // reload all items and check whether the order has changed
         const currentItems = find(this.config.items, this.container);
-        let orderChanged = false;
+        const orderHasChanged = this.interaction.orderHasChanged();
 
-        for (let i = 0; i < currentItems.length; i++)
-        {
-            if (currentItems[i] !== this.currentInteraction.before[i])
-            {
-                orderChanged = true;
-                break;
-            }
-        }
+        // reset current interaction
+        const endAction = (false && event !== undefined)
+            ? this.interaction.drop(event.pageX, event.pageY)
+            : this.interaction.abort();
 
-        if (orderChanged)
+        endAction
+            .then(
+                () => {
+                    // reset interaction
+                    this.interaction = null;
+
+                    if (orderHasChanged)
+                    {
+                        this.emitter.emit("changed", {items: currentItems});
+                    }
+                }
+            );
+    }
+
+
+    onMouseOut (event)
+    {
+        const html = findOne("html");
+        if (event.relatedTarget === html && event.toElement === html)
         {
-            this.emitter.emit("changed", {items: currentItems});
+            this.onDragEnd();
         }
     }
 

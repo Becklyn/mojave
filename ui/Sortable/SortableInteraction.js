@@ -226,7 +226,7 @@ export default class SortableInteraction
         if (0 === this.draggedIndex && this.itemsAfter[0] !== undefined)
         {
             setStyles(this.itemsAfter[0].element, {
-                "margin": 0,
+                margin: 0,
             });
         }
 
@@ -264,7 +264,10 @@ export default class SortableInteraction
         this.activateList(list, itemIndex);
 
         // update position of dragged element
-        setStyles(this.draggedItem, {left, top});
+        setStyles(this.draggedItem, {
+            left,
+            top,
+        });
 
         this.updateMovementOfItems();
     }
@@ -328,7 +331,16 @@ export default class SortableInteraction
 
         for (let i = 0; i < activeList.length; i++)
         {
-            activeList[i].shouldBeMoved = null === activeIndex ? false : (isBeforeList ? (i >= activeIndex) : (i <= activeIndex));
+            if (null === activeIndex)
+            {
+                activeList[i].shouldBeMoved = false;
+            }
+            else
+            {
+                activeList[i].shouldBeMoved = isBeforeList
+                    ? (i >= activeIndex)
+                    : (i <= activeIndex);
+            }
         }
 
         for (let i = 0; i < inactiveList.length; i++)
@@ -351,7 +363,6 @@ export default class SortableInteraction
             const item = items[i];
             item.top = item.rect.top - delta;
             item.bottom = item.rect.bottom - delta;
-            item.left = item.rect.left - delta;
         }
     }
 
@@ -399,14 +410,16 @@ export default class SortableInteraction
         }
 
         const target = list[itemIndex];
-        const updateMethod = list === this.itemsBefore ? before : after;
+        const updateMethod = list === this.itemsBefore
+            ? before
+            : after;
 
         return this.resetStyles({
             top: target.top,
             left: target.left,
         }, () => {
             updateMethod(target.element, this.draggedItem);
-        })
+        });
     }
 
 
@@ -442,7 +455,7 @@ export default class SortableInteraction
                     animateTo,
                     {
                         duration: 200,
-                        easing: EASE_OUT_CUBIC
+                        easing: EASE_OUT_CUBIC,
                     }
                 );
 

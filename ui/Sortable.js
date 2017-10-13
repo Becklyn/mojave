@@ -48,7 +48,7 @@ export default class Sortable
 
         /**
          * @private
-         * @type {mitt}
+         * @type {mitt.Emitter}
          */
         this.emitter = mitt();
 
@@ -99,6 +99,7 @@ export default class Sortable
         on(document.body, "mouseup", this.listeners.end);
         on(window, "mouseout", this.listeners.mouseOut);
 
+        this.emitter.emit("start", [draggedItem]);
         event.preventDefault();
     }
 
@@ -154,10 +155,14 @@ export default class Sortable
                     // reset interaction
                     this.interaction = null;
 
+                    // trigger end event
+                    this.emitter.emit("end");
+
                     if (orderHasChanged)
                     {
                         this.emitter.emit("changed", {items: currentItems});
                     }
+
                 }
             );
     }

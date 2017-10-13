@@ -144,7 +144,7 @@ export default class Sortable
 
         // reset current interaction
         const endAction = (event !== undefined)
-            ? this.interaction.drop(event.pageX, event.pageY)
+            ? this.interaction.drop(event.screenX, event.screenY)
             : this.interaction.abort();
 
         endAction

@@ -8,6 +8,8 @@ import {setStyles} from "../../dom/css";
  * @typedef {{
  *      element: HTMLElement,
  *      rect: ClientRect,
+ *      top: number,
+ *      left: number,
  *      isMoved: boolean,
  *      shouldBeMoved: boolean,
  *      initialPosition: number,
@@ -96,6 +98,12 @@ export default class SortableInteraction
          */
         this.hasMovedBefore = false;
 
+        /**
+         * @private
+         * @type {Number}
+         */
+        this.startScrollPosition = window.pageYOffset;
+
 
         const displacement = this.calculateDisplacement();
 
@@ -137,9 +145,14 @@ export default class SortableInteraction
      */
     prepareItem (item, initialPosition, displacedPosition)
     {
+        const rect = item.getBoundingClientRect();
+
         return {
             element: item,
-            rect: item.getBoundingClientRect(),
+            rect: rect,
+            top: rect.top,
+            left: rect.left,
+            bottom: rect.bottom,
             isMoved: false,
             shouldBeMoved: false,
             initialPosition: initialPosition,
@@ -245,10 +258,10 @@ export default class SortableInteraction
         }
 
         const {left, top, centerLeft, centerTop} = this.calculateOffsets(x, y);
-        const [listIndex, itemIndex] = this.findIntersection(centerLeft, centerTop);
+        const [list, itemIndex] = this.findIntersection(centerLeft, centerTop);
 
         // activate list
-        this.activateList(listIndex, itemIndex);
+        this.activateList(list, itemIndex);
 
         // update position of dragged element
         setStyles(this.draggedItem, {left, top});
@@ -265,7 +278,7 @@ export default class SortableInteraction
      * @private
      * @param {number} centerLeft
      * @param {number} centerTop
-     * @returns {[number, ?number]}
+     * @returns {[SortableInteractionItem[], ?number]}
      */
     findIntersection (centerLeft, centerTop)
     {
@@ -273,21 +286,21 @@ export default class SortableInteraction
         // check whether the dragged item is out of bounds on the X axis
         if (this.draggedRect.left <= centerLeft && this.draggedRect.right >= centerLeft)
         {
-            if (0 !== this.itemsBefore.length && this.itemsBefore[0].rect.top <= centerTop && this.itemsBefore[this.itemsBefore.length - 1].rect.bottom >= centerTop)
+            if (0 !== this.itemsBefore.length && this.itemsBefore[0].top <= centerTop && this.itemsBefore[this.itemsBefore.length - 1].bottom >= centerTop)
             {
                 for (let i = 0; i < this.itemsBefore.length; i++)
                 {
-                    if (this.itemsBefore[i].rect.bottom >= centerTop)
+                    if (this.itemsBefore[i].bottom >= centerTop)
                     {
                         return [this.itemsBefore, i];
                     }
                 }
             }
-            else if (0 !== this.itemsAfter.length && this.itemsAfter[0].rect.top <= centerTop && this.itemsAfter[this.itemsAfter.length - 1].rect.bottom >= centerTop)
+            else if (0 !== this.itemsAfter.length && this.itemsAfter[0].top <= centerTop && this.itemsAfter[this.itemsAfter.length - 1].bottom >= centerTop)
             {
                 for (let i = 0; i < this.itemsAfter.length; i++)
                 {
-                    if (this.itemsAfter[i].rect.top > centerTop)
+                    if (this.itemsAfter[i].top > centerTop)
                     {
                         return [this.itemsAfter, i - 1];
                     }
@@ -321,6 +334,24 @@ export default class SortableInteraction
         for (let i = 0; i < inactiveList.length; i++)
         {
             inactiveList[i].shouldBeMoved = false;
+        }
+    }
+
+
+    /**
+     * Scroll handler
+     */
+    onScroll ()
+    {
+        const items = this.itemsAfter.concat(this.itemsBefore);
+        const delta = window.pageYOffset - this.startScrollPosition;
+
+        for (let i = 0; i < items.length; i++)
+        {
+            const item = items[i];
+            item.top = item.rect.top - delta;
+            item.bottom = item.rect.bottom - delta;
+            item.left = item.rect.left - delta;
         }
     }
 
@@ -371,8 +402,8 @@ export default class SortableInteraction
         const updateMethod = list === this.itemsBefore ? before : after;
 
         return this.resetStyles({
-            top: target.rect.top,
-            left: target.rect.left,
+            top: target.top,
+            left: target.left,
         }, () => {
             updateMethod(target.element, this.draggedItem);
         })
@@ -386,8 +417,10 @@ export default class SortableInteraction
      */
     abort ()
     {
+        const delta = window.pageYOffset - this.startScrollPosition;
+
         return this.resetStyles({
-            top: this.draggedRect.top,
+            top: this.draggedRect.top - delta,
             left: this.draggedRect.left,
         });
     }

@@ -15,8 +15,6 @@ import SortableInteraction from "./Sortable/SortableInteraction";
 
 /**
  * Generic sortable implementation
- *
- * @todo handle scrolling while dragging correctly
  */
 export default class Sortable
 {
@@ -63,6 +61,7 @@ export default class Sortable
             move: this.onDragMove.bind(this),
             end: this.onDragEnd.bind(this),
             mouseOut: this.onMouseOut.bind(this),
+            scroll: this.onScroll.bind(this),
         };
     }
 
@@ -91,7 +90,7 @@ export default class Sortable
 
         const draggedItem = event.target.matches(this.config.items) ? event.target : closest(event.target, this.config.items);
 
-        this.interaction = new SortableInteraction(this.container, draggedItem, this.config.items, event.pageX, event.pageY);
+        this.interaction = new SortableInteraction(this.container, draggedItem, this.config.items, event.screenX, event.screenY);
         this.interaction.start();
 
         // prepare items
@@ -100,6 +99,7 @@ export default class Sortable
         on(document.body, "mousemove", this.listeners.move);
         on(document.body, "mouseup", this.listeners.end);
         on(window, "mouseout", this.listeners.mouseOut);
+        on(window, "scroll", this.listeners.scroll);
 
         this.emitter.emit("start", [draggedItem]);
         event.preventDefault();
@@ -119,7 +119,7 @@ export default class Sortable
             return;
         }
 
-        this.interaction.onMove(event.pageX, event.pageY);
+        this.interaction.onMove(event.screenX, event.screenY);
     }
 
 
@@ -140,6 +140,7 @@ export default class Sortable
         off(document.body, "mousemove", this.listeners.move);
         off(document.body, "mouseup", this.listeners.end);
         off(window, "mouseout", this.listeners.mouseOut);
+        off(window, "scroll", this.listeners.scroll);
 
         // reset current interaction
         const endAction = (event !== undefined)
@@ -183,6 +184,16 @@ export default class Sortable
         {
             this.onDragEnd();
         }
+    }
+
+    /**
+     * Callback on scroll
+     *
+     * @private
+     */
+    onScroll ()
+    {
+        this.interaction.onScroll();
     }
 
 

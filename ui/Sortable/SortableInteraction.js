@@ -16,10 +16,6 @@ import {setStyles} from "../../dom/css";
  */
 
 
-const ITEMS_BEFORE = 0;
-const ITEMS_AFTER = 1;
-
-
 export default class SortableInteraction
 {
     /**
@@ -102,19 +98,18 @@ export default class SortableInteraction
 
 
         const displacement = this.calculateDisplacement();
+
         /**
-         * All items, sorted whether they are before or after the dragged element
-         *
-         * Index 0 -> before dragged element
-         * Index 1 -> after dragged element
-         *
          * @private
-         * @type {[SortableInteractionItem[], SortableInteractionItem[]]}
+         * @type {SortableInteractionItem[]}
          */
-        this.items = [
-            this.allItems.slice(0, this.draggedIndex).map(item => this.prepareItem(item, 0, displacement)),
-            this.allItems.slice(this.draggedIndex + 1).map(item => this.prepareItem(item, displacement, 0)),
-        ];
+        this.itemsBefore = this.allItems.slice(0, this.draggedIndex).map(item => this.prepareItem(item, 0, displacement));
+
+        /**
+         * @private
+         * @type {SortableInteractionItem[]}
+         */
+        this.itemsAfter = this.allItems.slice(this.draggedIndex + 1).map(item => this.prepareItem(item, displacement, 0));
     }
 
 
@@ -193,7 +188,7 @@ export default class SortableInteraction
             "box-sizing": "border-box",
         });
 
-        this.items[ITEMS_AFTER].forEach(
+        this.itemsAfter.forEach(
             (item) => setStyles(item.element, {
                 transform: `translateY(${item.initialPosition}px)`,
             })
@@ -215,9 +210,9 @@ export default class SortableInteraction
         });
 
         // fix margin if dragged item is first item
-        if (0 === this.draggedIndex && this.items[ITEMS_AFTER][0] !== undefined)
+        if (0 === this.draggedIndex && this.itemsAfter[0] !== undefined)
         {
-            setStyles(this.items[ITEMS_AFTER][0].element, {
+            setStyles(this.itemsAfter[0].element, {
                 "margin": 0,
             });
         }
@@ -265,6 +260,8 @@ export default class SortableInteraction
     /**
      * Finds the intersection
      *
+     * Returns the active list and the active index. If the index is `null`, no item is active.
+     *
      * @private
      * @param {number} centerLeft
      * @param {number} centerTop
@@ -276,50 +273,47 @@ export default class SortableInteraction
         // check whether the dragged item is out of bounds on the X axis
         if (this.draggedRect.left <= centerLeft && this.draggedRect.right >= centerLeft)
         {
-            const before = this.items[ITEMS_BEFORE];
-            const after = this.items[ITEMS_AFTER];
-
-            if (0 !== before.length && before[0].rect.top <= centerTop && before[before.length - 1].rect.bottom >= centerTop)
+            if (0 !== this.itemsBefore.length && this.itemsBefore[0].rect.top <= centerTop && this.itemsBefore[this.itemsBefore.length - 1].rect.bottom >= centerTop)
             {
-                for (let i = 0; i < before.length; i++)
+                for (let i = 0; i < this.itemsBefore.length; i++)
                 {
-                    if (before[i].rect.bottom >= centerTop)
+                    if (this.itemsBefore[i].rect.bottom >= centerTop)
                     {
-                        return [ITEMS_BEFORE, i];
+                        return [this.itemsBefore, i];
                     }
                 }
             }
-            else if (0 !== after.length && after[0].rect.top <= centerTop && after[after.length - 1].rect.bottom >= centerTop)
+            else if (0 !== this.itemsAfter.length && this.itemsAfter[0].rect.top <= centerTop && this.itemsAfter[this.itemsAfter.length - 1].rect.bottom >= centerTop)
             {
-                for (let i = 0; i < after.length; i++)
+                for (let i = 0; i < this.itemsAfter.length; i++)
                 {
-                    if (after[i].rect.top > centerTop)
+                    if (this.itemsAfter[i].rect.top > centerTop)
                     {
-                        return [ITEMS_AFTER, i - 1];
+                        return [this.itemsAfter, i - 1];
                     }
                 }
 
-                return [ITEMS_AFTER, after.length - 1];
+                return [this.itemsAfter, this.itemsAfter.length - 1];
             }
         }
 
-        return [ITEMS_BEFORE, null];
+        return [this.itemsBefore, null];
     }
 
 
     /**
      * Activates the given list
-     * @param listIndex
+     * @param activeList
      * @param activeIndex
      */
-    activateList (listIndex, activeIndex)
+    activateList (activeList, activeIndex)
     {
-        const activeList = this.items[listIndex];
-        const inactiveList = this.items[ Math.abs(listIndex - 1) ];
+        const isBeforeList = activeList === this.itemsBefore;
+        const inactiveList = isBeforeList ? this.itemsAfter : this.itemsBefore;
 
         for (let i = 0; i < activeList.length; i++)
         {
-            activeList[i].shouldBeMoved = null === activeIndex ? false : (listIndex === ITEMS_BEFORE ? (i >= activeIndex) : (i <= activeIndex));
+            activeList[i].shouldBeMoved = null === activeIndex ? false : (isBeforeList ? (i >= activeIndex) : (i <= activeIndex));
         }
 
         for (let i = 0; i < inactiveList.length; i++)
@@ -336,22 +330,19 @@ export default class SortableInteraction
      */
     updateMovementOfItems ()
     {
-        for (let listIndex = ITEMS_BEFORE; listIndex <= ITEMS_AFTER; listIndex++)
+        const list = this.itemsBefore.concat(this.itemsAfter);
+
+        for (let i = 0; i < list.length; i++)
         {
-            const list = this.items[listIndex];
+            const item = list[i];
 
-            for (let i = 0; i < list.length; i++)
+            if (item.shouldBeMoved !== item.isMoved)
             {
-                const item = list[i];
-
-                if (item.shouldBeMoved !== item.isMoved)
-                {
-                    const movement = item.shouldBeMoved ? item.displacedPosition : item.initialPosition;
-                    setStyles(item.element, {
-                        transform: `translateY(${movement}px)`,
-                    });
-                    item.isMoved = item.shouldBeMoved;
-                }
+                const movement = item.shouldBeMoved ? item.displacedPosition : item.initialPosition;
+                setStyles(item.element, {
+                    transform: `translateY(${movement}px)`,
+                });
+                item.isMoved = item.shouldBeMoved;
             }
         }
     }
@@ -366,21 +357,21 @@ export default class SortableInteraction
     drop (x, y)
     {
         const {centerLeft, centerTop} = this.calculateOffsets(x, y);
-        const [listIndex, itemIndex] = this.findIntersection(centerLeft, centerTop);
+        const [list, itemIndex] = this.findIntersection(centerLeft, centerTop);
 
         if (null === itemIndex)
         {
             return this.abort();
         }
 
-        const target = this.items[listIndex][itemIndex];
-        const updateMethod = [before, after];
+        const target = list[itemIndex];
+        const updateMethod = list === this.itemsBefore ? before : after;
 
         return this.resetStyles({
             top: target.rect.top,
             left: target.rect.left,
         }, () => {
-            updateMethod[listIndex](target.element, this.draggedItem);
+            updateMethod(target.element, this.draggedItem);
         })
     }
 

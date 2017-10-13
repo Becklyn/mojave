@@ -99,6 +99,8 @@ export default class Sortable
         on(document.body, "mousemove", this.listeners.move);
         on(document.body, "mouseup", this.listeners.end);
         on(window, "mouseout", this.listeners.mouseOut);
+
+        event.preventDefault();
     }
 
 

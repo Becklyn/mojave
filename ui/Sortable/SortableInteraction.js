@@ -303,8 +303,10 @@ export default class SortableInteraction
 
     /**
      * Activates the given list
-     * @param activeList
-     * @param activeIndex
+     *
+     * @private
+     * @param {SortableInteractionItem[]} activeList
+     * @param {?number} activeIndex
      */
     activateList (activeList, activeIndex)
     {
@@ -353,6 +355,7 @@ export default class SortableInteraction
      *
      * @param {number} x
      * @param {number} y
+     * @returns {Promise}
      */
     drop (x, y)
     {

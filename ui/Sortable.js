@@ -53,7 +53,12 @@ export default class Sortable
         this.emitter = mitt();
 
 
-        // bind methods
+        /**
+         * Bind methods
+         *
+         * @private
+         * @type {{move: (function(this:Sortable)), end: (function(this:Sortable)), mouseOut: (function(this:Sortable))}}
+         */
         this.listeners = {
             move: this.onDragMove.bind(this),
             end: this.onDragEnd.bind(this),
@@ -68,9 +73,6 @@ export default class Sortable
     init ()
     {
         delegate(this.container, `${this.config.items} ${this.config.handle}`, "mousedown", (event) => this.onInteractionStart(event));
-        // on(this.container, "dragstart", (event) => this.onDragStart(event));
-        // on(this.container, "dragover", (event) => this.onDragOver(event));
-        // on(this.container, "drop", (event) => this.onDragEnd(event));
     }
 
 
@@ -125,7 +127,7 @@ export default class Sortable
      * Event on when the dragging ended
      *
      * @private
-     * @param {?Event} event
+     * @param {Event=} event
      */
     onDragEnd (event)
     {
@@ -168,6 +170,12 @@ export default class Sortable
     }
 
 
+    /**
+     * Callback on when the mouse leaves the window
+     *
+     * @private
+     * @param {Event} event
+     */
     onMouseOut (event)
     {
         const html = findOne("html");

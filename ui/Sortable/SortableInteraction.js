@@ -1,6 +1,7 @@
 import "../../polyfill/promise";
 import {EASE_OUT_CUBIC, animate} from "../../animation";
 import {after, before} from "../../dom/manipulate";
+import {find} from "../../dom/traverse";
 import {setStyles} from "../../dom/css";
 
 /**
@@ -20,11 +21,11 @@ export default class SortableInteraction
     /**
      * @param {HTMLElement} container
      * @param {HTMLElement} draggedItem
-     * @param {HTMLElement[]} allItems
+     * @param {string} itemSelector
      * @param {number} interactionX
      * @param {number} interactionY
      */
-    constructor (container, draggedItem, allItems, interactionX, interactionY)
+    constructor (container, draggedItem, itemSelector, interactionX, interactionY)
     {
         /**
          * @private
@@ -49,20 +50,26 @@ export default class SortableInteraction
         this.draggedRect = draggedItem.getBoundingClientRect();
 
         /**
-         * The index of the dragged item
-         *
-         * @private
-         * @type {number}
-         */
-        this.draggedIndex = allItems.indexOf(draggedItem);
-
-        /**
          * The list of all items
          *
          * @private
          * @type {HTMLElement[]}
          */
-        this.allItems = allItems;
+        this.allItems = find(itemSelector, this.container);
+
+        /**
+         * The index of the dragged item
+         *
+         * @private
+         * @type {number}
+         */
+        this.draggedIndex = this.allItems.indexOf(draggedItem);
+
+        /**
+         * @private
+         * @type {HTMLElement[]}
+         */
+        this.containedIFrames = find(`${itemSelector} iframe`, this.container);
 
         /**
          * The offset of the mouse inside the dragged item to the top left corner of it
@@ -176,6 +183,10 @@ export default class SortableInteraction
             width: this.draggedRect.width,
             height: this.draggedRect.height,
             margin: 0,
+        });
+
+        setStyles(this.containedIFrames, {
+            "pointer-events": "none",
         });
 
         this.updateMovementOfItems();
@@ -420,6 +431,10 @@ export default class SortableInteraction
                                 height: "",
                                 position: "relative",
                                 margin: "",
+                            });
+
+                            setStyles(this.containedIFrames, {
+                                "pointer-events": "",
                             });
 
                             setStyles(this.container, {

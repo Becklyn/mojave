@@ -139,11 +139,6 @@ export default class Sortable
         off(document.body, "mouseup", this.listeners.end);
         off(window, "mouseout", this.listeners.mouseOut);
 
-        // check for state changes
-        // reload all items and check whether the order has changed
-        const currentItems = find(this.config.items, this.container);
-        const orderHasChanged = this.interaction.orderHasChanged();
-
         // reset current interaction
         const endAction = (event !== undefined)
             ? this.interaction.drop(event.pageX, event.pageY)
@@ -152,6 +147,11 @@ export default class Sortable
         endAction
             .then(
                 () => {
+                    // check for state changes
+                    // reload all items and check whether the order has changed
+                    const currentItems = find(this.config.items, this.container);
+                    const orderHasChanged = this.interaction.orderHasChanged();
+
                     // reset interaction
                     this.interaction = null;
 

@@ -42,6 +42,12 @@ export default class SortableInteraction
         this.draggedItem = draggedItem;
 
         /**
+         * @private
+         * @type {string}
+         */
+        this.itemSelector = itemSelector;
+
+        /**
          * The rect of the dragged item
          *
          * @private
@@ -387,8 +393,6 @@ export default class SortableInteraction
         return this.resetStyles({
             top: this.draggedRect.top,
             left: this.draggedRect.left,
-        }, () => {
-            console.log("Styles about to reset.");
         });
     }
 
@@ -397,7 +401,7 @@ export default class SortableInteraction
      * @private
      *
      * @param {Object} animateTo
-     * @param {?function} endAnimationCallback
+     * @param {function=} endAnimationCallback
      * @returns {Promise}
      */
     resetStyles (animateTo, endAnimationCallback)
@@ -456,7 +460,16 @@ export default class SortableInteraction
      */
     orderHasChanged ()
     {
-        // @todo implement me pliis kthxbai
-        return true;
+        const items = find(this.itemSelector, this.container);
+
+        for (let i = 0; i < items.length; i++)
+        {
+            if (items[i] !== this.allItems[i])
+            {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

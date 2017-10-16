@@ -11,13 +11,13 @@ import {setStyles} from "./css";
  */
 function parseHtml (html)
 {
-    const doc = document.implementation.createHTMLDocument("");
-    doc.body.innerHTML = html;
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(html, "text/html");
     const children = doc.body.children;
 
-    if (children.length > 1)
+    if (children.length !== 1)
     {
-        throw new Error("Can't parse HTML with more than one root elements.");
+        throw new Error("Can only parse HTML with exactly one valid root element. A valid element can stand on its own in the body.");
     }
 
     return children[0];

@@ -123,3 +123,29 @@ QUnit.test(
         );
     }
 );
+
+
+QUnit.test(
+    "with string input",
+    (assert) =>
+    {
+        const element = createElement(`<p class="test">test</p>`);
+        assert.equal("P", element.tagName);
+        assert.equal("test", element.textContent);
+        assert.ok(element.classList.contains("test"));
+    }
+);
+
+
+QUnit.test(
+    "with invalid root node",
+    (assert) =>
+    {
+        assert.throws(
+            () => {
+                createElement(`<th class="test">test</th>`);
+            },
+            "function threw an error"
+        );
+    }
+);

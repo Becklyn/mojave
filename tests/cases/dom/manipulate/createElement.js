@@ -34,7 +34,7 @@ QUnit.test(
     {
         assert.throws(
             () => {
-                const element = createElement(null);
+                createElement(null);
             },
             "function threw an error"
         );
@@ -48,7 +48,7 @@ QUnit.test(
     {
         assert.throws(
             () => {
-                const element = createElement("");
+                createElement("");
             },
             "function threw an error"
         );
@@ -117,7 +117,7 @@ QUnit.test(
     {
         assert.throws(
             () => {
-                const element = createElement("div", null);
+                createElement("div", null);
             },
             "function threw an error"
         );

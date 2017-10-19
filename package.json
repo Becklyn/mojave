@@ -33,6 +33,7 @@
     },
     "dependencies": {
         "mitt": "^1.1.2",
-        "promiscuous": "^0.7.0"
+        "promiscuous": "^0.7.0",
+        "unfetch": "^3.0.0"
     }
 }

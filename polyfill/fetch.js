@@ -1,4 +1,4 @@
-import "mojave/polyfill/Promise";
+import "mojave/polyfill/promise";
 import "unfetch/polyfill";
 
 export default window.fetch;

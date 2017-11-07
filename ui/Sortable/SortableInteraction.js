@@ -1,4 +1,5 @@
 import "../../polyfill/promise";
+import TrHandler from "./GhostHandler/TrHandler";
 import {EASE_OUT_CUBIC, animate} from "../../animation";
 import {after, before} from "../../dom/manipulate";
 import {find} from "../../dom/traverse";
@@ -78,6 +79,12 @@ export default class SortableInteraction
          * @type {HTMLElement[]}
          */
         this.containedIFrames = find(`${itemSelector} iframe`, this.container);
+
+        /**
+         * @private
+         * @type {?GhostHandler}
+         */
+        this.ghostHandler = null;
 
         /**
          * The offset of the mouse inside the dragged item to the top left corner of it
@@ -187,6 +194,18 @@ export default class SortableInteraction
      */
     start ()
     {
+        switch (this.draggedItem.tagName)
+        {
+            case "TR":
+                this.ghostHandler = new TrHandler(this.draggedItem);
+                break;
+        }
+
+        if (null !== this.ghostHandler)
+        {
+            this.ghostHandler.onStart();
+        }
+
         // force container size
         setStyles(this.container, {
             height: this.container.getBoundingClientRect().height,
@@ -466,6 +485,11 @@ export default class SortableInteraction
                             if (endAnimationCallback !== undefined)
                             {
                                 endAnimationCallback();
+                            }
+
+                            if (null !== this.ghostHandler)
+                            {
+                                this.ghostHandler.onEnd();
                             }
 
                             setStyles(this.allItems, {

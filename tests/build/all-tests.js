@@ -30,6 +30,7 @@ import "../cases/dom/utils/isElement";
 import "../cases/dom/utils/splitStringValue";
 import "../cases/extend/merge";
 import "../cases/io/file";
+import "../cases/string/manipulate/replaceAll";
 import "../cases/timing/debounce";
 import "../cases/url/Slug";
 

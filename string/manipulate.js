@@ -1,15 +1,8 @@
 /**
- * @typedef {{
- *      string: string,
- * }|Object} mojave.replacementStringObject
- */
-
-
-/**
- * Replaces all occurrences of a given matching string with a given replacement string
+ * Replaces all occurrences of substrings in the given string.
  *
- * @param {string}                         text
- * @param {mojave.replacementStringObject} replacements
+ * @param {string}                text
+ * @param {Object<string,string>} replacements
  *
  * @returns {string}
  */

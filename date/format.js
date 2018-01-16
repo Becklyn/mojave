@@ -72,3 +72,27 @@ export function formatRelative (date, referenceDate = null)
 
     return "";
 }
+
+
+/**
+ * Formats the date in the little endion format (DD.MM.YYYY)
+ *
+ * @param {Date} date
+ * @return {string}
+ */
+export function formatDate (date)
+{
+    return `${zeroFill(date.getDate())}.${zeroFill(date.getMonth() + 1)}.${date.getFullYear()}`;
+}
+
+
+/**
+ * Prefixes a single digit number with a zero
+ *
+ * @param {number} value
+ * @return {string}
+ */
+function zeroFill (value)
+{
+    return value < 10 ? `0${value}` : value;
+}

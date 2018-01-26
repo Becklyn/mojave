@@ -75,21 +75,21 @@ export function setStyles (elements, styles)
                 continue;
             }
 
+            // don't transform custom properties
+            if (CUSTOM_PROPERTY_REGEX.test(property))
+            {
+                style.setProperty(property, value);
+                continue;
+            }
+
             // add "px" to all numbers of dimensional values
             if (typeof styles[property] === "number" && false === IS_NON_DIMENSIONAL.test(property))
             {
                 value += "px";
             }
 
-            if (CUSTOM_PROPERTY_REGEX.test(property))
-            {
-                style.setProperty(property, value);
-            }
-            else
-            {
-                property = normalizeProperty(property);
-                style[property] = value;
-            }
+            property = normalizeProperty(property);
+            style[property] = value;
         }
     }
 }

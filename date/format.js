@@ -87,6 +87,18 @@ export function formatDate (date)
 
 
 /**
+ * Formats the date in the little endion format (DD.MM.) without the year
+ *
+ * @param {Date} date
+ * @return {string}
+ */
+export function formatDateShort (date)
+{
+    return `${zeroFill(date.getDate())}.${zeroFill(date.getMonth() + 1)}.`;
+}
+
+
+/**
  * Prefixes a single digit number with a zero
  *
  * @param {number} value

@@ -5,7 +5,7 @@ type EventRegistrationToken = Function;
  * Registers an event listener for the given events
  */
 declare function on (
-    element : HTMLElement | Array<HTMLElement|Window>,
+    element : HTMLElement | Window | Array<HTMLElement|Window>,
     type : string,
     handler : (Event) => void,
 ) : void;
@@ -15,7 +15,7 @@ declare function on (
  * Removes an event listener for the given events
  */
 declare function off (
-    element : HTMLElement | Array<HTMLElement|Window>,
+    element : HTMLElement | Window | Array<HTMLElement|Window>,
     type : string,
     handler : (Event) => void | EventRegistrationToken,
 ) : void;

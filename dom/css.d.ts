@@ -19,7 +19,7 @@ declare function setStyles (
 declare function getStyle (
     element : HTMLElement,
     property : string,
-    pseudoElemen? : string,
+    pseudoElement? : string,
 ) : string | number;
 
 

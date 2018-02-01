@@ -3,7 +3,7 @@ interface CreateElementOptions {
     text? : string|number,
     html? : string|number,
     [p: string] : string|number,
-};
+}
 
 
 /**

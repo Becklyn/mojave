@@ -175,6 +175,7 @@ function updateDisplay (element, style)
     }
 }
 
+
 /**
  * Hides the given element(s)
  *
@@ -187,7 +188,7 @@ export function hide (element)
 
 
 /**
- * Hides the given element(s)
+ * Shows the given element(s)
  *
  * @param {HTMLElement|HTMLElement[]} element
  */

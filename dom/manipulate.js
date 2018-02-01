@@ -81,6 +81,7 @@ export function remove (element)
 
 /**
  * Empties the given element(s)
+ *
  * @param {HTMLElement|HTMLElement[]} element
  */
 export function empty (element)

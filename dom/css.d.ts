@@ -9,7 +9,7 @@ type Position = {
  */
 declare function setStyles (
     elements : HTMLElement | Array<HTMLElement>,
-    styles: {[p: string]: string|number},
+    styles: {[key : string]: string|number},
 ) : void;
 
 

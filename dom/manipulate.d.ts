@@ -1,5 +1,5 @@
 interface CreateElementOptions {
-    css? : {[p: string]: string|number},
+    css? : {[key : string]: string|number},
     text? : string|number,
     html? : string|number,
     [p: string] : string|number,

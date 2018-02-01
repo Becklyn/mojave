@@ -1,9 +1,10 @@
+
 /**
  * Sets all attributes on the given element
  */
 declare function setAttrs (
     element : HTMLElement,
-    attributes : {[p: string]: string},
+    attributes : {[key : string]: string|number},
 ) : void;
 
 

@@ -12,10 +12,8 @@ const HAS_PIXELS_UNIT = /px$/;
  * Returns the normalized (like vendor-prefixed) name of the given CSS property
  *
  * @private
- * @param {string} property
- * @return {string}
  */
-function normalizeProperty (property)
+function normalizeProperty (property : string) : string
 {
     if (propertyNameCache[property])
     {
@@ -30,7 +28,7 @@ function normalizeProperty (property)
 
     for (let i = 0; i < VENDOR_PREFIXES.length; i++)
     {
-        const prefixedName = `${VENDOR_PREFIXES[i]}${property}`;
+        const prefixedName : string = `${VENDOR_PREFIXES[i]}${property}`;
 
         if (prefixedName in DEFAULT_STYLES)
         {
@@ -46,11 +44,8 @@ function normalizeProperty (property)
 
 /**
  * Sets all styles on the element
- *
- * @param {HTMLElement|HTMLElement[]} elements
- * @param {Object.<string, (string|number)>} styles
  */
-export function setStyles (elements, styles)
+export function setStyles (elements : HTMLElement|HTMLElement[], styles : string) : void
 {
     elements = Array.isArray(elements) ? elements : [elements];
 
@@ -98,11 +93,9 @@ export function setStyles (elements, styles)
 /**
  * Returns the computed styles for the given element
  *
- * @param {HTMLElement} element
- * @param {?string} pseudoElement
- * @return {CssStyle}
+ * @private
  */
-function getComputedStyles (element, pseudoElement)
+function getComputedStyles (element : Element, pseudoElement? : string) : CSSStyleDeclaration
 {
     // @legacy IE <= 11
     // IE throws on elements created in popups
@@ -118,14 +111,9 @@ function getComputedStyles (element, pseudoElement)
 
 
 /**
- * Returns the CSS property value for the given propery and element
- *
- * @param {HTMLElement} element
- * @param {string} property
- * @param {?string} pseudoElement
- * @return {string|number}
+ * Returns the CSS property value for the given property and element
  */
-export function getStyle (element, property, pseudoElement = null)
+export function getStyle (element : HTMLElement, property : string, pseudoElement? : string = null) : null|string|number
 {
     if (DIRECTLY_ACCESSIBLE_SETTERS.test(property))
     {
@@ -162,12 +150,10 @@ export function getStyle (element, property, pseudoElement = null)
  * Updates the display value of the given element
  *
  * @private
- * @param {HTMLElement|HTMLElement[]} element
- * @param {string} style
  */
-function updateDisplay (element, style)
+function updateDisplay (element : HTMLElement|HTMLElement[], style : string) : void
 {
-    const list = Array.isArray(element) ? element : [element];
+    const list : HTMLElement[] = Array.isArray(element) ? element : [element];
 
     for (let i = 0; i < list.length; i++)
     {
@@ -178,10 +164,8 @@ function updateDisplay (element, style)
 
 /**
  * Hides the given element(s)
- *
- * @param {HTMLElement|HTMLElement[]} element
  */
-export function hide (element)
+export function hide (element : HTMLElement|HTMLElement[]) : void
 {
     updateDisplay(element, "none");
 }
@@ -189,10 +173,8 @@ export function hide (element)
 
 /**
  * Shows the given element(s)
- *
- * @param {HTMLElement|HTMLElement[]} element
  */
-export function show (element)
+export function show (element : HTMLElement|HTMLElement[]) : void
 {
     updateDisplay(element, "");
 }
@@ -200,11 +182,8 @@ export function show (element)
 
 /**
  * Returns the position of the element
- *
- * @param {HTMLElement} element
- * @return {{top: number, left: number}}
  */
-export function position (element)
+export function position (element : HTMLElement) : {top: number, left: number}
 {
     return {
         top: element.offsetTop,
@@ -215,11 +194,8 @@ export function position (element)
 
 /**
  * Returns the global offset of the element
- *
- * @param {HTMLElement} element
- * @return {{top: number, left: number}}
  */
-export function offset (element)
+export function offset (element : HTMLElement) : {top: number, left: number}
 {
     const rect = element.getBoundingClientRect();
 

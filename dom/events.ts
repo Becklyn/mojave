@@ -1,7 +1,7 @@
+/// <reference path="../mojave.d.ts" />
 /* eslint-disable no-underscore-dangle */
 
 import {splitStringValue} from "./utils";
-import {mojave as types} from "../global-types";
 
 /**
  * Registers an event listener for the given events
@@ -12,12 +12,12 @@ export function on (
     handler : EventListener
 ) : void
 {
-    const list : types.AnnotatedHTMLElement[] = (Array.isArray(element) ? element : [element]) as types.AnnotatedHTMLElement[];
+    const list : mojave.types.AnnotatedHTMLElement[] = (Array.isArray(element) ? element : [element]) as mojave.types.AnnotatedHTMLElement[];
     const types = splitStringValue(type);
 
     for (let i = 0; i < list.length; i++)
     {
-        for (let j = 0; j < types.length; j++)
+        for (let j = 0; j < mojave.types.length; j++)
         {
             const node = list[i];
             const eventType = types[j];
@@ -46,15 +46,15 @@ export function on (
 export function off (
     element : EventTarget|EventTarget[],
     type : string,
-    handler : EventListener|types.EventIntermediateToken
+    handler : EventListener|mojave.types.EventIntermediateToken
 ) : void
 {
-    const list : types.AnnotatedHTMLElement[] = (Array.isArray(element) ? element : [element]) as types.AnnotatedHTMLElement[];
+    const list : mojave.types.AnnotatedHTMLElement[] = (Array.isArray(element) ? element : [element]) as mojave.types.AnnotatedHTMLElement[];
     const types = splitStringValue(type);
 
     for (let i = 0; i < list.length; i++)
     {
-        for (let j = 0; j < types.length; j++)
+        for (let j = 0; j < mojave.types.length; j++)
         {
             const node = list[i];
             const eventType = types[j];
@@ -87,7 +87,7 @@ export function once (
     element : EventTarget,
     type : string,
     handler : EventListener
-) : types.EventIntermediateToken
+) : mojave.types.EventIntermediateToken
 {
     const intermediate = (...args) => {
         handler(...args);
@@ -111,8 +111,8 @@ export function delegate (
     element : EventTarget,
     selector : string,
     type : string,
-    handler : types.DelegatedEventHandler
-) : types.EventIntermediateToken
+    handler : mojave.types.DelegatedEventHandler
+) : mojave.types.EventIntermediateToken
 {
     const intermediate = (event) =>
     {

@@ -1,4 +1,4 @@
-declare namespace mojave
+declare namespace mojave.types
 {
     /**
      * Annotated HTML element, as it is internally used by mojave

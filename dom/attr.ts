@@ -1,7 +1,7 @@
+/// <reference path="../mojave.d.ts" />
 /* eslint-disable no-underscore-dangle */
 
 import {splitStringValue} from "./utils";
-import {mojave as types} from "../global-types";
 
 const SPECIAL_ATTRIBUTE_SETTERS = /^(html|text|css)$/;
 
@@ -9,7 +9,7 @@ const SPECIAL_ATTRIBUTE_SETTERS = /^(html|text|css)$/;
 /**
  * Sets all attributes on the given element
  */
-export function setAttrs (element : Element, attributes : types.KeyMap) : void
+export function setAttrs (element : Element, attributes : mojave.types.KeyMap) : void
 {
     for (const key in attributes)
     {
@@ -101,7 +101,7 @@ function normalizeDataKey (key : string) : string
  */
 export function setData (element : Element, key : string, value : any) : void
 {
-    const node : types.AnnotatedHTMLElement = element as types.AnnotatedHTMLElement;
+    const node : mojave.types.AnnotatedHTMLElement = element as mojave.types.AnnotatedHTMLElement;
     key = normalizeDataKey(key);
 
     if (node._data === undefined)
@@ -118,7 +118,7 @@ export function setData (element : Element, key : string, value : any) : void
  */
 export function getData (element : HTMLElement, key : string) : any
 {
-    const node : types.AnnotatedHTMLElement = element as types.AnnotatedHTMLElement;
+    const node : mojave.types.AnnotatedHTMLElement = element as mojave.types.AnnotatedHTMLElement;
     const normalizedKey = normalizeDataKey(key);
 
     if (typeof node._data === "object" && typeof node._data[normalizedKey] !== "undefined")

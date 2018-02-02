@@ -1,8 +1,8 @@
+/// <reference path="../mojave.d.ts" />
 /* eslint-disable no-underscore-dangle */
 
 import {on} from "./events";
 import {setData} from "./attr";
-import {mojave as types} from "../global-types";
 
 
 /**
@@ -26,7 +26,7 @@ export function duplicate (element : Element) : HTMLElement
  */
 export function clone (element : Element) : HTMLElement
 {
-    const node : types.AnnotatedHTMLElement = element as types.AnnotatedHTMLElement;
+    const node : mojave.types.AnnotatedHTMLElement = element as mojave.types.AnnotatedHTMLElement;
     const clonedElement : HTMLElement = duplicate(node);
     const listeners = node._listeners;
     const dataset = node.dataset;

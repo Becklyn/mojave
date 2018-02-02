@@ -1,7 +1,8 @@
+/// <reference path="../mojave.d.ts" />
+
 import {isElement} from "./utils";
 import {setAttrs} from "./attr";
 import {setStyles} from "./css";
-import {mojave as types} from "../global-types";
 
 
 /**
@@ -27,7 +28,7 @@ function parseHtml (html : string) : HTMLElement
 /**
  * Creates an element with the given attributes
  */
-export function createElement (type : string, attributes : types.CreateElementOptions = {}) : HTMLElement
+export function createElement (type : string, attributes : mojave.types.CreateElementOptions = {}) : HTMLElement
 {
     const element = (-1 !== type.indexOf("<"))
         ? parseHtml(type)

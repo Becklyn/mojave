@@ -1,3 +1,5 @@
+/// <reference path="../mojave.d.ts" />
+
 const CUSTOM_PROPERTY_REGEX = /^--/;
 const DEFAULT_STYLES = document.createElement("div").style;
 const VENDOR_PREFIXES = ["-webkit-", "-moz-", "-o-", "-ms-"];
@@ -6,8 +8,6 @@ const propertyNameCache = {};
 const IS_NON_DIMENSIONAL = /acit|ex(?:s|g|n|p|$)|rph|ows|mnc|ntw|ine[ch]|zoo|^ord/i;
 const DIRECTLY_ACCESSIBLE_SETTERS = /scroll(Top|Left)/i;
 const HAS_PIXELS_UNIT = /px$/;
-
-import {mojave as types} from "../global-types";
 
 
 /**
@@ -47,7 +47,7 @@ function normalizeProperty (property : string) : string
 /**
  * Sets all styles on the element
  */
-export function setStyles (elements : HTMLElement|HTMLElement[], styles : types.KeyMap) : void
+export function setStyles (elements : HTMLElement|HTMLElement[], styles : mojave.types.KeyMap) : void
 {
     elements = Array.isArray(elements) ? elements : [elements];
 

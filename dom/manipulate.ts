@@ -1,19 +1,7 @@
 import {isElement} from "./utils";
 import {setAttrs} from "./attr";
 import {setStyles} from "./css";
-
-declare namespace mojave.dom.manipulate
-{
-    interface CreateElementOptions {
-        css? : {[key : string]: string|number},
-        text? : string,
-        html? : string,
-        [p: string] : string|number,
-    }
-
-
-    type InsertElement = string|Element|Element[];
-}
+import {mojave as types} from "../global-types";
 
 
 /**
@@ -39,7 +27,7 @@ function parseHtml (html : string) : Element
 /**
  * Creates an element with the given attributes
  */
-export function createElement (type : string, attributes? : mojave.dom.manipulate.CreateElementOptions = {})
+export function createElement (type : string, attributes? : types.CreateElementOptions = {})
 {
     const element = (-1 !== type.indexOf("<"))
         ? parseHtml(type)
@@ -117,7 +105,7 @@ export function replace (element : Element, replacement : Element) : void
  */
 function insertElement (
     reference : Element,
-    insert : mojave.dom.manipulate.InsertElement,
+    insert : mojave.InsertableElement,
     adjacentPosition : InsertPosition,
     insertInto : Element,
     insertReference? : Element
@@ -143,7 +131,7 @@ function insertElement (
 /**
  * Inserts the given element/HTML string at the end of the reference element.
  */
-export function append (reference : Element, insert : mojave.dom.manipulate.InsertElement) : void
+export function append (reference : Element, insert : mojave.InsertableElement) : void
 {
     insertElement(
         reference,
@@ -158,7 +146,7 @@ export function append (reference : Element, insert : mojave.dom.manipulate.Inse
 /**
  * Inserts the given element/HTML string at the beginning of the reference element.
  */
-export function prepend (reference : Element, insert : mojave.dom.manipulate.InsertElement) : void
+export function prepend (reference : Element, insert : mojave.InsertableElement) : void
 {
     insertElement(
         reference,
@@ -173,7 +161,7 @@ export function prepend (reference : Element, insert : mojave.dom.manipulate.Ins
 /**
  * Inserts the given element/HTML string just before the reference element.
  */
-export function before (reference : Element, insert : mojave.dom.manipulate.InsertElement) : void
+export function before (reference : Element, insert : mojave.InsertableElement) : void
 {
     insertElement(
         reference,
@@ -188,7 +176,7 @@ export function before (reference : Element, insert : mojave.dom.manipulate.Inse
 /**
  * Inserts the given element/HTML string just after the reference element.
  */
-export function after (reference : Element, insert : mojave.dom.manipulate.InsertElement) : void
+export function after (reference : Element, insert : mojave.InsertableElement) : void
 {
     insertElement(
         reference,

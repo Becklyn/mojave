@@ -119,10 +119,6 @@ export function setData (element : Element, key : string, value : any) : void
 
 /**
  * Loads the data from the element
- *
- * @param {HTMLElement} element
- * @param {string} key
- * @return {*}
  */
 export function getData (element : HTMLElement, key : string) : any
 {

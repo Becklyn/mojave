@@ -97,7 +97,7 @@ export function setStyles (elements : HTMLElement|HTMLElement[], styles : types.
  *
  * @private
  */
-function getComputedStyles (element : Element, pseudoElement? : string) : CSSStyleDeclaration
+function getComputedStyles (element : Element, pseudoElement : string = null) : CSSStyleDeclaration
 {
     // @legacy IE <= 11
     // IE throws on elements created in popups
@@ -115,7 +115,7 @@ function getComputedStyles (element : Element, pseudoElement? : string) : CSSSty
 /**
  * Returns the CSS property value for the given property and element
  */
-export function getStyle (element : HTMLElement, property : string, pseudoElement? : string = null) : null|string|number
+export function getStyle (element : HTMLElement, property : string, pseudoElement : string = null) : null|string|number
 {
     if (DIRECTLY_ACCESSIBLE_SETTERS.test(property))
     {

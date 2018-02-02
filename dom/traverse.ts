@@ -7,7 +7,7 @@ import "../polyfill/dom";
  *
  * @private
  */
-function elementMatches (element : Element, selector? : string = null) : boolean
+function elementMatches (element : Element, selector : string = null) : boolean
 {
     return (null === selector || element.matches(selector));
 }
@@ -117,7 +117,7 @@ export function not (list : HTMLElement[], selector : string|HTMLElement|HTMLEle
 /**
  * Returns all children
  */
-export function children (parent : HTMLElement, selector? : string = null) : HTMLElement[]
+export function children (parent : HTMLElement, selector : string = null) : HTMLElement[]
 {
     const list : Element[] = [];
     let child : Element = parent.firstElementChild;
@@ -140,7 +140,7 @@ export function children (parent : HTMLElement, selector? : string = null) : HTM
  * Returns the nearest previous sibling matching
  * (optionally matching the given selector)
  */
-export function prev (element : HTMLElement, selector? : string = null) : HTMLElement|null
+export function prev (element : HTMLElement, selector : string = null) : HTMLElement|null
 {
     return fetchSingleSibling(element, selector, "previousElementSibling");
 }
@@ -150,7 +150,7 @@ export function prev (element : HTMLElement, selector? : string = null) : HTMLEl
  * Returns the nearest following sibling
  * (optionally matching the given selector)
  */
-export function next (element : HTMLElement, selector? : string = null) : HTMLElement|null
+export function next (element : HTMLElement, selector : string = null) : HTMLElement|null
 {
     return fetchSingleSibling(element, selector, "nextElementSibling");
 }
@@ -162,7 +162,7 @@ export function next (element : HTMLElement, selector? : string = null) : HTMLEl
  *
  * The nearest sibling is the first element in the list.
  */
-export function prevAll (element : HTMLElement, selector? : string = null) : HTMLElement[]
+export function prevAll (element : HTMLElement, selector : string = null) : HTMLElement[]
 {
     return fetchAllSiblings(element, selector, "previousElementSibling");
 }
@@ -174,7 +174,7 @@ export function prevAll (element : HTMLElement, selector? : string = null) : HTM
  *
  * The nearest sibling is the first element in the list.
  */
-export function nextAll (element : HTMLElement, selector? : string = null) : HTMLElement[]
+export function nextAll (element : HTMLElement, selector : string = null) : HTMLElement[]
 {
     return fetchAllSiblings(element, selector, "nextElementSibling");
 }
@@ -184,7 +184,7 @@ export function nextAll (element : HTMLElement, selector? : string = null) : HTM
  * Returns all siblings
  * (optionally matching the given selector)
  */
-export function siblings (element : HTMLElement, selector? : string = null) : HTMLElement[]
+export function siblings (element : HTMLElement, selector : string = null) : HTMLElement[]
 {
     let sibling : Element = element.parentElement .firstElementChild;
     const list : Element[] = [];

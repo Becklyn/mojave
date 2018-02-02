@@ -154,7 +154,7 @@ function findDelegatedTarget (delegateElement : EventTarget, currentTarget : Ele
 /**
  * Dispatches an event
  */
-export function trigger (element : EventTarget, type : string, data? : any = null) : void
+export function trigger (element : EventTarget, type : string, data : any = null) : void
 {
     const event = createEvent(type, {
         bubbles: true,

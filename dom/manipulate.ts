@@ -27,7 +27,7 @@ function parseHtml (html : string) : HTMLElement
 /**
  * Creates an element with the given attributes
  */
-export function createElement (type : string, attributes? : types.CreateElementOptions = {}) : HTMLElement
+export function createElement (type : string, attributes : types.CreateElementOptions = {}) : HTMLElement
 {
     const element = (-1 !== type.indexOf("<"))
         ? parseHtml(type)
@@ -108,7 +108,7 @@ function insertElement (
     insert : mojave.InsertableElement,
     adjacentPosition : InsertPosition,
     insertInto : Element,
-    insertReference? : Element
+    insertReference : Element | null
 ) : void // eslint-disable-line max-params
 {
     // if element to insert is string

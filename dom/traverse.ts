@@ -72,7 +72,7 @@ export function find (selector : string, context : HTMLElement|Document = docume
 /**
  * Finds a single DOM node matching the selector
  */
-export function findOne (selector : string, context : HTMLElement | Document = document) : HTMLElement | null
+export function findOne (selector : string, context : HTMLElement|Document = document) : HTMLElement | null
 {
     return context.querySelector(selector);
 }

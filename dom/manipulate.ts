@@ -106,7 +106,7 @@ export function replace (element : Element, replacement : Element) : void
  */
 function insertElement (
     reference : Element,
-    insert : mojave.InsertableElement,
+    insert : mojave.types.InsertableElement,
     adjacentPosition : InsertPosition,
     insertInto : Element,
     insertReference : Element | null
@@ -132,7 +132,7 @@ function insertElement (
 /**
  * Inserts the given element/HTML string at the end of the reference element.
  */
-export function append (reference : Element, insert : mojave.InsertableElement) : void
+export function append (reference : Element, insert : mojave.types.InsertableElement) : void
 {
     insertElement(
         reference,
@@ -147,7 +147,7 @@ export function append (reference : Element, insert : mojave.InsertableElement) 
 /**
  * Inserts the given element/HTML string at the beginning of the reference element.
  */
-export function prepend (reference : Element, insert : mojave.InsertableElement) : void
+export function prepend (reference : Element, insert : mojave.types.InsertableElement) : void
 {
     insertElement(
         reference,
@@ -162,7 +162,7 @@ export function prepend (reference : Element, insert : mojave.InsertableElement)
 /**
  * Inserts the given element/HTML string just before the reference element.
  */
-export function before (reference : Element, insert : mojave.InsertableElement) : void
+export function before (reference : Element, insert : mojave.types.InsertableElement) : void
 {
     insertElement(
         reference,
@@ -177,7 +177,7 @@ export function before (reference : Element, insert : mojave.InsertableElement) 
 /**
  * Inserts the given element/HTML string just after the reference element.
  */
-export function after (reference : Element, insert : mojave.InsertableElement) : void
+export function after (reference : Element, insert : mojave.types.InsertableElement) : void
 {
     insertElement(
         reference,

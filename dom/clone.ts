@@ -2,17 +2,18 @@
 
 import {on} from "./events";
 import {setData} from "./attr";
+import {mojave as types} from "../global-types";
 
 
 /**
  * Duplicates the given DOM node
  *
- * @param {HTMLElement} element
+ * @param {Element} element
  * @return {HTMLElement}
  */
-export function duplicate (element)
+export function duplicate (element : Element) : HTMLElement
 {
-    return element.cloneNode(true);
+    return element.cloneNode(true) as HTMLElement;
 }
 
 
@@ -20,14 +21,15 @@ export function duplicate (element)
  * Clones the given node, that includes duplicating the node and copying
  * all data and events.
  *
- * @param {HTMLElement} element
+ * @param {Element} element
  * @return {HTMLElement}
  */
-export function clone (element)
+export function clone (element : Element) : HTMLElement
 {
-    const clonedElement = duplicate(element);
-    const listeners = element._listeners;
-    const dataset = element.dataset;
+    const node : types.AnnotatedHTMLElement = element as types.AnnotatedHTMLElement;
+    const clonedElement : HTMLElement = duplicate(node);
+    const listeners = node._listeners;
+    const dataset = node.dataset;
 
     // copy events
     if (typeof listeners !== "undefined")
@@ -62,13 +64,13 @@ export function clone (element)
     }
 
     // copy custom data values
-    if (typeof element._data === "object")
+    if (typeof node._data === "object")
     {
-        for (const key in element._data)
+        for (const key in node._data)
         {
-            if (element._data.hasOwnProperty(key))
+            if (node._data.hasOwnProperty(key))
             {
-                setData(clonedElement, key, element._data[key]);
+                setData(clonedElement, key, node._data[key]);
             }
         }
     }

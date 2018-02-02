@@ -18,6 +18,8 @@ declare namespace mojave.dom.manipulate
 
 /**
  * Parses the HTML to an HTMLElement
+ *
+ * @private
  */
 function parseHtml (html : string) : Element
 {

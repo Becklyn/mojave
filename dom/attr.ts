@@ -88,6 +88,8 @@ export function removeClass (element : Element|Element[], classes : string|strin
 
 /**
  * Normalizes the key for *Data functions
+ *
+ * @private
  */
 function normalizeDataKey (key : string) : string
 {

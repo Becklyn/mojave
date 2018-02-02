@@ -5,9 +5,7 @@ import "../polyfill/dom";
  * Returns whether the given element is - in fact - an HTMLElement and
  * it matches the optional selector
  *
- * @param {Node|Element} element
- * @param {?string} selector
- * @return {boolean}
+ * @private
  */
 function elementMatches (element : Element, selector? : string = null) : boolean
 {
@@ -17,6 +15,8 @@ function elementMatches (element : Element, selector? : string = null) : boolean
 
 /**
  * Fetches all siblings
+ *
+ * @private
  */
 function fetchAllSiblings (element : Element, selector : string|null, accessor : string) : HTMLElement[]
 {
@@ -39,6 +39,8 @@ function fetchAllSiblings (element : Element, selector : string|null, accessor :
 
 /**
  * Fetches a single sibling
+ *
+ * @private
  */
 function fetchSingleSibling (element : HTMLElement, selector : string|null, accessor : string) : HTMLElement|null
 {

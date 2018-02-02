@@ -2,14 +2,24 @@ import {isElement} from "./utils";
 import {setAttrs} from "./attr";
 import {setStyles} from "./css";
 
+declare namespace mojave.dom.manipulate
+{
+    interface CreateElementOptions {
+        css? : {[key : string]: string|number},
+        text? : string,
+        html? : string,
+        [p: string] : string|number,
+    }
+
+
+    type InsertElement = string|Element|Element[];
+}
+
 
 /**
  * Parses the HTML to an HTMLElement
- *
- * @param {string} html
- * @return {HTMLElement}
  */
-function parseHtml (html)
+function parseHtml (html : string) : Element
 {
     const parser = new DOMParser();
     const doc = parser.parseFromString(html, "text/html");
@@ -26,13 +36,8 @@ function parseHtml (html)
 
 /**
  * Creates an element with the given attributes
- *
- * @param {string} type
- * @param {{html: string, text: string, css: {}}|Object} attributes
- *
- * @returns {HTMLElement}
  */
-export function createElement (type, attributes = {})
+export function createElement (type : string, attributes? : mojave.dom.manipulate.CreateElementOptions = {})
 {
     const element = (-1 !== type.indexOf("<"))
         ? parseHtml(type)
@@ -60,17 +65,15 @@ export function createElement (type, attributes = {})
 
 /**
  * Removes the given element(s)
- *
- * @param {HTMLElement|HTMLElement[]} element
  */
-export function remove (element)
+export function remove (element : Element|Element[]|null) : void
 {
     if (null === element)
     {
         return;
     }
 
-    const list = Array.isArray(element) ? element : [element];
+    const list : Element[] = Array.isArray(element) ? element : [element];
 
     for (let i = 0; i < list.length; i++)
     {
@@ -81,12 +84,10 @@ export function remove (element)
 
 /**
  * Empties the given element(s)
- *
- * @param {HTMLElement|HTMLElement[]} element
  */
-export function empty (element)
+export function empty (element : Element|Element[]) : void
 {
-    const list = Array.isArray(element) ? element : [element];
+    const list : Element[] = Array.isArray(element) ? element : [element];
 
     for (let i = 0; i < list.length; i++)
     {
@@ -100,11 +101,8 @@ export function empty (element)
 
 /**
  * Replaces the given element with the replacement element
- *
- * @param {HTMLElement} element
- * @param {HTMLElement} replacement
  */
-export function replace (element, replacement)
+export function replace (element : Element, replacement : Element) : void
 {
     element.parentNode.replaceChild(replacement, element);
 }
@@ -114,13 +112,14 @@ export function replace (element, replacement)
  * Inserts the given element(s)/HTML string at the given position.
  *
  * @private
- * @param {HTMLElement} reference                       The reference element from which the position is calculated.
- * @param {string|HTMLElement|HTMLElement[]} insert     The elements to insert. Can be an HTML string.
- * @param {string} adjacentPosition                     The argument for the .insertAdjacentHTML() call.
- * @param {Node} insertInto                      The parent element the item is inserted to.
- * @param {?Node} insertReference                The reference element for the .insertBefore() call.
  */
-function insertElement (reference, insert, adjacentPosition, insertInto, insertReference) // eslint-disable-line max-params
+function insertElement (
+    reference : Element,
+    insert : mojave.dom.manipulate.InsertElement,
+    adjacentPosition : InsertPosition,
+    insertInto : Element,
+    insertReference? : Element
+) : void // eslint-disable-line max-params
 {
     // if element to insert is string
     if (typeof insert === "string")
@@ -130,7 +129,7 @@ function insertElement (reference, insert, adjacentPosition, insertInto, insertR
     }
 
     // if element to insert is HTMLElement or HTMLElement[]
-    const list = Array.isArray(insert) ? insert : [insert];
+    const list : Element[] = Array.isArray(insert) ? insert : [insert];
 
     for (let i = 0; i < list.length; i++)
     {
@@ -141,11 +140,8 @@ function insertElement (reference, insert, adjacentPosition, insertInto, insertR
 
 /**
  * Inserts the given element/HTML string at the end of the reference element.
- *
- * @param {HTMLElement} reference
- * @param {string|HTMLElement|HTMLElement[]} insert
  */
-export function append (reference, insert)
+export function append (reference : Element, insert : mojave.dom.manipulate.InsertElement) : void
 {
     insertElement(
         reference,
@@ -159,35 +155,29 @@ export function append (reference, insert)
 
 /**
  * Inserts the given element/HTML string at the beginning of the reference element.
- *
- * @param {HTMLElement} reference
- * @param {string|HTMLElement|HTMLElement[]} insert
  */
-export function prepend (reference, insert)
+export function prepend (reference : Element, insert : mojave.dom.manipulate.InsertElement) : void
 {
     insertElement(
         reference,
         insert,
         "afterbegin",
         reference,
-        reference.firstChild
+        reference.firstElementChild
     );
 }
 
 
 /**
  * Inserts the given element/HTML string just before the reference element.
- *
- * @param {HTMLElement} reference
- * @param {string|HTMLElement|HTMLElement[]} insert
  */
-export function before (reference, insert)
+export function before (reference : Element, insert : mojave.dom.manipulate.InsertElement) : void
 {
     insertElement(
         reference,
         insert,
         "beforebegin",
-        reference.parentNode,
+        reference.parentElement,
         reference
     );
 }
@@ -195,17 +185,14 @@ export function before (reference, insert)
 
 /**
  * Inserts the given element/HTML string just after the reference element.
- *
- * @param {HTMLElement} reference
- * @param {string|HTMLElement|HTMLElement[]} insert
  */
-export function after (reference, insert)
+export function after (reference : Element, insert : mojave.dom.manipulate.InsertElement) : void
 {
     insertElement(
         reference,
         insert,
         "afterend",
-        reference.parentNode,
-        reference.nextSibling
+        reference.parentElement,
+        reference.nextElementSibling
     );
 }

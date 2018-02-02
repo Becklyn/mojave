@@ -12,7 +12,7 @@ declare namespace mojave.types
     /**
      * Options for createElement()
      */
-    interface CreateElementOptions extends KeyMap {
+    type CreateElementOptions = KeyMap & {
         css? : KeyMap,
         text? : string,
         html? : string,

@@ -12,11 +12,10 @@ declare namespace mojave
     /**
      * Options for createElement()
      */
-    interface CreateElementOptions {
-        css? : {[key : string]: string | number},
+    interface CreateElementOptions extends KeyMap {
+        css? : KeyMap,
         text? : string,
         html? : string,
-        [key : string] : string | number,
     }
 
     /**

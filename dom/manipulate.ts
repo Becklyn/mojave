@@ -9,7 +9,7 @@ import {mojave as types} from "../global-types";
  *
  * @private
  */
-function parseHtml (html : string) : Element
+function parseHtml (html : string) : HTMLElement
 {
     const parser = new DOMParser();
     const doc = parser.parseFromString(html, "text/html");
@@ -20,14 +20,14 @@ function parseHtml (html : string) : Element
         throw new Error("Can only parse HTML with exactly one valid root element. A valid element can stand on its own in the body.");
     }
 
-    return children[0];
+    return children[0] as HTMLElement;
 }
 
 
 /**
  * Creates an element with the given attributes
  */
-export function createElement (type : string, attributes? : types.CreateElementOptions = {})
+export function createElement (type : string, attributes? : types.CreateElementOptions = {}) : HTMLElement
 {
     const element = (-1 !== type.indexOf("<"))
         ? parseHtml(type)

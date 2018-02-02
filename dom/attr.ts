@@ -9,7 +9,7 @@ const SPECIAL_ATTRIBUTE_SETTERS = /^(html|text|css)$/;
 /**
  * Sets all attributes on the given element
  */
-export function setAttrs (element : Element, attributes : mojave.types.KeyMap) : void
+export function setAttrs (element : Element, attributes : mojave.types.OptionalKeyMap) : void
 {
     for (const key in attributes)
     {

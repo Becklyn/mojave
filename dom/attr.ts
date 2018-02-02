@@ -4,14 +4,16 @@ import {splitStringValue} from "./utils";
 
 const SPECIAL_ATTRIBUTE_SETTERS = /^(html|text|css)$/;
 
+declare namespace mojave.dom.attr
+{
+    type DataElement = HTMLElement & {_data: {[key : string] : any}|undefined};
+}
+
 
 /**
  * Sets all attributes on the given element
- *
- * @param {HTMLElement} element
- * @param {Object.<string, string>} attributes
  */
-export function setAttrs (element, attributes)
+export function setAttrs (element : Element, attributes : {[key : string]: string|number}) : void
 {
     for (const key in attributes)
     {
@@ -41,12 +43,8 @@ export function setAttrs (element, attributes)
 
 /**
  * Returns the attribute value for the given html node
- *
- * @param {HTMLElement} element
- * @param {string} attribute
- * @return {?string}
  */
-export function getAttr (element, attribute)
+export function getAttr (element : Element, attribute : string) : string|null
 {
     return element.getAttribute(attribute);
 }
@@ -54,14 +52,11 @@ export function getAttr (element, attribute)
 
 /**
  * Adds all given classes to the element
- *
- * @param {HTMLElement|HTMLElement[]} element
- * @param {string|string[]} classes
  */
-export function addClass (element, classes)
+export function addClass (element : Element|Element[], classes : string|string[]) : void
 {
-    const list = Array.isArray(element) ? element : [element];
-    const classList = splitStringValue(classes);
+    const list : Element[] = Array.isArray(element) ? element : [element];
+    const classList : string[] = splitStringValue(classes);
 
     for (let i = 0; i < list.length; i++)
     {
@@ -75,14 +70,11 @@ export function addClass (element, classes)
 
 /**
  * Remove all given classes from the element
- *
- * @param {HTMLElement|HTMLElement[]} element
- * @param {string|string[]} classes
  */
-export function removeClass (element, classes)
+export function removeClass (element : Element|Element[], classes : string|string[]) : void
 {
-    const list = Array.isArray(element) ? element : [element];
-    const classList = splitStringValue(classes);
+    const list : Element[] = Array.isArray(element) ? element : [element];
+    const classList : string[] = splitStringValue(classes);
 
     for (let i = 0; i < list.length; i++)
     {
@@ -96,12 +88,8 @@ export function removeClass (element, classes)
 
 /**
  * Normalizes the key for *Data functions
- *
- * @private
- * @param {string} key
- * @return {string}
  */
-function normalizeDataKey (key)
+function normalizeDataKey (key : string) : string
 {
     return key.replace(
         /-([a-z])/g,
@@ -112,21 +100,18 @@ function normalizeDataKey (key)
 
 /**
  * Sets the data on the given element
- *
- * @param {HTMLElement} element
- * @param {string} key
- * @param {*} value
  */
-export function setData (element, key, value)
+export function setData (element : Element, key : string, value : any) : void
 {
+    const node : mojave.dom.attr.DataElement = element as mojave.dom.attr.DataElement;
     key = normalizeDataKey(key);
 
-    if (typeof element._data === "undefined")
+    if (node._data === undefined)
     {
-        element._data = {};
+        node._data = {};
     }
 
-    element._data[key] = value;
+    node._data[key] = value;
 }
 
 
@@ -137,17 +122,18 @@ export function setData (element, key, value)
  * @param {string} key
  * @return {*}
  */
-export function getData (element, key)
+export function getData (element : HTMLElement, key : string) : any
 {
+    const node : mojave.dom.attr.DataElement = element as mojave.dom.attr.DataElement;
     const normalizedKey = normalizeDataKey(key);
 
-    if (typeof element._data === "object" && typeof element._data[normalizedKey] !== "undefined")
+    if (typeof node._data === "object" && typeof node._data[normalizedKey] !== "undefined")
     {
-        return element._data[normalizedKey];
+        return node._data[normalizedKey];
     }
 
     // @legacy IE <= 10 doesn't support dataset
-    if (typeof element.dataset === "undefined")
+    if (node.dataset === undefined)
     {
         return getAttr(element, `data-${key}`);
     }

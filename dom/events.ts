@@ -1,17 +1,18 @@
 /* eslint-disable no-underscore-dangle */
 
 import {splitStringValue} from "./utils";
+import {mojave as types} from "../global-types";
 
 /**
  * Registers an event listener for the given events
- *
- * @param {Window|HTMLElement|HTMLElement[]} element
- * @param {string|string[]} type
- * @param {function(*):*} handler
  */
-export function on (element, type, handler)
+export function on (
+    element : EventTarget|EventTarget[],
+    type : string,
+    handler : EventListenerOrEventListenerObject
+) : void
 {
-    const list = Array.isArray(element) ? element : [element];
+    const list : types.AnnotatedHTMLElement[] = (Array.isArray(element) ? element : [element]) as types.AnnotatedHTMLElement[];
     const types = splitStringValue(type);
 
     for (let i = 0; i < list.length; i++)
@@ -41,14 +42,14 @@ export function on (element, type, handler)
 
 /**
  * Removes an event listener for the given events
- *
- * @param {Window|HTMLElement|HTMLElement[]} element
- * @param {string|string[]} type
- * @param {function(*):*} handler
  */
-export function off (element, type, handler)
+export function off (
+    element : EventTarget|EventTarget[],
+    type : string,
+    handler : EventListenerOrEventListenerObject|types.EventIntermediateToken
+) : void
 {
-    const list = Array.isArray(element) ? element : [element];
+    const list : types.AnnotatedHTMLElement[] = (Array.isArray(element) ? element : [element]) as types.AnnotatedHTMLElement[];
     const types = splitStringValue(type);
 
     for (let i = 0; i < list.length; i++)
@@ -81,13 +82,12 @@ export function off (element, type, handler)
  *
  *      const intermediate = once(element, event, handler);
  *      off(element, event, intermediate);
- *
- * @param {Window|HTMLElement} element
- * @param {string} type
- * @param {function(*):*} handler
- * @return {function():*}
  */
-export function once (element, type, handler)
+export function once (
+    element : EventTarget,
+    type : string,
+    handler : EventListenerOrEventListenerObject
+) : types.EventIntermediateToken
 {
     const intermediate = (...args) => {
         handler(...args);
@@ -106,14 +106,13 @@ export function once (element, type, handler)
  *
  *      const intermediate = delegate(element, selector, type, handler);
  *      off(element, event, intermediate);
- *
- * @param {Window|HTMLElement} element
- * @param {string} selector
- * @param {string} type
- * @param {function(Event, HTMLElement)} handler
- * @return {function(Event)}
  */
-export function delegate (element, selector, type, handler)
+export function delegate (
+    element : EventTarget,
+    selector : string,
+    type : string,
+    handler : types.DelegatedEventHandler
+) : types.EventIntermediateToken
 {
     const intermediate = (event) =>
     {
@@ -133,24 +132,19 @@ export function delegate (element, selector, type, handler)
 
 /**
  * In a delegated event listener, this function finds the actual desired event target.
- *
- * @param {HTMLElement} delegateElement
- * @param {HTMLElement} currentTarget
- * @param {string} selector
- * @return {?HTMLElement}
  */
-function findDelegatedTarget (delegateElement, currentTarget, selector)
+function findDelegatedTarget (delegateElement : EventTarget, currentTarget : Element, selector : string) : Element|null
 {
     let node = currentTarget;
 
-    while (node !== delegateElement && node !== document)
+    while (null !== currentTarget && node !== delegateElement)
     {
         if (node.matches(selector))
         {
             return node;
         }
 
-        node = node.parentNode;
+        node = node.parentElement;
     }
 
     return null;
@@ -159,17 +153,12 @@ function findDelegatedTarget (delegateElement, currentTarget, selector)
 
 /**
  * Dispatches an event
- *
- * @param {Window|HTMLElement} element
- * @param {string} type
- * @param {*} data
  */
-export function trigger (element, type, data = null)
+export function trigger (element : EventTarget, type : string, data? : any = null) : void
 {
     const event = createEvent(type, {
         bubbles: true,
         cancelable: true,
-        preventDefault: false,
         detail: data,
     });
 
@@ -181,16 +170,12 @@ export function trigger (element, type, data = null)
  * Creates an event
  *
  * @private
- * @param {string} type
- * @param {CustomEventInit|{bubbles: boolean, cancelable: boolean, preventDefault: boolean, detail: *}} args
- * @return {CustomEvent}
  */
-function createEvent (type, args)
+function createEvent (type : string, args : CustomEventInit) : CustomEvent
 {
     // @legacy IE <= 11 doesn't support the global CustomEvent
-    if (typeof window.CustomEvent !== "function")
+    if (typeof CustomEvent !== "function")
     {
-        /** @type {CustomEvent|Event} event */
         const event = document.createEvent('CustomEvent');
         event.initCustomEvent(type, args.bubbles, args.cancelable, args.detail);
         return event;

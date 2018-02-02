@@ -69,10 +69,6 @@ export function find (selector : string, context : HTMLElement|Document = docume
 
 /**
  * Finds a single DOM node matching the selector
- *
- * @param {string} selector
- * @param {Document|HTMLElement} context
- * @return {?HTMLElement}
  */
 export function findOne (selector : string, context : HTMLElement | Document = document) : HTMLElement | null
 {
@@ -82,10 +78,6 @@ export function findOne (selector : string, context : HTMLElement | Document = d
 
 /**
  * Filters a list of DOM elements that match the given selector
- *
- * @param {HTMLElement[]} list
- * @param {string} selector
- * @return {HTMLElement[]}
  */
 export function filter (list : HTMLElement[], selector : string) : HTMLElement[]
 {
@@ -98,10 +90,6 @@ export function filter (list : HTMLElement[], selector : string) : HTMLElement[]
 /**
  * Filters a list of DOM elements that DO NOT match the given selector,
  * are not the given node or are not in the given node list.
- *
- * @param {HTMLElement[]} list
- * @param {string|HTMLElement|HTMLElement[]} selector
- * @return {HTMLElement[]}
  */
 export function not (list : HTMLElement[], selector : string|HTMLElement|HTMLElement[]) : HTMLElement[]
 {
@@ -126,10 +114,6 @@ export function not (list : HTMLElement[], selector : string|HTMLElement|HTMLEle
 
 /**
  * Returns all children
- *
- * @param {HTMLElement} parent
- * @param {?string} selector
- * @return {HTMLElement[]}
  */
 export function children (parent : HTMLElement, selector? : string = null) : HTMLElement[]
 {
@@ -153,10 +137,6 @@ export function children (parent : HTMLElement, selector? : string = null) : HTM
 /**
  * Returns the nearest previous sibling matching
  * (optionally matching the given selector)
- *
- * @param {HTMLElement} element
- * @param {?string} selector
- * @return {?HTMLElement}
  */
 export function prev (element : HTMLElement, selector? : string = null) : HTMLElement|null
 {
@@ -167,10 +147,6 @@ export function prev (element : HTMLElement, selector? : string = null) : HTMLEl
 /**
  * Returns the nearest following sibling
  * (optionally matching the given selector)
- *
- * @param {HTMLElement} element
- * @param {?string} selector
- * @return {?HTMLElement}
  */
 export function next (element : HTMLElement, selector? : string = null) : HTMLElement|null
 {
@@ -183,10 +159,6 @@ export function next (element : HTMLElement, selector? : string = null) : HTMLEl
  * (optionally matching the given selector)
  *
  * The nearest sibling is the first element in the list.
- *
- * @param {HTMLElement} element
- * @param {?string} selector
- * @return {HTMLElement[]}
  */
 export function prevAll (element : HTMLElement, selector? : string = null) : HTMLElement[]
 {
@@ -199,10 +171,6 @@ export function prevAll (element : HTMLElement, selector? : string = null) : HTM
  * (optionally matching the given selector)
  *
  * The nearest sibling is the first element in the list.
- *
- * @param {HTMLElement} element
- * @param {?string} selector
- * @return {HTMLElement[]}
  */
 export function nextAll (element : HTMLElement, selector? : string = null) : HTMLElement[]
 {

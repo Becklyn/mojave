@@ -1,19 +1,15 @@
 /* eslint-disable no-underscore-dangle */
 
 import {splitStringValue} from "./utils";
+import {mojave as types} from "../global-types";
 
 const SPECIAL_ATTRIBUTE_SETTERS = /^(html|text|css)$/;
-
-declare namespace mojave.dom.attr
-{
-    type DataElement = HTMLElement & {_data: {[key : string] : any}|undefined};
-}
 
 
 /**
  * Sets all attributes on the given element
  */
-export function setAttrs (element : Element, attributes : {[key : string]: string|number}) : void
+export function setAttrs (element : Element, attributes : types.KeyMap) : void
 {
     for (const key in attributes)
     {
@@ -105,7 +101,7 @@ function normalizeDataKey (key : string) : string
  */
 export function setData (element : Element, key : string, value : any) : void
 {
-    const node : mojave.dom.attr.DataElement = element as mojave.dom.attr.DataElement;
+    const node : types.AnnotatedHTMLElement = element as types.AnnotatedHTMLElement;
     key = normalizeDataKey(key);
 
     if (node._data === undefined)
@@ -122,7 +118,7 @@ export function setData (element : Element, key : string, value : any) : void
  */
 export function getData (element : HTMLElement, key : string) : any
 {
-    const node : mojave.dom.attr.DataElement = element as mojave.dom.attr.DataElement;
+    const node : types.AnnotatedHTMLElement = element as types.AnnotatedHTMLElement;
     const normalizedKey = normalizeDataKey(key);
 
     if (typeof node._data === "object" && typeof node._data[normalizedKey] !== "undefined")

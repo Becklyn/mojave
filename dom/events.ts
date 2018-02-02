@@ -9,7 +9,7 @@ import {mojave as types} from "../global-types";
 export function on (
     element : EventTarget|EventTarget[],
     type : string,
-    handler : EventListenerOrEventListenerObject
+    handler : EventListener
 ) : void
 {
     const list : types.AnnotatedHTMLElement[] = (Array.isArray(element) ? element : [element]) as types.AnnotatedHTMLElement[];
@@ -46,7 +46,7 @@ export function on (
 export function off (
     element : EventTarget|EventTarget[],
     type : string,
-    handler : EventListenerOrEventListenerObject|types.EventIntermediateToken
+    handler : EventListener|types.EventIntermediateToken
 ) : void
 {
     const list : types.AnnotatedHTMLElement[] = (Array.isArray(element) ? element : [element]) as types.AnnotatedHTMLElement[];
@@ -86,7 +86,7 @@ export function off (
 export function once (
     element : EventTarget,
     type : string,
-    handler : EventListenerOrEventListenerObject
+    handler : EventListener
 ) : types.EventIntermediateToken
 {
     const intermediate = (...args) => {

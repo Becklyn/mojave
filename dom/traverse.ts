@@ -5,55 +5,63 @@ import "../polyfill/dom";
  * Returns whether the given element is - in fact - an HTMLElement and
  * it matches the optional selector
  *
- * @param {Node|HTMLElement} element
+ * @param {Node|Element} element
  * @param {?string} selector
  * @return {boolean}
  */
-function elementMatches (element, selector)
+function elementMatches (element : Element, selector? : string = null) : boolean
 {
     return (null === selector || element.matches(selector));
 }
 
+
 /**
- *
- * @param {HTMLElement} element
- * @param {?string} selector
- * @param {string} method
- * @param {boolean} onlyFirst
- * @return {HTMLElement[]|HTMLElement}
+ * Fetches all siblings
  */
-function fetchSiblings (element, selector, method, onlyFirst)
+function fetchAllSiblings (element : Element, selector : string|null, accessor : string) : HTMLElement[]
 {
-    let sibling = element[method];
-    const list = [];
+    let sibling : Element = element[accessor];
+    const list : Element[] = [];
 
     while (sibling)
     {
         if (elementMatches(sibling, selector))
         {
-            if (onlyFirst)
-            {
-                return sibling;
-            }
-
             list.push(sibling);
         }
 
-        sibling = sibling[method];
+        sibling = sibling[accessor];
     }
 
-    return onlyFirst ? null : list;
+    return list as HTMLElement[];
+}
+
+
+/**
+ * Fetches a single sibling
+ */
+function fetchSingleSibling (element : HTMLElement, selector : string|null, accessor : string) : HTMLElement|null
+{
+    let sibling : Element = element[accessor];
+
+    while (sibling)
+    {
+        if (elementMatches(sibling, selector))
+        {
+            return sibling as HTMLElement;
+        }
+
+        sibling = sibling[accessor];
+    }
+
+    return null;
 }
 
 
 /**
  * Finds all DOM elements matching the selector
- *
- * @param {string} selector
- * @param {Document|HTMLElement} context
- * @return {HTMLElement[]}
  */
-export function find (selector, context = document)
+export function find (selector : string, context : HTMLElement|Document = document) : HTMLElement[]
 {
     return Array.prototype.slice.call(context.querySelectorAll(selector));
 }
@@ -66,7 +74,7 @@ export function find (selector, context = document)
  * @param {Document|HTMLElement} context
  * @return {?HTMLElement}
  */
-export function findOne (selector, context = document)
+export function findOne (selector : string, context : HTMLElement | Document = document) : HTMLElement | null
 {
     return context.querySelector(selector);
 }
@@ -79,7 +87,7 @@ export function findOne (selector, context = document)
  * @param {string} selector
  * @return {HTMLElement[]}
  */
-export function filter (list, selector)
+export function filter (list : HTMLElement[], selector : string) : HTMLElement[]
 {
     return list.filter(
         (e) => e.matches(selector)
@@ -95,7 +103,7 @@ export function filter (list, selector)
  * @param {string|HTMLElement|HTMLElement[]} selector
  * @return {HTMLElement[]}
  */
-export function not (list, selector)
+export function not (list : HTMLElement[], selector : string|HTMLElement|HTMLElement[]) : HTMLElement[]
 {
     if (typeof selector === "string")
     {
@@ -123,10 +131,10 @@ export function not (list, selector)
  * @param {?string} selector
  * @return {HTMLElement[]}
  */
-export function children (parent, selector = null)
+export function children (parent : HTMLElement, selector? : string = null) : HTMLElement[]
 {
-    const list = [];
-    let child = parent.firstElementChild;
+    const list : Element[] = [];
+    let child : Element = parent.firstElementChild;
 
     while (child)
     {
@@ -138,7 +146,7 @@ export function children (parent, selector = null)
         child = child.nextElementSibling;
     }
 
-    return list;
+    return list as HTMLElement[];
 }
 
 
@@ -150,9 +158,9 @@ export function children (parent, selector = null)
  * @param {?string} selector
  * @return {?HTMLElement}
  */
-export function prev (element, selector = null)
+export function prev (element : HTMLElement, selector? : string = null) : HTMLElement|null
 {
-    return fetchSiblings(element, selector, "previousElementSibling", true);
+    return fetchSingleSibling(element, selector, "previousElementSibling");
 }
 
 
@@ -164,9 +172,9 @@ export function prev (element, selector = null)
  * @param {?string} selector
  * @return {?HTMLElement}
  */
-export function next (element, selector = null)
+export function next (element : HTMLElement, selector? : string = null) : HTMLElement|null
 {
-    return fetchSiblings(element, selector, "nextElementSibling", true);
+    return fetchSingleSibling(element, selector, "nextElementSibling");
 }
 
 
@@ -180,9 +188,9 @@ export function next (element, selector = null)
  * @param {?string} selector
  * @return {HTMLElement[]}
  */
-export function prevAll (element, selector = null)
+export function prevAll (element : HTMLElement, selector? : string = null) : HTMLElement[]
 {
-    return fetchSiblings(element, selector, "previousElementSibling", false);
+    return fetchAllSiblings(element, selector, "previousElementSibling");
 }
 
 
@@ -196,24 +204,20 @@ export function prevAll (element, selector = null)
  * @param {?string} selector
  * @return {HTMLElement[]}
  */
-export function nextAll (element, selector = null)
+export function nextAll (element : HTMLElement, selector? : string = null) : HTMLElement[]
 {
-    return fetchSiblings(element, selector, "nextElementSibling", false);
+    return fetchAllSiblings(element, selector, "nextElementSibling");
 }
 
 
 /**
  * Returns all siblings
  * (optionally matching the given selector)
- *
- * @param {HTMLElement} element
- * @param {?string} selector
- * @return {HTMLElement[]}
  */
-export function siblings (element, selector = null)
+export function siblings (element : HTMLElement, selector? : string = null) : HTMLElement[]
 {
-    let sibling = element.parentNode.firstElementChild;
-    const list = [];
+    let sibling : Element = element.parentElement .firstElementChild;
+    const list : Element[] = [];
 
     while (sibling)
     {
@@ -225,29 +229,25 @@ export function siblings (element, selector = null)
         sibling = sibling.nextElementSibling;
     }
 
-    return list;
+    return list as HTMLElement[];
 }
 
 
 /**
  * Returns the closest parent that matches the selector
- *
- * @param {HTMLElement} element
- * @param {string} selector
- * @return {?HTMLElement}
  */
-export function closest (element, selector)
+export function closest (element : HTMLElement, selector : string) : HTMLElement|null
 {
-    let parent = element.parentNode;
+    let parent : Element|null = element.parentElement;
 
-    while (document !== parent)
+    while (null !== parent)
     {
-        if (parent.matches(selector))
+        if ((parent as HTMLElement).matches(selector))
         {
-            return parent;
+            return parent as HTMLElement;
         }
 
-        parent = parent.parentNode;
+        parent = parent.parentElement;
     }
 
     return null;

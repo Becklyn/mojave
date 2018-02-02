@@ -17,7 +17,7 @@ export function on (
 
     for (let i = 0; i < list.length; i++)
     {
-        for (let j = 0; j < mojave.types.length; j++)
+        for (let j = 0; j < types.length; j++)
         {
             const node = list[i];
             const eventType = types[j];
@@ -54,7 +54,7 @@ export function off (
 
     for (let i = 0; i < list.length; i++)
     {
-        for (let j = 0; j < mojave.types.length; j++)
+        for (let j = 0; j < types.length; j++)
         {
             const node = list[i];
             const eventType = types[j];
@@ -89,8 +89,8 @@ export function once (
     handler : EventListener
 ) : mojave.types.EventIntermediateToken
 {
-    const intermediate = (...args) => {
-        handler(...args);
+    const intermediate = (event) => {
+        handler(event);
         off(element, type, intermediate);
     };
     on(element, type, intermediate);

@@ -6,7 +6,7 @@ const YEAR = 365 * DAY;
 const MONTH = YEAR / 12;
 
 const TIME_SECTIONS = [
-    [0.8 * MINUTE, 'in diesem Moment'],
+    [0.8 * MINUTE, 'gerade eben'],
     [1.5 * MINUTE, 'vor einer Minute'],
     [60 * MINUTE, 'vor # Minuten', MINUTE],
     [1.5 * HOUR, 'vor einer Stunde'],

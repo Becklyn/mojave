@@ -22,7 +22,7 @@
     "license": "BSD-3-Clause",
     "devDependencies": {
         "kaba": "2.0.2",
-        "karma": "1.7.1",
+        "karma": "2.0.0",
         "karma-qunit": "1.2.1",
         "karma-sauce-launcher": "1.2.0",
         "qunitjs": "2.4.1",

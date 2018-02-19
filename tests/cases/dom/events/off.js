@@ -39,15 +39,11 @@ QUnit.test(
 
 
 QUnit.test(
-    "off() with an invalid element",
+    "off() with null",
     (assert) =>
     {
-        assert.throws(
-            () => {
-                off(null, "click", () => {});
-            },
-            "function threw an error"
-        );
+        off(null, "click", () => {});
+        assert.ok(true, "null is silently ignored");
     }
 );
 

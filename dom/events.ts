@@ -7,11 +7,16 @@ import {splitStringValue} from "./utils";
  * Registers an event listener for the given events
  */
 export function on (
-    element : EventTarget|EventTarget[],
+    element : null|EventTarget|EventTarget[],
     type : string,
     handler : EventListener
 ) : void
 {
+    if (null === element)
+    {
+        return;
+    }
+
     const list : mojave.types.AnnotatedHTMLElement[] = (Array.isArray(element) ? element : [element]) as mojave.types.AnnotatedHTMLElement[];
     const types = splitStringValue(type);
 
@@ -44,11 +49,16 @@ export function on (
  * Removes an event listener for the given events
  */
 export function off (
-    element : EventTarget|EventTarget[],
+    element : null|EventTarget|EventTarget[],
     type : string,
     handler : EventListener|mojave.types.EventIntermediateToken
 ) : void
 {
+    if (null === element)
+    {
+        return;
+    }
+
     const list : mojave.types.AnnotatedHTMLElement[] = (Array.isArray(element) ? element : [element]) as mojave.types.AnnotatedHTMLElement[];
     const types = splitStringValue(type);
 
@@ -154,8 +164,13 @@ function findDelegatedTarget (delegateElement : EventTarget, currentTarget : Ele
 /**
  * Dispatches an event
  */
-export function trigger (element : EventTarget, type : string, data : any = null) : void
+export function trigger (element : null|EventTarget, type : string, data : any = null) : void
 {
+    if (null === element)
+    {
+        return;
+    }
+
     const event = createEvent(type, {
         bubbles: true,
         cancelable: true,

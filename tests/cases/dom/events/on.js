@@ -122,6 +122,16 @@ QUnit.test(
 
 
 QUnit.test(
+    "on() with null",
+    (assert) =>
+    {
+        on(null, "click", () => {});
+        assert.ok(true, "null is silently ignored");
+    }
+);
+
+
+QUnit.test(
     "on() with an invalid event",
     (assert) =>
     {

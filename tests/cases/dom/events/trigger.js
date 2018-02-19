@@ -1,5 +1,5 @@
 import QUnit from "qunitjs";
-import {on, trigger} from "../../../../dom/events";
+import {off, on, trigger} from "../../../../dom/events";
 import {findOne} from "../../../../dom/traverse";
 
 
@@ -49,15 +49,11 @@ QUnit.test(
 
 
 QUnit.test(
-    "trigger() with an invalid element",
+    "trigger() with null",
     (assert) =>
     {
-        assert.throws(
-            () => {
-                trigger(null, "click");
-            },
-            "function threw an error"
-        );
+        trigger(null, "click");
+        assert.ok(true, "null is silently ignored");
     }
 );
 

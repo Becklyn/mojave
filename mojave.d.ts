@@ -5,7 +5,7 @@ declare namespace mojave.types
      */
     type AnnotatedHTMLElement = HTMLElement & {
         _data: undefined | KeyMap,
-        _listeners: undefined | {[key : string] : EventListenerOrEventListenerObject[]},
+        _listeners: undefined | {[key : string] : EventListener[]},
     };
 
 

@@ -8,7 +8,7 @@ import {splitStringValue} from "./utils";
  */
 export function on (
     element : null|EventTarget|EventTarget[],
-    type : string,
+    type : string|string[],
     handler : EventListener
 ) : void
 {
@@ -50,7 +50,7 @@ export function on (
  */
 export function off (
     element : null|EventTarget|EventTarget[],
-    type : string,
+    type : string|string[],
     handler : EventListener|mojave.types.EventIntermediateToken
 ) : void
 {

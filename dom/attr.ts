@@ -31,7 +31,10 @@ export function setAttrs (element : Element, attributes : mojave.types.OptionalK
         }
         else
         {
-            element.setAttribute(key, "" + attributes[key]);
+            element.setAttribute(
+                key,
+                (value === true) ? key : ("" + value)
+            );
         }
     }
 }

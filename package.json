@@ -23,7 +23,7 @@
     "devDependencies": {
         "kaba": "2.0.2",
         "karma": "1.7.1",
-        "karma-qunit": "1.2.1",
+        "karma-qunit": "2.0.1",
         "karma-sauce-launcher": "1.2.0",
         "qunitjs": "2.4.1",
         "saucelabs": "1.4.0"

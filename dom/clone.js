@@ -1,4 +1,3 @@
-/// <reference path="../mojave.d.ts" />
 /* eslint-disable no-underscore-dangle */
 
 import {on} from "./events";
@@ -11,9 +10,9 @@ import {setData} from "./attr";
  * @param {Element} element
  * @return {HTMLElement}
  */
-export function duplicate (element : Element) : HTMLElement
+export function duplicate (element)
 {
-    return element.cloneNode(true) as HTMLElement;
+    return element.cloneNode(true);
 }
 
 
@@ -24,12 +23,11 @@ export function duplicate (element : Element) : HTMLElement
  * @param {Element} element
  * @return {HTMLElement}
  */
-export function clone (element : Element) : HTMLElement
+export function clone (element)
 {
-    const node : mojave.types.AnnotatedHTMLElement = element as mojave.types.AnnotatedHTMLElement;
-    const clonedElement : HTMLElement = duplicate(node);
-    const listeners = node._listeners;
-    const dataset = node.dataset;
+    const clonedElement = duplicate(element);
+    const listeners = element._listeners;
+    const dataset = element.dataset;
 
     // copy events
     if (typeof listeners !== "undefined")
@@ -64,13 +62,13 @@ export function clone (element : Element) : HTMLElement
     }
 
     // copy custom data values
-    if (typeof node._data === "object")
+    if (typeof element._data === "object")
     {
-        for (const key in node._data)
+        for (const key in element._data)
         {
-            if (node._data.hasOwnProperty(key))
+            if (element._data.hasOwnProperty(key))
             {
-                setData(clonedElement, key, node._data[key]);
+                setData(clonedElement, key, element._data[key]);
             }
         }
     }

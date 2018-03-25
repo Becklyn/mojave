@@ -14,8 +14,10 @@ const HAS_PIXELS_UNIT = /px$/;
  * Returns the normalized (like vendor-prefixed) name of the given CSS property
  *
  * @private
+ * @param {string} property
+ * @returns {string}
  */
-function normalizeProperty (property : string) : string
+function normalizeProperty (property)
 {
     if (propertyNameCache[property])
     {
@@ -30,7 +32,7 @@ function normalizeProperty (property : string) : string
 
     for (let i = 0; i < VENDOR_PREFIXES.length; i++)
     {
-        const prefixedName : string = `${VENDOR_PREFIXES[i]}${property}`;
+        const prefixedName = `${VENDOR_PREFIXES[i]}${property}`;
 
         if (prefixedName in DEFAULT_STYLES)
         {
@@ -46,9 +48,13 @@ function normalizeProperty (property : string) : string
 
 /**
  * Sets all styles on the element
+ *
+ * @param {HTMLElement | HTMLElement[]} elements
+ * @param {mojave.types.KeyMap} styles
  */
-export function setStyles (elements : HTMLElement|HTMLElement[], styles : mojave.types.KeyMap) : void
+export function setStyles (elements, styles)
 {
+    /** @type {HTMLElement[]} elements */
     elements = Array.isArray(elements) ? elements : [elements];
 
     for (let i = 0; i < elements.length; i++)
@@ -96,8 +102,11 @@ export function setStyles (elements : HTMLElement|HTMLElement[], styles : mojave
  * Returns the computed styles for the given element
  *
  * @private
+ * @param {Element} element
+ * @param {string|null} [pseudoElement]
+ * @returns {CSSStyleDeclaration}
  */
-function getComputedStyles (element : Element, pseudoElement : string = null) : CSSStyleDeclaration
+function getComputedStyles (element, pseudoElement = null)
 {
     // @legacy IE <= 11
     // IE throws on elements created in popups
@@ -114,8 +123,13 @@ function getComputedStyles (element : Element, pseudoElement : string = null) : 
 
 /**
  * Returns the CSS property value for the given property and element
+ *
+ * @param {HTMLElement} element
+ * @param {string} property
+ * @param {string|null} [pseudoElement]
+ * @returns {string | number | null}
  */
-export function getStyle (element : HTMLElement, property : string, pseudoElement : string = null) : null|string|number
+export function getStyle (element, property, pseudoElement = null)
 {
     if (DIRECTLY_ACCESSIBLE_SETTERS.test(property))
     {
@@ -138,8 +152,7 @@ export function getStyle (element : HTMLElement, property : string, pseudoElemen
         return value === "" ? "1" : value;
     }
 
-
-    if (value !== undefined && !IS_NON_DIMENSIONAL.test(property) && typeof value === "string" && HAS_PIXELS_UNIT.test(value))
+    if (value !== undefined && !IS_NON_DIMENSIONAL.test(property) && HAS_PIXELS_UNIT.test(value))
     {
         return parseInt(value.replace(HAS_PIXELS_UNIT, ""), 10);
     }
@@ -152,10 +165,13 @@ export function getStyle (element : HTMLElement, property : string, pseudoElemen
  * Updates the display value of the given element
  *
  * @private
+ * @param {HTMLElement | HTMLElement[]} element
+ * @param {string} style
  */
-function updateDisplay (element : HTMLElement|HTMLElement[], style : string) : void
+function updateDisplay (element, style)
 {
-    const list : HTMLElement[] = Array.isArray(element) ? element : [element];
+    /** @type {HTMLElement[]} list */
+    const list = Array.isArray(element) ? element : [element];
 
     for (let i = 0; i < list.length; i++)
     {
@@ -166,8 +182,10 @@ function updateDisplay (element : HTMLElement|HTMLElement[], style : string) : v
 
 /**
  * Hides the given element(s)
+ *
+ * @param {HTMLElement | HTMLElement[]} element
  */
-export function hide (element : HTMLElement|HTMLElement[]) : void
+export function hide (element)
 {
     updateDisplay(element, "none");
 }
@@ -175,8 +193,10 @@ export function hide (element : HTMLElement|HTMLElement[]) : void
 
 /**
  * Shows the given element(s)
+ *
+ * @param {HTMLElement | HTMLElement[]} element
  */
-export function show (element : HTMLElement|HTMLElement[]) : void
+export function show (element)
 {
     updateDisplay(element, "");
 }
@@ -184,8 +204,11 @@ export function show (element : HTMLElement|HTMLElement[]) : void
 
 /**
  * Returns the position of the element
+ *
+ * @param {HTMLElement} element
+ * @returns {{top: number, left: number}}
  */
-export function position (element : HTMLElement) : {top: number, left: number}
+export function position (element)
 {
     return {
         top: element.offsetTop,
@@ -196,8 +219,11 @@ export function position (element : HTMLElement) : {top: number, left: number}
 
 /**
  * Returns the global offset of the element
+ *
+ * @param {HTMLElement} element
+ * @returns {{top: number, left: number}}
  */
-export function offset (element : HTMLElement) : {top: number, left: number}
+export function offset (element)
 {
     const rect = element.getBoundingClientRect();
 

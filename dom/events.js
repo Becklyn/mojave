@@ -1,23 +1,24 @@
-/// <reference path="../mojave.d.ts" />
 /* eslint-disable no-underscore-dangle */
 
 import {splitStringValue} from "./utils";
 
+
 /**
  * Registers an event listener for the given events
+ *
+ * @param {EventTarget | EventTarget[] | null} element
+ * @param {string | string[]} type
+ * @param {EventListener} handler
  */
-export function on (
-    element : null|EventTarget|EventTarget[],
-    type : string|string[],
-    handler : EventListener
-) : void
+export function on (element, type, handler)
 {
     if (null === element)
     {
         return;
     }
 
-    const list : mojave.types.AnnotatedHTMLElement[] = (Array.isArray(element) ? element : [element]) as mojave.types.AnnotatedHTMLElement[];
+    /** @type {mojave.types.AnnotatedHTMLElement[]} list */
+    const list = (Array.isArray(element) ? element : [element]);
     const types = splitStringValue(type);
 
     for (let i = 0; i < list.length; i++)
@@ -47,19 +48,20 @@ export function on (
 
 /**
  * Removes an event listener for the given events
+ *
+ * @param {EventTarget | EventTarget[] | null} element
+ * @param {string | string[]} type
+ * @param {EventListener | mojave.types.EventIntermediateToken} handler
  */
-export function off (
-    element : null|EventTarget|EventTarget[],
-    type : string|string[],
-    handler : EventListener|mojave.types.EventIntermediateToken
-) : void
+export function off (element, type, handler)
 {
     if (null === element)
     {
         return;
     }
 
-    const list : mojave.types.AnnotatedHTMLElement[] = (Array.isArray(element) ? element : [element]) as mojave.types.AnnotatedHTMLElement[];
+    /** @type {mojave.types.AnnotatedHTMLElement[]} list */
+    const list = (Array.isArray(element) ? element : [element]);
     const types = splitStringValue(type);
 
     for (let i = 0; i < list.length; i++)
@@ -92,12 +94,13 @@ export function off (
  *
  *      const intermediate = once(element, event, handler);
  *      off(element, event, intermediate);
+ *
+ * @param {EventTarget} element
+ * @param {string} type
+ * @param {EventListener} handler
+ * @returns {mojave.types.EventIntermediateToken}
  */
-export function once (
-    element : EventTarget,
-    type : string,
-    handler : EventListener
-) : mojave.types.EventIntermediateToken
+export function once (element, type, handler)
 {
     const intermediate = (event) => {
         handler(event);
@@ -116,13 +119,14 @@ export function once (
  *
  *      const intermediate = delegate(element, selector, type, handler);
  *      off(element, event, intermediate);
+ *
+ * @param {EventTarget} element
+ * @param {string} selector
+ * @param {string} type
+ * @param {mojave.types.DelegatedEventHandler} handler
+ * @returns {mojave.types.EventIntermediateToken}
  */
-export function delegate (
-    element : EventTarget,
-    selector : string,
-    type : string,
-    handler : mojave.types.DelegatedEventHandler
-) : mojave.types.EventIntermediateToken
+export function delegate (element, selector, type, handler)
 {
     const intermediate = (event) =>
     {
@@ -142,8 +146,14 @@ export function delegate (
 
 /**
  * In a delegated event listener, this function finds the actual desired event target.
+ *
+ * @private
+ * @param {EventTarget} delegateElement
+ * @param {Element} currentTarget
+ * @param {string} selector
+ * @returns {Element | null}
  */
-function findDelegatedTarget (delegateElement : EventTarget, currentTarget : Element, selector : string) : Element|null
+function findDelegatedTarget (delegateElement, currentTarget, selector)
 {
     let node = currentTarget;
 
@@ -163,8 +173,12 @@ function findDelegatedTarget (delegateElement : EventTarget, currentTarget : Ele
 
 /**
  * Dispatches an event
+ *
+ * @param {EventTarget | null} element
+ * @param {string} type
+ * @param {*} [data]
  */
-export function trigger (element : null|EventTarget, type : string, data : any = null) : void
+export function trigger (element, type, data = null)
 {
     if (null === element)
     {
@@ -185,8 +199,11 @@ export function trigger (element : null|EventTarget, type : string, data : any =
  * Creates an event
  *
  * @private
+ * @param {string} type
+ * @param {CustomEventInit} args
+ * @returns {CustomEvent}
  */
-function createEvent (type : string, args : CustomEventInit) : CustomEvent
+function createEvent (type, args)
 {
     // @legacy IE <= 11 doesn't support the global CustomEvent
     if (typeof CustomEvent !== "function")

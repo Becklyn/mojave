@@ -79,7 +79,7 @@ export function setStyles (elements, styles)
             // don't transform custom properties
             if (CUSTOM_PROPERTY_REGEX.test(property))
             {
-                style.setProperty(property, value as string);
+                style.setProperty(property, value);
                 continue;
             }
 

@@ -1,5 +1,3 @@
-/// <reference path="../mojave.d.ts" />
-
 import {isElement} from "./utils";
 import {setAttrs} from "./attr";
 import {setStyles} from "./css";
@@ -9,8 +7,10 @@ import {setStyles} from "./css";
  * Parses the HTML to an HTMLElement
  *
  * @private
+ * @param {string} html
+ * @returns {HTMLElement}
  */
-function parseHtml (html : string) : HTMLElement
+function parseHtml (html)
 {
     const parser = new DOMParser();
     const doc = parser.parseFromString(html, "text/html");
@@ -21,14 +21,18 @@ function parseHtml (html : string) : HTMLElement
         throw new Error("Can only parse HTML with exactly one valid root element. A valid element can stand on its own in the body.");
     }
 
-    return children[0] as HTMLElement;
+    return children[0];
 }
 
 
 /**
  * Creates an element with the given attributes
+ *
+ * @param {string} type
+ * @param {mojave.types.CreateElementOptions} [attributes]
+ * @returns {HTMLElement}
  */
-export function createElement (type : string, attributes : mojave.types.CreateElementOptions = {}) : HTMLElement
+export function createElement (type, attributes = {})
 {
     const element = (-1 !== type.indexOf("<"))
         ? parseHtml(type)
@@ -56,15 +60,17 @@ export function createElement (type : string, attributes : mojave.types.CreateEl
 
 /**
  * Removes the given element(s)
+ *
+ * @param {Element | Element[] | null} element
  */
-export function remove (element : Element|Element[]|null) : void
+export function remove (element)
 {
     if (null === element)
     {
         return;
     }
 
-    const list : Element[] = Array.isArray(element) ? element : [element];
+    const list = Array.isArray(element) ? element : [element];
 
     for (let i = 0; i < list.length; i++)
     {
@@ -75,10 +81,12 @@ export function remove (element : Element|Element[]|null) : void
 
 /**
  * Empties the given element(s)
+ *
+ * @param {Element | Element[]} element
  */
-export function empty (element : Element|Element[]) : void
+export function empty (element)
 {
-    const list : Element[] = Array.isArray(element) ? element : [element];
+    const list = Array.isArray(element) ? element : [element];
 
     for (let i = 0; i < list.length; i++)
     {
@@ -92,8 +100,11 @@ export function empty (element : Element|Element[]) : void
 
 /**
  * Replaces the given element with the replacement element
+ *
+ * @param {Element} element
+ * @param {Element} replacement
  */
-export function replace (element : Element, replacement : Element) : void
+export function replace (element, replacement)
 {
     element.parentNode.replaceChild(replacement, element);
 }
@@ -103,14 +114,13 @@ export function replace (element : Element, replacement : Element) : void
  * Inserts the given element(s)/HTML string at the given position.
  *
  * @private
+ * @param {Element} reference
+ * @param {mojave.types.InsertableElement} insert
+ * @param {InsertPosition} adjacentPosition
+ * @param {Element} insertInto
+ * @param {Element | null} insertReference
  */
-function insertElement (
-    reference : Element,
-    insert : mojave.types.InsertableElement,
-    adjacentPosition : InsertPosition,
-    insertInto : Element,
-    insertReference : Element | null
-) : void // eslint-disable-line max-params
+function insertElement (reference, insert, adjacentPosition, insertInto, insertReference) // eslint-disable-line max-params
 {
     // if element to insert is string
     if (typeof insert === "string")
@@ -120,7 +130,7 @@ function insertElement (
     }
 
     // if element to insert is HTMLElement or HTMLElement[]
-    const list : Element[] = Array.isArray(insert) ? insert : [insert];
+    const list = Array.isArray(insert) ? insert : [insert];
 
     for (let i = 0; i < list.length; i++)
     {
@@ -131,8 +141,11 @@ function insertElement (
 
 /**
  * Inserts the given element/HTML string at the end of the reference element.
+ *
+ * @param {Element} reference
+ * @param {mojave.types.InsertableElement} insert
  */
-export function append (reference : Element, insert : mojave.types.InsertableElement) : void
+export function append (reference , insert)
 {
     insertElement(
         reference,
@@ -146,8 +159,11 @@ export function append (reference : Element, insert : mojave.types.InsertableEle
 
 /**
  * Inserts the given element/HTML string at the beginning of the reference element.
+ *
+ * @param {Element} reference
+ * @param {mojave.types.InsertableElement} insert
  */
-export function prepend (reference : Element, insert : mojave.types.InsertableElement) : void
+export function prepend (reference, insert)
 {
     insertElement(
         reference,
@@ -161,8 +177,11 @@ export function prepend (reference : Element, insert : mojave.types.InsertableEl
 
 /**
  * Inserts the given element/HTML string just before the reference element.
+ *
+ * @param {Element} reference
+ * @param {mojave.types.InsertableElement} insert
  */
-export function before (reference : Element, insert : mojave.types.InsertableElement) : void
+export function before (reference, insert)
 {
     insertElement(
         reference,
@@ -176,8 +195,11 @@ export function before (reference : Element, insert : mojave.types.InsertableEle
 
 /**
  * Inserts the given element/HTML string just after the reference element.
+ *
+ * @param {Element} reference
+ * @param {mojave.types.InsertableElement} insert
  */
-export function after (reference : Element, insert : mojave.types.InsertableElement) : void
+export function after (reference, insert)
 {
     insertElement(
         reference,

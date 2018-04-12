@@ -1,8 +1,7 @@
-/* eslint-disable no-underscore-dangle */
-
 import {splitStringValue} from "./utils";
 
 const SPECIAL_ATTRIBUTE_SETTERS = /^(html|text|css)$/;
+const customDataStorage = new window.WeakMap();
 
 
 /**
@@ -129,13 +128,15 @@ function normalizeDataKey (key)
 export function setData (element, key, value)
 {
     key = normalizeDataKey(key);
+    let storage = customDataStorage.get(element);
 
-    if (element._data === undefined)
+    if (storage === undefined)
     {
-        element._data = {};
+        storage = {};
+        customDataStorage.set(element, storage);
     }
 
-    element._data[key] = value;
+    storage[key] = value;
 }
 
 
@@ -149,10 +150,11 @@ export function setData (element, key, value)
 export function getData (element, key)
 {
     const normalizedKey = normalizeDataKey(key);
+    const storage = customDataStorage.get(element);
 
-    if (typeof element._data === "object" && typeof element._data[normalizedKey] !== "undefined")
+    if (typeof storage === "object" && storage[normalizedKey] !== undefined)
     {
-        return element._data[normalizedKey];
+        return storage[normalizedKey];
     }
 
     // @legacy IE <= 10 doesn't support dataset
@@ -165,4 +167,16 @@ export function getData (element, key)
     return value === undefined
         ? null
         : value;
+}
+
+
+/**
+ * Returns all data in custom storage
+ *
+ * @param {HTMLElement} element
+ * @returns {Object}
+ */
+export function getAllCustomData (element)
+{
+    return customDataStorage.get(element) || {};
 }

@@ -21,7 +21,7 @@
     },
     "license": "BSD-3-Clause",
     "devDependencies": {
-        "kaba": "2.0.2",
+        "kaba": "Becklyn/kaba#0cb217d378a4d8fd6113def4ae6c1653c3111fbb",
         "karma": "1.7.1",
         "karma-qunit": "1.2.1",
         "karma-sauce-launcher": "1.2.0",

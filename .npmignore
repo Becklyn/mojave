@@ -1,7 +1,7 @@
 /.gitignore
 /.npmignore
 /.travis.yml
-/kabafile.js
+/kaba.js
 /karma.conf.js
 /node_modules
 /tests

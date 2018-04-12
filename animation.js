@@ -11,7 +11,7 @@
  *      easing: function(number):number,
  *      duration: number,
  *      ?stopPrevious: boolean,
- *      onAnimationFinished: function(),
+ *      onAnimationFinished: function(boolean),
  * }} mojave.AnimationContext
  *
  * @typedef {{
@@ -114,10 +114,8 @@ export function animateCallback (callback, options = {})
     context.currentFrame = null;
 
     // Build animation director + promise
-    let onAnimationAborted;
     const animationDirector = new Promise((resolve, reject) => {
         context.onAnimationFinished = resolve;
-        onAnimationAborted = reject;
     });
 
     // register first animation frame
@@ -128,7 +126,7 @@ export function animateCallback (callback, options = {})
     // add stop() method to animation director (the context needs to be initialized)
     animationDirector.stop = () =>
     {
-        onAnimationAborted();
+        context.onAnimationFinished(false);
         window.cancelAnimationFrame(context.currentFrame);
     };
 
@@ -159,7 +157,7 @@ function runAnimationStep (time, start, callback, context)
     }
     else
     {
-        context.onAnimationFinished();
+        context.onAnimationFinished(true);
     }
 }
 

@@ -93,11 +93,11 @@ export function compareDate (date, otherDate)
  */
 export function compareTimestamp (date, otherDate)
 {
-    const compareDate = compareDate(date, otherDate);
+    const compareDateResult = compareDate(date, otherDate);
 
-    if (0 !== compareDate)
+    if (0 !== compareDateResult)
     {
-        return compareDate;
+        return compareDateResult;
     }
 
     const compareHour = compare(date.getHours(), otherDate.getHours());

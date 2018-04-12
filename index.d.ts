@@ -1,15 +1,6 @@
 declare namespace mojave.types
 {
     /**
-     * Annotated HTML element, as it is internally used by mojave
-     */
-    type AnnotatedHTMLElement = HTMLElement & {
-        _data: undefined | KeyMap,
-        _listeners: undefined | {[key : string] : EventListener[]},
-    };
-
-
-    /**
      * Options for createElement()
      */
     type CreateElementOptions = KeyMap & {

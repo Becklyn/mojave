@@ -17,7 +17,7 @@ export function on (element, type, handler)
         return;
     }
 
-    /** @type {mojave.types.AnnotatedHTMLElement[]} list */
+    /** @type {HTMLElement[]} list */
     const list = (Array.isArray(element) ? element : [element]);
     const types = splitStringValue(type);
 
@@ -60,7 +60,7 @@ export function off (element, type, handler)
         return;
     }
 
-    /** @type {mojave.types.AnnotatedHTMLElement[]} list */
+    /** @type {HTMLElement[]} list */
     const list = (Array.isArray(element) ? element : [element]);
     const types = splitStringValue(type);
 

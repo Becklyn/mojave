@@ -1,7 +1,7 @@
 /* eslint-disable no-empty-function */
 
 import {getAllListeners, off, once, trigger} from "../../../../dom/events";
-import QUnit from "qunitjs";
+import QUnit from "qunit";
 import {findOne} from "../../../../dom/traverse";
 
 
@@ -22,15 +22,11 @@ QUnit.test(
     "once() callback only called once",
     (assert) =>
     {
-        assert.expect(1);
+        const done = assert.async(1);
+        assert.expect(0);
         const element = findOne(".example");
-        const done = assert.async();
 
-        once(element, "click", () => {
-            assert.step("event listener triggered");
-            done();
-        });
-
+        once(element, "click", done);
         element.click();
         element.click();
     }
@@ -41,15 +37,11 @@ QUnit.test(
     "once() called with custom event",
     (assert) =>
     {
-        assert.expect(1);
+        const done = assert.async(1);
+        assert.expect(0);
         const element = findOne(".example");
-        const done = assert.async();
 
-        once(element, "customEvent", () => {
-            assert.step("event listener triggered");
-            done();
-        });
-
+        once(element, "customEvent", done);
         trigger(element, "customEvent");
         trigger(element, "customEvent");
     }
@@ -126,6 +118,7 @@ QUnit.test(
     "once(custom event) multiple event handler triggered by one event",
     (assert) =>
     {
+        const done = assert.async(5);
         assert.expect(6);
         const element = findOne(".example");
         const order = ["first handler", "second handler", "third handler", "fourth handler", "fifth handler"];
@@ -133,6 +126,7 @@ QUnit.test(
         order.forEach((value) => {
             once(element, "customEvent", () => {
                 assert.step(value);
+                done();
             });
         });
 

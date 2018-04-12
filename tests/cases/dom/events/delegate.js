@@ -2,7 +2,7 @@
 
 import {delegate, off, trigger} from "../../../../dom/events";
 import {find, findOne} from "../../../../dom/traverse";
-import QUnit from "qunitjs";
+import QUnit from "qunit";
 
 QUnit.module("dom/events/delegate()", {
     beforeEach: () =>
@@ -21,13 +21,13 @@ QUnit.test(
     "delegate()",
     (assert) =>
     {
-        assert.expect(2);
+        const done = assert.async(1);
         const element = findOne("#element");
         const child = findOne(".first-child");
 
         const intermediate = delegate(element, "*", "click", () => {
-            assert.step("eventlistener could be removed after use");
             off(element, "click", intermediate);
+            done();
         });
 
         assert.equal(typeof intermediate, "function", "function was returned");
@@ -42,11 +42,10 @@ QUnit.test(
     "delegate() with matching selector",
     (assert) =>
     {
-        assert.expect(2);
+        const done = assert.async(2);
+        assert.expect(0);
 
-        delegate(findOne("#element"), ".child", "click", () => {
-            assert.step("event triggered on child element");
-        });
+        delegate(findOne("#element"), ".child", "click", done);
 
         find(".child").forEach((childElement) => {
             childElement.click();
@@ -76,14 +75,12 @@ QUnit.test(
     "delegate(custom event)",
     (assert) =>
     {
-        assert.expect(1);
+        const done = assert.async(1);
+        assert.expect(0);
         const element = findOne("#element");
         const child = findOne(".first-child");
 
-        delegate(element, "*", "customEvent", () => {
-            assert.step("could call handler with a custom event");
-        });
-
+        delegate(element, "*", "customEvent", done);
         trigger(child, "customEvent");
     }
 );
@@ -142,7 +139,7 @@ QUnit.test(
     (assert) =>
     {
         delegate(findOne("#element"), null, "customElement", () => {});
-        assert.step("this should have worked because the behavior of the function in this case is not defined");
+        assert.ok(true, "this should have worked because the behavior of the function in this case is not defined");
     }
 );
 

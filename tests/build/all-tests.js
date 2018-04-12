@@ -1,5 +1,3 @@
-/* global QUnit */
-
 import "../cases/date/compare";
 import "../cases/date/format";
 import "../cases/dom/clone/clone";
@@ -33,5 +31,7 @@ import "../cases/io/file";
 import "../cases/string/manipulate/replaceAll";
 import "../cases/timing/debounce";
 import "../cases/url/Slug";
+import QUnit from "qunit";
 
 QUnit.config.testTimeout = 1500;
+QUnit.start();

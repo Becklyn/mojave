@@ -1,5 +1,5 @@
 import {off, on, trigger} from "../../../../dom/events";
-import QUnit from "qunitjs";
+import QUnit from "qunit";
 import {findOne} from "../../../../dom/traverse";
 
 QUnit.module("dom/events/on()", {
@@ -19,15 +19,11 @@ QUnit.test(
     "on(click) with existing DOM node",
     (assert) =>
     {
-        assert.expect(1);
+        const done = assert.async(1);
+        assert.expect(0);
         const element = findOne("#button");
-        const done = assert.async();
 
-        on(element, "click", () => {
-            assert.step("event listener triggered");
-            done();
-        });
-
+        on(element, "click", done);
         element.click();
     }
 );
@@ -37,13 +33,11 @@ QUnit.test(
     "on(custom event) with existing DOM node",
     (assert) =>
     {
-        assert.expect(1);
+        const done = assert.async(1);
+        assert.expect(0);
         const element = findOne("#button");
 
-        on(element, "customEvent", () => {
-            assert.step("event listener triggered");
-        });
-
+        on(element, "customEvent", done);
         trigger(element, "customEvent");
     }
 );
@@ -69,14 +63,13 @@ QUnit.test(
     "on(custom event) triggering the event multiple times",
     (assert) =>
     {
-        assert.expect(5);
+        const done = assert.async(5);
+        assert.expect(0);
         const element = findOne(".example");
 
-        on(element, "customEvent", () => {
-            assert.step("event listener triggered");
-        });
+        on(element, "customEvent", done);
 
-        for(let i = 0; i < 5; i++)
+        for (let i = 0; i < 5; i++)
         {
             trigger(element, "customEvent");
         }
@@ -107,15 +100,13 @@ QUnit.test(
     "on(custom event) is not callable after removal",
     (assert) =>
     {
-        assert.expect(1);
+        const done = assert.async(1);
+        assert.expect(0);
         const element = findOne(".example");
-        const handler = () => {
-            assert.step("handler is called once");
-        };
 
-        on(element, "customEvent", handler);
+        on(element, "customEvent", done);
         trigger(element, "customEvent");
-        off(element, "customEvent", handler);
+        off(element, "customEvent", done);
         trigger(element, "customEvent");
     }
 );

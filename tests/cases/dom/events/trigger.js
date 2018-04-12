@@ -1,5 +1,5 @@
 import {on, trigger} from "../../../../dom/events";
-import QUnit from "qunitjs";
+import QUnit from "qunit";
 import {findOne} from "../../../../dom/traverse";
 
 
@@ -20,13 +20,11 @@ QUnit.test(
     "trigger() with an click event",
     (assert) =>
     {
-        assert.expect(1);
+        const done = assert.async(1);
+        assert.expect(0);
         const element = findOne(".example");
 
-        on(element, "click", () => {
-            assert.step("event listener was triggered");
-        });
-
+        on(element, "click", done);
         trigger(element, "click");
     }
 );
@@ -36,13 +34,11 @@ QUnit.test(
     "trigger() with a custom event",
     (assert) =>
     {
-        assert.expect(1);
+        const done = assert.async(1);
+        assert.expect(0);
         const element = findOne(".example");
 
-        on(element, "customEvent", () => {
-            assert.step("event listener was triggered");
-        });
-
+        on(element, "customEvent", done);
         trigger(element, "customEvent");
     }
 );
@@ -63,6 +59,6 @@ QUnit.test(
     (assert) =>
     {
         trigger(findOne(".example"), null);
-        assert.step("this should have worked because the behavior of the function in this case is not defined");
+        assert.ok(true, "this should have worked because the behavior of the function in this case is not defined");
     }
 );

@@ -1,5 +1,5 @@
 import {createElement, replace} from "../../../../dom/manipulate";
-import QUnit from "qunitjs";
+import QUnit from "qunit";
 import {findOne} from "../../../../dom/traverse";
 
 QUnit.module("dom/manipulate/replace()",

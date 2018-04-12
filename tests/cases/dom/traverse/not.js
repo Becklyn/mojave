@@ -1,5 +1,5 @@
 import {find, findOne, not} from "../../../../dom/traverse";
-import QUnit from "qunitjs";
+import QUnit from "qunit";
 
 QUnit.module("dom/traverse/not()",
     {

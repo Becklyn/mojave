@@ -1,6 +1,6 @@
 import {append, createElement} from "../../../../dom/manipulate";
 import {children, find, findOne} from "../../../../dom/traverse";
-import QUnit from "qunitjs";
+import QUnit from "qunit";
 
 QUnit.module("dom/manipulate/append()",
     {

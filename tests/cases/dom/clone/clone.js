@@ -1,6 +1,6 @@
 import {children, findOne} from "../../../../dom/traverse";
 import {on, trigger} from "../../../../dom/events";
-import QUnit from "qunitjs";
+import QUnit from "qunit";
 import {clone} from "../../../../dom/clone";
 import {getAttr} from "../../../../dom/attr";
 

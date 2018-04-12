@@ -1,7 +1,7 @@
 /* eslint-disable no-empty-function */
 
 import {delegate, off} from "../../../../dom/events";
-import QUnit from "qunitjs";
+import QUnit from "qunit";
 import {findOne} from "../../../../dom/traverse";
 
 
@@ -22,18 +22,19 @@ QUnit.test(
     "off()",
     (assert) =>
     {
-        assert.expect(2);
+        const done = assert.async(2);
+        assert.expect(0);
         const element = findOne(".example");
         const button = findOne("#button");
 
         const intermediate = delegate(element, "*", "click", () => {
-            assert.step("event listener was triggered");
+            done();
             off(element, "click", intermediate);
         });
 
         button.click();
         button.click();
-        assert.step("event listener could be removed after use");
+        done();
     }
 );
 

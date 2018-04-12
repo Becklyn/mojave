@@ -1,4 +1,4 @@
-import QUnit from "qunitjs";
+import QUnit from "qunit";
 import {splitStringValue} from "../../../../dom/utils";
 
 QUnit.module("dom/utils/splitStringValue()");

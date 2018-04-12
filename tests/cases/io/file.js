@@ -1,4 +1,4 @@
-import QUnit from "qunitjs";
+import QUnit from "qunit";
 import {formatSize} from "../../../io/file";
 
 QUnit.module("io/file");

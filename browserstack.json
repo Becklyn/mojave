@@ -2,6 +2,7 @@
     "test_path": "tests/index.html",
     "test_framework": "qunit",
     "exit_with_fail": true,
+    "timeout": 100,
     "browsers": [
         {"browser": "chrome", "browser_version": "latest", "device": null, "os": "Windows", "os_version": "10" },
         {"browser": "firefox", "browser_version": "latest", "device": null, "os": "Windows", "os_version": "10" },

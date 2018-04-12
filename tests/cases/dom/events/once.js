@@ -1,4 +1,4 @@
-/* eslint-disable no-underscore-dangle, no-empty-function */
+/* eslint-disable no-empty-function */
 
 import {getAllListeners, off, once, trigger} from "../../../../dom/events";
 import QUnit from "qunitjs";

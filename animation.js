@@ -1,4 +1,3 @@
-/* eslint-disable no-underscore-dangle */
 /**
  * @typedef {{
  *      ?easing: string|function(number):number,

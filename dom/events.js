@@ -1,5 +1,3 @@
-/* eslint-disable no-underscore-dangle */
-
 import {splitStringValue} from "./utils";
 const listenerRegistry = new window.WeakMap();
 

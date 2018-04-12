@@ -145,7 +145,7 @@ function insertElement (reference, insert, adjacentPosition, insertInto, insertR
  * @param {Element} reference
  * @param {mojave.types.InsertableElement} insert
  */
-export function append (reference , insert)
+export function append (reference, insert)
 {
     insertElement(
         reference,

@@ -67,7 +67,6 @@ QUnit.test(
 );
 
 
-
 QUnit.test(
     "nextAll() with an element at the start, with selector",
     (assert) =>

@@ -1,5 +1,5 @@
+import {on, trigger} from "../../../../dom/events";
 import QUnit from "qunitjs";
-import {off, on, trigger} from "../../../../dom/events";
 import {findOne} from "../../../../dom/traverse";
 
 
@@ -12,7 +12,7 @@ QUnit.module("dom/events/trigger()", {
                 <input type="text" id="input-element">
             </div>
         `;
-    }
+    },
 });
 
 

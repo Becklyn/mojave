@@ -9,7 +9,9 @@ QUnit.test(
     (assert) =>
     {
         let text = "foobar";
-        text = replaceAll(text, {foo: "a"});
+        text = replaceAll(text, {
+            foo: "a",
+        });
 
         assert.equal(text, "abar", `string was successfully replaced`);
     }
@@ -21,7 +23,10 @@ QUnit.test(
     (assert) =>
     {
         let text = "foobar";
-        text = replaceAll(text, {foo: "a", bar: "b"});
+        text = replaceAll(text, {
+            foo: "a",
+            bar: "b",
+        });
 
         assert.equal(text, "ab", `string was successfully replaced`);
     }
@@ -33,7 +38,10 @@ QUnit.test(
     (assert) =>
     {
         let text = "foobarbarfoofoobarfoobar";
-        text = replaceAll(text, {foo: "a", bar: "b"});
+        text = replaceAll(text, {
+            foo: "a",
+            bar: "b",
+        });
 
         assert.equal(text, "abbaabab", `string was successfully replaced`);
     }
@@ -45,7 +53,10 @@ QUnit.test(
     (assert) =>
     {
         let text = "farboo";
-        text = replaceAll(text, {foo: "a", bar: "b"});
+        text = replaceAll(text, {
+            foo: "a",
+            bar: "b",
+        });
 
         assert.equal(text, "farboo", `string is unaltered`);
     }
@@ -118,7 +129,10 @@ QUnit.test(
     (assert) =>
     {
         let text = "fooar";
-        text = replaceAll(text, {foo: "b", bar: "a"});
+        text = replaceAll(text, {
+            foo: "b",
+            bar: "a",
+        });
 
         assert.equal(text, "a", `string was successfully replaced. The result is a string, which matched only after the first alteration, which lead the string to be replaced although it wouldn't have been replaced if the original string was matched against.`);
     }

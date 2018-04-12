@@ -206,7 +206,7 @@ export function next (element, selector = null)
  * @param {string|null} [selector]
  * @returns {HTMLElement[]}
  */
-export function prevAll (element , selector = null)
+export function prevAll (element, selector = null)
 {
     return fetchAllSiblings(element, selector, "previousElementSibling");
 }
@@ -236,7 +236,7 @@ export function nextAll (element, selector = null)
  * @param {string|null} [selector]
  * @returns {HTMLElement[]}
  */
-export function siblings (element , selector = null)
+export function siblings (element, selector = null)
 {
     let sibling = element.parentElement.firstElementChild;
     const list = [];

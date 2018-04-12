@@ -14,7 +14,7 @@ QUnit.module("dom/events/off()", {
                 <input type="text" id="input-element">
             </div>
         `;
-    }
+    },
 });
 
 

@@ -1,8 +1,7 @@
 /* eslint-disable no-empty-function */
 
-
-import {find, findOne} from "../../../../dom/traverse";
 import {delegate, off, trigger} from "../../../../dom/events";
+import {find, findOne} from "../../../../dom/traverse";
 import QUnit from "qunitjs";
 
 QUnit.module("dom/events/delegate()", {

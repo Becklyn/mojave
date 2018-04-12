@@ -6,8 +6,7 @@ QUnit.module("extend/merge()");
 
 QUnit.test(
     "basic merge() tests",
-    function (assert)
-    {
+    (assert) => {
         const cases = [
             {
                 target: "a",
@@ -47,22 +46,62 @@ QUnit.test(
             {
                 target: {a: 1},
                 sources: [{b: 2}],
-                expected: {a: 1, b: 2},
+                expected: {
+                    a: 1,
+                    b: 2,
+                },
             },
             {
-                target: {a: 1, b: 2},
+                target: {
+                    a: 1,
+                    b: 2,
+                },
                 sources: [{b: 3}],
-                expected: {a: 1, b: 3},
+                expected: {
+                    a: 1,
+                    b: 3,
+                },
             },
             {
-                target: {a: 1, b: ["a"]},
-                sources: [{c: 4, b: ["b"]}],
-                expected: {a: 1, b: ["a", "b"], c: 4},
+                target: {
+                    a: 1,
+                    b: ["a"],
+                },
+                sources: [{
+                    c: 4,
+                    b: ["b"],
+                }],
+                expected: {
+                    a: 1,
+                    b: ["a", "b"],
+                    c: 4,
+                },
             },
             {
-                target: {a: 1, b: {c: 4, d: 5}, f: true},
-                sources: [{b: {c: 6, e: 7}, f: false}],
-                expected: {a: 1, b: {c: 6, d: 5, e: 7}, f: false},
+                target: {
+                    a: 1,
+                    b: {
+                        c: 4,
+                        d: 5,
+                    },
+                    f: true,
+                },
+                sources: [{
+                    b: {
+                        c: 6,
+                        e: 7,
+                    },
+                    f: false,
+                }],
+                expected: {
+                    a: 1,
+                    b: {
+                        c: 6,
+                        d: 5,
+                        e: 7,
+                    },
+                    f: false,
+                },
             },
             {
                 target: "a",
@@ -75,9 +114,15 @@ QUnit.test(
                 expected: ["a", "b", "c"],
             },
             {
-                target: {a: 1, b: 2},
+                target: {
+                    a: 1,
+                    b: 2,
+                },
                 sources: [{b: 3}, {b: 5}],
-                expected: {a: 1, b: 5},
+                expected: {
+                    a: 1,
+                    b: 5,
+                },
             },
         ];
 
@@ -90,8 +135,7 @@ QUnit.test(
 
 QUnit.test(
     "merge() with functions",
-    function (assert)
-    {
+    (assert) => {
         const cases = [
             {
                 target: () => { return 1; },

@@ -39,7 +39,7 @@ export function isSameTimestamp (date, otherDate)
  *
  * @param {Date} date
  * @param {Date} otherDate
- * @param {boolean} includeTimeCheck
+ * @returns {boolean}
  */
 export function isBeforeDate (date, otherDate)
 {
@@ -59,7 +59,7 @@ export function isBeforeDate (date, otherDate)
  * @param {Date} otherDate
  * @return {number}
  */
-export function compareDate (date, otherDate,)
+export function compareDate (date, otherDate)
 {
     const compareYear = compare(date.getFullYear(), otherDate.getFullYear());
 
@@ -127,7 +127,10 @@ export function compareTimestamp (date, otherDate)
  */
 function compare (value, otherValue)
 {
-    return value === otherValue
-        ? 0
-        : (value < otherValue) ? -1 : 1;
+    if (value === otherValue)
+    {
+        return 0;
+    }
+
+    return (value < otherValue) ? -1 : 1;
 }

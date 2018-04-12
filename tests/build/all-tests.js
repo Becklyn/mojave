@@ -1,3 +1,4 @@
+import "../cases/classes/classes";
 import "../cases/date/compare";
 import "../cases/date/format";
 import "../cases/dom/clone/clone";

@@ -99,13 +99,18 @@ export function off (element, type, handler)
  *      const intermediate = once(element, event, handler);
  *      off(element, event, intermediate);
  *
- * @param {EventTarget} element
+ * @param {?EventTarget} element
  * @param {string} type
  * @param {EventListener} handler
- * @returns {mojave.types.EventIntermediateToken}
+ * @returns {?mojave.types.EventIntermediateToken}
  */
 export function once (element, type, handler)
 {
+    if (null === element)
+    {
+        return null;
+    }
+
     const intermediate = (event) => {
         handler(event);
         off(element, type, intermediate);
@@ -124,14 +129,19 @@ export function once (element, type, handler)
  *      const intermediate = delegate(element, selector, type, handler);
  *      off(element, event, intermediate);
  *
- * @param {EventTarget} element
+ * @param {?EventTarget} element
  * @param {string} selector
  * @param {string} type
  * @param {mojave.types.DelegatedEventHandler} handler
- * @returns {mojave.types.EventIntermediateToken}
+ * @returns {?mojave.types.EventIntermediateToken}
  */
 export function delegate (element, selector, type, handler)
 {
+    if (null === element)
+    {
+        return null;
+    }
+
     const intermediate = (event) =>
     {
         const matchedDelegatedTarget = findDelegatedTarget(element, event.target, selector);

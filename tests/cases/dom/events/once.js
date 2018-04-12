@@ -1,6 +1,6 @@
 /* eslint-disable no-underscore-dangle, no-empty-function */
 
-import {off, once, trigger} from "../../../../dom/events";
+import {getAllListeners, off, once, trigger} from "../../../../dom/events";
 import QUnit from "qunitjs";
 import {findOne} from "../../../../dom/traverse";
 
@@ -64,17 +64,17 @@ QUnit.test(
         const element = findOne(".example");
         const done = assert.async();
 
-        assert.equal(element._listeners, undefined, "listeners not defined");
+        assert.equal(getAllListeners(element).click, undefined, "listeners not defined");
 
         once(element, "click", () => {});
 
-        assert.equal(element._listeners.click.length, 1, "1 listener registered");
+        assert.equal(getAllListeners(element).click.length, 1, "1 listener registered");
 
         element.click();
 
         window.setTimeout(
             () => {
-                assert.equal(element._listeners.click.length, 0, "listener was successfully removed");
+                assert.equal(getAllListeners(element).click.length, 0, "listener was successfully removed");
                 done();
             }
         );
@@ -89,16 +89,16 @@ QUnit.test(
         assert.expect(3);
         const element = findOne(".example");
 
-        assert.equal(element._listeners, undefined, "listeners not defined");
+        assert.equal(getAllListeners(element).click, undefined, "listeners not defined");
 
         const token = once(element, "click", () => {
             assert.step("event listener triggered although it should have been removed");
         });
 
-        assert.equal(element._listeners.click.length, 1, "1 listener registered");
+        assert.equal(getAllListeners(element).click.length, 1, "1 listener registered");
 
         off(element, "click", token);
-        assert.equal(element._listeners.click.length, 0, "listener was successfully removed");
+        assert.equal(getAllListeners(element).click.length, 0, "listener was successfully removed");
 
         element.click();
     }
@@ -146,12 +146,8 @@ QUnit.test(
     "once() with an invalid element",
     (assert) =>
     {
-        assert.throws(
-            () => {
-                once(null, "customEvent", () => {});
-            },
-            "function threw an error"
-        );
+        const intermediate = once(null, "customEvent", () => {});
+        assert.equal(intermediate, null, "intermediate token should be null");
     }
 );
 

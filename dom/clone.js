@@ -1,6 +1,6 @@
 /* eslint-disable no-underscore-dangle */
 
-import {on} from "./events";
+import {getAllListeners, on} from "./events";
 import {setData} from "./attr";
 
 
@@ -26,23 +26,20 @@ export function duplicate (element)
 export function clone (element)
 {
     const clonedElement = duplicate(element);
-    const listeners = element._listeners;
+    const listeners = getAllListeners(element);
     const dataset = element.dataset;
 
     // copy events
-    if (typeof listeners !== "undefined")
+    for (const type in listeners)
     {
-        for (const type in listeners)
+        if (!listeners.hasOwnProperty(type))
         {
-            if (!listeners.hasOwnProperty(type))
-            {
-                continue;
-            }
+            continue;
+        }
 
-            for (let i = 0; i < listeners[type].length; i++)
-            {
-                on(clonedElement, type, listeners[type][i]);
-            }
+        for (let i = 0; i < listeners[type].length; i++)
+        {
+            on(clonedElement, type, listeners[type][i]);
         }
     }
 

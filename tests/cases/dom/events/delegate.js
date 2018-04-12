@@ -132,9 +132,8 @@ QUnit.test(
     "delegate() with an invalid element",
     (assert) =>
     {
-        assert.throws(() => {
-            delegate(null, "*", "customEvent", () => {});
-        });
+        const intermediate = delegate(null, "*", "customEvent", () => {});
+        assert.equal(intermediate, null, "intermediate token should be null");
     }
 );
 

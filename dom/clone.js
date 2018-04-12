@@ -1,7 +1,5 @@
-/* eslint-disable no-underscore-dangle */
-
+import {getAllCustomData, setData} from "./attr";
 import {getAllListeners, on} from "./events";
-import {setData} from "./attr";
 
 
 /**
@@ -28,6 +26,7 @@ export function clone (element)
     const clonedElement = duplicate(element);
     const listeners = getAllListeners(element);
     const dataset = element.dataset;
+    const customDataset = getAllCustomData(element);
 
     // copy events
     for (const type in listeners)
@@ -59,14 +58,11 @@ export function clone (element)
     }
 
     // copy custom data values
-    if (typeof element._data === "object")
+    for (const key in customDataset)
     {
-        for (const key in element._data)
+        if (customDataset.hasOwnProperty(key))
         {
-            if (element._data.hasOwnProperty(key))
-            {
-                setData(clonedElement, key, element._data[key]);
-            }
+            setData(clonedElement, key, customDataset[key]);
         }
     }
 

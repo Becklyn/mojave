@@ -21,6 +21,7 @@
     },
     "license": "BSD-3-Clause",
     "devDependencies": {
+        "browserstack-runner": "^0.7.0",
         "kaba": "Becklyn/kaba#0cb217d378a4d8fd6113def4ae6c1653c3111fbb",
         "karma": "1.7.1",
         "karma-qunit": "1.2.1",
@@ -29,7 +30,7 @@
         "saucelabs": "1.4.0"
     },
     "scripts": {
-        "test": "node_modules/.bin/karma start"
+        "test": "node_modules/.bin/browserstack-runner"
     },
     "dependencies": {
         "mitt": "1.1.3",

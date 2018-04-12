@@ -1,0 +1,30 @@
+{
+    "test_path": "tests/index.html",
+    "test_framework": "qunit",
+    "exit_with_fail": true,
+    "browsers": [
+        {"browser": "chrome", "browser_version": "latest", "device": null, "os": "Windows", "os_version": "10" },
+        {"browser": "chrome", "browser_version": "63.0", "device": null, "os": "Windows", "os_version": "10" },
+
+        {"browser": "firefox", "browser_version": "latest", "device": null, "os": "Windows", "os_version": "10" },
+        {"browser": "firefox", "browser_version": "57.0", "device": null, "os": "Windows", "os_version": "10" },
+
+        {"browser": "edge", "browser_version": "latest", "device": null, "os": "Windows", "os_version": "10" },
+        {"browser": "edge", "browser_version": "15.0", "device": null, "os": "Windows", "os_version": "10" },
+
+        {"browser": "ie", "browser_version": "11.0", "device": null, "os": "Windows", "os_version": "8.1" },
+        {"browser": "ie", "browser_version": "10.0", "device": null, "os": "Windows", "os_version": "8" },
+
+        {"browser": "chrome", "browser_version": "latest", "device": null, "os": "OS X", "os_version": "High Sierra" },
+        {"browser": "chrome", "browser_version": "63.0", "device": null, "os": "OS X", "os_version": "High Sierra" },
+
+        {"browser": "firefox", "browser_version": "latest", "device": null, "os": "OS X", "os_version": "High Sierra" },
+        {"browser": "firefox", "browser_version": "57.0", "device": null, "os": "OS X", "os_version": "High Sierra" },
+
+        {"browser": "safari", "browser_version": "latest", "device": null, "os": "OS X", "os_version": "High Sierra" },
+        {"browser": "safari", "browser_version": "10.1", "device": null, "os": "OS X", "os_version": "Sierra" },
+
+        {"os": "ios", "browser_version": "latest", "device": "iPhone X", "os_version": "11.0", "real_mobile": true},
+        {"os": "android", "browser_version": "latest", "device": "Google Pixel", "os_version": "8.0", "real_mobile": true}
+    ]
+}

@@ -1,6 +1,7 @@
 /* eslint-disable no-underscore-dangle */
 
 import {splitStringValue} from "./utils";
+const listenerRegistry = new window.WeakMap();
 
 
 /**
@@ -29,18 +30,20 @@ export function on (element, type, handler)
             const eventType = types[j];
 
             node.addEventListener(eventType, handler);
+            let listeners = listenerRegistry.get(node);
 
-            if (typeof node._listeners === "undefined")
+            if (!listeners)
             {
-                node._listeners = {};
+                listeners = {};
+                listenerRegistry.set(node, listeners);
             }
 
-            if (typeof node._listeners[eventType] === "undefined")
+            if (listeners[eventType] === undefined)
             {
-                node._listeners[eventType] = [];
+                listeners[eventType] = [];
             }
 
-            node._listeners[eventType].push(handler);
+            listeners[eventType].push(handler);
         }
     }
 }
@@ -72,14 +75,15 @@ export function off (element, type, handler)
             const eventType = types[j];
 
             node.removeEventListener(eventType, handler);
+            const listeners = listenerRegistry.get(node);
 
-            if (typeof node._listeners !== "undefined" && typeof node._listeners[eventType] !== "undefined")
+            if (listeners !== undefined && listeners[eventType] !== undefined)
             {
-                const index = node._listeners[eventType].indexOf(handler);
+                const index = listeners[eventType].indexOf(handler);
 
                 if (-1 !== index)
                 {
-                    node._listeners[eventType].splice(index, 1);
+                    listeners[eventType].splice(index, 1);
                 }
             }
         }
@@ -157,7 +161,7 @@ function findDelegatedTarget (delegateElement, currentTarget, selector)
 {
     let node = currentTarget;
 
-    while (null !== currentTarget && node !== delegateElement)
+    while (null !== node && node !== delegateElement)
     {
         if (node.matches(selector))
         {
@@ -214,4 +218,16 @@ function createEvent (type, args)
     }
 
     return new CustomEvent(type, args);
+}
+
+
+/**
+ * Returns all event listeners for the given element
+ *
+ * @param {EventTarget} element
+ * @returns {Object}
+ */
+export function getAllListeners (element)
+{
+    return listenerRegistry.get(element) || {};
 }

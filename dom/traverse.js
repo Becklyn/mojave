@@ -169,6 +169,32 @@ export function children (parent, selector = null)
 
 
 /**
+ * Returns the first child
+ *
+ * @param {HTMLElement} parent
+ * @param {string|null} [selector]
+ *
+ * @returns {HTMLElement}
+ */
+export function firstChild (parent, selector = null)
+{
+    let child = parent.firstElementChild;
+
+    while (child)
+    {
+        if (elementMatches(child, selector))
+        {
+            return child;
+        }
+
+        child = child.nextElementSibling;
+    }
+
+    return null;
+}
+
+
+/**
  * Returns the nearest previous sibling matching
  * (optionally matching the given selector)
  *

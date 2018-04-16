@@ -30,6 +30,18 @@ QUnit.test(
 
 
 QUnit.test(
+    "children() with selector that matches no elements",
+    (assert) =>
+    {
+        const fixture = findOne("#qunit-fixture");
+
+        const result = children(fixture, ".non-existing-element");
+        assert.equal(result.length, 0, "is empty");
+    }
+);
+
+
+QUnit.test(
     "children() with selector",
     (assert) =>
     {

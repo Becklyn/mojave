@@ -1,4 +1,4 @@
-import {firstChild, findOne} from "../../../../dom/traverse";
+import { firstChild, findOne } from "../../../../dom/traverse";
 import QUnit from "qunit";
 
 QUnit.module("dom/traverse/firstChild()",
@@ -23,6 +23,18 @@ QUnit.test(
 
         const result = firstChild(fixture);
         assert.ok(result.classList.contains("element1"), "contains .element1");
+    }
+);
+
+
+QUnit.test(
+    "firstChild() with selector that matches no elements",
+    (assert) =>
+    {
+        const fixture = findOne("#qunit-fixture");
+
+        const result = firstChild(fixture, ".non-existing-element");
+        assert.equal(result, null, "is empty");
     }
 );
 

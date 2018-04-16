@@ -19,6 +19,7 @@ import "../cases/dom/manipulate/replace";
 import "../cases/dom/traverse/children";
 import "../cases/dom/traverse/filter";
 import "../cases/dom/traverse/find";
+import "../cases/dom/traverse/firstChild";
 import "../cases/dom/traverse/next";
 import "../cases/dom/traverse/nextAll";
 import "../cases/dom/traverse/not";

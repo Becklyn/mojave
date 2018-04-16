@@ -42,7 +42,7 @@ This build is compiled using kaba, so you can use regular modern JS.
 ### Working on the project
 
 1. Make your changes in the library
-2. If you added a new file, update the bundle build in `tests/build/complete-library-build.js`
+2. If you added a new file, update the bundle build in `tests/build/all-tests.js`
 3. Bundle the library via `kaba`
 4. Write your tests in `tests/cases/`
 5. Open the QUnit page in your browser and check whether all tests work correctly.

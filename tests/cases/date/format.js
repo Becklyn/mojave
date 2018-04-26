@@ -39,3 +39,59 @@ QUnit.test(
         assert.equal(formatRelative(new Date()), "gerade eben", "default reference date");
     }
 );
+
+
+QUnit.test(
+    "relativeFormat() localized tests",
+    (assert) =>
+    {
+        const referenceDate = new Date(2017, 11, 31, 12, 0, 0);
+        const labels = {
+            past: [
+                'just now',
+                'one minute ago',
+                '# minutes ago',
+                'one hour ago',
+                '# hours ago',
+                'yesterday',
+                'two days ago',
+                '# days ago',
+                'one week ago',
+                '# weeks ago',
+                'one month ago',
+                '# months ago',
+                'one year ago',
+                '# years ago',
+            ],
+            future: [
+                'right now',
+                'in one minute',
+                'in # minutes',
+                'in one hour',
+                'in # hours',
+                'tomorrow',
+                'day after tomorrow',
+                'in # days',
+                'in one week',
+                'in # weeks',
+                'in one month',
+                'in # months',
+                'in one year',
+                'in # years',
+            ],
+        };
+
+
+        const labelFormatter = (index, delta) => {
+            const key = (delta < 0) ? "future" : "past";
+            return labels[key][index];
+        };
+
+        assert.equal(formatRelative(new Date(2017, 11, 31, 11, 59, 50), referenceDate, labelFormatter), "just now", "10s ago");
+        assert.equal(formatRelative(new Date(2017, 5, 31, 11, 59, 0), referenceDate, labelFormatter), "6 months ago", "multiple months ago");
+        assert.equal(formatRelative(referenceDate, new Date(2017, 11, 31, 11, 59, 12), labelFormatter), "in one minute", "border of seconds-minutes slip: minutes, future");
+        assert.equal(formatRelative(referenceDate, new Date(2015, 5, 31, 11, 59, 0), labelFormatter), "in 3 years", "in multiple years");
+        assert.equal(formatRelative(new Date(1917, 11, 31, 12, 0, 0), referenceDate, labelFormatter), "100 years ago", "very far in the past");
+        assert.equal(formatRelative(new Date(2117, 11, 31, 12, 0, 0), referenceDate, labelFormatter), "in 100 years", "very far in the future");
+    }
+);

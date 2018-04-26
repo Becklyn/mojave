@@ -5,34 +5,79 @@ const WEEK = 7 * DAY;
 const YEAR = 365 * DAY;
 const MONTH = YEAR / 12;
 
+const TIME_SECTION_LABELS_DE = [
+    'gerade eben',
+    'vor einer Minute',
+    'vor # Minuten',
+    'vor einer Stunde',
+    'vor # Stunden',
+    'gestern',
+    'vorgestern',
+    'vor # Tagen',
+    'vor einer Woche',
+    'vor # Wochen',
+    'vor einem Monat',
+    'vor # Monaten',
+    'vor einem Jahr',
+    'vor # Jahren',
+];
+
+const germanRelativeDateLabelFormatter = (index, delta) =>
+{
+    let text = TIME_SECTION_LABELS_DE[index];
+
+    // if the date is in the future
+    if (delta < 0)
+    {
+        // replace by descending length
+        text = text
+            .replace("vorgestern", "übermorgen")
+            .replace("gestern", "morgen")
+            .replace("vor", "in");
+    }
+
+    return text;
+};
+
 const TIME_SECTIONS = [
-    [0.8 * MINUTE, 'gerade eben'],
-    [1.5 * MINUTE, 'vor einer Minute'],
-    [60 * MINUTE, 'vor # Minuten', MINUTE],
-    [1.5 * HOUR, 'vor einer Stunde'],
-    [DAY, 'vor # Stunden', HOUR],
-    [2 * DAY, 'gestern'],
-    [3 * DAY, 'vorgestern'],
-    [7 * DAY, 'vor # Tagen', DAY],
-    [1.5 * WEEK, 'vor einer Woche'],
-    [MONTH, 'vor # Wochen', WEEK],
-    [1.5 * MONTH, 'vor einem Monat'],
-    [YEAR, 'vor # Monaten', MONTH],
-    [1.5 * YEAR, 'vor einem Jahr'],
-    [null, 'vor # Jahren', YEAR],
+    [0.8 * MINUTE],
+    [1.5 * MINUTE],
+    [60 * MINUTE, MINUTE],
+    [1.5 * HOUR],
+    [DAY, HOUR],
+    [2 * DAY],
+    [3 * DAY],
+    [7 * DAY, DAY],
+    [1.5 * WEEK],
+    [MONTH, WEEK],
+    [1.5 * MONTH],
+    [YEAR, MONTH],
+    [1.5 * YEAR],
+    [null, YEAR],
 ];
 
 
 /**
  * Formats the date relative to now / the fromDate
  *
+ * The format label function formats the label.
+ * It receives
+ *      * `index` {number} (of the translation labels, see the default german ones for which one is which)
+ *      * `delta` {number} the difference between the two dates in seconds. If the delta is negative, the given date is in the future (in relation to the reference date)
+ *
+ *
  * @param {Date} date
  * @param {?Date} referenceDate
- *
+ * @param {function(number, number)} formatLabel
  * @returns {string}
  */
-export function formatRelative (date, referenceDate = null)
+export function formatRelative (date, referenceDate = null, formatLabel = null)
 {
+    if (null === formatLabel)
+    {
+        formatLabel = germanRelativeDateLabelFormatter;
+    }
+
     if (null === referenceDate)
     {
         referenceDate = new Date();
@@ -52,20 +97,10 @@ export function formatRelative (date, referenceDate = null)
 
         if (entry[0] === null || absDelta < entry[0])
         {
-            let text = entry[1];
+            let text = formatLabel(i, delta);
 
-            // if the date is in the future
-            if (delta < 0)
-            {
-                // replace by descending length
-                text = text
-                    .replace("vorgestern", "übermorgen")
-                    .replace("gestern", "morgen")
-                    .replace("vor", "in");
-            }
-
-            return typeof entry[2] !== "undefined"
-                ? text.replace("#", Math.round(absDelta / entry[2]))
+            return typeof entry[1] !== "undefined"
+                ? text.replace("#", Math.round(absDelta / entry[1]))
                 : text;
         }
     }
@@ -75,7 +110,7 @@ export function formatRelative (date, referenceDate = null)
 
 
 /**
- * Formats the date in the little endion format (DD.MM.YYYY)
+ * Formats the date in the little endian format (DD.MM.YYYY)
  *
  * @param {Date} date
  * @return {string}

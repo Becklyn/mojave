@@ -7,4 +7,5 @@ module.exports = (new Kaba())
     .setOutputPath("tests/dist")
     .disableChunkSplitting()
     .disableFileNameHashing()
+    .disableModuleConcatenation()
 ;

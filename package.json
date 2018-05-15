@@ -27,7 +27,7 @@
         "karma-qunit": "2.0.2",
         "karma-sauce-launcher": "1.2.0",
         "qunit": "2.6.0",
-        "saucelabs": "1.4.0"
+        "saucelabs": "1.5.0"
     },
     "scripts": {
         "test": "node_modules/.bin/browserstack-runner"

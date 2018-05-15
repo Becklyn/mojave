@@ -26,6 +26,13 @@ export function get (selector)
         (segment) =>
         {
             const match = SELECTOR_MATCHER.exec(segment.trim());
+
+            // skip invalid segments
+            if (null === match)
+            {
+                return;
+            }
+
             const path = match[3].split(".");
             const name = match[2] || path[path.length - 1];
 

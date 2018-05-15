@@ -145,6 +145,26 @@ QUnit.test(
                     },
                 },
             },
+            {
+                // allow line breaks
+                accessor: get`
+                    phone: phoneNumber.0.number,
+                    firstName,
+                    gender: gender.type
+                `,
+                expected: {
+                    phone: "212 555-1234",
+                    firstName: "John",
+                    gender: "male",
+                },
+            },
+            {
+                // allow trailing commas
+                accessor: get`,,firstName,,`,
+                expected: {
+                    firstName: "John",
+                },
+            },
         ];
 
         cases.forEach((testCase, index) => {

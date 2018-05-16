@@ -24,7 +24,7 @@
         "browserstack-runner": "0.7.0",
         "kaba": "Becklyn/kaba#0cb217d378a4d8fd6113def4ae6c1653c3111fbb",
         "karma": "2.0.2",
-        "karma-qunit": "2.0.2",
+        "karma-qunit": "2.1.0",
         "karma-sauce-launcher": "1.2.0",
         "qunit": "2.6.0",
         "saucelabs": "1.5.0"

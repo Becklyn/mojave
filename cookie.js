@@ -24,12 +24,17 @@ export function setCookie (key, value, options = {})
         secure: window.location.protocol === "https",
     }, options);
 
+    if (options.expires === undefined)
+    {
+        options.expires = 30;
+    }
+
     if (typeof options.expires === "number")
     {
         options.expires = new Date(new Date() * 1 + options.expires * 864e+5);
     }
 
-    options.expires = options.expires !== undefined
+    options.expires = options.expires !== undefined && null !== options.expires
         ? options.expires.toUTCString()
         : "";
 

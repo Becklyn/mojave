@@ -1,3 +1,5 @@
+import { merge } from "./extend";
+
 /**
  * @typedef {{
  *      domain: string,
@@ -17,7 +19,7 @@
  */
 export function setCookie (key, value, options = {})
 {
-    options = Object.assign({
+    options = merge({
         path: "/",
         secure: window.location.protocol === "https",
     }, options);

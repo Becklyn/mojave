@@ -1,3 +1,5 @@
+import {typeOf} from "./types";
+
 /**
  * Merges the given objects.
  *
@@ -32,11 +34,11 @@ export function merge (target, ...sources)
 
     // only one source given
     const source = sources[0];
-    const sourceType = Array.isArray(source) ? "array" : typeof source;
-    const targetType = Array.isArray(target) ? "array" : typeof target;
+    const sourceType = typeOf(source);
+    const targetType = typeOf(target);
 
-
-    if (sourceType === targetType)
+    // null is implicitly compatible with any (scalar) type
+    if (sourceType === targetType || "null" === sourceType)
     {
         // both items are an array: just concat and return
         if ("array" === targetType)

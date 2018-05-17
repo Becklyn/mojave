@@ -119,19 +119,8 @@ function encodeCookieKey (key)
  */
 function encodeCookieValue (value)
 {
-    try
-    {
-        value = JSON.stringify(value);
-    }
-    catch (err)
-    {
-        // Silently swallow any exceptions that may occur during JSON serialization
-    }
-
-    value = encodeURIComponent("" + value)
+    return encodeURIComponent(JSON.stringify(value))
         .replace(/%(23|24|26|2B|3A|3C|3E|3D|2F|3F|40|5B|5D|5E|60|7B|7D|7C)/g, decodeURIComponent);
-
-    return value;
 }
 
 

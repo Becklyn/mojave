@@ -141,23 +141,16 @@ function encodeCookieOptions (options)
             continue;
         }
 
+        // RFC 6265 section 5.2:
+        // =====================
+        // 3.  If the remaining unparsed-attributes contains a %x3B (";") character:
+        // Consume the characters of the unparsed-attributes up to, not including, the first %x3B (";") character.
         const optionValue = options[optionName];
-        if (optionValue === true)
-        {
-            encodedOptions.push(optionName);
-        }
-        else
-        {
-            // RFC 6265 section 5.2:
-            // =====================
-            // 3.  If the remaining unparsed-attributes contains a %x3B (";") character:
-            // Consume the characters of the unparsed-attributes up to, not including, the first %x3B (";") character.
-            const sanitizedOption = (optionValue === true)
-                ? optionName
-                : `${optionName}=${("" + optionValue).split(";")[0]}`;
+        const sanitizedOption = (optionValue === true)
+            ? optionName
+            : `${optionName}=${("" + optionValue).split(";")[0]}`;
 
-            encodedOptions.push(sanitizedOption);
-        }
+        encodedOptions.push(sanitizedOption);
     }
 
     return encodedOptions;

@@ -124,6 +124,15 @@ QUnit.test(
                     b: 5,
                 },
             },
+            {
+                target: {
+                    a: 1,
+                },
+                sources: [{a: null}],
+                expected: {
+                    a: null,
+                },
+            },
         ];
 
         cases.forEach((data, index) => {

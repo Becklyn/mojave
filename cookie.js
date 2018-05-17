@@ -104,7 +104,7 @@ function encodeCookieValue (value)
  * @private
  * @param {Object.<string, string|boolean>} options
  *
- * @return {string[]}
+ * @return {string}
  */
 function encodeCookieOptions (options)
 {
@@ -129,5 +129,5 @@ function encodeCookieOptions (options)
         encodedOptions.push(sanitizedOption);
     }
 
-    return encodedOptions;
+    return encodedOptions.join(" ;");
 }

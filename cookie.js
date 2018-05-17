@@ -29,7 +29,7 @@ export function setCookie (key, value, options = {})
         options.expires = new Date(new Date() * 1 + options.expires * 864e+5);
     }
 
-    options.expires = typeof options.expires !== "undefined"
+    options.expires = options.expires !== undefined
         ? options.expires.toUTCString()
         : "";
 

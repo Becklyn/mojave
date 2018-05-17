@@ -30,15 +30,13 @@ export function setCookie (key, value, options = {})
         options.expires = new Date(new Date() * 1 + options.expires * 864e+5);
     }
 
-    options.expires = options.expires !== undefined && null !== options.expires
-        ? options.expires.toUTCString()
-        : "";
+    options.expires = !!options.expires ? options.expires.toUTCString() : "";
 
     const encodedKey = encodeCookieKey(key);
     const encodedValue = encodeCookieValue(value);
     const encodedOptions = encodeCookieOptions(options);
 
-    document.cookie = `${encodedKey}=${encodedValue};${encodedOptions.join(" ;")}`;
+    document.cookie = `${encodedKey}=${encodedValue};${encodedOptions}`;
 }
 
 
@@ -55,14 +53,9 @@ export function getCookie (key)
     const matcher = new RegExp(`; ${encodedSearchCookieKey}=([^;]+)`);
     const match = matcher.exec(`; ${document.cookie}`);
 
-    if (null !== match)
-    {
-        const decodedCookieValue = decodeURIComponent(match[1]);
-
-        return JSON.parse(decodedCookieValue);
-    }
-
-    return null;
+    return null !== match
+        ? JSON.parse(decodeURIComponent(match[1]))
+        : null;
 }
 
 

@@ -117,16 +117,13 @@ function encodeCookieKey (key)
  */
 function encodeCookieValue (value)
 {
-    if (Array.isArray(value) || typeof value === "object")
+    try
     {
-        try
-        {
-            value = JSON.stringify(value);
-        }
-        catch (err)
-        {
-            // Silently swallow any exceptions that may occur during JSON serialization
-        }
+        value = JSON.stringify(value);
+    }
+    catch (err)
+    {
+        // Silently swallow any exceptions that may occur during JSON serialization
     }
 
     value = encodeURIComponent("" + value)

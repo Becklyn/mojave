@@ -50,29 +50,15 @@ export function setCookie (key, value, options = {})
  */
 export function getCookie (key)
 {
-    const cookies = document.cookie ? document.cookie.split('; ') : [];
+    const encodedSearchCookieKey = encodeCookieKey(key);
+    const matcher = new RegExp(`; ${encodedSearchCookieKey}=([^;]+)`);
+    const match = matcher.exec(`; ${document.cookie}`);
 
-    for (let i = 0; i < cookies.length; i++)
+    if (null !== match)
     {
-        const parts = cookies[i].split("=");
-        const cookieName = decodeURIComponent(parts[0]);
+        const decodedCookieValue = decodeURIComponent(match[1]);
 
-        const decodedCookieValue = decodeURIComponent(
-            parts.slice(1).join("=")
-        );
-
-        if (cookieName === key)
-        {
-            try
-            {
-                return JSON.parse(decodedCookieValue);
-            }
-            catch (err)
-            {
-                // Silently swallow any JSON parse errors
-                return null;
-            }
-        }
+        return JSON.parse(decodedCookieValue);
     }
 
     return null;

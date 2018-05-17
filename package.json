@@ -26,7 +26,7 @@
         "karma": "2.0.2",
         "karma-qunit": "2.0.2",
         "karma-sauce-launcher": "1.2.0",
-        "qunit": "2.6.0",
+        "qunit": "2.6.1",
         "saucelabs": "1.5.0"
     },
     "scripts": {

@@ -22,12 +22,8 @@ export function setCookie (key, value, options = {})
     options = merge({
         path: "/",
         secure: window.location.protocol === "https",
+        expires: 30,
     }, options);
-
-    if (options.expires === undefined)
-    {
-        options.expires = 30;
-    }
 
     if (typeof options.expires === "number")
     {

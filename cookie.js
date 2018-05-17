@@ -163,9 +163,7 @@ function encodeCookieOptions (options)
             // =====================
             // 3.  If the remaining unparsed-attributes contains a %x3B (";") character:
             // Consume the characters of the unparsed-attributes up to, not including, the first %x3B (";") character.
-            const optionValueSplit = typeof optionValue === "string"
-                ? optionValue.split(";")[0]
-                : optionValue;
+            const optionValueSplit = ("" + optionValue).split(";")[0];
 
             encodedOptions.push(`${optionName}=${optionValueSplit}`);
         }

@@ -57,13 +57,9 @@ export function getCookie (key)
         const parts = cookies[i].split("=");
         const cookieName = decodeURIComponent(parts[0]);
 
-        let cookieValue = parts.slice(1).join("=");
-        if (cookieValue.charAt(0) === '"')
-        {
-            cookieValue = cookieValue.slice(1, -1);
-        }
-
-        const decodedCookieValue = decodeURIComponent(cookieValue);
+        const decodedCookieValue = decodeURIComponent(
+            parts.slice(1).join("=")
+        );
 
         if (cookieName === key)
         {

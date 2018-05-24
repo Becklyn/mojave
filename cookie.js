@@ -41,7 +41,7 @@ export function formatCookieString (key, value, options = {})
 
     if (typeof options.expires === "number")
     {
-        options.expires = new Date(new Date() * 1 + options.expires * 864e+5);
+        options.expires = new Date((new Date()).getTime() + (options.expires * 864e+5));
     }
 
     options.expires = !options.expires ? "" : options.expires.toUTCString();

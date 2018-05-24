@@ -24,7 +24,7 @@ QUnit.test(
 
 
         // region check whether the duplicated element is a DOM element on its own
-        assert.notEqual(duplicatedElement, element, "elements are not one and the same element");
+        assert.notStrictEqual(duplicatedElement, element, "elements are not one and the same element");
         // endregion
 
 
@@ -33,7 +33,7 @@ QUnit.test(
         {
             const attribute = element.attributes.item(i).name;
 
-            assert.equal(
+            assert.strictEqual(
                 getAttr(duplicatedElement, attribute),
                 getAttr(element, attribute),
                 `${attribute}-attribute was cloned`
@@ -45,7 +45,7 @@ QUnit.test(
         // region check child elements
         for(let i = 0; i < children(element).length; i++)
         {
-            assert.equal(
+            assert.strictEqual(
                 children(duplicatedElement)[i].className,
                 children(element)[i].className,
                 "children were all duplicated"
@@ -55,7 +55,7 @@ QUnit.test(
 
 
         // region check HTML structure
-        assert.equal(duplicatedElement.outerHTML, element.outerHTML, `outerHTML was duplicated`);
+        assert.strictEqual(duplicatedElement.outerHTML, element.outerHTML, `outerHTML was duplicated`);
         // endregion
     }
 );

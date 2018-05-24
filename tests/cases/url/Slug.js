@@ -20,7 +20,7 @@ QUnit.test(
             ["a---b", "a-b"],
         ]
             .forEach(
-                ([raw, expected]) => assert.equal(instance.transform(raw), expected)
+                ([raw, expected]) => assert.strictEqual(instance.transform(raw), expected)
             );
     }
 );
@@ -38,7 +38,7 @@ QUnit.test(
             ["abczdef", "abcadef"],
         ]
             .forEach(
-                ([raw, expected]) => assert.equal(instance.transform(raw), expected)
+                ([raw, expected]) => assert.strictEqual(instance.transform(raw), expected)
             );
     }
 );
@@ -54,7 +54,7 @@ QUnit.test(
             ["abczdef", "abc-def"],
         ]
             .forEach(
-                ([raw, expected]) => assert.equal(instance.transform(raw), expected)
+                ([raw, expected]) => assert.strictEqual(instance.transform(raw), expected)
             );
     }
 );

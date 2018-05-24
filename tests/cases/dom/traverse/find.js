@@ -24,7 +24,7 @@ QUnit.test(
     {
         const result = find(".test-element-find.element1");
 
-        assert.equal(result.length, 1, "found 1 element");
+        assert.strictEqual(result.length, 1, "found 1 element");
         assert.ok(result[0].classList.contains("element1"), "contains .element1");
     }
 );
@@ -36,7 +36,7 @@ QUnit.test(
     {
         const result = find(".test-element-find");
 
-        assert.equal(result.length, 4, "found 4 elements");
+        assert.strictEqual(result.length, 4, "found 4 elements");
         assert.ok(result[0].classList.contains("element1"), "contains .element1");
         assert.ok(result[1].classList.contains("element2"), "contains .element2");
         assert.ok(result[2].classList.contains("element2-1"), "contains .element2-1");

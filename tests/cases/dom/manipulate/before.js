@@ -26,8 +26,8 @@ QUnit.test(
         const reference = children[1];
         before(reference, insert);
 
-        assert.equal(children[1], insert, "is at the spot of the reference element");
-        assert.equal(children[2], reference, "reference element still exists and is positioned right after the insert");
+        assert.strictEqual(children[1], insert, "is at the spot of the reference element");
+        assert.strictEqual(children[2], reference, "reference element still exists and is positioned right after the insert");
     }
 );
 
@@ -53,9 +53,9 @@ QUnit.test(
         const insertArray = [document.createElement("div"), document.createElement("div")];
         before(reference, insertArray);
 
-        assert.equal(children[1], insertArray[0], "first insert is at the spot of the reference element");
-        assert.equal(children[2], insertArray[1], "second insert is after the first insert");
-        assert.equal(children[3], reference, "reference element still exists and is positioned right after the inserts");
+        assert.strictEqual(children[1], insertArray[0], "first insert is at the spot of the reference element");
+        assert.strictEqual(children[2], insertArray[1], "second insert is after the first insert");
+        assert.strictEqual(children[3], reference, "reference element still exists and is positioned right after the inserts");
     }
 );
 

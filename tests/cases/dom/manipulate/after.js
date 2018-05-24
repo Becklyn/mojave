@@ -26,8 +26,8 @@ QUnit.test(
         const afterReference = children[0];
         after(afterReference, insert);
 
-        assert.equal(children[0], afterReference, "element after the reference element still exists and is positioned right before the insert");
-        assert.equal(children[1], insert, "reference element still exists and is positioned right after the insert");
+        assert.strictEqual(children[0], afterReference, "element after the reference element still exists and is positioned right before the insert");
+        assert.strictEqual(children[1], insert, "reference element still exists and is positioned right after the insert");
     }
 );
 
@@ -40,7 +40,7 @@ QUnit.test(
         const afterReference = children[0];
         after(afterReference, `<div class="test"></div>`);
 
-        assert.equal(children[0], afterReference, "element after the reference element still exists and is positioned right after the insert");
+        assert.strictEqual(children[0], afterReference, "element after the reference element still exists and is positioned right after the insert");
         assert.ok(children[1].classList.contains("test"), "is before the reference element");
     }
 );
@@ -55,9 +55,9 @@ QUnit.test(
         const insertArray = [createElement("div"), createElement("div")];
         after(afterReference, insertArray);
 
-        assert.equal(children[0], afterReference, "reference element still exists and is positioned right before the inserts");
-        assert.equal(children[1], insertArray[0], "first insert is at the spot after the reference element");
-        assert.equal(children[2], insertArray[1], "second insert is after the first insert");
+        assert.strictEqual(children[0], afterReference, "reference element still exists and is positioned right before the inserts");
+        assert.strictEqual(children[1], insertArray[0], "first insert is at the spot after the reference element");
+        assert.strictEqual(children[2], insertArray[1], "second insert is after the first insert");
     }
 );
 

@@ -10,7 +10,7 @@ QUnit.test(
     {
         const values = splitStringValue("Value1 Value2 Value3 Value4 Value5");
 
-        assert.equal(values.length, 5, "recognised all values");
+        assert.strictEqual(values.length, 5, "recognised all values");
         assert.ok(Array.isArray(values), "is Array");
     }
 );
@@ -24,7 +24,7 @@ QUnit.test(
             ["Value1", "Value2", "Value3", "Value4", "Value5"]
         );
 
-        assert.equal(values.length, 5, "recognised all values");
+        assert.strictEqual(values.length, 5, "recognised all values");
         assert.ok(Array.isArray(values), "is Array");
     }
 );
@@ -36,7 +36,7 @@ QUnit.test(
     {
         const values = splitStringValue("");
 
-        assert.equal(values.length, 0, "result has no values");
+        assert.strictEqual(values.length, 0, "result has no values");
         assert.ok(Array.isArray(values), "is Array");
     }
 );

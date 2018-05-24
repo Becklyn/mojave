@@ -44,7 +44,7 @@ export function formatCookieString (key, value, options = {})
         options.expires = new Date(new Date() * 1 + options.expires * 864e+5);
     }
 
-    options.expires = !!options.expires ? options.expires.toUTCString() : "";
+    options.expires = !options.expires ? "" : options.expires.toUTCString();
 
     const encodedKey = encodeCookieKey(key);
     const encodedValue = encodeCookieValue(value);

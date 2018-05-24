@@ -112,7 +112,10 @@ function encodeCookieOptions (options)
 
     for (let optionName in options)
     {
-        if (!options.hasOwnProperty(optionName))
+        const optionValue = options[optionName];
+
+        // Flags with a `false` value needs to be omitted
+        if (!options.hasOwnProperty(optionName) || optionValue === false)
         {
             continue;
         }
@@ -121,7 +124,6 @@ function encodeCookieOptions (options)
         // =====================
         // 3.  If the remaining unparsed-attributes contains a %x3B (";") character:
         // Consume the characters of the unparsed-attributes up to, not including, the first %x3B (";") character.
-        const optionValue = options[optionName];
         const sanitizedOption = (optionValue === true)
             ? optionName
             : `${optionName}=${("" + optionValue).split(";")[0]}`;

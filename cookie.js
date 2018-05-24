@@ -86,7 +86,6 @@ export function removeCookie (key)
 }
 
 
-
 /**
  * @private
  * @param {string} key
@@ -97,7 +96,7 @@ function encodeCookieKey (key)
 {
     return encodeURIComponent("" + key)
         .replace(/%(23|24|26|2B|5E|60|7C)/g, decodeURIComponent)
-        .replace(/[\(\)]/g, escape);
+        .replace(/[()]/g, escape);
 }
 
 
@@ -124,6 +123,7 @@ function encodeCookieOptions (options)
 {
     const encodedOptions = [];
 
+    // eslint-disable-next-line guard-for-in
     for (let optionName in options)
     {
         const optionValue = options[optionName];

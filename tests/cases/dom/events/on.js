@@ -51,7 +51,7 @@ QUnit.test(
         const object = {some: "object"};
 
         on(element, "customEvent", (event) => {
-            assert.equal(event.detail, object, "event listener triggered");
+            assert.strictEqual(event.detail, object, "event listener triggered");
         });
 
         trigger(element, "customEvent", object);

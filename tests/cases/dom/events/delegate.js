@@ -30,7 +30,7 @@ QUnit.test(
             done();
         });
 
-        assert.equal(typeof intermediate, "function", "function was returned");
+        assert.strictEqual(typeof intermediate, "function", "function was returned");
 
         child.click();
         child.click();
@@ -96,7 +96,7 @@ QUnit.test(
         const object = {some: "object"};
 
         delegate(element, "*", "customEvent", (event) => {
-            assert.equal(event.detail, object, "arbitrary object was parsed");
+            assert.strictEqual(event.detail, object, "arbitrary object was parsed");
         });
 
         trigger(child, "customEvent", object);
@@ -129,7 +129,7 @@ QUnit.test(
     (assert) =>
     {
         const intermediate = delegate(null, "*", "customEvent", () => {});
-        assert.equal(intermediate, null, "intermediate token should be null");
+        assert.strictEqual(intermediate, null, "intermediate token should be null");
     }
 );
 

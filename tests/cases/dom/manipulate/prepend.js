@@ -25,8 +25,8 @@ QUnit.test(
         const prependChild = createElement(`<div class="className"></div>`);
         prepend(parent, prependChild);
 
-        assert.equal(find(".className").length, 1, "has one occurrence");
-        assert.equal(parent.firstElementChild, prependChild, "is first element");
+        assert.strictEqual(find(".className").length, 1, "has one occurrence");
+        assert.strictEqual(parent.firstElementChild, prependChild, "is first element");
     }
 );
 
@@ -52,8 +52,8 @@ QUnit.test(
         prepend(parent, prependChildren);
 
         const childElements = children(parent);
-        assert.equal(childElements[0], prependChildren[0], "is first element");
-        assert.equal(childElements[1], prependChildren[1], "is second element");
+        assert.strictEqual(childElements[0], prependChildren[0], "is first element");
+        assert.strictEqual(childElements[1], prependChildren[1], "is second element");
     }
 );
 

@@ -36,7 +36,7 @@ QUnit.test(
 
 
         // region check whether the cloned element is a DOM element on its own
-        assert.notEqual(clonedElement, element, "elements are not one and the same element");
+        assert.notStrictEqual(clonedElement, element, "elements are not one and the same element");
         // endregion
 
 
@@ -50,7 +50,7 @@ QUnit.test(
         {
             const attribute = element.attributes.item(i).name;
 
-            assert.equal(
+            assert.strictEqual(
                 getAttr(clonedElement, attribute),
                 getAttr(element, attribute),
                 `${attribute}-attribute was cloned`
@@ -62,7 +62,7 @@ QUnit.test(
         // region check child elements
         for(let i = 0; i < children(element).length; i++)
         {
-            assert.equal(
+            assert.strictEqual(
                 children(clonedElement)[i].className,
                 children(element)[i].className,
                 "children were all cloned"
@@ -72,7 +72,7 @@ QUnit.test(
 
 
         // region check HTML structure
-        assert.equal(clonedElement.outerHTML, element.outerHTML, `outerHTML was cloned`);
+        assert.strictEqual(clonedElement.outerHTML, element.outerHTML, `outerHTML was cloned`);
         // endregion
     }
 );

@@ -44,7 +44,7 @@ QUnit.test(
         ];
 
         cases.forEach(({input, expected}, index) => {
-            assert.equal(classes(input), expected, `Test case ${index}`);
+            assert.strictEqual(classes(input), expected, `Test case ${index}`);
         });
     }
 );

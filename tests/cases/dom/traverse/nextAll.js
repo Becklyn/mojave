@@ -29,7 +29,7 @@ QUnit.test(
 
         const result = nextAll(element);
 
-        assert.equal(result.length, 2, "found 2 elements");
+        assert.strictEqual(result.length, 2, "found 2 elements");
         assert.ok(result[0].classList.contains("element5"), "found .element5");
         assert.ok(result[1].classList.contains("element6"), "found .element6");
     }
@@ -44,7 +44,7 @@ QUnit.test(
 
         const result = nextAll(element);
 
-        assert.equal(result.length, 5, "found 5 elements");
+        assert.strictEqual(result.length, 5, "found 5 elements");
         assert.ok(result[0].classList.contains("element2"), "found .element2");
         assert.ok(result[1].classList.contains("element3"), "found .element3");
         assert.ok(result[2].classList.contains("element4"), "found .element4");
@@ -62,7 +62,7 @@ QUnit.test(
 
         const result = nextAll(element);
 
-        assert.equal(result.length, 0, "found 0 elements");
+        assert.strictEqual(result.length, 0, "found 0 elements");
     }
 );
 
@@ -75,7 +75,7 @@ QUnit.test(
 
         const result = nextAll(element, ".test-class");
 
-        assert.equal(result.length, 2, "found 2 elements");
+        assert.strictEqual(result.length, 2, "found 2 elements");
         assert.ok(result[0].classList.contains("element2"), "found .element2");
         assert.ok(result[1].classList.contains("element3"), "found .element3");
     }

@@ -56,17 +56,17 @@ QUnit.test(
         const element = findOne(".example");
         const done = assert.async();
 
-        assert.equal(getAllListeners(element).click, undefined, "listeners not defined");
+        assert.strictEqual(getAllListeners(element).click, undefined, "listeners not defined");
 
         once(element, "click", () => {});
 
-        assert.equal(getAllListeners(element).click.length, 1, "1 listener registered");
+        assert.strictEqual(getAllListeners(element).click.length, 1, "1 listener registered");
 
         element.click();
 
         window.setTimeout(
             () => {
-                assert.equal(getAllListeners(element).click.length, 0, "listener was successfully removed");
+                assert.strictEqual(getAllListeners(element).click.length, 0, "listener was successfully removed");
                 done();
             }
         );
@@ -81,16 +81,16 @@ QUnit.test(
         assert.expect(3);
         const element = findOne(".example");
 
-        assert.equal(getAllListeners(element).click, undefined, "listeners not defined");
+        assert.strictEqual(getAllListeners(element).click, undefined, "listeners not defined");
 
         const token = once(element, "click", () => {
             assert.step("event listener triggered although it should have been removed");
         });
 
-        assert.equal(getAllListeners(element).click.length, 1, "1 listener registered");
+        assert.strictEqual(getAllListeners(element).click.length, 1, "1 listener registered");
 
         off(element, "click", token);
-        assert.equal(getAllListeners(element).click.length, 0, "listener was successfully removed");
+        assert.strictEqual(getAllListeners(element).click.length, 0, "listener was successfully removed");
 
         element.click();
     }
@@ -106,7 +106,7 @@ QUnit.test(
         const object = {some: "object"};
 
         once(element, "customEvent", (event) => {
-            assert.equal(event.detail, object, "event listener triggered");
+            assert.strictEqual(event.detail, object, "event listener triggered");
         });
 
         trigger(element, "customEvent", object);
@@ -141,7 +141,7 @@ QUnit.test(
     (assert) =>
     {
         const intermediate = once(null, "customEvent", () => {});
-        assert.equal(intermediate, null, "intermediate token should be null");
+        assert.strictEqual(intermediate, null, "intermediate token should be null");
     }
 );
 

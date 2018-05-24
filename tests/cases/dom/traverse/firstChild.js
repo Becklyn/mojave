@@ -34,7 +34,7 @@ QUnit.test(
         const fixture = findOne("#qunit-fixture");
 
         const result = firstChild(fixture, ".non-existing-element");
-        assert.equal(result, null, "is empty");
+        assert.strictEqual(result, null, "is empty");
     }
 );
 

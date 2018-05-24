@@ -23,10 +23,10 @@ QUnit.test(
     {
         const element = find(".test")[0];
 
-        assert.notEqual(element.innerHTML.length, 0, "element contains something before the empty() was executed");
+        assert.notStrictEqual(element.innerHTML.length, 0, "element contains something before the empty() was executed");
         empty(element);
-        assert.equal(element.innerHTML, "", "element is empty");
-        assert.equal(element.children.length, 0, "element contains no children");
+        assert.strictEqual(element.innerHTML, "", "element is empty");
+        assert.strictEqual(element.children.length, 0, "element contains no children");
     }
 );
 
@@ -37,11 +37,11 @@ QUnit.test(
     {
         const elements = find(".test");
 
-        assert.notEqual(elements[0].innerHTML, 0, "first element contains something before the empty() was executed");
-        assert.notEqual(elements[1].innerHTML, 0, "second element contains something before the empty() was executed");
+        assert.notStrictEqual(elements[0].innerHTML, 0, "first element contains something before the empty() was executed");
+        assert.notStrictEqual(elements[1].innerHTML, 0, "second element contains something before the empty() was executed");
         empty(elements);
-        assert.equal(elements[0].innerHTML, "", "first element is empty");
-        assert.equal(elements[1].innerHTML, "", "second element is empty");
+        assert.strictEqual(elements[0].innerHTML, "", "first element is empty");
+        assert.strictEqual(elements[1].innerHTML, "", "second element is empty");
     }
 );
 

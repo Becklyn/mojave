@@ -10,7 +10,7 @@ QUnit.test(
     {
         const element = createElement("div");
 
-        assert.equal(element.tagName.toLowerCase(), "div", "created element with <div> tag");
+        assert.strictEqual(element.tagName.toLowerCase(), "div", "created element with <div> tag");
         assert.ok(element instanceof HTMLElement, "is HTMLElement");
     }
 );
@@ -22,7 +22,7 @@ QUnit.test(
     {
         const element = createElement("customtagname");
 
-        assert.equal(element.tagName.toLowerCase(), "customtagname", "created with custom tag");
+        assert.strictEqual(element.tagName.toLowerCase(), "customtagname", "created with custom tag");
         assert.ok(element instanceof HTMLElement, "is HTMLElement");
     }
 );
@@ -71,8 +71,8 @@ QUnit.test(
         );
 
         assert.ok(element, "created <div> with the expected class");
-        assert.equal(element.getAttribute("width"), 100, "width attribute has the expected value");
-        assert.equal(element.style.display, "none", "style attribute has the expected value");
+        assert.strictEqual(element.getAttribute("width"), 100, "width attribute has the expected value");
+        assert.strictEqual(element.style.display, "none", "style attribute has the expected value");
     }
 );
 
@@ -88,7 +88,7 @@ QUnit.test(
             }
         );
 
-        assert.equal(element.innerHTML, "<div></div>", "innerHTML was added");
+        assert.strictEqual(element.innerHTML, "<div></div>", "innerHTML was added");
     }
 );
 
@@ -105,8 +105,8 @@ QUnit.test(
             }
         );
 
-        assert.equal(element.textContent, "test text", "text was added");
-        assert.equal(element.innerHTML.indexOf("<div>"), -1, "innerHTML was ignored");
+        assert.strictEqual(element.textContent, "test text", "text was added");
+        assert.strictEqual(element.innerHTML.indexOf("<div>"), -1, "innerHTML was ignored");
     }
 );
 
@@ -130,8 +130,8 @@ QUnit.test(
     (assert) =>
     {
         const element = createElement(`<p class="test">test</p>`);
-        assert.equal("P", element.tagName);
-        assert.equal("test", element.textContent);
+        assert.strictEqual("P", element.tagName);
+        assert.strictEqual("test", element.textContent);
         assert.ok(element.classList.contains("test"));
     }
 );

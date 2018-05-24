@@ -25,8 +25,8 @@ QUnit.test(
         const appendingChild = createElement(`<div class="className"></div>`);
         append(parent, appendingChild);
 
-        assert.equal(find(".className").length, 1, "has one occurrence");
-        assert.equal(parent.lastElementChild, appendingChild, "is last element");
+        assert.strictEqual(find(".className").length, 1, "has one occurrence");
+        assert.strictEqual(parent.lastElementChild, appendingChild, "is last element");
     }
 );
 
@@ -52,8 +52,8 @@ QUnit.test(
         append(parent, appendingChildren);
 
         const childElements = children(parent);
-        assert.equal(childElements[2], appendingChildren[0], "is second to last element");
-        assert.equal(childElements[3], appendingChildren[1], "is last element");
+        assert.strictEqual(childElements[2], appendingChildren[0], "is second to last element");
+        assert.strictEqual(childElements[3], appendingChildren[1], "is last element");
     }
 );
 

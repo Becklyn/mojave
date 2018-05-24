@@ -25,8 +25,8 @@ QUnit.test(
         const lengthBefore = children.length;
         replace(children[2], replacement);
 
-        assert.equal(children.length, lengthBefore, "the amount of elements did not change");
-        assert.equal(children[2], replacement, "element was replaced");
+        assert.strictEqual(children.length, lengthBefore, "the amount of elements did not change");
+        assert.strictEqual(children[2], replacement, "element was replaced");
     }
 );
 

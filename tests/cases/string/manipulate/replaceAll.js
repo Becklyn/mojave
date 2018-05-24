@@ -13,7 +13,7 @@ QUnit.test(
             foo: "a",
         });
 
-        assert.equal(text, "abar", `string was successfully replaced`);
+        assert.strictEqual(text, "abar", `string was successfully replaced`);
     }
 );
 
@@ -28,7 +28,7 @@ QUnit.test(
             bar: "b",
         });
 
-        assert.equal(text, "ab", `string was successfully replaced`);
+        assert.strictEqual(text, "ab", `string was successfully replaced`);
     }
 );
 
@@ -43,7 +43,7 @@ QUnit.test(
             bar: "b",
         });
 
-        assert.equal(text, "abbaabab", `string was successfully replaced`);
+        assert.strictEqual(text, "abbaabab", `string was successfully replaced`);
     }
 );
 
@@ -58,7 +58,7 @@ QUnit.test(
             bar: "b",
         });
 
-        assert.equal(text, "farboo", `string is unaltered`);
+        assert.strictEqual(text, "farboo", `string is unaltered`);
     }
 );
 
@@ -70,7 +70,7 @@ QUnit.test(
         let text = "farboo";
         text = replaceAll(text, {});
 
-        assert.equal(text, "farboo", `string is unaltered`);
+        assert.strictEqual(text, "farboo", `string is unaltered`);
     }
 );
 
@@ -82,7 +82,7 @@ QUnit.test(
         let text = "foobar";
         text = replaceAll(text, {bar: null});
 
-        assert.equal(text, "foonull", `string was successfully replaced`);
+        assert.strictEqual(text, "foonull", `string was successfully replaced`);
     }
 );
 
@@ -94,7 +94,7 @@ QUnit.test(
         let text = "foobar";
         text = replaceAll(text, {null: null});
 
-        assert.equal(text, "foobar", `string is unaltered`);
+        assert.strictEqual(text, "foobar", `string is unaltered`);
     }
 );
 
@@ -106,7 +106,7 @@ QUnit.test(
         let text = "foo";
         text = replaceAll(text, {"": "x"});
 
-        assert.equal(text, "fxoxo", `string was successfully replaced. The result has a the replacement string after every character`);
+        assert.strictEqual(text, "fxoxo", `string was successfully replaced. The result has a the replacement string after every character`);
     }
 );
 
@@ -119,7 +119,7 @@ QUnit.test(
         const regx = /(foo)/g;
         text = replaceAll(text, {[regx]: "x"});
 
-        assert.equal(text, "foobar", `string is unaltered`);
+        assert.strictEqual(text, "foobar", `string is unaltered`);
     }
 );
 
@@ -134,6 +134,6 @@ QUnit.test(
             bar: "a",
         });
 
-        assert.equal(text, "a", `string was successfully replaced. The result is a string, which matched only after the first alteration, which lead the string to be replaced although it wouldn't have been replaced if the original string was matched against.`);
+        assert.strictEqual(text, "a", `string was successfully replaced. The result is a string, which matched only after the first alteration, which lead the string to be replaced although it wouldn't have been replaced if the original string was matched against.`);
     }
 );

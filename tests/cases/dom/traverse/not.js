@@ -29,7 +29,7 @@ QUnit.test(
 
         const result = not(elements, ".element2");
 
-        assert.equal(result.length, 5, "found 5 elements");
+        assert.strictEqual(result.length, 5, "found 5 elements");
         assert.ok(result[0].classList.contains("element1"), "found .element1");
         assert.ok(result[1].classList.contains("element2-1"), "found .element2-1");
         assert.ok(result[2].classList.contains("element3"), "found .element3");
@@ -60,7 +60,7 @@ QUnit.test(
 
         const result = not(elements);
 
-        assert.equal(result.length, 6, "found 6 elements");
+        assert.strictEqual(result.length, 6, "found 6 elements");
         assert.ok(result[0].classList.contains("element1"), "found .element1");
         assert.ok(result[1].classList.contains("element2"), "found .element2");
         assert.ok(result[2].classList.contains("element2-1"), "found .element2-1");

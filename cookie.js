@@ -19,6 +19,20 @@ import { merge } from "./extend";
  */
 export function setCookie (key, value, options = {})
 {
+    document.cookie = formatCookieString(key, value, options);
+}
+
+/**
+ * Formats the cookie string
+ *
+ * @private
+ * @param {string} key
+ * @param {*} value
+ * @param {mojave.CookieOptions} options
+ * @returns {string}
+ */
+export function formatCookieString (key, value, options = {})
+{
     options = merge({
         path: "/",
         secure: window.location.protocol === "https",
@@ -27,16 +41,16 @@ export function setCookie (key, value, options = {})
 
     if (typeof options.expires === "number")
     {
-        options.expires = new Date(new Date() * 1 + options.expires * 864e+5);
+        options.expires = new Date((new Date()).getTime() + (options.expires * 864e+5));
     }
 
-    options.expires = !!options.expires ? options.expires.toUTCString() : "";
+    options.expires = !options.expires ? "" : options.expires.toUTCString();
 
     const encodedKey = encodeCookieKey(key);
     const encodedValue = encodeCookieValue(value);
     const encodedOptions = encodeCookieOptions(options);
 
-    document.cookie = `${encodedKey}=${encodedValue};${encodedOptions}`;
+    return `${encodedKey}=${encodedValue};${encodedOptions}`;
 }
 
 
@@ -72,7 +86,6 @@ export function removeCookie (key)
 }
 
 
-
 /**
  * @private
  * @param {string} key
@@ -83,7 +96,7 @@ function encodeCookieKey (key)
 {
     return encodeURIComponent("" + key)
         .replace(/%(23|24|26|2B|5E|60|7C)/g, decodeURIComponent)
-        .replace(/[\(\)]/g, escape);
+        .replace(/[()]/g, escape);
 }
 
 
@@ -110,6 +123,7 @@ function encodeCookieOptions (options)
 {
     const encodedOptions = [];
 
+    // eslint-disable-next-line guard-for-in
     for (let optionName in options)
     {
         const optionValue = options[optionName];

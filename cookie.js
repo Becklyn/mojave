@@ -19,6 +19,20 @@ import { merge } from "./extend";
  */
 export function setCookie (key, value, options = {})
 {
+    document.cookie = formatCookieString(key, value, options);
+}
+
+/**
+ * Formats the cookie string
+ *
+ * @private
+ * @param {string} key
+ * @param {*} value
+ * @param {mojave.CookieOptions} options
+ * @returns {string}
+ */
+export function formatCookieString (key, value, options = {})
+{
     options = merge({
         path: "/",
         secure: window.location.protocol === "https",
@@ -36,7 +50,7 @@ export function setCookie (key, value, options = {})
     const encodedValue = encodeCookieValue(value);
     const encodedOptions = encodeCookieOptions(options);
 
-    document.cookie = `${encodedKey}=${encodedValue};${encodedOptions}`;
+    return `${encodedKey}=${encodedValue};${encodedOptions}`;
 }
 
 

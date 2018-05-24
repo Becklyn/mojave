@@ -71,7 +71,7 @@ QUnit.test(
         );
 
         assert.ok(element, "created <div> with the expected class");
-        assert.strictEqual(element.getAttribute("width"), 100, "width attribute has the expected value");
+        assert.strictEqual(element.getAttribute("width"), "100", "width attribute has the expected value");
         assert.strictEqual(element.style.display, "none", "style attribute has the expected value");
     }
 );

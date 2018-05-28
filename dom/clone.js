@@ -46,7 +46,7 @@ export function clone (element)
     // no need to do anything here, as the attributes are already cloned.
 
     // copy dataset
-    if (typeof dataset !== "undefined")
+    if (dataset !== undefined)
     {
         for (const key in dataset)
         {

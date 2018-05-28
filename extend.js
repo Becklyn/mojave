@@ -53,7 +53,7 @@ export function merge (target, ...sources)
             {
                 if (source.hasOwnProperty(key))
                 {
-                    target[key] = (typeof target[key] !== "undefined")
+                    target[key] = (target[key] !== undefined)
                         ? merge(target[key], source[key])
                         : source[key];
                 }

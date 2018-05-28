@@ -38,7 +38,7 @@ export function merge (target, ...sources)
     const targetType = typeOf(target);
 
     // null is implicitly compatible with any (scalar) type
-    if (sourceType === targetType || "null" === sourceType)
+    if (sourceType === targetType || "null" === sourceType || "null" === targetType)
     {
         // both items are an array: just concat and return
         if ("array" === targetType)

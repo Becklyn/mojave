@@ -34,22 +34,39 @@ function parseHtml (html)
  */
 export function createElement (type, attributes = {})
 {
+    const element = createUnstyledElement(type, attributes);
+
+    if (attributes.css !== undefined)
+    {
+        setStyles(element, attributes.css);
+    }
+
+    return element;
+}
+
+
+/**
+ * Creates a simple, unstyled element.
+ *
+ * This is a smaller alternative to `createElement`, if you definitely don't need to style the element.
+ *
+ * @param {string} type
+ * @param {mojave.types.CreateElementOptions} [attributes]
+ * @returns {HTMLElement}
+ */
+export function createUnstyledElement (type, attributes = {})
+{
     const element = (-1 !== type.indexOf("<"))
         ? parseHtml(type)
         : document.createElement(type);
 
     setAttrs(element, attributes);
 
-    if (typeof attributes.css !== "undefined")
-    {
-        setStyles(element, attributes.css);
-    }
-
-    if (typeof attributes.text !== "undefined")
+    if (attributes.text !== undefined)
     {
         element.textContent = attributes.text;
     }
-    else if (typeof attributes.html !== "undefined")
+    else if (attributes.html !== undefined)
     {
         element.innerHTML = attributes.html;
     }

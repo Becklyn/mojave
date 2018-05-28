@@ -51,7 +51,7 @@ export function animate (element, properties, options = {})
     let values = null;
 
     // stop previous animation by default
-    if (typeof options.stopPrevious === "undefined" || true === options.stopPrevious)
+    if (options.stopPrevious === undefined || true === options.stopPrevious)
     {
         stopAnimation(element);
     }
@@ -160,16 +160,20 @@ function runAnimationStep (time, start, callback, context)
     }
 }
 
-
+/**
+ * Stops any animation on the given element
+ *
+ * @param {HTMLElement} element
+ */
 export function stopAnimation (element)
 {
-    if (typeof element._currentAnimation !== "undefined" && element._currentAnimation !== null)
+    // check for undefined + null
+    if (element._currentAnimation != null)
     {
         element._currentAnimation.stop();
         element._currentAnimation = null;
     }
 }
-
 
 
 /**

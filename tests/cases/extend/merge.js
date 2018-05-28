@@ -133,6 +133,15 @@ QUnit.test(
                     a: null,
                 },
             },
+            {
+                target: {
+                    a: null,
+                },
+                sources: [{a: 1}],
+                expected: {
+                    a: 1,
+                },
+            },
         ];
 
         cases.forEach((data, index) => {

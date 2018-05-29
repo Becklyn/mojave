@@ -29,6 +29,7 @@ import "../cases/dom/traverse/prevAll";
 import "../cases/dom/traverse/siblings";
 import "../cases/dom/utils/isElement";
 import "../cases/dom/utils/splitStringValue";
+import "../cases/extend/extend";
 import "../cases/extend/merge";
 import "../cases/io/file";
 import "../cases/string/manipulate/replaceAll";

@@ -70,3 +70,30 @@ export function merge (target, ...sources)
     //      - if the types don't match
     return target;
 }
+
+
+/**
+ * Extends the component without mutating any of the sources.
+ * Is basically a shallow object copy.
+ *
+ * @param {Object[]} sources
+ * @returns {Object}
+ */
+export function extend (...sources)
+{
+    let target = {};
+
+    for (let i = 0; i < sources.length; i++) {
+        let source = sources[i];
+
+        for (const key in source)
+        {
+            if (source.hasOwnProperty(key))
+            {
+                target[key] = source[key];
+            }
+        }
+    }
+
+    return target;
+}

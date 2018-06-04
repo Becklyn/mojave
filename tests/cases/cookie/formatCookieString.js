@@ -4,7 +4,7 @@ import QUnit from "qunit";
 QUnit.module("cookie/set");
 
 QUnit.test(
-    "formatCookieString()",
+    "valid formatCookieString() variations",
     (assert) =>
     {
         /** @type {Array<{key: string, value: string, options: object, expected: RegExp}>} */
@@ -41,6 +41,18 @@ QUnit.test(
                 let actual = formatCookieString(singleCase.key, singleCase.value, singleCase.options);
                 assert.ok(singleCase.expected.test(actual), `Test #${index}`);
             }
+        );
+    }
+);
+
+QUnit.test(
+    "invalid cookie name",
+    (assert) =>
+    {
+        assert.throws(
+            () => formatCookieString(`a@b`, 5),
+            /Invalid cookie name./,
+            "Throws with invalid cookie names."
         );
     }
 );

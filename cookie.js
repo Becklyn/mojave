@@ -46,11 +46,15 @@ export function formatCookieString (key, value, options = {})
 
     options.expires = !options.expires ? "" : options.expires.toUTCString();
 
-    const encodedKey = encodeCookieKey(key);
+    if (/[^a-z0-9\-_.]/i.test(key))
+    {
+        throw new Error("Invalid cookie name: only A-Z 0-9 -_. allowed.");
+    }
+
     const encodedValue = encodeCookieValue(value);
     const encodedOptions = encodeCookieOptions(options);
 
-    return `${encodedKey}=${encodedValue};${encodedOptions}`;
+    return `${key}=${encodedValue};${encodedOptions}`;
 }
 
 
@@ -63,8 +67,7 @@ export function formatCookieString (key, value, options = {})
  */
 export function getCookie (key)
 {
-    const encodedSearchCookieKey = encodeCookieKey(key);
-    const matcher = new RegExp(`; ${encodedSearchCookieKey}=([^;]+)`);
+    const matcher = new RegExp(`; ${key}=([^;]+)`);
     const match = matcher.exec(`; ${document.cookie}`);
 
     return null !== match
@@ -83,20 +86,6 @@ export function removeCookie (key)
     setCookie(key, "", {
         expires: -1,
     });
-}
-
-
-/**
- * @private
- * @param {string} key
- *
- * @return {string}
- */
-function encodeCookieKey (key)
-{
-    return encodeURIComponent("" + key)
-        .replace(/%(23|24|26|2B|5E|60|7C)/g, decodeURIComponent)
-        .replace(/[()]/g, escape);
 }
 
 

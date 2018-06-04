@@ -51,7 +51,9 @@ export function formatCookieString (key, value, options = {})
         throw new Error("Invalid cookie name: only A-Z 0-9 -_. allowed.");
     }
 
-    const encodedValue = encodeCookieValue(value);
+    // encode the cookie value and de-encode characters, that don't need to be escaped.
+    const encodedValue = encodeURIComponent(JSON.stringify(value))
+        .replace(/%(23|24|26|2B|3A|3C|3E|3D|2F|3F|40|5B|5D|5E|60|7B|7D|7C)/g, decodeURIComponent);
     const encodedOptions = encodeCookieOptions(options);
 
     return `${key}=${encodedValue};${encodedOptions}`;
@@ -86,19 +88,6 @@ export function removeCookie (key)
     setCookie(key, "", {
         expires: -1,
     });
-}
-
-
-/**
- * @private
- * @param {*} value
- *
- * @return {string}
- */
-function encodeCookieValue (value)
-{
-    return encodeURIComponent(JSON.stringify(value))
-        .replace(/%(23|24|26|2B|3A|3C|3E|3D|2F|3F|40|5B|5D|5E|60|7B|7D|7C)/g, decodeURIComponent);
 }
 
 

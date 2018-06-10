@@ -53,7 +53,7 @@ export function mountJsx (selector, ComponentToMount, additionalProps = {})
         }
         catch (e)
         {
-            // ignore
+            console.error("Could not mount component", e);
         }
     }
 }

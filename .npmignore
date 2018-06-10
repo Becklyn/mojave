@@ -1,8 +1,12 @@
 /.gitignore
+/.idea
 /.npmignore
 /.travis.yml
+/browserstack.json
 /kaba.js
 /karma.conf.js
 /node_modules
+/package-lock.json
 /tests
+/yarn.lock
 

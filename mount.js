@@ -83,7 +83,7 @@ export function mountJsxWithStore (selector, ComponentToMount, additionalProps =
 
             render(
                 h(Provider, {store},
-                    h(ComponentToMount, data)
+                    h(ComponentToMount)
                 ),
                 node.parentElement,
                 node

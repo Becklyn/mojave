@@ -42,7 +42,10 @@ export function mountJsx (selector, ComponentToMount, additionalProps = {})
         try
         {
             const node = elements[i];
-            let data = JSON.parse(node.textContent);
+            const content = node.textContent.trim();
+            let data = (content !== "")
+                ? JSON.parse(content)
+                : {};
             data = merge(data, additionalProps);
 
             render(
@@ -77,7 +80,10 @@ export function mountJsxWithStore (selector, ComponentToMount, additionalProps =
         try
         {
             const node = elements[i];
-            let data = JSON.parse(node.textContent);
+            const content = node.textContent.trim();
+            let data = (content !== "")
+                ? JSON.parse(content)
+                : {};
             data = merge(data, additionalProps);
             let store = createStore(data);
 

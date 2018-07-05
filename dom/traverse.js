@@ -286,13 +286,14 @@ export function siblings (element, selector = null)
  *
  * @param {HTMLElement} element
  * @param {string} selector
+ * @param {?HTMLElement} rootElement    if a root element is given, the parent is only searched up to (and excluding) this root node.
  * @returns {HTMLElement | null}
  */
-export function closest (element, selector)
+export function closest (element, selector, rootElement = null)
 {
     let parent = element.parentElement;
 
-    while (null !== parent)
+    while (null !== parent && rootElement !== parent)
     {
         if (parent.matches(selector))
         {

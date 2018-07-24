@@ -23,7 +23,7 @@
     "devDependencies": {
         "browserstack-runner": "0.7.0",
         "kaba": "5.0.4",
-        "karma": "2.0.4",
+        "karma": "2.0.5",
         "karma-qunit": "2.1.0",
         "karma-sauce-launcher": "1.2.0",
         "qunit": "2.6.1",

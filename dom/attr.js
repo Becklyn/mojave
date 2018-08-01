@@ -55,19 +55,6 @@ export function getAttr (element, attribute)
 
 
 /**
- * Determines whether the given attribute is set on the element
- *
- * @param {Element} element
- * @param {string} attribute
- * @returns {boolean}
- */
-export function hasAttr (element, attribute)
-{
-    return null !== element.getAttribute(attribute);
-}
-
-
-/**
  * Updates the classes on the given element
  *
  * @private

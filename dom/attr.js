@@ -171,29 +171,23 @@ export function getData (element, key)
 
 
 /**
- * Determines whether the given attribute is set on the element
+ * Determines whether the given data attribute is set on the element
  *
- * @param {Element} element
+ * @param {HTMLElement} element
  * @param {string} key
  * @returns {boolean}
  */
 export function hasData (element, key)
 {
-    const normalizedKey = normalizeDataKey(key);
-    const storage = customDataStorage.get(element);
+    const value = getData(element, key);
 
-    if (typeof storage === "object")
+    // Empty data attributes' value is an empty string
+    if ("" === value)
     {
-        return storage[normalizedKey] !== undefined;
+        return true;
     }
 
-    // @legacy IE <= 10 doesn't support dataset
-    if (element.dataset === undefined)
-    {
-        return hasAttr(element, `data-${key}`);
-    }
-
-    return undefined !== element.dataset[normalizedKey];
+    return null !== (value || null);
 }
 
 

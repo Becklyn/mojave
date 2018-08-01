@@ -55,6 +55,19 @@ export function getAttr (element, attribute)
 
 
 /**
+ * Determines whether the given attribute is set on the element
+ *
+ * @param {Element} element
+ * @param {string} attribute
+ * @returns {boolean}
+ */
+export function hasAttr (element, attribute)
+{
+    return null !== element.getAttribute(attribute);
+}
+
+
+/**
  * Updates the classes on the given element
  *
  * @private
@@ -167,6 +180,33 @@ export function getData (element, key)
     return value === undefined
         ? null
         : value;
+}
+
+
+/**
+ * Determines whether the given attribute is set on the element
+ *
+ * @param {Element} element
+ * @param {string} key
+ * @returns {boolean}
+ */
+export function hasData (element, key)
+{
+    const normalizedKey = normalizeDataKey(key);
+    const storage = customDataStorage.get(element);
+
+    if (typeof storage === "object")
+    {
+        return storage[normalizedKey] !== undefined;
+    }
+
+    // @legacy IE <= 10 doesn't support dataset
+    if (element.dataset === undefined)
+    {
+        return hasAttr(element, `data-${key}`);
+    }
+
+    return undefined !== element.dataset[normalizedKey];
 }
 
 

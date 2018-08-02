@@ -189,7 +189,7 @@ export function hasData (element, key)
         return true;
     }
 
-    return null !== value;
+    return null != value;
 }
 
 

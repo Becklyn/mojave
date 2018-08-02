@@ -44,6 +44,8 @@ export function setAttrs (element, attributes)
 /**
  * Returns the attribute value for the given html node
  *
+ * @deprecated use `element.getAttribute()` directly instead. Will be removed in v3.0
+ *
  * @param {Element} element
  * @param {string} attribute
  * @returns {string | null}
@@ -167,6 +169,27 @@ export function getData (element, key)
     return value === undefined
         ? null
         : value;
+}
+
+
+/**
+ * Determines whether the given data attribute is set on the element
+ *
+ * @param {HTMLElement} element
+ * @param {string} key
+ * @returns {boolean}
+ */
+export function hasData (element, key)
+{
+    const value = getData(element, key);
+
+    // Empty data attributes' value is an empty string
+    if ("" === value)
+    {
+        return true;
+    }
+
+    return null != value;
 }
 
 

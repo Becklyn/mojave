@@ -2,6 +2,7 @@ import "../cases/classes/classes";
 import "../cases/cookie/formatCookieString";
 import "../cases/date/compare";
 import "../cases/date/format";
+import "../cases/dom/attr/hasData";
 import "../cases/dom/clone/clone";
 import "../cases/dom/clone/duplicate";
 import "../cases/dom/events/delegate";

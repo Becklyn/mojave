@@ -120,6 +120,7 @@ const browsers = {
 
 module.exports = function (config) {
     config.set({
+        hostname: 'bs-local.com',
         frameworks: ['qunit'],
         files: [
             'tests/dist/complete-library-build.js',

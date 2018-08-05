@@ -1,5 +1,6 @@
+/* eslint-disable camelcase */
+
 // Karma configuration
-// Generated on Fri Jul 07 2017 16:49:19 GMT+0200 (CEST)
 
 const browsers = {
     // Chrome (Windows)
@@ -7,13 +8,13 @@ const browsers = {
         base: 'SauceLabs',
         browserName: 'chrome',
         platform: 'Windows 8',
-        version: 'latest'
+        version: 'latest',
     },
     win_chrome_latest_1: {
         base: 'SauceLabs',
         browserName: 'chrome',
         platform: 'Windows 8',
-        version: 'latest-1'
+        version: 'latest-1',
     },
 
     // Firefox (Windows)
@@ -21,13 +22,13 @@ const browsers = {
         base: 'SauceLabs',
         browserName: 'firefox',
         platform: 'Windows 10',
-        version: 'latest'
+        version: 'latest',
     },
     win_firefox_latest_1: {
         base: 'SauceLabs',
         browserName: 'firefox',
         platform: 'Windows 10',
-        version: 'latest-1'
+        version: 'latest-1',
     },
 
     // Edge
@@ -35,7 +36,7 @@ const browsers = {
         base: 'SauceLabs',
         browserName: 'MicrosoftEdge',
         platform: 'Windows 10',
-        version: 'latest'
+        version: 'latest',
     },
     // Edge "latest-1" is not supported
 
@@ -44,7 +45,7 @@ const browsers = {
         base: 'SauceLabs',
         browserName: 'internet explorer',
         platform: 'Windows 10',
-        version: '11.103'
+        version: '11.103',
     },
 
     // IE 10
@@ -52,7 +53,7 @@ const browsers = {
         base: 'SauceLabs',
         browserName: 'internet explorer',
         platform: 'Windows 8',
-        version: '10.0'
+        version: '10.0',
     },
 
     // Chrome (macOS)
@@ -60,13 +61,13 @@ const browsers = {
         base: 'SauceLabs',
         browserName: 'chrome',
         platform: 'macOS 10.12',
-        version: 'latest'
+        version: 'latest',
     },
     mac_chrome_latest_1: {
         base: 'SauceLabs',
         browserName: 'chrome',
         platform: 'macOS 10.12',
-        version: 'latest-1'
+        version: 'latest-1',
     },
 
     // Firefox (Windows)
@@ -74,13 +75,13 @@ const browsers = {
         base: 'SauceLabs',
         browserName: 'firefox',
         platform: 'macOS 10.12',
-        version: 'latest'
+        version: 'latest',
     },
     mac_firefox_latest_1: {
         base: 'SauceLabs',
         browserName: 'firefox',
         platform: 'macOS 10.12',
-        version: 'latest-1'
+        version: 'latest-1',
     },
 
     // Safari
@@ -88,7 +89,8 @@ const browsers = {
         base: 'SauceLabs',
         browserName: 'safari',
         platform: 'macOS 10.12',
-        version: '10.0', // "latest" randomly fails on some tests
+        // "latest" randomly fails on some tests
+        version: '10.0',
     },
     // Safari "latest-1" is not supported
 
@@ -99,7 +101,8 @@ const browsers = {
         appiumVersion: '1.6.4',
         deviceName: 'iPhone 7 Plus Simulator',
         deviceOrientation: 'portrait',
-        platformVersion: '10.3', // "latest" randomly fails on some tests
+        // "latest" randomly fails on some tests
+        platformVersion: '10.3',
         platformName: 'iOS',
     },
 
@@ -120,7 +123,7 @@ module.exports = function (config) {
         frameworks: ['qunit'],
         files: [
             'tests/dist/complete-library-build.js',
-            'tests/dist/all-tests.js'
+            'tests/dist/all-tests.js',
         ],
         preprocessors: {},
         reporters: ['dots', 'saucelabs'],

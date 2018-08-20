@@ -30,7 +30,7 @@
     "devDependencies": {
         "browserstack-runner": "0.8.0",
         "kaba": "5.0.4",
-        "qunit": "2.6.1"
+        "qunit": "2.6.2"
     },
     "scripts": {
         "test": "node_modules/.bin/browserstack-runner"

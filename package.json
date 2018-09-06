@@ -23,7 +23,7 @@
     "dependencies": {
         "mitt": "1.1.3",
         "preact": "8.3.1",
-        "promiscuous": "0.7.1",
+        "promiscuous": "0.7.2",
         "unfetch": "3.1.1",
         "unistore": "3.0.6"
     },

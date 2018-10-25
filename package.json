@@ -33,6 +33,7 @@
         "qunit": "2.7.0"
     },
     "scripts": {
-        "test": "node_modules/.bin/browserstack-runner"
+        "test": "npm run-script build && node_modules/.bin/browserstack-runner",
+        "build": "node_modules/.bin/tsc --diagnostics --noEmitOnError --noErrorTruncation --listEmittedFiles --pretty"
     }
 }

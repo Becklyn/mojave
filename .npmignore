@@ -4,9 +4,12 @@
 /.travis.yml
 /browserstack.json
 /kaba.js
-/karma.conf.js
 /node_modules
 /package-lock.json
 /tests
 /yarn.lock
 
+# ignore all .ts when publishing
+*.ts
+*.tsx
+!*.d.ts

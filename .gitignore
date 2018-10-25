@@ -1,5 +1,8 @@
 /node_modules
 /package-lock.json
-/run-tests.sh
 /tests/dist
 /yarn.lock
+
+# ignore build files
+*.d.ts
+*.js

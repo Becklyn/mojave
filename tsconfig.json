@@ -1,0 +1,24 @@
+{
+    "compilerOptions": {
+        "target": "es5",
+        "module": "es2015",
+        "jsx": "preserve",
+        "declaration": true,
+        "sourceMap": false,
+        "removeComments": true,
+        "strict": true,
+        "strictNullChecks": true,
+        "noImplicitThis": true,
+        "noUnusedLocals": true,
+        "moduleResolution": "node",
+        "experimentalDecorators": true,
+        "alwaysStrict": false
+    },
+    "include": [
+        "**/*.tsx",
+        "**/*.ts"
+    ],
+    "exclude": [
+        "node_modules"
+    ]
+}

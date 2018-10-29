@@ -8,8 +8,11 @@ export type EventIntermediateToken = (any : any) => void;
 
 /**
  * Event handler for delegated events
+ *
+ * @param {Event} event The original event
+ * @param {HTMLElement} element The matched element
  */
-export type DelegatedEventHandler = (Event : Event, HTMLElement : HTMLElement) => void;
+export type DelegatedEventHandler = (event : Event, element : HTMLElement) => void;
 
 
 /**

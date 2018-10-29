@@ -46,8 +46,7 @@ export class Slug
      */
     transform (raw : string) : string
     {
-        // transform to string
-        raw = ("" + raw).toLowerCase(); // eslint-disable-line prefer-template
+        raw = raw.toLowerCase();
 
         for (let i = 0; i < this.transforms.length; i++)
         {

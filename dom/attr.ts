@@ -1,16 +1,13 @@
 import {splitStringValue} from "./utils";
 
 const SPECIAL_ATTRIBUTE_SETTERS = /^(html|text|css)$/;
-const customDataStorage = new window.WeakMap();
+const customDataStorage = new (window as any).WeakMap();
 
 
 /**
  * Sets all attributes on the given element
- *
- * @param {Element} element
- * @param {mojave.types.OptionalKeyMap} attributes
  */
-export function setAttrs (element, attributes)
+export function setAttrs (element : Element, attributes : mojave.types.OptionalKeyMap) : void
 {
     for (const key in attributes)
     {
@@ -50,7 +47,7 @@ export function setAttrs (element, attributes)
  * @param {string} attribute
  * @returns {string | null}
  */
-export function getAttr (element, attribute)
+export function getAttr (element : Element, attribute : string) : null|string
 {
     return element.getAttribute(attribute);
 }
@@ -60,13 +57,9 @@ export function getAttr (element, attribute)
  * Updates the classes on the given element
  *
  * @private
- * @param {Element | Element[]} element
- * @param {string | string[]} classes
- * @param {string} method
  */
-function updateClasses (element, classes, method)
+function updateClasses (element : Element|Element[], classes : string|string[], method : (...tokens : string[]) => void) : void
 {
-    /** @type {Element[]} list */
     const list = Array.isArray(element) ? element : [element];
     const classList = splitStringValue(classes);
 
@@ -74,7 +67,7 @@ function updateClasses (element, classes, method)
     {
         for (let j = 0; j < classList.length; j++)
         {
-            list[i].classList[method](classList[j]);
+            method.call(list[i].classList, classList[j]);
         }
     }
 }
@@ -82,36 +75,26 @@ function updateClasses (element, classes, method)
 
 /**
  * Adds all given classes to the element
- *
- * @param {Element | Element[]} element
- * @param {string | string[]} classes
  */
-export function addClass (element, classes)
+export function addClass (element : Element|Element[], classes : string|string[]) : void
 {
-    updateClasses(element, classes, "add");
+    updateClasses(element, classes, DOMTokenList.prototype.add);
 }
 
 
 /**
  * Remove all given classes from the element
- *
- * @param {Element | Element[]} element
- * @param {string | string[]} classes
  */
-export function removeClass (element, classes)
+export function removeClass (element : Element|Element[], classes : string|string[]) : void
 {
-    updateClasses(element, classes, "remove");
+    updateClasses(element, classes, DOMTokenList.prototype.remove);
 }
 
 
 /**
  * Normalizes the key for *Data functions
- *
- * @private
- * @param {string} key
- * @returns {string}
  */
-function normalizeDataKey (key)
+function normalizeDataKey (key : string) : string
 {
     return key.replace(
         /-([a-z])/g,
@@ -122,12 +105,8 @@ function normalizeDataKey (key)
 
 /**
  * Sets the data on the given element
- *
- * @param {Element} element
- * @param {string} key
- * @param {*} value
  */
-export function setData (element, key, value)
+export function setData (element : Element, key : string, value : any) : void
 {
     key = normalizeDataKey(key);
     let storage = customDataStorage.get(element);
@@ -144,12 +123,8 @@ export function setData (element, key, value)
 
 /**
  * Loads the data from the element
- *
- * @param {HTMLElement} element
- * @param {string} key
- * @returns {*}
  */
-export function getData (element, key)
+export function getData (element : HTMLElement, key : string) : any
 {
     const normalizedKey = normalizeDataKey(key);
     const storage = customDataStorage.get(element);
@@ -174,12 +149,8 @@ export function getData (element, key)
 
 /**
  * Determines whether the given data attribute is set on the element
- *
- * @param {HTMLElement} element
- * @param {string} key
- * @returns {boolean}
  */
-export function hasData (element, key)
+export function hasData (element : HTMLElement, key : string) : boolean
 {
     const value = getData(element, key);
 
@@ -195,11 +166,8 @@ export function hasData (element, key)
 
 /**
  * Returns all data in custom storage
- *
- * @param {HTMLElement} element
- * @returns {Object}
  */
-export function getAllCustomData (element)
+export function getAllCustomData (element : HTMLElement) : {}
 {
     return customDataStorage.get(element) || {};
 }

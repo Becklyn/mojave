@@ -1,12 +1,14 @@
+export type SlugCharacterReplacementMap = Array<[RegExp|string, string]>;
+
 export class Slug
 {
-    private readonly transforms : Array<[RegExp, string]>;
+    private readonly transforms : SlugCharacterReplacementMap;
     /**
      * The sanitizing regexp, that removes all unwanted characters
      */
     private readonly sanitize : RegExp;
 
-    constructor (transforms : Array<[RegExp, string]> = [], sanitize : null|RegExp= null)
+    constructor (transforms : SlugCharacterReplacementMap = [], sanitize : null|RegExp= null)
     {
         this.transforms = [];
         this.sanitize = null !== sanitize

@@ -30,7 +30,7 @@ export class Slug
         {
             let from = transforms[i][0];
 
-            if (from instanceof RegExp)
+            if (from instanceof RegExp && -1 === from.flags.indexOf("g"))
             {
                 if (-1 === from.flags.indexOf("g"))
                 {

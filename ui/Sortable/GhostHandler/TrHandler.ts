@@ -10,7 +10,7 @@ export default class TrHandler implements GhostHandler
      */
     constructor (tableRow : HTMLTableRowElement)
     {
-        this.cells = find("td", tableRow);
+        this.cells = find("td", tableRow) as HTMLTableCellElement[];
     }
 
 

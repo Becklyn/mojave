@@ -41,7 +41,7 @@ const germanRelativeDateLabelFormatter : DateFormatter = (index : number, delta 
     return text;
 };
 
-const TIME_SECTIONS = [
+const TIME_SECTIONS : [number, number?][] = [
     [0.8 * MINUTE],
     [1.5 * MINUTE],
     [60 * MINUTE, MINUTE],
@@ -55,7 +55,7 @@ const TIME_SECTIONS = [
     [1.5 * MONTH],
     [YEAR, MONTH],
     [1.5 * YEAR],
-    [null, YEAR],
+    [Infinity, YEAR],
 ];
 
 

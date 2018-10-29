@@ -43,7 +43,7 @@ function normalizeProperty (property : string) : string
 /**
  * Sets all styles on the element
  */
-export function setStyles (elements : HTMLElement|HTMLElement[]|Window|Window[], styles : mojave.types.KeyMap) : void
+export function setStyles (elements : HTMLElement|HTMLElement[]|Window|Window[], styles : {[key: string]: string|number}) : void
 {
     let styledElements : (HTMLElement|Window)[] = Array.isArray(elements) ? elements : [elements];
 

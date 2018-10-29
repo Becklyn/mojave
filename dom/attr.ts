@@ -1,7 +1,7 @@
 import {splitStringValue} from "./utils";
 
 const SPECIAL_ATTRIBUTE_SETTERS = /^(html|text|css)$/;
-const customDataStorage = new WeakMap();
+const customDataStorage = new WeakMap<Element, any>();
 
 /**
  * Generic map from string keys -> string | number | null | boolean

@@ -1,6 +1,7 @@
 import {closest, find, findOne} from "../dom/traverse";
 import {delegate, off, on} from "../dom/events";
 import {merge} from "../extend";
+//@ts-ignore
 import mitt from "mitt";
 import SortableInteraction from "./Sortable/SortableInteraction";
 
@@ -37,7 +38,7 @@ export default class Sortable
         this.container = container;
         this.config = merge({
             handle: "",
-        }, config);
+        }, config) as SortableConfig;
         this.interaction = null;
         this.emitter = mitt();
         this.listeners = {
@@ -54,7 +55,12 @@ export default class Sortable
      */
     init ()
     {
-        delegate(this.container, `${this.config.items} ${this.config.handle}`, "mousedown", (event : MouseEvent) => this.onInteractionStart(event));
+        delegate(
+            this.container,
+            `${this.config.items} ${this.config.handle}`,
+            "mousedown",
+            (event : Event) => this.onInteractionStart(event as MouseEvent)
+        );
     }
 
 
@@ -75,7 +81,7 @@ export default class Sortable
             return;
         }
 
-        const draggedItem = eventTarget.matches(this.config.items) ? eventTarget : closest(eventTarget, this.config.items);
+        const draggedItem = eventTarget.matches(this.config.items) ? eventTarget : closest(eventTarget, this.config.items) as HTMLElement;
 
         this.interaction = new SortableInteraction(this.container, draggedItem, this.config.items, event.screenX, event.screenY);
         this.interaction.start();

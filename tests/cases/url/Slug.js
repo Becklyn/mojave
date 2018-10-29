@@ -1,5 +1,5 @@
 import QUnit from "qunit";
-import Slug from "../../../url/Slug";
+import {Slug} from "../../../url/Slug";
 
 QUnit.module("url/Slug");
 

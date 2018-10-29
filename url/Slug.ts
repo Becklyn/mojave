@@ -8,7 +8,7 @@ export class Slug
      */
     private readonly sanitize : RegExp;
 
-    constructor (transforms : SlugCharacterReplacementMap = [], sanitize : null|RegExp= null)
+    constructor (transforms : SlugCharacterReplacementMap = [], sanitize : null|RegExp = null)
     {
         this.transforms = [];
         this.sanitize = null !== sanitize

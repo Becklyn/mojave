@@ -92,7 +92,7 @@ export function formatRelative (date : Date, referenceDate : null|Date = null, f
             const text = formatLabel(i, delta);
             const secondEntry = entry[1];
 
-            return secondEntry !== undefined && secondEntry !== null
+            return secondEntry !== undefined
                 ? text.replace("#", Math.round(absDelta / secondEntry) + "")
                 : text;
         }

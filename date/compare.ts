@@ -89,7 +89,6 @@ export function compareTimestamp (date : Date, otherDate : Date) : number
 
 
 /**
- * Compares two numbers
  */
 function compare (value : number, otherValue : number) : number
 {

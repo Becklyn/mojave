@@ -27,10 +27,10 @@ declare namespace mojave.types
     /**
      * Custom event listener token, that can unregister delegated or once event listeners
      */
-    type EventIntermediateToken = (any) => void;
+    type EventIntermediateToken = (any : any) => void;
 
     /**
      * Event handler for delegated events
      */
-    type DelegatedEventHandler = (Event, HTMLElement) => void;
+    type DelegatedEventHandler = (Event : Event, HTMLElement : HTMLElement) => void;
 }

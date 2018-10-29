@@ -8,7 +8,7 @@ Next Major
 
 
 
-Next Minor
-----------
+2.6 (unreleased)
+----------------
 
 * *Deprecation*: deprecated `dom/form`. Inline the implementation instead.

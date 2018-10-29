@@ -4,126 +4,60 @@ import {EASE_OUT_CUBIC, animate} from "../../animation";
 import {after, before} from "../../dom/manipulate";
 import {find} from "../../dom/traverse";
 import {setStyles} from "../../dom/css";
+import {GhostHandler} from "./GhostHandler/GhostHandler";
 
-/**
- * @typedef {{
- *      element: HTMLElement,
- *      rect: ClientRect,
- *      top: number,
- *      left: number,
- *      isMoved: boolean,
- *      shouldBeMoved: boolean,
- *      initialPosition: number,
- *      displacedPosition: number,
- * }} SortableInteractionItem
- */
+
+export type SortableInteractionItem = {
+    element: HTMLElement;
+    rect: ClientRect;
+    top: number;
+    bottom: number;
+    left: number;
+    isMoved: boolean;
+    shouldBeMoved: boolean;
+    initialPosition: number;
+    displacedPosition: number;
+};
 
 
 export default class SortableInteraction
 {
+    private readonly container : HTMLElement;
+    private readonly draggedItem : HTMLElement;
+    private readonly itemSelector : string;
+    private readonly draggedRect : ClientRect | DOMRect;
+    private readonly allItems : HTMLElement[];
+    private readonly draggedIndex : number;
+    private readonly containedIFrames : HTMLElement[];
+    private ghostHandler : null|GhostHandler;
+    private itemDragOffset : { x: number; y: number };
+    private hasMovedBefore : boolean;
+    private readonly startScrollPosition : number;
+    private readonly itemsBefore : SortableInteractionItem[];
+    private readonly itemsAfter : SortableInteractionItem[];
+
     /**
-     * @param {HTMLElement} container
-     * @param {HTMLElement} draggedItem
-     * @param {string} itemSelector
-     * @param {number} interactionX
-     * @param {number} interactionY
      */
-    constructor (container, draggedItem, itemSelector, interactionX, interactionY)
+    constructor (container : HTMLElement, draggedItem : HTMLElement, itemSelector : string, interactionX : number, interactionY : number)
     {
-        /**
-         * @private
-         * @type {HTMLElement}
-         */
         this.container = container;
-
-        /**
-         * The dragged item
-         *
-         * @private
-         * @type {HTMLElement}
-         */
         this.draggedItem = draggedItem;
-
-        /**
-         * @private
-         * @type {string}
-         */
         this.itemSelector = itemSelector;
-
-        /**
-         * The rect of the dragged item
-         *
-         * @private
-         * @type {ClientRect}
-         */
         this.draggedRect = draggedItem.getBoundingClientRect();
-
-        /**
-         * The list of all items
-         *
-         * @private
-         * @type {HTMLElement[]}
-         */
         this.allItems = find(itemSelector, this.container);
-
-        /**
-         * The index of the dragged item
-         *
-         * @private
-         * @type {number}
-         */
         this.draggedIndex = this.allItems.indexOf(draggedItem);
-
-        /**
-         * @private
-         * @type {HTMLElement[]}
-         */
         this.containedIFrames = find(`${itemSelector} iframe`, this.container);
-
-        /**
-         * @private
-         * @type {?GhostHandler}
-         */
         this.ghostHandler = null;
-
-        /**
-         * The offset of the mouse inside the dragged item to the top left corner of it
-         *
-         * @private
-         * @type {{x: number, y: number}}
-         */
         this.itemDragOffset = {
             x: interactionX - this.draggedRect.left,
             y: interactionY - this.draggedRect.top,
         };
-
-        /**
-         * Flag, whether the item was moved already at least once
-         *
-         * @private
-         * @type {boolean}
-         */
         this.hasMovedBefore = false;
-
-        /**
-         * @private
-         * @type {Number}
-         */
         this.startScrollPosition = window.pageYOffset;
-
 
         const displacement = this.calculateDisplacement();
 
-        /**
-         * @private
-         * @type {SortableInteractionItem[]}
-         */
         this.itemsBefore = this.allItems.slice(0, this.draggedIndex).map(item => this.prepareItem(item, 0, displacement));
-
-        /**
-         * @private
-         * @type {SortableInteractionItem[]}
-         */
         this.itemsAfter = this.allItems.slice(this.draggedIndex + 1).map(item => this.prepareItem(item, displacement, 0));
     }
 
@@ -143,14 +77,8 @@ export default class SortableInteraction
 
     /**
      * Prepares a single item
-     *
-     * @private
-     * @param {HTMLElement} item
-     * @param {number} initialPosition
-     * @param {number} displacedPosition
-     * @returns {SortableInteractionItem}
      */
-    prepareItem (item, initialPosition, displacedPosition)
+    private prepareItem (item : HTMLElement, initialPosition : number, displacedPosition : number) : SortableInteractionItem
     {
         const rect = item.getBoundingClientRect();
 
@@ -169,13 +97,8 @@ export default class SortableInteraction
 
     /**
      * Calculates the offsets for the dragged element
-     *
-     * @private
-     * @param {number} x
-     * @param {number} y
-     * @returns {{left: number, top: number, centerLeft: number, centerTop: number}}
      */
-    calculateOffsets (x, y)
+    private calculateOffsets (x : number, y : number) : {left: number, top: number, centerLeft: number, centerTop: number}
     {
         const left = x - this.itemDragOffset.x;
         const top = y - this.itemDragOffset.y;
@@ -192,12 +115,12 @@ export default class SortableInteraction
     /**
      * Starts the interaction of the sortable
      */
-    start ()
+    start () : void
     {
         switch (this.draggedItem.tagName)
         {
             case "TR":
-                this.ghostHandler = new TrHandler(this.draggedItem);
+                this.ghostHandler = new TrHandler(this.draggedItem as HTMLTableRowElement);
                 break;
         }
 
@@ -255,11 +178,8 @@ export default class SortableInteraction
 
     /**
      * Callback on when the item was moved
-     *
-     * @param {number} x
-     * @param {number} y
      */
-    onMove (x, y)
+    onMove (x : number, y : number) : void
     {
         if (!this.hasMovedBefore)
         {
@@ -296,13 +216,8 @@ export default class SortableInteraction
      * Finds the intersection
      *
      * Returns the active list and the active index. If the index is `null`, no item is active.
-     *
-     * @private
-     * @param {number} centerLeft
-     * @param {number} centerTop
-     * @returns {[SortableInteractionItem[], ?number]}
      */
-    findIntersection (centerLeft, centerTop)
+    findIntersection (centerLeft : number, centerTop : number) : [SortableInteractionItem[], number|null]
     {
         // first: simple out of bounds check
         // check whether the dragged item is out of bounds on the X axis
@@ -338,12 +253,8 @@ export default class SortableInteraction
 
     /**
      * Activates the given list
-     *
-     * @private
-     * @param {SortableInteractionItem[]} activeList
-     * @param {?number} activeIndex
      */
-    activateList (activeList, activeIndex)
+    activateList (activeList : SortableInteractionItem[], activeIndex : number|null) : void
     {
         const isBeforeList = activeList === this.itemsBefore;
         const inactiveList = isBeforeList ? this.itemsAfter : this.itemsBefore;
@@ -372,7 +283,7 @@ export default class SortableInteraction
     /**
      * Scroll handler
      */
-    onScroll ()
+    onScroll () : void
     {
         const items = this.itemsAfter.concat(this.itemsBefore);
         const delta = window.pageYOffset - this.startScrollPosition;
@@ -388,10 +299,8 @@ export default class SortableInteraction
 
     /**
      * Updates the movement of all items
-     *
-     * @private
      */
-    updateMovementOfItems ()
+    private updateMovementOfItems () : void
     {
         const list = this.itemsBefore.concat(this.itemsAfter);
 
@@ -413,12 +322,8 @@ export default class SortableInteraction
 
     /**
      * Handles the dropping of elements at specific coordinates
-     *
-     * @param {number} x
-     * @param {number} y
-     * @returns {Promise}
      */
-    drop (x, y)
+    drop (x : number, y : number) : Promise<any>
     {
         const {centerLeft, centerTop} = this.calculateOffsets(x, y);
         const [list, itemIndex] = this.findIntersection(centerLeft, centerTop);
@@ -444,10 +349,8 @@ export default class SortableInteraction
 
     /**
      * Aborts the interaction
-     *
-     * @returns {Promise}
      */
-    abort ()
+    abort () : Promise<any>
     {
         const delta = window.pageYOffset - this.startScrollPosition;
 
@@ -459,16 +362,11 @@ export default class SortableInteraction
 
 
     /**
-     * @private
-     *
-     * @param {Object} animateTo
-     * @param {function=} endAnimationCallback
-     * @returns {Promise}
      */
-    resetStyles (animateTo, endAnimationCallback)
+    private resetStyles (animateTo : Object, endAnimationCallback? : () => void) : Promise<any>
     {
-        return new window.Promise(
-            (resolve) => {
+        return new Promise(
+            (resolve : () => void) => {
                 const endAnimation = animate(
                     this.draggedItem,
                     animateTo,
@@ -521,10 +419,8 @@ export default class SortableInteraction
 
     /**
      * Returns whether the order of the items has changed
-     *
-     * @returns {boolean}
      */
-    orderHasChanged ()
+    orderHasChanged () : boolean
     {
         const items = find(this.itemSelector, this.container);
 

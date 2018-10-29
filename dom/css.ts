@@ -71,7 +71,7 @@ export function setStyles (elements : HTMLElement|HTMLElement[], styles : mojave
             // don't transform custom properties
             if (CUSTOM_PROPERTY_REGEX.test(property))
             {
-                style.setProperty(property, <string>value);
+                style.setProperty(property, value as string);
                 continue;
             }
 

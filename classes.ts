@@ -1,10 +1,7 @@
 /**
- * Combines all classnames in the map to a single class string
- *
- * @param {Object<string, boolean>} map
- * @returns {string}
+ * Combines all class names in the map to a single class string
  */
-export function classes (map)
+export function classes (map : {[key: string] : boolean}) : string
 {
     let list = [];
 

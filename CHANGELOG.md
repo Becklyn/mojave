@@ -12,3 +12,4 @@ Next Major
 ----------------
 
 * *Deprecation*: deprecated `dom/form`. Inline the implementation instead.
+* *Deprecation*: deprecated `unistore`. Implement it yourself instead.

@@ -4,24 +4,18 @@ import {getAllListeners, on} from "./events";
 
 /**
  * Duplicates the given DOM node
- *
- * @param {Element} element
- * @return {HTMLElement}
  */
-export function duplicate (element)
+export function duplicate (element : HTMLElement) : HTMLElement
 {
-    return element.cloneNode(true);
+    return element.cloneNode(true) as HTMLElement;
 }
 
 
 /**
  * Clones the given node, that includes duplicating the node and copying
  * all data and events.
- *
- * @param {Element} element
- * @return {HTMLElement}
  */
-export function clone (element)
+export function clone (element : HTMLElement) : HTMLElement
 {
     const clonedElement = duplicate(element);
     const listeners = getAllListeners(element);

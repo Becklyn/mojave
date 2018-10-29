@@ -37,7 +37,6 @@ import "../cases/io/file";
 import "../cases/string/manipulate/replaceAll";
 import "../cases/timing/debounce";
 import "../cases/types/typeOf";
-import "../cases/unistore/get";
 import "../cases/url/Slug";
 import QUnit from "qunit";
 

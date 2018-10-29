@@ -1,23 +1,15 @@
-import { merge } from "./extend";
-
-/**
- * @typedef {{
- *      domain: string,
- *      path: string,
- *      secure: boolean,
- *      ?expires: number|Date,
- * }} mojave.CookieOptions
- */
+export type CookieOptions = Partial<{
+    domain: string,
+    path: string,
+    secure: boolean,
+    expires: number|Date,
+}>;
 
 
 /**
  * Sets a cookie's value. If the value is an object or array, it'll be JSON.stringify and saved as a string
- *
- * @param {string} key
- * @param {*} value
- * @param {mojave.CookieOptions} options
  */
-export function setCookie (key, value, options = {})
+export function setCookie (key : string, value : any, options : CookieOptions = {}) : void
 {
     document.cookie = formatCookieString(key, value, options);
 }
@@ -26,25 +18,24 @@ export function setCookie (key, value, options = {})
  * Formats the cookie string
  *
  * @private
- * @param {string} key
- * @param {*} value
- * @param {mojave.CookieOptions} options
- * @returns {string}
  */
-export function formatCookieString (key, value, options = {})
+export function formatCookieString (key : string, value : any, options : CookieOptions = {}) : string
 {
-    options = merge({
-        path: "/",
-        secure: window.location.protocol === "https",
-        expires: 30,
-    }, options);
+    let config : {[key: string]: string|boolean} = {
+        domain: options.domain || false,
+        path: options.path || "/",
+        secure: options.secure || ( window.location.protocol === "https"),
+    };
 
-    if (typeof options.expires === "number")
-    {
-        options.expires = new Date((new Date()).getTime() + (options.expires * 864e+5));
-    }
+    // if a Date is given, just use the date.
+    // if a number is given, use it as days.
+    // if nothing is given, default to 30 days.
+    let expireDate = (options.expires instanceof Date)
+        ? options.expires
+        : new Date((new Date()).getTime() + ((options.expires || 30) * 864e5));
 
-    options.expires = !options.expires ? "" : options.expires.toUTCString();
+    config.expires = expireDate.toUTCString();
+
 
     if (/[^a-z0-9\-_.]/i.test(key))
     {
@@ -54,7 +45,7 @@ export function formatCookieString (key, value, options = {})
     // encode the cookie value and de-encode characters, that don't need to be escaped.
     const encodedValue = encodeURIComponent(JSON.stringify(value))
         .replace(/%(23|24|26|2B|3A|3C|3E|3D|2F|3F|40|5B|5D|5E|60|7B|7D|7C)/g, decodeURIComponent);
-    const encodedOptions = encodeCookieOptions(options);
+    const encodedOptions = encodeCookieOptions(config);
 
     return `${key}=${encodedValue};${encodedOptions}`;
 }
@@ -62,12 +53,8 @@ export function formatCookieString (key, value, options = {})
 
 /**
  * Retrieves a cookie's value
- *
- * @param {string} key
- *
- * @returns {*|null}
  */
-export function getCookie (key)
+export function getCookie (key : string) : any
 {
     const matcher = new RegExp(`; ${key}=([^;]+)`);
     const match = matcher.exec(`; ${document.cookie}`);
@@ -80,10 +67,8 @@ export function getCookie (key)
 
 /**
  * Removes the given cookie
- *
- * @param {string} key
  */
-export function removeCookie (key)
+export function removeCookie (key : string) : void
 {
     setCookie(key, "", {
         expires: -1,
@@ -97,7 +82,7 @@ export function removeCookie (key)
  *
  * @return {string}
  */
-function encodeCookieOptions (options)
+function encodeCookieOptions (options : {[key: string]: string|boolean}) : string
 {
     const encodedOptions = [];
 

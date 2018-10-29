@@ -11,6 +11,7 @@ const SELECTOR_MATCHER = /^((.+?)\s*:\s*)?(.+)$/;
  *  - all whitespace is stripped from the selector
  *  - name clashes will always return the last matched entry
  *
+ * @deprecated since 2.6, to be removed in 3.0. Implement it yourself instead.
  * @param {string|Array} selector
  * @returns {function(object):object}
  */

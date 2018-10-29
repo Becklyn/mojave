@@ -1,7 +1,7 @@
 import {splitStringValue} from "./utils";
 
 const SPECIAL_ATTRIBUTE_SETTERS = /^(html|text|css)$/;
-const customDataStorage = new (window as any).WeakMap();
+const customDataStorage = new WeakMap();
 
 
 /**

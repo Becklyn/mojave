@@ -1,5 +1,5 @@
 import {splitStringValue} from "./utils";
-const listenerRegistry = new WeakMap();
+const listenerRegistry = new WeakMap<EventTarget, EventHandlerList>();
 
 /**
  * Custom event listener token, that can unregister delegated or once event listeners
@@ -13,6 +13,10 @@ export type EventIntermediateToken = (any : any) => void;
  * @param {HTMLElement} element The matched element
  */
 export type DelegatedEventHandler = (event : Event, element : HTMLElement) => void;
+
+type EventHandlerList = {
+    [eventType: string]: EventListener[],
+};
 
 
 /**
@@ -214,7 +218,7 @@ function createEvent (type : string, args : CustomEventInit) : CustomEvent
 /**
  * Returns all event listeners for the given element
  */
-export function getAllListeners (element : EventTarget) : Object
+export function getAllListeners (element : EventTarget) : EventHandlerList
 {
     return listenerRegistry.get(element) || {};
 }

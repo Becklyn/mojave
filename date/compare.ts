@@ -3,16 +3,6 @@
  */
 export function isSameDay (date : Date, otherDate : Date) : boolean
 {
-    if (!(date instanceof Date))
-    {
-        return false;
-    }
-
-    if (!(otherDate instanceof Date))
-    {
-        return false;
-    }
-
     return 0 === compareDate(date, otherDate);
 }
 

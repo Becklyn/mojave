@@ -87,7 +87,7 @@ export function formatRelative (date : Date, referenceDate : null|Date = null, f
         const entry = TIME_SECTIONS[i];
         const firstEntry = entry[0];
 
-        if (firstEntry === null || absDelta < firstEntry)
+        if (absDelta < firstEntry)
         {
             const text = formatLabel(i, delta);
             const secondEntry = entry[1];

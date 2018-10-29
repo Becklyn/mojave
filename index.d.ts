@@ -1,11 +1,6 @@
 declare namespace mojave.types
 {
     /**
-     * Generic map from string keys -> string | number
-     */
-    type KeyMap = {[key : string] : string | number};
-
-    /**
      * Generic map from string keys -> string | number | null | boolean
      */
     type OptionalKeyMap = {[key : string] : string | number | null | boolean};

@@ -5,8 +5,8 @@ import {setStyles} from "./css";
 /**
  * Options for createElement()
  */
-export type CreateElementOptions = mojave.types.KeyMap & {
-    css? : mojave.types.KeyMap,
+export type CreateElementOptions = {[key: string]: string|number} & {
+    css? : {[key: string]: string|number},
     text? : string,
     html? : string,
 }

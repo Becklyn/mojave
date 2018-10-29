@@ -32,10 +32,7 @@ export class Slug
 
             if (from instanceof RegExp && -1 === from.flags.indexOf("g"))
             {
-                if (-1 === from.flags.indexOf("g"))
-                {
-                    from = new RegExp(from.source, `${from.flags}g`);
-                }
+                from = new RegExp(from.source, `${from.flags}g`);
             }
 
             this.transforms.push([

@@ -1,12 +1,7 @@
 /**
  * Replaces all occurrences of substrings in the given string.
- *
- * @param {string}                text
- * @param {Object<string,string>} replacements
- *
- * @returns {string}
  */
-export function replaceAll (text, replacements)
+export function replaceAll (text : string, replacements : {[key: string]: string}) : string
 {
     for (const key in replacements)
     {

@@ -5,10 +5,14 @@ import {merge} from "./extend";
 // global map of active element animations
 const elementAnimations = new WeakMap<HTMLElement, AnimationDirector>();
 
-type AnimationOptions = {
+export type AnimationOptions = {
     easing?: string|((progress: number) => number),
     stopPrevious?: boolean,
     duration?: number,
+}
+
+export type AnimationDirector = Promise<any> & {
+    stop: () => void,
 }
 
 type AnimationContext = {
@@ -17,10 +21,6 @@ type AnimationContext = {
     duration: number,
     stopPrevious?: boolean,
     onAnimationFinished: (didFinish: boolean) => void,
-}
-
-type AnimationDirector = Promise<any> & {
-    stop: () => void,
 }
 
 type PropertyValues = {

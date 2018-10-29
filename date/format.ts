@@ -65,7 +65,7 @@ const TIME_SECTIONS = [
  *      * `index` {number} (of the translation labels, see the default german ones for which one is which)
  *      * `delta` {number} the difference between the two dates in seconds. If the delta is negative, the given date is in the future (in relation to the reference date)
  */
-export function formatRelative (date : null|Date, referenceDate : null|Date = null, formatLabel : null|((index : number, delta : number) => string) = null) : string
+export function formatRelative (date : Date, referenceDate : null|Date = null, formatLabel : null|((index : number, delta : number) => string) = null) : string
 {
     if (null === formatLabel)
     {
@@ -75,11 +75,6 @@ export function formatRelative (date : null|Date, referenceDate : null|Date = nu
     if (null === referenceDate)
     {
         referenceDate = new Date();
-    }
-
-    if (!(date instanceof Date))
-    {
-        return "";
     }
 
     const delta = (referenceDate.getTime() - date.getTime()) / 1000;

@@ -1,6 +1,16 @@
 import {splitStringValue} from "./utils";
 const listenerRegistry = new WeakMap();
 
+/**
+ * Custom event listener token, that can unregister delegated or once event listeners
+ */
+export type EventIntermediateToken = (any : any) => void;
+
+/**
+ * Event handler for delegated events
+ */
+export type DelegatedEventHandler = (Event : Event, HTMLElement : HTMLElement) => void;
+
 
 /**
  * Registers an event listener for the given events
@@ -87,7 +97,7 @@ export function off (element : null|EventTarget|EventTarget[], type : string|str
  *      const intermediate = once(element, event, handler);
  *      off(element, event, intermediate);
  */
-export function once (element : null|EventTarget, type : string, handler : EventListener) : null|mojave.types.EventIntermediateToken
+export function once (element : null|EventTarget, type : string, handler : EventListener) : null|EventIntermediateToken
 {
     if (null === element)
     {
@@ -112,7 +122,7 @@ export function once (element : null|EventTarget, type : string, handler : Event
  *      const intermediate = delegate(element, selector, type, handler);
  *      off(element, event, intermediate);
  */
-export function delegate (element : null|EventTarget, selector : string, type : string, handler : mojave.types.DelegatedEventHandler) : null|mojave.types.EventIntermediateToken
+export function delegate (element : null|EventTarget, selector : string, type : string, handler : DelegatedEventHandler) : null|EventIntermediateToken
 {
     if (null === element)
     {

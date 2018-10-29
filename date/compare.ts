@@ -1,34 +1,16 @@
 /**
  * Returns whether both dates are for the same day
- *
- * @param {Date} date
- * @param {Date} otherDate
- * @returns {boolean}
  */
-export function isSameDay (date, otherDate)
+export function isSameDay (date : Date, otherDate : Date) : boolean
 {
-    if (!(date instanceof Date))
-    {
-        return false;
-    }
-
-    if (!(otherDate instanceof Date))
-    {
-        return false;
-    }
-
     return 0 === compareDate(date, otherDate);
 }
 
 
 /**
  * Returns whether both dates are for the same day and the same hour
- *
- * @param {Date} date
- * @param {Date} otherDate
- * @returns {boolean}
  */
-export function isSameTimestamp (date, otherDate)
+export function isSameTimestamp (date : Date, otherDate : Date) : boolean
 {
     return 0 === compareTimestamp(date, otherDate);
 }
@@ -36,12 +18,8 @@ export function isSameTimestamp (date, otherDate)
 
 /**
  * Checks whether the `date` is before the `otherDate`
- *
- * @param {Date} date
- * @param {Date} otherDate
- * @returns {boolean}
  */
-export function isBeforeDate (date, otherDate)
+export function isBeforeDate (date : Date, otherDate : Date) : boolean
 {
     return -1 === compareDate(date, otherDate);
 }
@@ -54,12 +32,8 @@ export function isBeforeDate (date, otherDate)
  *      +1 if the `date` is after the `other date`.
  *
  * Only checks the date and ignores the time
- *
- * @param {Date} date
- * @param {Date} otherDate
- * @return {number}
  */
-export function compareDate (date, otherDate)
+export function compareDate (date : Date, otherDate : Date) : number
 {
     const compareYear = compare(date.getFullYear(), otherDate.getFullYear());
 
@@ -86,12 +60,8 @@ export function compareDate (date, otherDate)
  *      +1 if the `date` is after the `other date`.
  *
  * Includes time checks.
- *
- * @param {Date} date
- * @param {Date} otherDate
- * @return {number}
  */
-export function compareTimestamp (date, otherDate)
+export function compareTimestamp (date : Date, otherDate : Date) : number
 {
     const compareDateResult = compareDate(date, otherDate);
 
@@ -119,13 +89,8 @@ export function compareTimestamp (date, otherDate)
 
 
 /**
- * Compares two numbers
- *
- * @param {number} value
- * @param {number} otherValue
- * @return {number}
  */
-function compare (value, otherValue)
+function compare (value : number, otherValue : number) : number
 {
     if (value === otherValue)
     {

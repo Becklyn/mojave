@@ -56,31 +56,3 @@ QUnit.test(
         assert.strictEqual(childElements[1], prependChildren[1], "is second element");
     }
 );
-
-
-QUnit.test(
-    "with node as parent and invalid child",
-    (assert) =>
-    {
-        assert.throws(
-            () => {
-                prepend(findOne("#test-parent"), null);
-            },
-            "function threw an error"
-        );
-    }
-);
-
-
-QUnit.test(
-    "with invalid parent and a node as a child",
-    (assert) =>
-    {
-        assert.throws(
-            () => {
-                prepend(null, createElement("div"));
-            },
-            "function threw an error"
-        );
-    }
-);

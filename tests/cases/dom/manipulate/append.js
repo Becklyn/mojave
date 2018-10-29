@@ -56,31 +56,3 @@ QUnit.test(
         assert.strictEqual(childElements[3], appendingChildren[1], "is last element");
     }
 );
-
-
-QUnit.test(
-    "with node as parent and an invalid child",
-    (assert) =>
-    {
-        assert.throws(
-            () => {
-                append(findOne("#test-parent"), null);
-            },
-            "function threw an error"
-        );
-    }
-);
-
-
-QUnit.test(
-    "with invalid parent and a node as a child",
-    (assert) =>
-    {
-        assert.throws(
-            () => {
-                append(null, document.createElement("div"));
-            },
-            "function threw an error"
-        );
-    }
-);

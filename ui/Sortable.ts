@@ -4,59 +4,42 @@ import {merge} from "../extend";
 import mitt from "mitt";
 import SortableInteraction from "./Sortable/SortableInteraction";
 
-
 /**
- * @typedef {{
- *      items: string,
- *      ?handle: string,
- * }} SortableConfig
+ * Config object for working with ui/sortable
  */
+export type SortableConfig = {
+    items: string,
+    handle?: string,
+}
 
+export type SortableListeners = {
+    move: (event : Event) => void;
+    end: (event : Event) => void;
+    mouseOut: (event : Event) => void;
+    scroll: (event : Event) => void;
+};
 
 /**
  * Generic sortable implementation
  */
 export default class Sortable
 {
-    /**
-     * @param {HTMLElement} container
-     * @param {SortableConfig} config
-     */
-    constructor (container, config)
-    {
-        /**
-         * @private
-         * @type {HTMLElement}
-         */
-        this.container = container;
+    private readonly container : HTMLElement;
+    private readonly config : SortableConfig;
+    private interaction : null|SortableInteraction;
+    private readonly emitter : mitt.Emitter;
+    private listeners : SortableListeners;
 
-        /**
-         * @private
-         * @type {SortableConfig}
-         */
+    /**
+     */
+    constructor (container : HTMLElement, config : SortableConfig)
+    {
+        this.container = container;
         this.config = merge({
             handle: "",
         }, config);
-
-        /**
-         * @private
-         * @type {?SortableInteraction}
-         */
         this.interaction = null;
-
-        /**
-         * @private
-         * @type {mitt.Emitter}
-         */
         this.emitter = mitt();
-
-
-        /**
-         * Bind methods
-         *
-         * @private
-         * @type {{move: (function(this:Sortable)), end: (function(this:Sortable)), mouseOut: (function(this:Sortable))}}
-         */
         this.listeners = {
             move: this.onDragMove.bind(this),
             end: this.onDragEnd.bind(this),
@@ -71,24 +54,28 @@ export default class Sortable
      */
     init ()
     {
-        delegate(this.container, `${this.config.items} ${this.config.handle}`, "mousedown", (event) => this.onInteractionStart(event));
+        delegate(this.container, `${this.config.items} ${this.config.handle}`, "mousedown", (event : MouseEvent) => this.onInteractionStart(event));
     }
 
 
     /**
      * Callback on when the interaction starts
-     *
-     * @private
-     * @param {Event} event
      */
-    onInteractionStart (event)
+    private onInteractionStart (event : MouseEvent) : void
     {
         if (null !== this.interaction)
         {
             return;
         }
 
-        const draggedItem = event.target.matches(this.config.items) ? event.target : closest(event.target, this.config.items);
+        let eventTarget = event.target as HTMLElement;
+
+        if (null === eventTarget)
+        {
+            return;
+        }
+
+        const draggedItem = eventTarget.matches(this.config.items) ? eventTarget : closest(eventTarget, this.config.items);
 
         this.interaction = new SortableInteraction(this.container, draggedItem, this.config.items, event.screenX, event.screenY);
         this.interaction.start();
@@ -108,11 +95,8 @@ export default class Sortable
 
     /**
      * Event on when the input devices moved while dragging
-     *
-     * @private
-     * @param {Event} event
      */
-    onDragMove (event)
+    private onDragMove (event : MouseEvent) : void
     {
         if (null === this.interaction)
         {
@@ -125,11 +109,8 @@ export default class Sortable
 
     /**
      * Event on when the dragging ended
-     *
-     * @private
-     * @param {Event=} event
      */
-    onDragEnd (event)
+    private onDragEnd (event? : MouseEvent) : void
     {
         if (null === this.interaction)
         {
@@ -153,6 +134,12 @@ export default class Sortable
                     // check for state changes
                     // reload all items and check whether the order has changed
                     const currentItems = find(this.config.items, this.container);
+
+                    if (null === this.interaction)
+                    {
+                        return;
+                    }
+
                     const orderHasChanged = this.interaction.orderHasChanged();
 
                     // reset interaction
@@ -173,11 +160,8 @@ export default class Sortable
 
     /**
      * Callback on when the mouse leaves the window
-     *
-     * @private
-     * @param {Event} event
      */
-    onMouseOut (event)
+    private onMouseOut (event : MouseEvent) : void
     {
         const html = findOne("html");
         if (event.relatedTarget === html && event.toElement === html)
@@ -188,22 +172,22 @@ export default class Sortable
 
     /**
      * Callback on scroll
-     *
-     * @private
      */
-    onScroll ()
+    private onScroll () : void
     {
+        if (null === this.interaction)
+        {
+            return;
+        }
+
         this.interaction.onScroll();
     }
 
 
     /**
      * Register an event listener
-     *
-     * @param {string} event
-     * @param {function} callback
      */
-    on (event, callback)
+    on (event : string, callback : (...args : any[]) => void) : void
     {
         this.emitter.on(event, callback);
     }

@@ -1,13 +1,13 @@
-export default class GhostHandler
+export interface GhostHandler
 {
     /**
      * Callback on when the interaction starts
      */
-    onStart () {}
+    onStart () : void,
 
 
     /**
      * Callback on when the interaction ends
      */
-    onEnd () {}
+    onEnd () : void,
 }

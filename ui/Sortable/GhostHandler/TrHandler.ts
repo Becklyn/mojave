@@ -1,20 +1,15 @@
-import GhostHandler from "./GhostHandler";
+import {GhostHandler} from "./GhostHandler";
 import {find} from "../../../dom/traverse";
 import {setStyles} from "../../../dom/css";
 
-export default class TrHandler extends GhostHandler
+export default class TrHandler implements GhostHandler
 {
-    /**
-     * @param {HTMLElement} tableRow
-     */
-    constructor (tableRow)
-    {
-        super();
+    private readonly cells : HTMLTableCellElement[];
 
-        /**
-         * @private
-         * @type {HTMLElement[]}
-         */
+    /**
+     */
+    constructor (tableRow : HTMLTableRowElement)
+    {
         this.cells = find("td", tableRow);
     }
 

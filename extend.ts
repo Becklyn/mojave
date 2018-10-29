@@ -11,7 +11,7 @@ import {typeOf} from "./types";
  * @param {...*} sources
  * @return {*}
  */
-export function merge (target, ...sources)
+export function merge (target : {[key: string]: any}, ...sources : {[key: string]: any}[]) : {[key: string]: any}
 {
     // no source given: just return the target
     if (0 === sources.length)
@@ -79,9 +79,9 @@ export function merge (target, ...sources)
  * @param {Object[]} sources
  * @returns {Object}
  */
-export function extend (...sources)
+export function extend (...sources : {[key: string]: any}[]) : {[key: string]: any}
 {
-    let target = {};
+    let target : {[key: string]: any} = {};
 
     for (let i = 0; i < sources.length; i++) {
         let source = sources[i];

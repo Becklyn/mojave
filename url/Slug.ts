@@ -1,27 +1,16 @@
+export type SlugCharacterReplacementMap = Array<[RegExp|string, string]>;
 
-
-export default class Slug
+export class Slug
 {
+    private readonly transforms : SlugCharacterReplacementMap;
     /**
-     * Constructs a new instance
-     *
-     * @param {Array.<Array.<*>>} transforms
-     * @param {?RegExp} sanitize
+     * The sanitizing regexp, that removes all unwanted characters
      */
-    constructor (transforms = [], sanitize = null)
-    {
-        /**
-         * @private
-         * @type {Array.<Array.<RegExp, string>>}
-         */
-        this.transforms = [];
+    private readonly sanitize : RegExp;
 
-        /**
-         * The sanitizing regexp, that removes all unwanted characters
-         *
-         * @private
-         * @type {RegExp}
-         */
+    constructor (transforms : SlugCharacterReplacementMap = [], sanitize : null|RegExp = null)
+    {
+        this.transforms = [];
         this.sanitize = null !== sanitize
             ? sanitize
             : /[^a-z0-9\-._~(),;!]/g;
@@ -40,13 +29,10 @@ export default class Slug
         for (let i = 0; i < transforms.length; i++)
         {
             let from = transforms[i][0];
-            const flags = typeof from.flags === "string"
-                ? from.flags
-                : "";
 
-            if (-1 === flags.indexOf("g"))
+            if (from instanceof RegExp && -1 === from.flags.indexOf("g"))
             {
-                from = new RegExp(from.source, `${flags}g`);
+                from = new RegExp(from.source, `${from.flags}g`);
             }
 
             this.transforms.push([
@@ -59,14 +45,10 @@ export default class Slug
 
     /**
      * Transforms a raw slug to a prepared slug
-     *
-     * @param {string} raw
-     * @return {string}
      */
-    transform (raw)
+    transform (raw : string) : string
     {
-        // transform to string
-        raw = ("" + raw).toLowerCase(); // eslint-disable-line prefer-template
+        raw = raw.toLowerCase();
 
         for (let i = 0; i < this.transforms.length; i++)
         {

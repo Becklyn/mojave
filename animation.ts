@@ -159,10 +159,8 @@ function runAnimationStep (time : number, start : number, callback : (progress: 
 
 /**
  * Stops any animation on the given element
- *
- * @param {HTMLElement} element
  */
-export function stopAnimation (element : HTMLElement)
+export function stopAnimation (element : HTMLElement) : void
 {
     let director = elementAnimations.get(element);
 
@@ -206,10 +204,6 @@ function fetchPropertyValues (element : HTMLElement|Window, properties : {[name:
 /**
  * First this function calculates the new interpolated value according to the current progress.
  * Then all values are applied to the given element.
- *
- * @param {HTMLElement|Window} element
- * @param {Object.<string, {start: number, delta: number}>} initialValues
- * @param {number} progress
  */
 function applyAllInterpolatedValues (element : HTMLElement|Window, initialValues : PropertyValues, progress : number) : void
 {

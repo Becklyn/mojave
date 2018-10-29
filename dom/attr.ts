@@ -3,11 +3,16 @@ import {splitStringValue} from "./utils";
 const SPECIAL_ATTRIBUTE_SETTERS = /^(html|text|css)$/;
 const customDataStorage = new WeakMap();
 
+/**
+ * Generic map from string keys -> string | number | null | boolean
+ */
+type OptionalKeyMap = {[key : string] : string | number | null | boolean};
+
 
 /**
  * Sets all attributes on the given element
  */
-export function setAttrs (element : Element, attributes : mojave.types.OptionalKeyMap) : void
+export function setAttrs (element : Element, attributes : OptionalKeyMap) : void
 {
     for (const key in attributes)
     {

@@ -42,10 +42,6 @@ export function setAttrs (element : Element, attributes : mojave.types.OptionalK
  * Returns the attribute value for the given html node
  *
  * @deprecated use `element.getAttribute()` directly instead. Will be removed in v3.0
- *
- * @param {Element} element
- * @param {string} attribute
- * @returns {string | null}
  */
 export function getAttr (element : Element, attribute : string) : null|string
 {

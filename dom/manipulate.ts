@@ -10,7 +10,7 @@ import {setStyles} from "./css";
  * @param {string} html
  * @returns {HTMLElement}
  */
-function parseHtml (html)
+function parseHtml (html : string) : HTMLElement
 {
     const parser = new DOMParser();
     const doc = parser.parseFromString(html, "text/html");
@@ -21,18 +21,14 @@ function parseHtml (html)
         throw new Error("Can only parse HTML with exactly one valid root element. A valid element can stand on its own in the body.");
     }
 
-    return children[0];
+    return children[0] as HTMLElement;
 }
 
 
 /**
  * Creates an element with the given attributes
- *
- * @param {string} type
- * @param {mojave.types.CreateElementOptions} [attributes]
- * @returns {HTMLElement}
  */
-export function createElement (type, attributes = {})
+export function createElement (type : string, attributes : mojave.types.CreateElementOptions = {}) : HTMLElement
 {
     const element = createUnstyledElement(type, attributes);
 
@@ -49,12 +45,8 @@ export function createElement (type, attributes = {})
  * Creates a simple, unstyled element.
  *
  * This is a smaller alternative to `createElement`, if you definitely don't need to style the element.
- *
- * @param {string} type
- * @param {mojave.types.CreateElementOptions} [attributes]
- * @returns {HTMLElement}
  */
-export function createUnstyledElement (type, attributes = {})
+export function createUnstyledElement (type : string, attributes : mojave.types.CreateElementOptions = {}) : HTMLElement
 {
     const element = (-1 !== type.indexOf("<"))
         ? parseHtml(type)
@@ -77,10 +69,8 @@ export function createUnstyledElement (type, attributes = {})
 
 /**
  * Removes the given element(s)
- *
- * @param {Element | Element[] | null} element
  */
-export function remove (element)
+export function remove (element : Element|Element[]|null) : void
 {
     if (null === element)
     {
@@ -91,17 +81,20 @@ export function remove (element)
 
     for (let i = 0; i < list.length; i++)
     {
-        list[i].parentNode.removeChild(list[i]);
+        let parentNode = list[i].parentNode;
+
+        if (null !== parentNode)
+        {
+            parentNode.removeChild(list[i]);
+        }
     }
 }
 
 
 /**
  * Empties the given element(s)
- *
- * @param {Element | Element[]} element
  */
-export function empty (element)
+export function empty (element : HTMLElement|HTMLElement[]) : void
 {
     const list = Array.isArray(element) ? element : [element];
 
@@ -117,32 +110,38 @@ export function empty (element)
 
 /**
  * Replaces the given element with the replacement element
- *
- * @param {Element} element
- * @param {Element} replacement
  */
-export function replace (element, replacement)
+export function replace (element : Element, replacement : Element) : void
 {
-    element.parentNode.replaceChild(replacement, element);
+    let parentNode = element.parentNode;
+
+    if (null !== parentNode)
+    {
+        parentNode.replaceChild(replacement, element);
+    }
 }
 
 
 /**
  * Inserts the given element(s)/HTML string at the given position.
- *
- * @private
- * @param {Element} reference
- * @param {mojave.types.InsertableElement} insert
- * @param {InsertPosition} adjacentPosition
- * @param {Element} insertInto
- * @param {Element | null} insertReference
  */
-function insertElement (reference, insert, adjacentPosition, insertInto, insertReference) // eslint-disable-line max-params
+function insertElement (
+    reference : Element,
+    insert : mojave.types.InsertableElement,
+    adjacentPosition : InsertPosition,
+    insertInto : null|Element,
+    insertReference : null|Element
+) // eslint-disable-line max-params
 {
     // if element to insert is string
     if (typeof insert === "string")
     {
         reference.insertAdjacentHTML(adjacentPosition, insert);
+        return;
+    }
+
+    if (insertInto === null)
+    {
         return;
     }
 
@@ -158,11 +157,8 @@ function insertElement (reference, insert, adjacentPosition, insertInto, insertR
 
 /**
  * Inserts the given element/HTML string at the end of the reference element.
- *
- * @param {Element} reference
- * @param {mojave.types.InsertableElement} insert
  */
-export function append (reference, insert)
+export function append (reference : Element, insert : mojave.types.InsertableElement) : void
 {
     insertElement(
         reference,
@@ -176,11 +172,8 @@ export function append (reference, insert)
 
 /**
  * Inserts the given element/HTML string at the beginning of the reference element.
- *
- * @param {Element} reference
- * @param {mojave.types.InsertableElement} insert
  */
-export function prepend (reference, insert)
+export function prepend (reference : Element, insert : mojave.types.InsertableElement) : void
 {
     insertElement(
         reference,
@@ -194,11 +187,8 @@ export function prepend (reference, insert)
 
 /**
  * Inserts the given element/HTML string just before the reference element.
- *
- * @param {Element} reference
- * @param {mojave.types.InsertableElement} insert
  */
-export function before (reference, insert)
+export function before (reference : Element, insert : mojave.types.InsertableElement) : void
 {
     insertElement(
         reference,
@@ -212,11 +202,8 @@ export function before (reference, insert)
 
 /**
  * Inserts the given element/HTML string just after the reference element.
- *
- * @param {Element} reference
- * @param {mojave.types.InsertableElement} insert
  */
-export function after (reference, insert)
+export function after (reference : Element, insert : mojave.types.InsertableElement) : void
 {
     insertElement(
         reference,

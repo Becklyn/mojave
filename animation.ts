@@ -104,7 +104,7 @@ export function animateCallback (callback : (progress: number) => void, options 
     const context : AnimationContext = merge({
         duration: 400,
         easing: EASE_IN_OUT_CUBIC,
-    }, options);
+    }, options) as AnimationContext;
 
     // set internal parameters
     context.currentFrame = null;

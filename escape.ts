@@ -1,12 +1,7 @@
-///<reference path="types/escape.d.ts">
-
 /**
  * Escapes the given text as HTML
- *
- * @param {string} text
- * @return {string}
  */
-export function escapeHtml (text)
+export function escapeHtml (text : string) : string
 {
     return text
         .replace(/&/g, "&amp;")

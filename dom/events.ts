@@ -200,7 +200,7 @@ function createEvent (type : string, args : CustomEventInit) : CustomEvent
     if (typeof CustomEvent !== "function")
     {
         const event = document.createEvent('CustomEvent');
-        event.initCustomEvent(type, args.bubbles || false, args.cancelable || false, args.detail);
+        event.initCustomEvent(type, !!args.bubbles, !!args.cancelable, args.detail);
         return event;
     }
 

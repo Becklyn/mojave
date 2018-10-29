@@ -43,13 +43,13 @@ function normalizeProperty (property : string) : string
 /**
  * Sets all styles on the element
  */
-export function setStyles (elements : HTMLElement|HTMLElement[], styles : mojave.types.KeyMap) : void
+export function setStyles (elements : HTMLElement|HTMLElement[]|Window|Window[], styles : mojave.types.KeyMap) : void
 {
-    elements = Array.isArray(elements) ? elements : [elements];
+    let styledElements : (HTMLElement|Window)[] = Array.isArray(elements) ? elements : [elements];
 
-    for (let i = 0; i < elements.length; i++)
+    for (let i = 0; i < styledElements.length; i++)
     {
-        let element = elements[i] as mojave.types.StringIndexedHTMLElement;
+        let element = styledElements[i] as mojave.types.StringIndexedHTMLElement;
         let style = element.style;
 
         for (let property in styles)
@@ -109,7 +109,7 @@ function getComputedStyles (element : Element, pseudoElement : string|null = nul
 /**
  * Returns the CSS property value for the given property and element
  */
-export function getStyle (element : HTMLElement, property : string, pseudoElement : string|null = null) : string|number|null
+export function getStyle (element : HTMLElement|Window, property : string, pseudoElement : string|null = null) : string|number|null
 {
     let castedElement = element as mojave.types.StringIndexedHTMLElement;
 

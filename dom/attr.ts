@@ -163,7 +163,7 @@ export function hasData (element : HTMLElement, key : string) : boolean
 /**
  * Returns all data in custom storage
  */
-export function getAllCustomData (element : HTMLElement) : {}
+export function getAllCustomData (element : HTMLElement) : any
 {
     return customDataStorage.get(element) || {};
 }

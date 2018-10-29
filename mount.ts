@@ -6,7 +6,7 @@ import {merge} from "./extend";
 /**
  * Mounts the given class on all elements of the given selector
  */
-export function mount (selector : string, ComponentToMount : {new(...args: any[]): any;}, constructorParameters : any[] = [])
+export function mount (selector : string, ComponentToMount : {new(...args: any[]): {init(): void}}, constructorParameters : any[] = [])
 {
     const elements = find(selector);
 

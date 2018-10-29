@@ -1,10 +1,7 @@
 /**
  * Checks whether the given node is an HTMLElement
- *
- * @param {Node} node
- * @returns {boolean}
  */
-export function isElement (node)
+export function isElement (node : Node) : boolean
 {
     return node.nodeType === Node.ELEMENT_NODE;
 }
@@ -12,11 +9,8 @@ export function isElement (node)
 
 /**
  * Splits the string value by spaces
- *
- * @param {string | string[]} value
- * @returns {string[]}
  */
-export function splitStringValue (value)
+export function splitStringValue (value : string|string[]) : string[]
 {
     if (Array.isArray(value))
     {

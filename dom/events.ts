@@ -1,22 +1,30 @@
 import {splitStringValue} from "./utils";
-const listenerRegistry = new window.WeakMap();
+const listenerRegistry = new WeakMap();
+
+/**
+ * Custom event listener token, that can unregister delegated or once event listeners
+ */
+export type EventIntermediateToken = (any : any) => void;
+
+/**
+ * Event handler for delegated events
+ *
+ * @param {Event} event The original event
+ * @param {HTMLElement} element The matched element
+ */
+export type DelegatedEventHandler = (event : Event, element : HTMLElement) => void;
 
 
 /**
  * Registers an event listener for the given events
- *
- * @param {EventTarget | EventTarget[] | null} element
- * @param {string | string[]} type
- * @param {EventListener} handler
  */
-export function on (element, type, handler)
+export function on (element : null|EventTarget|EventTarget[], type : string|string[], handler : EventListener) : void
 {
     if (null === element)
     {
         return;
     }
 
-    /** @type {HTMLElement[]} list */
     const list = (Array.isArray(element) ? element : [element]);
     const types = splitStringValue(type);
 
@@ -49,19 +57,14 @@ export function on (element, type, handler)
 
 /**
  * Removes an event listener for the given events
- *
- * @param {EventTarget | EventTarget[] | null} element
- * @param {string | string[]} type
- * @param {EventListener | mojave.types.EventIntermediateToken} handler
  */
-export function off (element, type, handler)
+export function off (element : null|EventTarget|EventTarget[], type : string|string[], handler : EventListener) : void
 {
     if (null === element)
     {
         return;
     }
 
-    /** @type {HTMLElement[]} list */
     const list = (Array.isArray(element) ? element : [element]);
     const types = splitStringValue(type);
 
@@ -96,20 +99,15 @@ export function off (element, type, handler)
  *
  *      const intermediate = once(element, event, handler);
  *      off(element, event, intermediate);
- *
- * @param {?EventTarget} element
- * @param {string} type
- * @param {EventListener} handler
- * @returns {?mojave.types.EventIntermediateToken}
  */
-export function once (element, type, handler)
+export function once (element : null|EventTarget, type : string, handler : EventListener) : null|EventIntermediateToken
 {
     if (null === element)
     {
         return null;
     }
 
-    const intermediate = (event) => {
+    const intermediate = (event : Event) => {
         handler(event);
         off(element, type, intermediate);
     };
@@ -126,27 +124,21 @@ export function once (element, type, handler)
  *
  *      const intermediate = delegate(element, selector, type, handler);
  *      off(element, event, intermediate);
- *
- * @param {?EventTarget} element
- * @param {string} selector
- * @param {string} type
- * @param {mojave.types.DelegatedEventHandler} handler
- * @returns {?mojave.types.EventIntermediateToken}
  */
-export function delegate (element, selector, type, handler)
+export function delegate (element : null|EventTarget, selector : string, type : string, handler : DelegatedEventHandler) : null|EventIntermediateToken
 {
     if (null === element)
     {
         return null;
     }
 
-    const intermediate = (event) =>
+    const intermediate = (event : Event) =>
     {
-        const matchedDelegatedTarget = findDelegatedTarget(element, event.target, selector);
+        const matchedDelegatedTarget = findDelegatedTarget(element, event.target as Element, selector);
 
         if (null !== matchedDelegatedTarget)
         {
-            handler(event, matchedDelegatedTarget);
+            handler(event, matchedDelegatedTarget as HTMLElement);
         }
     };
 
@@ -158,16 +150,10 @@ export function delegate (element, selector, type, handler)
 
 /**
  * In a delegated event listener, this function finds the actual desired event target.
- *
- * @private
- * @param {EventTarget} delegateElement
- * @param {Element} currentTarget
- * @param {string} selector
- * @returns {Element | null}
  */
-function findDelegatedTarget (delegateElement, currentTarget, selector)
+function findDelegatedTarget (delegateElement : EventTarget, currentTarget : null|Element, selector : string) : null|Element
 {
-    let node = currentTarget;
+    let node : null|Element|HTMLElement = currentTarget;
 
     while (null !== node && node !== delegateElement)
     {
@@ -185,12 +171,8 @@ function findDelegatedTarget (delegateElement, currentTarget, selector)
 
 /**
  * Dispatches an event
- *
- * @param {EventTarget | null} element
- * @param {string} type
- * @param {*} [data]
  */
-export function trigger (element, type, data = null)
+export function trigger (element : null|EventTarget, type : string, data : any = null) : void
 {
     if (null === element)
     {
@@ -215,13 +197,13 @@ export function trigger (element, type, data = null)
  * @param {CustomEventInit} args
  * @returns {CustomEvent}
  */
-function createEvent (type, args)
+function createEvent (type : string, args : CustomEventInit) : CustomEvent
 {
     // @legacy IE <= 11 doesn't support the global CustomEvent
     if (typeof CustomEvent !== "function")
     {
         const event = document.createEvent('CustomEvent');
-        event.initCustomEvent(type, args.bubbles, args.cancelable, args.detail);
+        event.initCustomEvent(type, !!args.bubbles, !!args.cancelable, args.detail);
         return event;
     }
 
@@ -231,11 +213,8 @@ function createEvent (type, args)
 
 /**
  * Returns all event listeners for the given element
- *
- * @param {EventTarget} element
- * @returns {Object}
  */
-export function getAllListeners (element)
+export function getAllListeners (element : EventTarget) : Object
 {
     return listenerRegistry.get(element) || {};
 }

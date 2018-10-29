@@ -25,16 +25,6 @@ declare namespace mojave.types
     type OptionalKeyMap = {[key : string] : string | number | null | boolean};
 
     /**
-     * Custom event listener token, that can unregister delegated or once event listeners
-     */
-    type EventIntermediateToken = (any : any) => void;
-
-    /**
-     * Event handler for delegated events
-     */
-    type DelegatedEventHandler = (Event : Event, HTMLElement : HTMLElement) => void;
-
-    /**
      * The default HTMLElement's d.ts only exposes a numbered indexer
      */
     interface StringIndexedHTMLElement extends HTMLElement {

@@ -67,6 +67,7 @@ export function mountJsx (selector, ComponentToMount, additionalProps = {})
  * The matched node must contain the data as JSON encoded content.
  * The content will be automatically encapsulated in a unistore store.
  *
+ * @deprecated since 2.6, to be removed in 3.0. No alternative present, you need to wrap it yourself.
  * @param {string} selector
  * @param {preact.Component} ComponentToMount
  * @param {Object} additionalProps

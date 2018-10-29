@@ -22,7 +22,9 @@ const TIME_SECTION_LABELS_DE = [
     'vor # Jahren',
 ];
 
-const germanRelativeDateLabelFormatter = (index : number, delta : number) : string =>
+type DateFormatter = (index : number, delta : number) => string;
+
+const germanRelativeDateLabelFormatter : DateFormatter = (index : number, delta : number) : string =>
 {
     let text = TIME_SECTION_LABELS_DE[index];
 
@@ -65,7 +67,7 @@ const TIME_SECTIONS = [
  *      * `index` {number} (of the translation labels, see the default german ones for which one is which)
  *      * `delta` {number} the difference between the two dates in seconds. If the delta is negative, the given date is in the future (in relation to the reference date)
  */
-export function formatRelative (date : Date, referenceDate : null|Date = null, formatLabel : null|((index : number, delta : number) => string) = null) : string
+export function formatRelative (date : Date, referenceDate : null|Date = null, formatLabel : null|DateFormatter = null) : string
 {
     if (null === formatLabel)
     {

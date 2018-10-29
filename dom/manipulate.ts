@@ -2,6 +2,20 @@ import {isElement} from "./utils";
 import {setAttrs} from "./attr";
 import {setStyles} from "./css";
 
+/**
+ * Options for createElement()
+ */
+export type CreateElementOptions = mojave.types.KeyMap & {
+    css? : mojave.types.KeyMap,
+    text? : string,
+    html? : string,
+}
+
+/**
+ * Allowed argument for DOM insert methods.
+ */
+export type InsertableElement = string | Element | Element[];
+
 
 /**
  * Parses the HTML to an HTMLElement
@@ -28,7 +42,7 @@ function parseHtml (html : string) : HTMLElement
 /**
  * Creates an element with the given attributes
  */
-export function createElement (type : string, attributes : mojave.types.CreateElementOptions = {}) : HTMLElement
+export function createElement (type : string, attributes : CreateElementOptions = {}) : HTMLElement
 {
     const element = createUnstyledElement(type, attributes);
 
@@ -46,7 +60,7 @@ export function createElement (type : string, attributes : mojave.types.CreateEl
  *
  * This is a smaller alternative to `createElement`, if you definitely don't need to style the element.
  */
-export function createUnstyledElement (type : string, attributes : mojave.types.CreateElementOptions = {}) : HTMLElement
+export function createUnstyledElement (type : string, attributes : CreateElementOptions = {}) : HTMLElement
 {
     const element = (-1 !== type.indexOf("<"))
         ? parseHtml(type)
@@ -127,7 +141,7 @@ export function replace (element : Element, replacement : Element) : void
  */
 function insertElement (
     reference : Element,
-    insert : mojave.types.InsertableElement,
+    insert : InsertableElement,
     adjacentPosition : InsertPosition,
     insertInto : null|Element,
     insertReference : null|Element
@@ -158,7 +172,7 @@ function insertElement (
 /**
  * Inserts the given element/HTML string at the end of the reference element.
  */
-export function append (reference : Element, insert : mojave.types.InsertableElement) : void
+export function append (reference : Element, insert : InsertableElement) : void
 {
     insertElement(
         reference,
@@ -173,7 +187,7 @@ export function append (reference : Element, insert : mojave.types.InsertableEle
 /**
  * Inserts the given element/HTML string at the beginning of the reference element.
  */
-export function prepend (reference : Element, insert : mojave.types.InsertableElement) : void
+export function prepend (reference : Element, insert : InsertableElement) : void
 {
     insertElement(
         reference,
@@ -188,7 +202,7 @@ export function prepend (reference : Element, insert : mojave.types.InsertableEl
 /**
  * Inserts the given element/HTML string just before the reference element.
  */
-export function before (reference : Element, insert : mojave.types.InsertableElement) : void
+export function before (reference : Element, insert : InsertableElement) : void
 {
     insertElement(
         reference,
@@ -203,7 +217,7 @@ export function before (reference : Element, insert : mojave.types.InsertableEle
 /**
  * Inserts the given element/HTML string just after the reference element.
  */
-export function after (reference : Element, insert : mojave.types.InsertableElement) : void
+export function after (reference : Element, insert : InsertableElement) : void
 {
     insertElement(
         reference,

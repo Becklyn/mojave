@@ -33,4 +33,19 @@ declare namespace mojave.types
      * Event handler for delegated events
      */
     type DelegatedEventHandler = (Event : Event, HTMLElement : HTMLElement) => void;
+
+    /**
+     * The default HTMLElement's d.ts only exposes a numbered indexer
+     */
+    interface StringIndexedHTMLElement extends HTMLElement {
+        [index: string]: any;
+        style: StringIndexedCSSStyleDeclaration;
+    }
+
+    /**
+     * The default CSSStyleDeclaration's d.ts only exposes a numbered indexer
+     */
+    interface StringIndexedCSSStyleDeclaration extends CSSStyleDeclaration {
+        [index: string]: any;
+    }
 }

@@ -1,7 +1,7 @@
 const CUSTOM_PROPERTY_REGEX = /^--/;
 const DEFAULT_STYLES = document.createElement("div").style;
 const VENDOR_PREFIXES = ["-webkit-", "-moz-", "-o-", "-ms-"];
-const propertyNameCache = {};
+const propertyNameCache : { [key: string] : string } = {};
 // DOM properties that should NOT have "px" added when numeric
 const IS_NON_DIMENSIONAL = /acit|ex(?:s|g|n|p|$)|rph|ows|mnc|ntw|ine[ch]|zoo|^ord/i;
 const DIRECTLY_ACCESSIBLE_SETTERS = /scroll(Top|Left)/i;
@@ -10,12 +10,8 @@ const HAS_PIXELS_UNIT = /px$/;
 
 /**
  * Returns the normalized (like vendor-prefixed) name of the given CSS property
- *
- * @private
- * @param {string} property
- * @returns {string}
  */
-function normalizeProperty (property)
+function normalizeProperty (property : string) : string
 {
     if (propertyNameCache[property])
     {
@@ -46,19 +42,15 @@ function normalizeProperty (property)
 
 /**
  * Sets all styles on the element
- *
- * @param {HTMLElement | HTMLElement[]} elements
- * @param {mojave.types.KeyMap} styles
  */
-export function setStyles (elements, styles)
+export function setStyles (elements : HTMLElement|HTMLElement[], styles : mojave.types.KeyMap) : void
 {
-    /** @type {HTMLElement[]} elements */
     elements = Array.isArray(elements) ? elements : [elements];
 
     for (let i = 0; i < elements.length; i++)
     {
-        const element = elements[i];
-        const style = element.style;
+        let element = elements[i] as mojave.types.StringIndexedHTMLElement;
+        let style = element.style;
 
         for (let property in styles)
         {
@@ -79,12 +71,12 @@ export function setStyles (elements, styles)
             // don't transform custom properties
             if (CUSTOM_PROPERTY_REGEX.test(property))
             {
-                style.setProperty(property, value);
+                style.setProperty(property, value as string);
                 continue;
             }
 
             // add "px" to all numbers of dimensional values
-            if (typeof styles[property] === "number" && false === IS_NON_DIMENSIONAL.test(property))
+            if (typeof styles[property] === "number" && !IS_NON_DIMENSIONAL.test(property))
             {
                 value += "px";
             }
@@ -98,17 +90,12 @@ export function setStyles (elements, styles)
 
 /**
  * Returns the computed styles for the given element
- *
- * @private
- * @param {Element} element
- * @param {string|null} [pseudoElement]
- * @returns {CSSStyleDeclaration}
  */
-function getComputedStyles (element, pseudoElement = null)
+function getComputedStyles (element : Element, pseudoElement : string|null = null) : CSSStyleDeclaration
 {
     // @legacy IE <= 11
     // IE throws on elements created in popups
-    let view = element.ownerDocument.defaultView;
+    let view = null !== element.ownerDocument && element.ownerDocument.defaultView;
 
     if (!view || !view.opener)
     {
@@ -121,17 +108,14 @@ function getComputedStyles (element, pseudoElement = null)
 
 /**
  * Returns the CSS property value for the given property and element
- *
- * @param {HTMLElement} element
- * @param {string} property
- * @param {string|null} [pseudoElement]
- * @returns {string | number | null}
  */
-export function getStyle (element, property, pseudoElement = null)
+export function getStyle (element : HTMLElement, property : string, pseudoElement : string|null = null) : string|number|null
 {
+    let castedElement = element as mojave.types.StringIndexedHTMLElement;
+
     if (DIRECTLY_ACCESSIBLE_SETTERS.test(property))
     {
-        return element[property];
+        return castedElement[property];
     }
 
     if (!CUSTOM_PROPERTY_REGEX.test(property))
@@ -139,7 +123,7 @@ export function getStyle (element, property, pseudoElement = null)
         property = normalizeProperty(property);
     }
 
-    const styles = getComputedStyles(element, pseudoElement);
+    const styles = getComputedStyles(castedElement, pseudoElement) as mojave.types.StringIndexedCSSStyleDeclaration;
     // getPropertyValue is needed for:
     //   getStyle(el, '--customProperty')
     const value = styles.getPropertyValue(property) || styles[property];
@@ -161,14 +145,9 @@ export function getStyle (element, property, pseudoElement = null)
 
 /**
  * Updates the display value of the given element
- *
- * @private
- * @param {HTMLElement | HTMLElement[]} element
- * @param {string} style
  */
-function updateDisplay (element, style)
+function updateDisplay (element : HTMLElement|HTMLElement[], style : string) : void
 {
-    /** @type {HTMLElement[]} list */
     const list = Array.isArray(element) ? element : [element];
 
     for (let i = 0; i < list.length; i++)
@@ -183,7 +162,7 @@ function updateDisplay (element, style)
  *
  * @param {HTMLElement | HTMLElement[]} element
  */
-export function hide (element)
+export function hide (element : HTMLElement|HTMLElement[]) : void
 {
     updateDisplay(element, "none");
 }
@@ -194,7 +173,7 @@ export function hide (element)
  *
  * @param {HTMLElement | HTMLElement[]} element
  */
-export function show (element)
+export function show (element : HTMLElement|HTMLElement[]) : void
 {
     updateDisplay(element, "");
 }
@@ -202,11 +181,8 @@ export function show (element)
 
 /**
  * Returns the position of the element
- *
- * @param {HTMLElement} element
- * @returns {{top: number, left: number}}
  */
-export function position (element)
+export function position (element : HTMLElement) : {top: number, left: number}
 {
     return {
         top: element.offsetTop,
@@ -217,11 +193,8 @@ export function position (element)
 
 /**
  * Returns the global offset of the element
- *
- * @param {HTMLElement} element
- * @returns {{top: number, left: number}}
  */
-export function offset (element)
+export function offset (element : HTMLElement) : {top: number, left: number}
 {
     const rect = element.getBoundingClientRect();
 

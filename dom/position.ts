@@ -1,11 +1,7 @@
 /**
  * Returns the position of the mouse event relative to the given element
- *
- * @param {MouseEvent} event
- * @param {HTMLElement} element
- * @returns {{left: number, top: number}}
  */
-export function getRelativeEventPosition (event, element)
+export function getRelativeEventPosition (event : MouseEvent, element : HTMLElement) : {left: number, top: number}
 {
     const rect = element.getBoundingClientRect();
 

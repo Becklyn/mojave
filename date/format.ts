@@ -85,15 +85,13 @@ export function formatRelative (date : Date, referenceDate : null|Date = null, f
     for (let i = 0; i < TIME_SECTIONS.length; i++)
     {
         const entry = TIME_SECTIONS[i];
-        const firstEntry = entry[0];
 
-        if (absDelta < firstEntry)
+        if (absDelta < entry[0])
         {
             const text = formatLabel(i, delta);
-            const secondEntry = entry[1];
 
-            return secondEntry !== undefined
-                ? text.replace("#", Math.round(absDelta / secondEntry) + "")
+            return entry[1] !== undefined
+                ? text.replace("#", Math.round(absDelta / entry[1]) + "")
                 : text;
         }
     }

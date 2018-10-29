@@ -22,7 +22,9 @@ const TIME_SECTION_LABELS_DE = [
     'vor # Jahren',
 ];
 
-const germanRelativeDateLabelFormatter = (index, delta) =>
+type DateFormatter = (index : number, delta : number) => string;
+
+const germanRelativeDateLabelFormatter : DateFormatter = (index : number, delta : number) : string =>
 {
     let text = TIME_SECTION_LABELS_DE[index];
 
@@ -53,7 +55,7 @@ const TIME_SECTIONS = [
     [1.5 * MONTH],
     [YEAR, MONTH],
     [1.5 * YEAR],
-    [null, YEAR],
+    [Infinity, YEAR],
 ];
 
 
@@ -64,14 +66,8 @@ const TIME_SECTIONS = [
  * It receives
  *      * `index` {number} (of the translation labels, see the default german ones for which one is which)
  *      * `delta` {number} the difference between the two dates in seconds. If the delta is negative, the given date is in the future (in relation to the reference date)
- *
- *
- * @param {Date} date
- * @param {?Date} referenceDate
- * @param {function(number, number)} formatLabel
- * @returns {string}
  */
-export function formatRelative (date, referenceDate = null, formatLabel = null)
+export function formatRelative (date : Date, referenceDate : null|Date = null, formatLabel : null|DateFormatter = null) : string
 {
     if (null === formatLabel)
     {
@@ -83,11 +79,6 @@ export function formatRelative (date, referenceDate = null, formatLabel = null)
         referenceDate = new Date();
     }
 
-    if (!(date instanceof Date) || !(referenceDate instanceof Date))
-    {
-        return "";
-    }
-
     const delta = (referenceDate.getTime() - date.getTime()) / 1000;
     const absDelta = Math.abs(delta);
 
@@ -95,12 +86,12 @@ export function formatRelative (date, referenceDate = null, formatLabel = null)
     {
         const entry = TIME_SECTIONS[i];
 
-        if (entry[0] === null || absDelta < entry[0])
+        if (absDelta < entry[0])
         {
-            let text = formatLabel(i, delta);
+            const text = formatLabel(i, delta);
 
             return entry[1] !== undefined
-                ? text.replace("#", Math.round(absDelta / entry[1]))
+                ? text.replace("#", Math.round(absDelta / entry[1]) + "")
                 : text;
         }
     }
@@ -111,23 +102,17 @@ export function formatRelative (date, referenceDate = null, formatLabel = null)
 
 /**
  * Formats the date in the little endian format (DD.MM.YYYY)
- *
- * @param {Date} date
- * @return {string}
  */
-export function formatDate (date)
+export function formatDate (date : Date) : string
 {
     return `${zeroFill(date.getDate())}.${zeroFill(date.getMonth() + 1)}.${date.getFullYear()}`;
 }
 
 
 /**
- * Formats the date in the little endion format (DD.MM.) without the year
- *
- * @param {Date} date
- * @return {string}
+ * Formats the date in the little endian format (DD.MM.) without the year
  */
-export function formatDateShort (date)
+export function formatDateShort (date : Date) : string
 {
     return `${zeroFill(date.getDate())}.${zeroFill(date.getMonth() + 1)}.`;
 }
@@ -135,11 +120,8 @@ export function formatDateShort (date)
 
 /**
  * Prefixes a single digit number with a zero
- *
- * @param {number} value
- * @return {string}
  */
-function zeroFill (value)
+function zeroFill (value : number) : string
 {
-    return value < 10 ? `0${value}` : value;
+    return value < 10 ? `0${value}` : value + "";
 }

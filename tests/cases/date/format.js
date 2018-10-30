@@ -32,9 +32,6 @@ QUnit.test(
         assert.strictEqual(formatRelative(new Date(1917, 11, 31, 12, 0, 0), referenceDate), "vor 100 Jahren", "very far in the past");
         assert.strictEqual(formatRelative(new Date(2117, 11, 31, 12, 0, 0), referenceDate), "in 100 Jahren", "very far in the future");
 
-        // invalid call
-        assert.strictEqual(formatRelative(1, 2), "", "invalid types");
-
         // default reference date
         assert.strictEqual(formatRelative(new Date()), "gerade eben", "default reference date");
     }

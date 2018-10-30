@@ -30,9 +30,14 @@ export class Slug
         {
             let from = transforms[i][0];
 
-            if (from instanceof RegExp && -1 === from.flags.indexOf("g"))
+            if (from instanceof RegExp)
             {
-                from = new RegExp(from.source, `${from.flags}g`);
+                let regexMatch = /^\/.*?\/([^g\/]*)$/.exec(from.toString());
+
+                if (null !== regexMatch)
+                {
+                    from = new RegExp(from.source, `${regexMatch[1]}g`);
+                }
             }
 
             this.transforms.push([

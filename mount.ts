@@ -6,9 +6,14 @@ import {merge} from "./extend";
 /**
  * Mounts the given class on all elements of the given selector
  */
-export function mount (selector : string, ComponentToMount : {new(...args: any[]): {init(): void}}, constructorParameters : any[] = [])
+export function mount (
+    selector : string,
+    ComponentToMount : {new(...args: any[]): {init(): void}},
+    constructorParameters : any[] = [],
+    context : Document|HTMLElement = document
+)
 {
-    const elements = find(selector);
+    const elements = find(selector, context);
 
     for (let i = 0; i < elements.length; i++)
     {
@@ -23,9 +28,14 @@ export function mount (selector : string, ComponentToMount : {new(...args: any[]
  * Mounts the component as JSX Component.
  * The matched node must contain the data as JSON encoded content.
  */
-export function mountJsx (selector : string, ComponentToMount : ComponentFactory<any>, additionalProps : object = {})
+export function mountJsx (
+    selector : string,
+    ComponentToMount : ComponentFactory<any>,
+    additionalProps : object = {},
+    context : Document|HTMLElement = document
+)
 {
-    const elements = find(selector);
+    const elements = find(selector, context);
 
     for (let i = 0; i < elements.length; i++)
     {

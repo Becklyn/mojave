@@ -6,6 +6,7 @@
 /kaba.js
 /node_modules
 /package-lock.json
+/renovate.json
 /tests
 /yarn.lock
 

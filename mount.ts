@@ -17,8 +17,7 @@ export function mount (
 
     for (let i = 0; i < elements.length; i++)
     {
-        constructorParameters.unshift(elements[i]);
-        const mounted = new ComponentToMount(...constructorParameters);
+        const mounted = new ComponentToMount(elements[i], ...constructorParameters);
         mounted.init();
     }
 }

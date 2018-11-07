@@ -14,7 +14,7 @@ QUnit.module("mount()", {
 });
 
 QUnit.test(
-    "mount() tests",
+    "mount() test that the correct parameters are passed, fixes #158",
     (assert) =>
     {
         let context = findOne("#qunit-fixture");

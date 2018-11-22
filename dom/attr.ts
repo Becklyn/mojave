@@ -25,7 +25,7 @@ export function setAttrs (element : Element, attributes : OptionalKeyMap) : void
 
         if (SPECIAL_ATTRIBUTE_SETTERS.test(key))
         {
-            return;
+            continue;
         }
 
         if (value === null || value === false)

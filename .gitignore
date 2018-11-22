@@ -6,3 +6,6 @@
 # ignore build files
 *.d.ts
 *.js
+
+# don't ignore test files
+!/tests/cases/**/*.js

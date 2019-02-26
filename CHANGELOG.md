@@ -1,3 +1,9 @@
+3.0.5
+=====
+
+*   **Bugfix**: fix and unify types of `create*Element()` 
+
+
 3.0
 ===
 

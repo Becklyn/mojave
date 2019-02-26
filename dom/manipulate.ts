@@ -1,14 +1,19 @@
 import {isElement} from "./utils";
-import {setAttrs} from "./attr";
-import {setStyles} from "./css";
+import {OptionalKeyMap, setAttrs} from "./attr";
+import {setStyles, StylePropertiesMap} from "./css";
 
+/**
+ * Options for createUnstyledElement()
+ */
+export type CreateUnstyledElementOptions = OptionalKeyMap & {
+    text? : string,
+    html? : string,
+}
 /**
  * Options for createElement()
  */
-export type CreateElementOptions = {[key: string]: string|number} & {
-    css? : {[key: string]: string|number},
-    text? : string,
-    html? : string,
+export type CreateElementOptions = CreateUnstyledElementOptions & {
+    css? : StylePropertiesMap,
 }
 
 /**
@@ -60,7 +65,7 @@ export function createElement (type : string, attributes : CreateElementOptions 
  *
  * This is a smaller alternative to `createElement`, if you definitely don't need to style the element.
  */
-export function createUnstyledElement (type : string, attributes : CreateElementOptions = {}) : HTMLElement
+export function createUnstyledElement (type : string, attributes : CreateUnstyledElementOptions = {}) : HTMLElement
 {
     const element = (-1 !== type.indexOf("<"))
         ? parseHtml(type)

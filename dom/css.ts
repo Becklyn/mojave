@@ -7,6 +7,10 @@ const IS_NON_DIMENSIONAL = /acit|ex(?:s|g|n|p|$)|rph|ows|mnc|ntw|ine[ch]|zoo|^or
 const DIRECTLY_ACCESSIBLE_SETTERS = /scroll(Top|Left)/i;
 const HAS_PIXELS_UNIT = /px$/;
 
+export interface StylePropertiesMap
+{
+    [key: string]: string|number;
+}
 
 /**
  * Returns the normalized (like vendor-prefixed) name of the given CSS property
@@ -43,7 +47,7 @@ function normalizeProperty (property : string) : string
 /**
  * Sets all styles on the element
  */
-export function setStyles (elements : HTMLElement|HTMLElement[]|Window|Window[], styles : {[key: string]: string|number}) : void
+export function setStyles (elements : HTMLElement|HTMLElement[]|Window|Window[], styles : StylePropertiesMap) : void
 {
     let styledElements : (HTMLElement|Window)[] = Array.isArray(elements) ? elements : [elements];
 

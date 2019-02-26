@@ -6,7 +6,9 @@ const customDataStorage = new WeakMap<Element, any>();
 /**
  * Generic map from string keys -> string | number | null | boolean
  */
-type OptionalKeyMap = {[key : string] : string | number | null | boolean};
+export interface OptionalKeyMap {
+    [key : string] : string | number | null | boolean;
+}
 
 
 /**

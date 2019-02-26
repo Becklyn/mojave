@@ -29,10 +29,11 @@
     "devDependencies": {
         "browserstack-runner": "0.9.0",
         "kaba": "7.0.6",
-        "qunit": "2.9.1"
+        "qunit": "2.9.1",
+        "typescript": "^3.3.3333"
     },
     "scripts": {
-        "test": "npx browserstack-runner",
-        "build": "npx tsc --version && npx tsc --diagnostics --noEmitOnError --noErrorTruncation --listEmittedFiles --pretty"
+        "test": "node_modules/.bin/browserstack-runner",
+        "build": "node_modules/.bin/tsc --version && node_modules/.bin/tsc --diagnostics --noEmitOnError --noErrorTruncation --listEmittedFiles --pretty"
     }
 }

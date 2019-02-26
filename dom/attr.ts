@@ -36,6 +36,14 @@ export function setAttrs (element : Element, attributes : OptionalKeyMap) : void
         }
         else
         {
+            // @ts-ignore
+            if (element[key] !== undefined)
+            {
+                // @ts-ignore
+                element[key] = value;
+                continue;
+            }
+
             element.setAttribute(
                 key,
                 (value === true) ? key : ("" + value)

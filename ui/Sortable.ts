@@ -13,12 +13,6 @@ export type SortableConfig = {
     handle?: string,
 }
 
-export type SortableListeners = {
-    move: (event : Event) => void;
-    end: (event : Event) => void;
-    mouseOut: (event : Event) => void;
-    scroll: (event : Event) => void;
-};
 
 /**
  * Generic sortable implementation
@@ -29,7 +23,7 @@ export default class Sortable
     private readonly config : SortableConfig;
     private interaction : null|SortableInteraction;
     private readonly emitter : mitt.Emitter;
-    private listeners : SortableListeners;
+    private listeners : {[event: string]: EventListener};
 
     /**
      */
@@ -42,10 +36,10 @@ export default class Sortable
         this.interaction = null;
         this.emitter = mitt();
         this.listeners = {
-            move: this.onDragMove.bind(this),
-            end: this.onDragEnd.bind(this),
-            mouseOut: this.onMouseOut.bind(this),
-            scroll: this.onScroll.bind(this),
+            move: this.onDragMove.bind(this) as EventListener,
+            end: this.onDragEnd.bind(this) as EventListener,
+            mouseOut: this.onMouseOut.bind(this) as EventListener,
+            scroll: this.onScroll.bind(this) as EventListener,
         };
     }
 

@@ -29,7 +29,7 @@ export type InsertableElement = string | Element | Element[];
  * @param {string} html
  * @returns {HTMLElement}
  */
-function parseHtml (html : string) : HTMLElement
+function parseHtml<T extends HTMLElement = HTMLElement> (html : string) : T
 {
     const parser = new DOMParser();
     const doc = parser.parseFromString(html, "text/html");
@@ -40,16 +40,16 @@ function parseHtml (html : string) : HTMLElement
         throw new Error("Can only parse HTML with exactly one valid root element. A valid element can stand on its own in the body.");
     }
 
-    return children[0] as HTMLElement;
+    return children[0] as T;
 }
 
 
 /**
  * Creates an element with the given attributes
  */
-export function createElement (type : string, attributes : CreateElementOptions = {}) : HTMLElement
+export function createElement<T extends HTMLElement = HTMLElement> (type : string, attributes : CreateElementOptions = {}) : T
 {
-    const element = createUnstyledElement(type, attributes);
+    const element = createUnstyledElement<T>(type, attributes);
 
     if (attributes.css !== undefined)
     {
@@ -65,11 +65,11 @@ export function createElement (type : string, attributes : CreateElementOptions 
  *
  * This is a smaller alternative to `createElement`, if you definitely don't need to style the element.
  */
-export function createUnstyledElement (type : string, attributes : CreateUnstyledElementOptions = {}) : HTMLElement
+export function createUnstyledElement<T extends HTMLElement = HTMLElement> (type : string, attributes : CreateUnstyledElementOptions = {}) : T
 {
     const element = (-1 !== type.indexOf("<"))
-        ? parseHtml(type)
-        : document.createElement(type);
+        ? parseHtml<T>(type)
+        : document.createElement(type) as T;
 
     setAttrs(element, attributes);
 

@@ -14,17 +14,17 @@ function elementMatches (element : Element, selector : string|null = null)
 /**
  * Fetches all siblings
  */
-function fetchAllSiblings (element : Element, selector : null|string, accessor : string) : HTMLElement[]
+function fetchAllSiblings<T extends HTMLElement = HTMLElement> (element : Element, selector : null|string, accessor : string) : T[]
 {
     let indexableElement = element as mojave.types.StringIndexedHTMLElement;
     let sibling = indexableElement[accessor];
-    const list = [];
+    const list: T[] = [];
 
     while (sibling)
     {
         if (elementMatches(sibling, selector))
         {
-            list.push(sibling);
+            list.push(sibling as T);
         }
 
         sibling = sibling[accessor];
@@ -37,7 +37,7 @@ function fetchAllSiblings (element : Element, selector : null|string, accessor :
 /**
  * Fetches a single sibling
  */
-function fetchSingleSibling (element : HTMLElement, selector : null|string, accessor : string) : null|HTMLElement
+function fetchSingleSibling<T extends HTMLElement = HTMLElement> (element : HTMLElement, selector : null|string, accessor : string) : null|T
 {
     let indexableElement = element as mojave.types.StringIndexedHTMLElement;
     let sibling = indexableElement[accessor];
@@ -46,7 +46,7 @@ function fetchSingleSibling (element : HTMLElement, selector : null|string, acce
     {
         if (elementMatches(sibling, selector))
         {
-            return sibling;
+            return sibling as T;
         }
 
         sibling = sibling[accessor];
@@ -59,29 +59,29 @@ function fetchSingleSibling (element : HTMLElement, selector : null|string, acce
 /**
  * Finds all DOM elements matching the selector
  */
-export function find (selector : string, context : HTMLElement|Document = document) : HTMLElement[]
+export function find<T extends HTMLElement = HTMLElement> (selector : string, context : HTMLElement|Document = document) : T[]
 {
-    return Array.prototype.slice.call(context.querySelectorAll(selector));
+    return Array.prototype.slice.call(context.querySelectorAll(selector)) as T[];
 }
 
 
 /**
  * Finds a single DOM node matching the selector
  */
-export function findOne (selector : string, context : HTMLElement|Document = document) : null|HTMLElement
+export function findOne<T extends HTMLElement = HTMLElement> (selector : string, context : HTMLElement|Document = document) : null|T
 {
-    return context.querySelector(selector);
+    return context.querySelector(selector) as T;
 }
 
 
 /**
  * Filters a list of DOM elements that match the given selector
  */
-export function filter (list : HTMLElement[], selector : string) : HTMLElement[]
+export function filter<T extends HTMLElement = HTMLElement> (list : HTMLElement[], selector : string) : T[]
 {
     return list.filter(
         (e) => e.matches(selector)
-    );
+    ) as T[];
 }
 
 
@@ -89,53 +89,53 @@ export function filter (list : HTMLElement[], selector : string) : HTMLElement[]
  * Filters a list of DOM elements that DO NOT match the given selector,
  * are not the given node or are not in the given node list.
  */
-export function not (list : HTMLElement[], selector : string|HTMLElement|HTMLElement[]) : HTMLElement[]
+export function not<T extends HTMLElement = HTMLElement> (list : HTMLElement[], selector : string|HTMLElement|HTMLElement[]) : T[]
 {
     if (typeof selector === "string")
     {
         return list.filter(
             (e) => !e.matches(selector)
-        );
+        ) as T[];
     }
     else if (Array.isArray(selector))
     {
         return list.filter(
             (e) => -1 !== selector.indexOf(e)
-        );
+        ) as T[];
     }
 
     return list.filter(
         (e) => e !== selector
-    );
+    ) as T[];
 }
 
 
 /**
  * Returns all children
  */
-export function children (parent : HTMLElement, selector : null|string = null) : HTMLElement[]
+export function children<T extends HTMLElement = HTMLElement> (parent : HTMLElement, selector : null|string = null) : T[]
 {
-    const list : HTMLElement[] = [];
+    const list : T[] = [];
     let child = parent.firstElementChild;
 
     while (child)
     {
         if (elementMatches(child, selector))
         {
-            list.push(child as HTMLElement);
+            list.push(child as T);
         }
 
         child = child.nextElementSibling;
     }
 
-    return list;
+    return list as T[];
 }
 
 
 /**
  * Returns the first child
  */
-export function firstChild (parent : HTMLElement, selector : null|string = null) : null|HTMLElement
+export function firstChild<T extends HTMLElement = HTMLElement> (parent : HTMLElement, selector : null|string = null) : null|T
 {
     let child = parent.firstElementChild;
 
@@ -143,7 +143,7 @@ export function firstChild (parent : HTMLElement, selector : null|string = null)
     {
         if (elementMatches(child, selector))
         {
-            return child as HTMLElement;
+            return child as T;
         }
 
         child = child.nextElementSibling;
@@ -157,9 +157,9 @@ export function firstChild (parent : HTMLElement, selector : null|string = null)
  * Returns the nearest previous sibling matching
  * (optionally matching the given selector)
  */
-export function prev (element : HTMLElement, selector : null|string = null) : null|HTMLElement
+export function prev<T extends HTMLElement = HTMLElement> (element : HTMLElement, selector : null|string = null) : null|T
 {
-    return fetchSingleSibling(element, selector, "previousElementSibling");
+    return fetchSingleSibling<T>(element, selector, "previousElementSibling");
 }
 
 
@@ -167,9 +167,9 @@ export function prev (element : HTMLElement, selector : null|string = null) : nu
  * Returns the nearest following sibling
  * (optionally matching the given selector)
  */
-export function next (element : HTMLElement, selector : null|string = null) : null|HTMLElement
+export function next<T extends HTMLElement = HTMLElement> (element : HTMLElement, selector : null|string = null) : null|T
 {
-    return fetchSingleSibling(element, selector, "nextElementSibling");
+    return fetchSingleSibling<T>(element, selector, "nextElementSibling");
 }
 
 
@@ -179,9 +179,9 @@ export function next (element : HTMLElement, selector : null|string = null) : nu
  *
  * The nearest sibling is the first element in the list.
  */
-export function prevAll (element : HTMLElement, selector : null|string = null) : HTMLElement[]
+export function prevAll<T extends HTMLElement = HTMLElement> (element : HTMLElement, selector : null|string = null) : T[]
 {
-    return fetchAllSiblings(element, selector, "previousElementSibling");
+    return fetchAllSiblings<T>(element, selector, "previousElementSibling");
 }
 
 
@@ -191,9 +191,9 @@ export function prevAll (element : HTMLElement, selector : null|string = null) :
  *
  * The nearest sibling is the first element in the list.
  */
-export function nextAll (element : HTMLElement, selector : null|string = null) : HTMLElement[]
+export function nextAll<T extends HTMLElement = HTMLElement> (element : HTMLElement, selector : null|string = null) : T[]
 {
-    return fetchAllSiblings(element, selector, "nextElementSibling");
+    return fetchAllSiblings<T>(element, selector, "nextElementSibling");
 }
 
 
@@ -201,9 +201,9 @@ export function nextAll (element : HTMLElement, selector : null|string = null) :
  * Returns all siblings
  * (optionally matching the given selector)
  */
-export function siblings (element : HTMLElement, selector : null|string = null) : HTMLElement[]
+export function siblings<T extends HTMLElement = HTMLElement> (element : HTMLElement, selector : null|string = null) : T[]
 {
-    const list : HTMLElement[] = [];
+    const list : T[] = [];
     let sibling : null|Element = null;
 
     if (null !== element.parentElement)
@@ -215,7 +215,7 @@ export function siblings (element : HTMLElement, selector : null|string = null) 
     {
         if (sibling !== element && elementMatches(sibling, selector))
         {
-            list.push(sibling as HTMLElement);
+            list.push(sibling as T);
         }
 
         sibling = sibling.nextElementSibling;
@@ -230,7 +230,7 @@ export function siblings (element : HTMLElement, selector : null|string = null) 
  *
  * If a root element is given, the parent is only searched up to (and excluding) this root node.
  */
-export function closest (element : HTMLElement, selector : string, rootElement : null|HTMLElement = null) : null|HTMLElement
+export function closest<T extends HTMLElement = HTMLElement> (element : HTMLElement, selector : string, rootElement : null|HTMLElement = null) : null|T
 {
     let parent = element.parentElement;
 
@@ -238,7 +238,7 @@ export function closest (element : HTMLElement, selector : string, rootElement :
     {
         if (parent.matches(selector))
         {
-            return parent;
+            return parent as T;
         }
 
         parent = parent.parentElement;

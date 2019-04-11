@@ -24,12 +24,8 @@ export type InsertableElement = string | Element | Element[];
 
 /**
  * Parses the HTML to an HTMLElement
- *
- * @private
- * @param {string} html
- * @returns {HTMLElement}
  */
-function parseHtml<T extends HTMLElement = HTMLElement> (html : string) : T
+function parseHtml (html : string) : HTMLElement
 {
     const parser = new DOMParser();
     const doc = parser.parseFromString(html, "text/html");
@@ -40,7 +36,7 @@ function parseHtml<T extends HTMLElement = HTMLElement> (html : string) : T
         throw new Error("Can only parse HTML with exactly one valid root element. A valid element can stand on its own in the body.");
     }
 
-    return children[0] as T;
+    return children[0] as HTMLElement;
 }
 
 
@@ -68,7 +64,7 @@ export function createElement<T extends HTMLElement = HTMLElement> (type : strin
 export function createUnstyledElement<T extends HTMLElement = HTMLElement> (type : string, attributes : CreateUnstyledElementOptions = {}) : T
 {
     const element = (-1 !== type.indexOf("<"))
-        ? parseHtml<T>(type)
+        ? parseHtml(type) as T
         : document.createElement(type) as T;
 
     setAttrs(element, attributes);

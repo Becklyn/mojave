@@ -77,11 +77,11 @@ export function findOne<T extends HTMLElement = HTMLElement> (selector : string,
 /**
  * Filters a list of DOM elements that match the given selector
  */
-export function filter<T extends HTMLElement = HTMLElement> (list : HTMLElement[], selector : string) : T[]
+export function filter<TList extends HTMLElement[]> (list : TList, selector : string) : TList
 {
     return list.filter(
         (e) => e.matches(selector)
-    ) as T[];
+    ) as TList;
 }
 
 
@@ -89,24 +89,24 @@ export function filter<T extends HTMLElement = HTMLElement> (list : HTMLElement[
  * Filters a list of DOM elements that DO NOT match the given selector,
  * are not the given node or are not in the given node list.
  */
-export function not<T extends HTMLElement[]> (list : T, selector : string|HTMLElement|HTMLElement[]) : T
+export function not<TList extends HTMLElement[]> (list : TList, selector : string|HTMLElement|HTMLElement[]) : TList
 {
     if (typeof selector === "string")
     {
         return list.filter(
             (e) => !e.matches(selector)
-        ) as T;
+        ) as TList;
     }
     else if (Array.isArray(selector))
     {
         return list.filter(
             (e) => -1 !== selector.indexOf(e)
-        ) as T;
+        ) as TList;
     }
 
     return list.filter(
         (e) => e !== selector
-    ) as T;
+    ) as TList;
 }
 
 

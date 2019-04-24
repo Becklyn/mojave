@@ -12,17 +12,22 @@ export type EventIntermediateToken = (any : any) => void;
  * @param {Event} event The original event
  * @param {HTMLElement} element The matched element
  */
-export type DelegatedEventHandler = (event : Event, element : HTMLElement) => void;
+export type DelegatedEventHandler<TEvent extends Event = Event, TElement extends HTMLElement = HTMLElement> =
+    (event : TEvent, element : TElement) => void;
 
 type EventHandlerList = {
-    [eventType: string]: EventListener[],
+    [eventType: string]: GenericEventListener<Event>[],
 };
+
+type GenericEventListener<T extends Event = Event> = {
+    (event: T): void;
+}
 
 
 /**
  * Registers an event listener for the given events
  */
-export function on (element : null|EventTarget|EventTarget[], type : string|string[], handler : EventListener) : void
+export function on<T extends Event = Event> (element : null|EventTarget|EventTarget[], type : string|string[], handler : GenericEventListener<T>) : void
 {
     if (null === element)
     {
@@ -39,7 +44,7 @@ export function on (element : null|EventTarget|EventTarget[], type : string|stri
             const node = list[i];
             const eventType = types[j];
 
-            node.addEventListener(eventType, handler);
+            node.addEventListener(eventType, handler as EventListener);
             let listeners = listenerRegistry.get(node);
 
             if (!listeners)
@@ -53,7 +58,7 @@ export function on (element : null|EventTarget|EventTarget[], type : string|stri
                 listeners[eventType] = [];
             }
 
-            listeners[eventType].push(handler);
+            listeners[eventType].push(handler as EventListener);
         }
     }
 }
@@ -62,7 +67,7 @@ export function on (element : null|EventTarget|EventTarget[], type : string|stri
 /**
  * Removes an event listener for the given events
  */
-export function off (element : null|EventTarget|EventTarget[], type : string|string[], handler : EventListener) : void
+export function off<T extends Event = Event> (element : null|EventTarget|EventTarget[], type : string|string[], handler : GenericEventListener<T>) : void
 {
     if (null === element)
     {
@@ -79,12 +84,12 @@ export function off (element : null|EventTarget|EventTarget[], type : string|str
             const node = list[i];
             const eventType = types[j];
 
-            node.removeEventListener(eventType, handler);
+            node.removeEventListener(eventType, handler as EventListener);
             const listeners = listenerRegistry.get(node);
 
             if (listeners !== undefined && listeners[eventType] !== undefined)
             {
-                const index = listeners[eventType].indexOf(handler);
+                const index = listeners[eventType].indexOf(handler as EventListener);
 
                 if (-1 !== index)
                 {
@@ -104,14 +109,14 @@ export function off (element : null|EventTarget|EventTarget[], type : string|str
  *      const intermediate = once(element, event, handler);
  *      off(element, event, intermediate);
  */
-export function once (element : null|EventTarget, type : string, handler : EventListener) : null|EventIntermediateToken
+export function once<T extends Event = Event> (element : null|EventTarget, type : string, handler : GenericEventListener<T>) : null|EventIntermediateToken
 {
     if (null === element)
     {
         return null;
     }
 
-    const intermediate = (event : Event) => {
+    const intermediate = (event : T) => {
         handler(event);
         off(element, type, intermediate);
     };
@@ -129,20 +134,25 @@ export function once (element : null|EventTarget, type : string, handler : Event
  *      const intermediate = delegate(element, selector, type, handler);
  *      off(element, event, intermediate);
  */
-export function delegate (element : null|EventTarget, selector : string, type : string, handler : DelegatedEventHandler) : null|EventIntermediateToken
+export function delegate<TEvent extends Event = Event, TElement extends HTMLElement = HTMLElement> (
+    element : null|EventTarget,
+    selector : string,
+    type : string,
+    handler : DelegatedEventHandler<TEvent, TElement>,
+) : null|EventIntermediateToken
 {
     if (null === element)
     {
         return null;
     }
 
-    const intermediate = (event : Event) =>
+    const intermediate = (event : TEvent) =>
     {
-        const matchedDelegatedTarget = findDelegatedTarget(element, event.target as Element, selector);
+        const matchedDelegatedTarget = findDelegatedTarget<TElement>(element, event.target as Element, selector);
 
         if (null !== matchedDelegatedTarget)
         {
-            handler(event, matchedDelegatedTarget as HTMLElement);
+            handler(event, matchedDelegatedTarget);
         }
     };
 
@@ -155,7 +165,7 @@ export function delegate (element : null|EventTarget, selector : string, type : 
 /**
  * In a delegated event listener, this function finds the actual desired event target.
  */
-function findDelegatedTarget (delegateElement : EventTarget, currentTarget : null|Element, selector : string) : null|Element
+function findDelegatedTarget<T extends Element = Element> (delegateElement : EventTarget, currentTarget : null|Element, selector : string) : null|T
 {
     let node : null|Element|HTMLElement = currentTarget;
 
@@ -163,7 +173,7 @@ function findDelegatedTarget (delegateElement : EventTarget, currentTarget : nul
     {
         if (node.matches(selector))
         {
-            return node;
+            return node as T;
         }
 
         node = node.parentElement;

@@ -27,7 +27,7 @@ export default class Sortable
 
     /**
      */
-    constructor (container : HTMLElement, config : SortableConfig)
+    public constructor (container : HTMLElement, config : SortableConfig)
     {
         this.container = container;
         this.config = merge({
@@ -47,13 +47,13 @@ export default class Sortable
     /**
      * Initializes the component
      */
-    init ()
+    public init (): void
     {
-        delegate(
+        delegate<MouseEvent>(
             this.container,
             `${this.config.items} ${this.config.handle}`,
             "mousedown",
-            (event : Event) => this.onInteractionStart(event as MouseEvent)
+            event => this.onInteractionStart(event)
         );
     }
 

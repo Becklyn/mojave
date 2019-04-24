@@ -24,10 +24,6 @@ export type InsertableElement = string | Element | Element[];
 
 /**
  * Parses the HTML to an HTMLElement
- *
- * @private
- * @param {string} html
- * @returns {HTMLElement}
  */
 function parseHtml (html : string) : HTMLElement
 {
@@ -47,9 +43,9 @@ function parseHtml (html : string) : HTMLElement
 /**
  * Creates an element with the given attributes
  */
-export function createElement (type : string, attributes : CreateElementOptions = {}) : HTMLElement
+export function createElement<T extends HTMLElement = HTMLElement> (type : string, attributes : CreateElementOptions = {}) : T
 {
-    const element = createUnstyledElement(type, attributes);
+    const element = createUnstyledElement<T>(type, attributes);
 
     if (attributes.css !== undefined)
     {
@@ -65,11 +61,11 @@ export function createElement (type : string, attributes : CreateElementOptions 
  *
  * This is a smaller alternative to `createElement`, if you definitely don't need to style the element.
  */
-export function createUnstyledElement (type : string, attributes : CreateUnstyledElementOptions = {}) : HTMLElement
+export function createUnstyledElement<T extends HTMLElement = HTMLElement> (type : string, attributes : CreateUnstyledElementOptions = {}) : T
 {
     const element = (-1 !== type.indexOf("<"))
-        ? parseHtml(type)
-        : document.createElement(type);
+        ? parseHtml(type) as T
+        : document.createElement(type) as T;
 
     setAttrs(element, attributes);
 

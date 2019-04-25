@@ -6,7 +6,8 @@ interface FetchOptions
     method?: string;
     headers?: {[name: string]: string};
     data?: BodyInit|null;
-    json?: null|{[name: string]: any}|Array<any>,
+    json?: null|{[name: string]: any}|Array<any>;
+    credentials?: boolean;
 }
 
 export type RequestFailureReasons = "status" | "invalid_json" | "request_failed";
@@ -41,7 +42,7 @@ export function request<T extends object = {}> (url: string, options: FetchOptio
             fetch(url, {
                 body: data,
                 cache: "no-cache",
-                credentials: "include",
+                credentials: false !== options.credentials ? "include" : "omit",
                 headers: headers,
                 method: options.method || "get",
             })

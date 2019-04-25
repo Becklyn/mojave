@@ -9,11 +9,16 @@ interface FetchOptions
     json?: null|{[name: string]: any}|Array<any>,
 }
 
+interface ApiReturnValues<T> {
+    response: Response;
+    data: T;
+}
+
 
 /**
  * Small wrapper to fetch a JSON response
  */
-export function request<T extends object = {}> (url: string, options: FetchOptions = {}) : Promise<T>
+export function request<T extends object = {}> (url: string, options: FetchOptions = {}) : Promise<ApiReturnValues<T>>
 {
     let headers = extend(options.headers || {}, {
         Accept: "application/json",
@@ -27,12 +32,33 @@ export function request<T extends object = {}> (url: string, options: FetchOptio
         headers["Content-Type"] = "application/json; charset=UTF-8";
     }
 
-    return fetch(url, {
-        body: data,
-        cache: "no-cache",
-        credentials: "include",
-        headers: headers,
-        method: options.method || "get",
-    })
-        .then(response => response.json());
+
+    return new Promise(
+        (resolve, reject) => {
+            fetch(url, {
+                body: data,
+                cache: "no-cache",
+                credentials: "include",
+                headers: headers,
+                method: options.method || "get",
+            })
+                .then(response => {
+                        return response.json()
+                            .then(
+                                data =>
+                                {
+                                    if (response.status < 200 || response.status >= 500)
+                                    {
+                                        return reject({response, data});
+                                    }
+
+                                    resolve({data, response});
+                                },
+                                (error) => reject({error})
+                            );
+                    },
+                    (error) => reject({error}),
+                );
+        }
+    );
 }

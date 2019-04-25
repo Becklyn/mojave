@@ -9,9 +9,12 @@ interface FetchOptions
     json?: null|{[name: string]: any}|Array<any>,
 }
 
+export type RequestFailureReasons = "status" | "invalid_json" | "request_failed";
+
 interface ApiReturnValues<T> {
     response: Response;
     data: T;
+    reason?: RequestFailureReasons;
 }
 
 
@@ -49,15 +52,15 @@ export function request<T extends object = {}> (url: string, options: FetchOptio
                                 {
                                     if (response.status < 200 || response.status >= 500)
                                     {
-                                        return reject({response, data});
+                                        return reject({response, data, reason: "status"});
                                     }
 
                                     resolve({data, response});
                                 },
-                                (error) => reject({error})
+                                (error) => reject({error, reason: "invalid_json"})
                             );
                     },
-                    (error) => reject({error}),
+                    (error) => reject({error, reason: "request_failed"}),
                 );
         }
     );

@@ -1,7 +1,7 @@
 import fetch from "./polyfill/fetch";
 import {extend} from "./extend";
 
-interface FetchOptions
+export interface RequestOptions
 {
     method?: string;
     headers?: {[name: string]: string};
@@ -12,17 +12,21 @@ interface FetchOptions
 
 export type RequestFailureReasons = "status" | "invalid_json" | "request_failed";
 
-interface ApiReturnValues<T> {
+export interface SuccessResponse<T> {
     response: Response;
     data: T;
-    reason?: RequestFailureReasons;
+}
+
+export interface FailureResponse {
+    error: Error;
+    reason: RequestFailureReasons;
 }
 
 
 /**
  * Small wrapper to fetch a JSON response
  */
-export function request<T extends object = {}> (url: string, options: FetchOptions = {}) : Promise<ApiReturnValues<T>>
+export function request<T extends object = {}> (url: string, options: RequestOptions = {}) : Promise<SuccessResponse<T>|FailureResponse>
 {
     let headers = extend(options.headers || {}, {
         Accept: "application/json",

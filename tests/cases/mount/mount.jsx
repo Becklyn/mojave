@@ -16,7 +16,7 @@ QUnit.module("mount()", {
 });
 
 QUnit.test(
-    "with class: the correct parameters are passed, fixes #158",
+    "with class: the correct parameters are passed",
     (assert) =>
     {
         let context = findOne("#qunit-fixture");

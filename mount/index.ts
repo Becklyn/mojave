@@ -39,12 +39,13 @@ export function mountLazy <T extends mojave.Mountable>(selector: string, importP
 function doMount (elements: HTMLElement[], mountable: mojave.Mountable, options: mojave.MountOptions = {}) : void
 {
     let mountableAny = mountable as any;
+    let type = options.type || "func";
 
     elements.forEach(
         node =>
         {
             // check whether is a JSX component (i.e. it has no `init()` method).
-            if (true === options.jsx)
+            if ("jsx" === type)
             {
                 let opts = options as mojave.ComponentMountOptions;
 
@@ -60,11 +61,15 @@ function doMount (elements: HTMLElement[], mountable: mojave.Mountable, options:
                     node
                 );
             }
-            else
+            else if ("class" === type)
             {
                 let standaloneOptions = options as mojave.StandaloneMountOptions;
                 const mounted = new mountableAny(node, ...(standaloneOptions.params || []));
                 mounted.init();
+            }
+            else
+            {
+                (mountable as Function)(node);
             }
         }
     );

@@ -2,7 +2,6 @@ import {children, findOne} from "../../../../dom/traverse";
 import {on, trigger} from "../../../../dom/events";
 import QUnit from "qunit";
 import {clone} from "../../../../dom/clone";
-import {getAttr} from "../../../../dom/attr";
 
 QUnit.module("dom/clone/clone()", {
     beforeEach: () =>
@@ -51,8 +50,8 @@ QUnit.test(
             const attribute = element.attributes.item(i).name;
 
             assert.strictEqual(
-                getAttr(clonedElement, attribute),
-                getAttr(element, attribute),
+                clonedElement.getAttribute(attribute),
+                element.getAttribute(attribute),
                 `${attribute}-attribute was cloned`
             );
         }
@@ -74,33 +73,5 @@ QUnit.test(
         // region check HTML structure
         assert.strictEqual(clonedElement.outerHTML, element.outerHTML, `outerHTML was cloned`);
         // endregion
-    }
-);
-
-
-QUnit.test(
-    "with (query) string",
-    (assert) =>
-    {
-        assert.throws(
-            () => {
-                clone("#qunit-fixture");
-            },
-            "function threw an error",
-        );
-    }
-);
-
-
-QUnit.test(
-    "with an invalid parameter",
-    (assert) =>
-    {
-        assert.throws(
-            () => {
-                clone(null);
-            },
-            "function threw an error",
-        );
     }
 );

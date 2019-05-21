@@ -2,7 +2,6 @@ import QUnit from "qunit";
 import {children} from "../../../../dom/traverse";
 import {createElement} from "../../../../dom/manipulate";
 import {duplicate} from "../../../../dom/clone";
-import {getAttr} from "../../../../dom/attr";
 
 QUnit.module("dom/clone/duplicate()");
 
@@ -34,8 +33,8 @@ QUnit.test(
             const attribute = element.attributes.item(i).name;
 
             assert.strictEqual(
-                getAttr(duplicatedElement, attribute),
-                getAttr(element, attribute),
+                duplicatedElement.getAttribute(attribute),
+                element.getAttribute(attribute),
                 `${attribute}-attribute was cloned`
             );
         }

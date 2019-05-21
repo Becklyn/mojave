@@ -1,7 +1,7 @@
 import {ComponentFactory, h, render} from "preact";
 import {mojave} from "../@types/mojave";
 import {find} from "../dom/traverse";
-import {merge} from "../extend";
+import {extend} from "../extend";
 import {safeParseJson} from "../json";
 
 
@@ -56,7 +56,7 @@ function doMount (elements: HTMLElement[], mountable: mojave.Mountable, options:
                 }
 
                 render(
-                    h(mountable as ComponentFactory<any>, merge(opts.params || {}, safeParseJson(node.textContent) || {})),
+                    h(mountable as ComponentFactory<any>, extend(opts.params || {}, safeParseJson(node.textContent) || {})),
                     node.parentElement,
                     node
                 );

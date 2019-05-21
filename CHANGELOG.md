@@ -1,6 +1,9 @@
 4.0
 ===
 
+*   Added a new `mount()` function: support JSX, classes and functions. Also simplify the function interface.
+*   Added a new `mountLazy()` function, that mirrors the `mount()` function, except that it loads the component lazily.
+*   `mount*()` can now also mount functions.
 *   Added `safeParseJson()` as a safe and easy way to parse JSON.
 
 

@@ -1,3 +1,9 @@
+4.0
+===
+
+*   Added `safeParseJson()` as a safe and easy way to parse JSON.
+
+
 3.0.5
 =====
 
@@ -9,7 +15,7 @@
 
 * **BC BREAK**: removed `dom/form`. Inline the implementation instead.
 * **BC BREAK**: removed `unistore`. Implement it yourself instead.
-* **BC BREAK**: removed `mount::mountJsxWithStore()`. No alternative present, you need to wrap it yourself.
+* **BC BREAK**: removed `index::mountJsxWithStore()`. No alternative present, you need to wrap it yourself.
 * **BC BREAK**: The class `ui/Slug` is no longer a default export but instead a named export.
 
 
@@ -18,4 +24,4 @@
 
 * *Deprecation*: deprecated `dom/form`. Inline the implementation instead.
 * *Deprecation*: deprecated `unistore`. Implement it yourself instead.
-* *Deprecation*: deprecated `mount::mountJsxWithStore()`. No alternative present, you need to wrap it yourself.
+* *Deprecation*: deprecated `index::mountJsxWithStore()`. No alternative present, you need to wrap it yourself.

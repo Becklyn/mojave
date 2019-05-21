@@ -10,7 +10,8 @@ declare namespace mojave
 
 
     export type MountableType = "func" | "jsx" | "class";
-    export type Mountable = StandaloneComponentInterface|ComponentFactory<any>;
+    export type MountableFunction = (element: HTMLElement) => void;
+    export type Mountable = MountableFunction|StandaloneComponentInterface|ComponentFactory<any>;
 
 
     export interface MountOptions
@@ -31,6 +32,19 @@ declare namespace mojave
 
     export interface StandaloneMountOptions extends MountOptions
     {
+        type: "class";
+
+
+        /**
+         * Additional parameters to pass as props / constructor arguments
+         */
+        params?: any[];
+    }
+
+    export interface FunctionMountOptions extends MountOptions
+    {
+        type?: "func";
+
         /**
          * Additional parameters to pass as props / constructor arguments
          */
@@ -39,6 +53,9 @@ declare namespace mojave
 
     export interface ComponentMountOptions extends MountOptions
     {
+        type: "jsx";
+
+
         /**
          * Additional parameters to pass as props / constructor arguments
          */

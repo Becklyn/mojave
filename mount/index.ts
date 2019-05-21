@@ -6,9 +6,10 @@ import {safeParseJson} from "../json";
 
 
 
-export function mount (selector: string, mountable: ComponentFactory<any>, options: mojave.ComponentMountOptions): void;
-export function mount (selector: string, mountable: mojave.StandaloneComponentInterface, options: mojave.StandaloneMountOptions): void;
-export function mount <T extends mojave.Mountable>(selector: string, mountable: mojave.Mountable, options: mojave.MountOptions = {}) : void
+export function mount (selector: string, mountable: ComponentFactory<any>, options?: mojave.ComponentMountOptions): void;
+export function mount (selector: string, mountable: mojave.StandaloneComponentInterface, options?: mojave.StandaloneMountOptions): void;
+export function mount (selector: string, mountable: mojave.MountableFunction, options?: mojave.FunctionMountOptions): void;
+export function mount <T extends mojave.Mountable>(selector: string, mountable: mojave.Mountable, options?: mojave.MountOptions) : void
 {
     doMount(find(selector), mountable, options);
 }

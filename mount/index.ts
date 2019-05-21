@@ -69,7 +69,8 @@ function doMount (elements: HTMLElement[], mountable: mojave.Mountable, options:
             }
             else
             {
-                (mountable as Function)(node);
+                let standaloneOptions = options as mojave.StandaloneMountOptions;
+                (mountable as Function)(node, ...(standaloneOptions.params || []));
             }
         }
     );

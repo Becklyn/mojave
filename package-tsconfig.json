@@ -9,7 +9,6 @@
         "strict": true,
         "strictNullChecks": true,
         "noImplicitThis": true,
-        "noUnusedLocals": true,
         "moduleResolution": "node",
         "experimentalDecorators": true,
         "alwaysStrict": false,

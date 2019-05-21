@@ -34,7 +34,7 @@ export default class Sortable
             handle: "",
         }, config) as SortableConfig;
         this.interaction = null;
-        this.emitter = mitt();
+        this.emitter = new mitt();
         this.listeners = {
             move: this.onDragMove.bind(this) as EventListener,
             end: this.onDragEnd.bind(this) as EventListener,

@@ -1,3 +1,6 @@
+import {safeParseJson} from "./json";
+
+
 export type CookieOptions = Partial<{
     domain: string,
     path: string,

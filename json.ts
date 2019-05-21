@@ -1,7 +1,7 @@
 /**
  * Wraps parsing of JSON, so that an error is logged, but no exception is thrown
  */
-function safeParseJson (value?: string|false|null) : {[k: string]: any}|null
+export function safeParseJson (value?: string|false|null) : {[k: string]: any}|null
 {
     try
     {

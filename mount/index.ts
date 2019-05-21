@@ -2,6 +2,7 @@ import {ComponentFactory, h, render} from "preact";
 import {mojave} from "../@types/mojave";
 import {find} from "../dom/traverse";
 import {merge} from "../extend";
+import {safeParseJson} from "../json";
 
 
 
@@ -37,37 +38,37 @@ export function mountLazy <T extends mojave.Mountable>(selector: string, importP
  */
 function doMount (elements: HTMLElement[], mountable: mojave.Mountable, options: mojave.MountOptions = {}) : void
 {
-    let isJsx = typeof (mountable as any).init !== "function";
+    let mountableAny = mountable as any;
 
-    for (let i = 0; i < elements.length; i++)
-    {
-        let node = elements[i];
-
-        if (isJsx)
+    elements.forEach(
+        node =>
         {
-            let Component = mountable as ComponentFactory<any>;
-            let opts = options as mojave.ComponentMountOptions;
-
-            if (node.parentElement === null)
+            // check whether is a JSX component (i.e. it has no `init()` method).
+            if (true === options.jsx)
             {
-                console.error("Can't mount on container without parent.");
-                continue;
-            }
+                let opts = options as mojave.ComponentMountOptions;
 
-            render(
-                h(Component, merge(opts.params || {}, safeParseJson(node.textContent) || {})),
-                node.parentElement,
-                node
-            );
+                if (node.parentElement === null)
+                {
+                    console.error("Can't mount on container without parent.");
+                    return;
+                }
+
+                render(
+                    h(mountable as ComponentFactory<any>, merge(opts.params || {}, safeParseJson(node.textContent) || {})),
+                    node.parentElement,
+                    node
+                );
+            }
+            else
+            {
+                console.log("instance create");
+                let standaloneOptions = options as mojave.StandaloneMountOptions;
+                const mounted = new mountableAny(node, ...(standaloneOptions.params || []));
+                mounted.init();
+            }
         }
-        else
-        {
-            let StandaloneComponent = mountable as any;
-            let standaloneOptions = options as mojave.StandaloneMountOptions;
-            const mounted = new StandaloneComponent(node, ...(standaloneOptions.params || []));
-            mounted.init();
-        }
-    }
+    );
 }
 
 

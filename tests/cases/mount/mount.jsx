@@ -16,7 +16,7 @@ QUnit.module("mount()", {
 });
 
 QUnit.test(
-    "mount() test that the correct parameters are passed, fixes #158",
+    "with class: the correct parameters are passed, fixes #158",
     (assert) =>
     {
         let context = findOne("#qunit-fixture");
@@ -53,12 +53,12 @@ QUnit.test(
             init () {}
         }
 
-        mount(".fixture", ExampleMountComponent, {params: [42], context});
+        mount(".fixture", ExampleMountComponent, {params: [42], context, type: "class"});
     }
 );
 
 QUnit.test(
-    "mount() with JSX component",
+    "with JSX",
     assert =>
     {
         assert.expect(2);
@@ -74,7 +74,7 @@ QUnit.test(
 
         findOne("#qunit-fixture").innerHTML = `<div id="container"></div>`;
 
-        mount("#container", Test, {jsx: true});
+        mount("#container", Test, {type: "jsx"});
 
         assert.strictEqual(
             document.getElementById("qunit-fixture").querySelectorAll(".test").length,
@@ -84,7 +84,7 @@ QUnit.test(
 );
 
 QUnit.test(
-    "mount() test that the correct parameters are passed for JSX",
+    "with JSX: the correct parameters are passed",
     assert =>
     {
         assert.expect(3);
@@ -106,6 +106,53 @@ QUnit.test(
         }
 
         findOne("#qunit-fixture").innerHTML = `<div id="container"></div>`;
-        mount("#container", Test, {jsx: true, params});
+        mount("#container", Test, {type: "jsx", params});
+    }
+);
+
+
+QUnit.test(
+    "with function",
+    assert =>
+    {
+        assert.expect(1);
+
+        findOne("#qunit-fixture").innerHTML = `<div id="container"></div>`;
+        let fixtures = document.getElementById("qunit-fixture");
+        let container = fixtures.firstElementChild;
+
+        mount(
+            "#container",
+            (element) => assert.strictEqual(element, container),
+            {
+                context: fixtures,
+            }
+        );
+    }
+);
+
+
+QUnit.test(
+    "with function: correct argument passing",
+    assert =>
+    {
+        assert.expect(3);
+
+        findOne("#qunit-fixture").innerHTML = `<div id="container"></div>`;
+        let fixtures = document.getElementById("qunit-fixture");
+        let container = fixtures.firstElementChild;
+
+        mount(
+            "#container",
+            (element, a, b) => {
+                assert.strictEqual(element, container);
+                assert.strictEqual(a, 1);
+                assert.strictEqual(b, 2);
+            },
+            {
+                context: fixtures,
+                params: [1, 2]
+            }
+        );
     }
 );

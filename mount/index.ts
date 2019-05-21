@@ -37,16 +37,18 @@ export function mountLazy <T extends mojave.Mountable>(selector: string, importP
 /**
  * Actually mounts on the given elements
  */
-function doMount (elements: HTMLElement[], mountable: mojave.Mountable, options: mojave.MountOptions = {}) : void
+function doMount (elements: HTMLElement[], mountable: mojave.Mountable, rawOptions?: mojave.MountOptions) : void
 {
     let mountableAny = mountable as any;
-    let type = options.type || "func";
+    let options = extend({
+        type: "func",
+    }, rawOptions || {}) as mojave.MountOptions;
 
     elements.forEach(
         node =>
         {
             // check whether is a JSX component (i.e. it has no `init()` method).
-            if ("jsx" === type)
+            if ("jsx" === options.type)
             {
                 let opts = options as mojave.ComponentMountOptions;
 
@@ -62,7 +64,7 @@ function doMount (elements: HTMLElement[], mountable: mojave.Mountable, options:
                     node
                 );
             }
-            else if ("class" === type)
+            else if ("class" === options.type)
             {
                 let standaloneOptions = options as mojave.StandaloneMountOptions;
                 const mounted = new mountableAny(node, ...(standaloneOptions.params || []));

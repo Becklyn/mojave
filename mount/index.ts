@@ -15,9 +15,15 @@ export function mount <T extends mojave.Mountable>(selector: string, mountable: 
 }
 
 
-export function mountLazy (selector: string, importPath: string, mountable: ComponentFactory<any>, options: mojave.ComponentMountOptions): void;
-export function mountLazy (selector: string, importPath: string, mountable: mojave.StandaloneComponentInterface, options: mojave.StandaloneMountOptions): void;
-export function mountLazy <T extends mojave.Mountable>(selector: string, importPath: string, mountable: mojave.Mountable, options: mojave.MountOptions = {}) : void
+/**
+ * Mounts the component lazily, if an element matching the selector exists.
+ *
+ * The importer must import the component.
+ * Example:
+ *
+ *     mountLazy(".selector", () => import("./src/MyComp"));
+ */
+export function mountLazy <T extends mojave.Mountable>(selector: string, importer: () => Promise<any>, options?: mojave.MountOptions) : void
 {
     let elements = find(selector);
 

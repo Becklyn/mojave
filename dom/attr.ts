@@ -56,7 +56,7 @@ export function setAttrs (element : Element, attributes : OptionalKeyMap) : void
 /**
  * Returns the attribute value for the given html node
  *
- * @deprecated use `element.getAttribute()` directly instead. Will be removed in v3.0
+ * @deprecated use `element.getAttribute()` directly instead. Will be removed in v4.0
  */
 export function getAttr (element : Element, attribute : string) : null|string
 {
@@ -86,6 +86,8 @@ function updateClasses (element : Element|Element[], classes : string|string[], 
 
 /**
  * Adds all given classes to the element
+ *
+ * @deprecated use `element.classList()` directly instead. Will be removed in v4.0
  */
 export function addClass (element : Element|Element[], classes : string|string[]) : void
 {
@@ -95,6 +97,8 @@ export function addClass (element : Element|Element[], classes : string|string[]
 
 /**
  * Remove all given classes from the element
+ *
+ * @deprecated use `element.classList()` directly instead. Will be removed in v4.0
  */
 export function removeClass (element : Element|Element[], classes : string|string[]) : void
 {
@@ -116,6 +120,8 @@ function normalizeDataKey (key : string) : string
 
 /**
  * Sets the data on the given element
+ *
+ * @deprecated use `element.dataset` directly instead. Will be removed in v4.0
  */
 export function setData (element : Element, key : string, value : any) : void
 {
@@ -134,6 +140,8 @@ export function setData (element : Element, key : string, value : any) : void
 
 /**
  * Loads the data from the element
+ *
+ * @deprecated use `element.dataset` directly instead. Will be removed in v4.0
  */
 export function getData (element : HTMLElement, key : string) : any
 {
@@ -160,6 +168,8 @@ export function getData (element : HTMLElement, key : string) : any
 
 /**
  * Determines whether the given data attribute is set on the element
+ *
+ * @deprecated use `element.dataset` directly instead. Will be removed in v4.0
  */
 export function hasData (element : HTMLElement, key : string) : boolean
 {
@@ -177,6 +187,8 @@ export function hasData (element : HTMLElement, key : string) : boolean
 
 /**
  * Returns all data in custom storage
+ *
+ * @deprecated Will be removed in v4.0 (as it will be obsolete)
  */
 export function getAllCustomData (element : HTMLElement) : any
 {

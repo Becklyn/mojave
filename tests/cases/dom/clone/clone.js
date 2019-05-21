@@ -76,31 +76,3 @@ QUnit.test(
         // endregion
     }
 );
-
-
-QUnit.test(
-    "with (query) string",
-    (assert) =>
-    {
-        assert.throws(
-            () => {
-                clone("#qunit-fixture");
-            },
-            "function threw an error",
-        );
-    }
-);
-
-
-QUnit.test(
-    "with an invalid parameter",
-    (assert) =>
-    {
-        assert.throws(
-            () => {
-                clone(null);
-            },
-            "function threw an error",
-        );
-    }
-);

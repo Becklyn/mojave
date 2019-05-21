@@ -59,9 +59,7 @@ export function getCookie (key : string) : any
     const matcher = new RegExp(`; ${key}=([^;]+)`);
     const match = matcher.exec(`; ${document.cookie}`);
 
-    return null !== match
-        ? JSON.parse(decodeURIComponent(match[1]))
-        : null;
+    return safeParseJson(match && match[1]);
 }
 
 

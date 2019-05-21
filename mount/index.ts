@@ -66,13 +66,13 @@ function doMount (elements: HTMLElement[], mountable: mojave.Mountable, rawOptio
             }
             else if ("class" === options.type)
             {
-                let standaloneOptions = options as mojave.StandaloneMountOptions;
+                let standaloneOptions = options as mojave.ClassMountOptions;
                 const mounted = new mountableAny(node, ...(standaloneOptions.params || []));
                 mounted.init();
             }
             else
             {
-                let standaloneOptions = options as mojave.StandaloneMountOptions;
+                let standaloneOptions = options as mojave.FunctionMountOptions;
                 (mountable as Function)(node, ...(standaloneOptions.params || []));
             }
         }

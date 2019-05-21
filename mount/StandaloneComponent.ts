@@ -1,7 +1,4 @@
-import {mojave} from "../@types/mojave";
-
-
-export class StandaloneComponent<TContainer extends HTMLElement = HTMLElement> implements mojave.StandaloneComponentInterface
+export class StandaloneComponent<TContainer extends HTMLElement = HTMLElement>
 {
     protected container: TContainer;
 

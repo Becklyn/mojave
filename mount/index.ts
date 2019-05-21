@@ -48,7 +48,7 @@ function doMount (elements: HTMLElement[], mountable: mojave.Mountable, rawOptio
     let mountableAny = mountable as any;
     let options = extend({
         type: "func",
-    }, rawOptions || {}) as mojave.MountOptions;
+    }, rawOptions || {}) as mojave.MountOptions & {type: mojave.MountableType};
 
     elements.forEach(
         node =>

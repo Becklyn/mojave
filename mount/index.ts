@@ -32,9 +32,9 @@ export function mountLazy <T extends mojave.Mountable>(selector: string, importe
         return;
     }
 
-    import(importPath).then(
-        component => doMount(elements, component, options),
-        error => console.error(`Mounting of component of path '${importPath}' failed: ${error.message}`, error)
+    importer().then(
+        module => doMount(elements, module.default, options),
+        error => console.error(`Mounting of component of path '${selector}' failed: ${error.message}`, error)
     );
 }
 

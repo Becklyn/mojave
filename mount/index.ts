@@ -62,7 +62,6 @@ function doMount (elements: HTMLElement[], mountable: mojave.Mountable, options:
             }
             else
             {
-                console.log("instance create");
                 let standaloneOptions = options as mojave.StandaloneMountOptions;
                 const mounted = new mountableAny(node, ...(standaloneOptions.params || []));
                 mounted.init();

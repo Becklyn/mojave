@@ -1,4 +1,4 @@
-import {ComponentFactory, h, render} from "preact";
+import {ComponentType, createElement, render} from "preact";
 import {mojave} from "../@types/mojave";
 import {find} from "../dom/traverse";
 import {extend} from "../extend";
@@ -7,7 +7,7 @@ import {safeParseJson} from "../json";
 
 
 export function mount (selector: string, mountable: mojave.MountableFunction, options?: mojave.FunctionMountOptions): void;
-export function mount (selector: string, mountable: ComponentFactory<any>, options?: mojave.ComponentMountOptions): void;
+export function mount (selector: string, mountable: ComponentType<any>, options?: mojave.ComponentMountOptions): void;
 export function mount (selector: string, mountable: mojave.MountableClass, options?: mojave.ClassMountOptions): void;
 export function mount <T extends mojave.Mountable>(selector: string, mountable: mojave.Mountable, options?: mojave.MountOptions) : void
 {
@@ -65,7 +65,7 @@ function doMount (elements: HTMLElement[], mountable: mojave.Mountable, rawOptio
                 }
 
                 render(
-                    h(mountable as ComponentFactory<any>, extend(opts.params || {}, safeParseJson(node.textContent) || {})),
+                    createElement(mountable as ComponentType<any>, extend(opts.params || {}, safeParseJson(node.textContent) || {})),
                     node.parentElement,
                     node
                 );

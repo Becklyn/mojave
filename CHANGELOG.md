@@ -8,6 +8,7 @@
 *   Added a new `mountLazy()` function, that mirrors the `mount()` function, except that it loads the component lazily.
 *   `mount*()` can now also mount functions.
 *   Added `safeParseJson()` as a safe and easy way to parse JSON.
+*   `preact` was bumped to 10.x
 
 
 

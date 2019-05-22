@@ -6,3 +6,4 @@
 *   `getData(element)` and `setData(element)` were removed. Use `element.dataset` directly instead.
 *   `getAttr(element)` was removed. Use `element.getAttribute()` directly instead.
 *   `addClass()` and `removeClass()` were removed. Use `element.classList` directly instead.
+*   `preact` was bumped to 10.x

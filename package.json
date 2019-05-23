@@ -34,7 +34,7 @@
     },
     "scripts": {
         "test": "node_modules/.bin/browserstack-runner",
-        "build": "node_modules/.bin/tsc --version && node_modules/.bin/tsc -p package-tsconfig.json --diagnostics --noEmitOnError --noErrorTruncation --listEmittedFiles --pretty",
-        "dev": "node_modules/.bin/tsc -p package-tsconfig.json --noEmitOnError --noErrorTruncation --listEmittedFiles --pretty -w"
+        "build": "node_modules/.bin/tsc --version && node_modules/.bin/tsc -p tests-tsconfig.json --diagnostics --noEmitOnError --noErrorTruncation --listEmittedFiles --pretty",
+        "dev": "node_modules/.bin/tsc -p tests-tsconfig.json --noEmitOnError --noErrorTruncation --listEmittedFiles --pretty -w"
     }
 }

@@ -1,3 +1,5 @@
+/.DS_Store
+/.github
 /.gitignore
 /.idea
 /.npmignore
@@ -8,6 +10,7 @@
 /package-lock.json
 /renovate.json
 /tests
+/tests-tsconfig.json
 /yarn.lock
 
 # ignore all .ts when publishing

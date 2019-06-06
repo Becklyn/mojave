@@ -9,7 +9,6 @@
 /kaba.js
 /node_modules
 /package-lock.json
-/renovate.json
 /tests
 /tests-tsconfig.json
 /yarn.lock

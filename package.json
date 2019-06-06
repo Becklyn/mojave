@@ -35,13 +35,5 @@
         "becklyn",
         "library",
         "widgets"
-    ],
-    "renovate-config": {
-        "default": {
-            "extends": [
-                "config:base",
-                ":preserveSemverRanges"
-            ]
-        }
-    }
+    ]
 }

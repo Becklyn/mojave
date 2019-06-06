@@ -1,4 +1,5 @@
 import "../polyfill/dom";
+import {mojave} from "../@types/mojave";
 
 
 /**

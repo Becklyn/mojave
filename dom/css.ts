@@ -1,3 +1,5 @@
+import {mojave} from "../@types/mojave";
+
 const CUSTOM_PROPERTY_REGEX = /^--/;
 const DEFAULT_STYLES = document.createElement("div").style;
 const VENDOR_PREFIXES = ["-webkit-", "-moz-", "-o-", "-ms-"];

@@ -10,3 +10,4 @@
 
 # don't ignore test files
 !/tests/cases/**/*.js
+!/.build/*

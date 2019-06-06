@@ -1,25 +1,23 @@
 {
     "name": "mojave",
-    "version": "4.0.1",
     "description": "A library of commonly used JavaScript tools and helpers by Becklyn",
-    "keywords": [
-        "becklyn",
-        "library",
-        "widgets"
-    ],
-    "author": {
-        "name": "Becklyn Studios",
-        "email": "hello@becklyn.com"
-    },
+    "license": "BSD-3-Clause",
+    "author": "Becklyn Studios <hello@becklyn.com>",
+    "homepage": "https://github.com/Becklyn/mojave",
     "repository": {
         "type": "git",
         "url": "git://github.com/Becklyn/mojave.git"
     },
-    "homepage": "https://github.com/Becklyn/mojave",
     "bugs": {
         "url": "https://github.com/Becklyn/mojave/issues"
     },
-    "license": "BSD-3-Clause",
+    "version": "4.0.1",
+    "scripts": {
+        "build": "node_modules/.bin/tsc --version && node_modules/.bin/tsc -p tests-tsconfig.json --diagnostics --noEmitOnError --noErrorTruncation --listEmittedFiles --pretty",
+        "dev": "node_modules/.bin/tsc -p tests-tsconfig.json --noEmitOnError --noErrorTruncation --listEmittedFiles --pretty -w",
+        "prepublishOnly": "npm run-script build",
+        "test": "node_modules/.bin/browserstack-runner"
+    },
     "dependencies": {
         "mitt": "^1.1.3",
         "preact": "^10.0.0-beta.2",
@@ -32,9 +30,9 @@
         "qunit": "^2.9.2",
         "typescript": "^3.5.1"
     },
-    "scripts": {
-        "test": "node_modules/.bin/browserstack-runner",
-        "build": "node_modules/.bin/tsc --version && node_modules/.bin/tsc -p tests-tsconfig.json --diagnostics --noEmitOnError --noErrorTruncation --listEmittedFiles --pretty",
-        "dev": "node_modules/.bin/tsc -p tests-tsconfig.json --noEmitOnError --noErrorTruncation --listEmittedFiles --pretty -w"
-    }
+    "keywords": [
+        "becklyn",
+        "library",
+        "widgets"
+    ]
 }

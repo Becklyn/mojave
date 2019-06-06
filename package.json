@@ -11,7 +11,7 @@
     "bugs": {
         "url": "https://github.com/Becklyn/mojave/issues"
     },
-    "version": "4.0.1",
+    "version": "4.0.2",
     "scripts": {
         "build": "node_modules/.bin/tsc --version && node_modules/.bin/tsc -p tests-tsconfig.json --diagnostics --noEmitOnError --noErrorTruncation --listEmittedFiles --pretty",
         "dev": "node_modules/.bin/tsc -p tests-tsconfig.json --noEmitOnError --noErrorTruncation --listEmittedFiles --pretty -w",

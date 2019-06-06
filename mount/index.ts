@@ -57,8 +57,9 @@ function doMount (elements: HTMLElement[], mountable: mojave.Mountable, rawOptio
             if ("jsx" === options.type)
             {
                 let opts = options as mojave.ComponentMountOptions;
+                let parent = node.parentElement;
 
-                if (node.parentElement === null)
+                if (parent === null)
                 {
                     console.error("Can't mount on container without parent.");
                     return;
@@ -66,9 +67,11 @@ function doMount (elements: HTMLElement[], mountable: mojave.Mountable, rawOptio
 
                 render(
                     createElement(mountable as ComponentType<any>, extend(opts.params || {}, safeParseJson(node.textContent) || {})),
-                    node.parentElement,
+                    parent,
                     node
                 );
+
+                parent.removeChild(node);
             }
             else if ("class" === options.type)
             {

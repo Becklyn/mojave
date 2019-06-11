@@ -8,9 +8,7 @@
         {"browser": "firefox", "browser_version": "latest", "device": null, "os": "Windows", "os_version": "10" },
         {"browser": "edge", "browser_version": "latest", "device": null, "os": "Windows", "os_version": "10" },
         {"browser": "ie", "browser_version": "11.0", "device": null, "os": "Windows", "os_version": "8.1" },
-        {"browser": "chrome", "browser_version": "latest", "device": null, "os": "OS X", "os_version": "High Sierra" },
-        {"browser": "firefox", "browser_version": "latest", "device": null, "os": "OS X", "os_version": "High Sierra" },
-        {"browser": "safari", "browser_version": "latest", "device": null, "os": "OS X", "os_version": "High Sierra" },
+        {"browser": "safari", "browser_version": "latest", "device": null, "os": "OS X", "os_version": "Mojave" },
         {"os": "ios", "browser_version": "latest", "device": "iPhone 8 Plus", "os_version": "11.0", "real_mobile": true},
         {"os": "android", "browser_version": "latest", "device": "Google Pixel", "os_version": "8.0", "real_mobile": true}
     ]

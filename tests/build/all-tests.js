@@ -34,7 +34,7 @@ import "../cases/dom/utils/splitStringValue";
 import "../cases/extend/extend";
 import "../cases/extend/merge";
 import "../cases/io/file";
-import "../cases/json/parseElementJson";
+import "../cases/json/parseElementAsJson";
 import "../cases/json/safeParseJson";
 import "../cases/mount/mount";
 import "../cases/runtime/hasOwnProperty";

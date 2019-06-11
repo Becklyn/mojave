@@ -1,7 +1,7 @@
 import {findOne} from "../../../dom/traverse";
 import QUnit from "qunit";
 import {mount} from "../../../mount";
-import {h, Component} from "preact";
+import {h} from "preact";
 
 
 QUnit.module("mount()", {
@@ -63,18 +63,15 @@ QUnit.test(
     {
         assert.expect(2);
 
-        class Test extends Component
+        let TestComponent = () =>
         {
-            render ()
-            {
-                assert.ok(true, "render called");
-                return <div className="test"/>;
-            }
-        }
+            assert.ok(true, "render called");
+            return <div className="test"/>;
+        };
 
         let fixture = findOne("#qunit-fixture");
         fixture.innerHTML = `<div id="container"></div>`;
-        mount("#container", Test, {type: "jsx"});
+        mount("#container", TestComponent, {type: "jsx"});
 
         assert.strictEqual(
             document.getElementById("qunit-fixture").querySelectorAll(".test").length,
@@ -137,19 +134,16 @@ QUnit.test(
             d: 7.5
         };
 
-        class Test extends Component
+        let TestComponent = (props) =>
         {
-            render (props)
-            {
-                assert.strictEqual(props.a, params.a);
-                assert.strictEqual(props.b, params.b);
-                assert.strictEqual(props.d, params.d);
-                return <div className="test"/>;
-            }
-        }
+            assert.strictEqual(props.a, params.a);
+            assert.strictEqual(props.b, params.b);
+            assert.strictEqual(props.d, params.d);
+            return <div className="test"/>;
+        };
 
         findOne("#qunit-fixture").innerHTML = `<div id="container"></div>`;
-        mount("#container", Test, {type: "jsx", params});
+        mount("#container", TestComponent, {type: "jsx", params});
     }
 );
 

@@ -11,3 +11,6 @@
 # don't ignore test files
 !/tests/cases/**/*.js
 !/.build/*
+
+# don't ignore build config
+!/kaba.js

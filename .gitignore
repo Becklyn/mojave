@@ -9,7 +9,7 @@
 !/@types/*.d.ts
 
 # don't ignore test files
-!/tests/cases/**/*.js
+!/tests/**/*.js
 !/.build/*
 
 # don't ignore build config

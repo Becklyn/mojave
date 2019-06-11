@@ -2,7 +2,7 @@ import {ComponentType, createElement, render} from "preact";
 import {mojave} from "../@types/mojave";
 import {find} from "../dom/traverse";
 import {extend} from "../extend";
-import {safeParseJson} from "../json";
+import {parseElementAsJson} from "../json";
 
 
 
@@ -69,7 +69,7 @@ function doMount (elements: HTMLElement[], mountable: mojave.Mountable, rawOptio
                 if (!opts.hydrate)
                 {
                     // if the node should not be hydrated, try to use the content as JSON
-                    params = extend(params, safeParseJson(node.textContent) || {});
+                    params = extend(params, parseElementAsJson(node) || {});
 
                     // remove node before mount, so that we can ensure that preact doesn't reuse it.
                     parent.removeChild(node);

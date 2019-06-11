@@ -2,6 +2,9 @@
 =====
 
 *   Added new function `hasOwnProperty()`.
+*   Added a new `hydrate` option when mounting JSX components. It decides whether 
+    *   `hydrate: false/undefined` -> the body is parsed as JSON (and passed as props) and the mounting node is removed
+    *   `hydrate: true` -> the mounting node is left untouched and preact mounts on this node (if possible). The content is *not* parsed as JSON.
 
 
 4.0.0

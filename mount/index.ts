@@ -58,20 +58,29 @@ function doMount (elements: HTMLElement[], mountable: mojave.Mountable, rawOptio
             {
                 let opts = options as mojave.ComponentMountOptions;
                 let parent = node.parentElement;
+                let params = opts.params || {};
 
-                if (parent === null)
+                if (!parent)
                 {
                     console.error("Can't mount on container without parent.");
                     return;
                 }
 
-                render(
-                    createElement(mountable as ComponentType<any>, extend(opts.params || {}, safeParseJson(node.textContent) || {})),
-                    parent,
-                    node
-                );
+                if (!opts.hydrate)
+                {
+                    // if the node should not be hydrated, try to use the content as JSON
+                    params = extend(params, safeParseJson(node.textContent) || {});
 
-                parent.removeChild(node);
+                    // remove node before mount, so that we can ensure that preact doesn't reuse it.
+                    parent.removeChild(node);
+                }
+
+                // render
+                render(
+                    createElement(mountable as ComponentType<any>, params),
+                    parent,
+                    opts.hydrate ? node : undefined
+                );
             }
             else if ("class" === options.type)
             {

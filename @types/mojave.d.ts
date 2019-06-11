@@ -48,6 +48,11 @@ declare namespace mojave
          * Additional parameters to pass as props / constructor arguments
          */
         params?: {[k: string]: any};
+
+        /**
+         * Flag whether the element should be hydrated (if possible) or the mounting element should be removed.
+         */
+        hydrate?: boolean;
     }
 }
 

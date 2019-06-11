@@ -72,14 +72,57 @@ QUnit.test(
             }
         }
 
-        findOne("#qunit-fixture").innerHTML = `<div id="container"></div>`;
-
+        let fixture = findOne("#qunit-fixture");
+        fixture.innerHTML = `<div id="container"></div>`;
         mount("#container", Test, {type: "jsx"});
 
         assert.strictEqual(
             document.getElementById("qunit-fixture").querySelectorAll(".test").length,
             1
         );
+    }
+);
+
+QUnit.test(
+    "with JSX: remove mount node if not hydrating",
+    assert =>
+    {
+        assert.expect(2);
+        let TestComponent = () =>
+        {
+            return <div className="test"/>;
+        };
+
+        let fixture = findOne("#qunit-fixture");
+        fixture.innerHTML = `<div id="container"></div>`;
+        let mountingPoint = fixture.firstElementChild;
+
+        assert.strictEqual(mountingPoint.parentElement, fixture, "Parent is set beforehand");
+        mount("#container", TestComponent, {type: "jsx"});
+        assert.strictEqual(mountingPoint.parentElement, null, "Parent isn't set anymore, as the node has been removed from the DOM");
+    }
+);
+
+QUnit.test(
+    "with JSX: hydrate on mount",
+    assert =>
+    {
+        assert.expect(4);
+        let TestComponent = (props) =>
+        {
+            assert.strictEqual(props.a, undefined, "The JSON in the body has not been parsed.");
+            return <div className="test"/>;
+        };
+
+        let fixture = findOne("#qunit-fixture");
+        fixture.innerHTML = `<div id="container">{"a": 1}</div>`;
+        let mountingPoint = fixture.firstElementChild;
+
+        assert.strictEqual(mountingPoint.parentElement, fixture, "Parent is set beforehand");
+        mount("#container", TestComponent, {type: "jsx", hydrate: true});
+        // keep element in DOM
+        assert.strictEqual(mountingPoint.parentElement, fixture, "Parent is set after, as the node hasn't been removed from the dom.");
+        assert.strictEqual(fixture.childElementCount, 1, "The node was hydrated / reused and no new node was added.");
     }
 );
 

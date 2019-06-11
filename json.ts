@@ -21,4 +21,15 @@ export function safeParseJson (value?: string|false|null) : {[k: string]: any}|n
     return null;
 }
 
-
+/**
+ * Parses JSON from the given element's content.
+ */
+export function parseElementAsJson (element: HTMLElement) : {[k: string]: any}|null
+{
+    return safeParseJson(
+        (element.textContent || "")
+            .replace(/&lt;/g, "<")
+            .replace(/&gt;/g, ">")
+            .replace(/&amp;/g, "&")
+    );
+}

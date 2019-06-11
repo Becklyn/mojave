@@ -1,3 +1,9 @@
+4.2.0
+=====
+
+*   Add `parseElementAsJson()` that automatically parses JSON from the content of a node and removes HTML escaping.
+
+
 4.1.0
 =====
 

@@ -35,6 +35,7 @@ import "../cases/extend/extend";
 import "../cases/extend/merge";
 import "../cases/io/file";
 import "../cases/mount/mount";
+import "../cases/runtime/hasOwnProperty";
 import "../cases/string/manipulate/replaceAll";
 import "../cases/timing/debounce";
 import "../cases/types/typeOf";

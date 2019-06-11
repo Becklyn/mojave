@@ -1,5 +1,11 @@
-4.0
-===
+4.1.0
+=====
+
+*   Added new function `hasOwnProperty()`.
+
+
+4.0.0
+=====
 
 *   **Dropped IE 10 support.**
 *   Removed functions: `getData()`, `setData()`, `getAttr()`, `addClass()` and `removeClass()`
@@ -11,9 +17,8 @@
 *   `preact` was bumped to 10.x
 
 
-
-3.0
-===
+3.0.0
+=====
 
 *   Fix and unify types of `create*Element()` 
 *   Removed `dom/form`. Inline the implementation instead.
@@ -22,8 +27,8 @@
 *   The class `ui/Slug` is no longer a default export but instead a named export.
 
 
-2.6 (unreleased)
-----------------
+2.6.0
+=====
 
 *   Deprecated `dom/form`. Inline the implementation instead.
 *   Deprecated `unistore`. Implement it yourself instead.

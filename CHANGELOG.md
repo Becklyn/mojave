@@ -2,6 +2,7 @@
 =====
 
 *   Add `parseElementAsJson()` that automatically parses JSON from the content of a node and removes HTML escaping.
+*   Add `getScrollParent()`, that fetches a scrollable parent of an element.
 
 
 4.1.0

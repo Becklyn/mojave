@@ -5,6 +5,7 @@
 *   Added `getScrollParent()`, that fetches a scrollable parent of an element.
 *   Added `onNextAnimationFrame()`.
 *   Added `isChildElement()`.
+*   Added `scrollToElement()`.
 
 
 4.1.0

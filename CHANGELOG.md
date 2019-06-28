@@ -6,6 +6,7 @@
 *   Added `onNextAnimationFrame()`.
 *   Added `isChildElement()`.
 *   Added `scrollToElement()`.
+*   Improved the return types of `request()`. Also several type guard helper functions were added, to more easily handle failed requests.
 
 
 4.1.0

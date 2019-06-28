@@ -51,14 +51,52 @@ export interface StatusFailureResponse {
     error: Error;
     response: Response;
     data: any;
-    reason: "invalid_json";
+    reason: "status";
+}
+
+
+/**
+ * Returns whether the response is a FailureResponse
+ */
+export function isFailureResponse (response: any): response is FailureResponse
+{
+    return response.reason && response.error;
+}
+
+/**
+ * Returns whether the response is a RequestFailureResponse
+ */
+export function isRequestFailure (response: any): response is RequestFailureResponse
+{
+    return response.reason && "request_failed" === response.reason;
+}
+
+
+/**
+ * Returns whether the response is a JsonFailureResponse
+ */
+export function isJsonFailure (response: any): response is JsonFailureResponse
+{
+    return response.reason && "invalid_json" === response.reason;
+}
+
+
+/**
+ * Returns whether the response is a StatusFailureResponse
+ */
+export function isStatusFailure (response: any): response is StatusFailureResponse
+{
+    return response.reason && "invalid_json" === response.reason;
 }
 
 
 /**
  * Small wrapper to fetch a JSON response
+ *
+ * In case of rejection, it is highly likely that the response is a FailureResponse.
+ * Use the type guards above to check for the different cases.
  */
-export function request<T extends object = {}> (url: string, options: RequestOptions = {}) : Promise<SuccessResponse<T>|FailureResponse>
+export function request<T extends object = {}> (url: string, options: RequestOptions = {}) : Promise<SuccessResponse<T>>
 {
     let headers = extend(options.headers || {}, {
         Accept: "application/json",

@@ -1,9 +1,10 @@
 4.2.0
 =====
 
-*   Add `parseElementAsJson()` that automatically parses JSON from the content of a node and removes HTML escaping.
-*   Add `getScrollParent()`, that fetches a scrollable parent of an element.
-*   Add `onNextAnimationFrame()`.
+*   Added `parseElementAsJson()` that automatically parses JSON from the content of a node and removes HTML escaping.
+*   Added `getScrollParent()`, that fetches a scrollable parent of an element.
+*   Added `onNextAnimationFrame()`.
+*   Added `isChildElement()`.
 
 
 4.1.0

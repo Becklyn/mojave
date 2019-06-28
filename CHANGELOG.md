@@ -1,12 +1,17 @@
+4.3.0
+=====
+
+*   Added `isChildElement()`.
+*   Added `scrollToElement()`.
+*   Improved the return types of `request()`. Also several type guard helper functions were added, to more easily handle failed requests.
+
+
 4.2.0
 =====
 
 *   Added `parseElementAsJson()` that automatically parses JSON from the content of a node and removes HTML escaping.
 *   Added `getScrollParent()`, that fetches a scrollable parent of an element.
 *   Added `onNextAnimationFrame()`.
-*   Added `isChildElement()`.
-*   Added `scrollToElement()`.
-*   Improved the return types of `request()`. Also several type guard helper functions were added, to more easily handle failed requests.
 
 
 4.1.0

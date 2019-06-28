@@ -1,9 +1,12 @@
+import {animate} from "./animation";
+
+
 /**
  * Returns the scroll parent of the given node.
  *
  * If this returns null, the scroll parent is document.documentElement
  */
-export function getScrollParent (node: Node|null) : Element|null
+export function getScrollParent (node: Node|null) : HTMLElement|null
 {
     if (!node || !(node instanceof Element))
     {
@@ -16,8 +19,27 @@ export function getScrollParent (node: Node|null) : Element|null
 
     if (isScrollable && node.scrollHeight >= node.clientHeight)
     {
-        return node;
+        return node as HTMLElement;
     }
 
     return getScrollParent(node.parentNode);
+}
+
+
+/**
+ * Scrolls to the given element
+ */
+export function scrollToElement (element: HTMLElement, inContainer?: HTMLElement) : void
+{
+    if (element.scrollIntoView)
+    {
+        element.scrollIntoView({behavior: "smooth"});
+        return;
+    }
+
+    let scrollContainer = inContainer || getScrollParent(element) || document.documentElement;
+
+    animate(scrollContainer, {
+        scrollTop: element.offsetTop,
+    });
 }

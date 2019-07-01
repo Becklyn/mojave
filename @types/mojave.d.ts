@@ -8,7 +8,7 @@ declare namespace mojave
         }
     };
     export type MountableType = "func" | "jsx" | "class";
-    export type MountableFunction = (element: HTMLElement) => void;
+    export type MountableFunction = (element: HTMLElement, ...args: any[]) => void;
     export type Mountable = MountableFunction|MountableClass|ComponentFactory<any>;
 
 

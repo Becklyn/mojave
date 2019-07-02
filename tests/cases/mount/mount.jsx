@@ -173,22 +173,24 @@ QUnit.test(
     "with function: correct argument passing",
     assert =>
     {
-        assert.expect(3);
+        assert.expect(4);
 
         findOne("#qunit-fixture").innerHTML = `<div id="container"></div>`;
         let fixtures = document.getElementById("qunit-fixture");
         let container = fixtures.firstElementChild;
+        let objectParam = {a: "a"};
 
         mount(
             "#container",
-            (element, a, b) => {
+            (element, a, b, c) => {
                 assert.strictEqual(element, container);
                 assert.strictEqual(a, 1);
                 assert.strictEqual(b, 2);
+                assert.strictEqual(c, objectParam);
             },
             {
                 context: fixtures,
-                params: [1, 2]
+                params: [1, 2, objectParam]
             }
         );
     }

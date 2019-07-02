@@ -29,11 +29,6 @@ type GenericEventListener<T extends Event = Event> = {
  */
 export function on<T extends Event = Event> (element : null|EventTarget|EventTarget[], type : string|string[], handler : GenericEventListener<T>) : void
 {
-    if (null === element)
-    {
-        return;
-    }
-
     const list = (Array.isArray(element) ? element : [element]);
     const types = splitStringValue(type);
 
@@ -75,11 +70,6 @@ export function on<T extends Event = Event> (element : null|EventTarget|EventTar
  */
 export function off<T extends Event = Event> (element : null|EventTarget|EventTarget[], type : string|string[], handler : GenericEventListener<T>) : void
 {
-    if (null === element)
-    {
-        return;
-    }
-
     const list = (Array.isArray(element) ? element : [element]);
     const types = splitStringValue(type);
 

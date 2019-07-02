@@ -123,14 +123,68 @@ QUnit.test(
 
 
 QUnit.test(
+    "on() with array of null",
+    (assert) =>
+    {
+        assert.expect(1);
+
+        on([null, null, null], "click", () => {});
+        assert.ok(true);
+    }
+);
+
+QUnit.test(
+    "on() with array of mixed entries (null and existing element)",
+    (assert) =>
+    {
+        assert.expect(1);
+
+        on([null, findOne(".example"), null], "click", () => {});
+        assert.ok(true);
+    }
+);
+
+
+QUnit.test(
     "on() with an invalid event",
     (assert) =>
     {
-        assert.throws(
-            () => {
-                on(findOne(".example"), null, () => {});
-            },
-            "function threw an error"
-        );
+        assert.expect(1);
+
+        on(findOne(".example"), "", () => {});
+        assert.ok(true);
+    }
+);
+
+QUnit.test(
+    "on() with an array of elements and an invalid event",
+    (assert) =>
+    {
+        assert.expect(1);
+
+        on([findOne(".example")], "", () => {});
+        assert.ok(true);
+    }
+);
+
+QUnit.test(
+    "on() with an array of null and an invalid event",
+    (assert) =>
+    {
+        assert.expect(1);
+
+        on([null, null, null], "", () => {});
+        assert.ok(true);
+    }
+);
+
+QUnit.test(
+    "on() with an array of mixed entries (null and existing element) and an invalid event",
+    (assert) =>
+    {
+        assert.expect(1);
+
+        on([null, findOne(".example"), null], "", () => {});
+        assert.ok(true);
     }
 );

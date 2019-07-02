@@ -23,17 +23,14 @@ type GenericEventListener<T extends Event = Event> = {
     (event: T): void;
 }
 
+type EventHandlerTargets = null | EventTarget | (null|EventTarget)[];
+
 
 /**
  * Registers an event listener for the given events
  */
-export function on<T extends Event = Event> (element : null|EventTarget|EventTarget[], type : string|string[], handler : GenericEventListener<T>) : void
+export function on<T extends Event = Event> (element : EventHandlerTargets, type : string|string[], handler : GenericEventListener<T>) : void
 {
-    if (null === element)
-    {
-        return;
-    }
-
     const list = (Array.isArray(element) ? element : [element]);
     const types = splitStringValue(type);
 
@@ -42,6 +39,12 @@ export function on<T extends Event = Event> (element : null|EventTarget|EventTar
         for (let j = 0; j < types.length; j++)
         {
             const node = list[i];
+
+            if (null === node)
+            {
+                continue;
+            }
+
             const eventType = types[j];
 
             node.addEventListener(eventType, handler as EventListener);
@@ -67,13 +70,8 @@ export function on<T extends Event = Event> (element : null|EventTarget|EventTar
 /**
  * Removes an event listener for the given events
  */
-export function off<T extends Event = Event> (element : null|EventTarget|EventTarget[], type : string|string[], handler : GenericEventListener<T>) : void
+export function off<T extends Event = Event> (element : EventHandlerTargets, type : string|string[], handler : GenericEventListener<T>) : void
 {
-    if (null === element)
-    {
-        return;
-    }
-
     const list = (Array.isArray(element) ? element : [element]);
     const types = splitStringValue(type);
 
@@ -82,6 +80,12 @@ export function off<T extends Event = Event> (element : null|EventTarget|EventTa
         for (let j = 0; j < types.length; j++)
         {
             const node = list[i];
+
+            if (null === node)
+            {
+                continue;
+            }
+
             const eventType = types[j];
 
             node.removeEventListener(eventType, handler as EventListener);

@@ -23,11 +23,13 @@ type GenericEventListener<T extends Event = Event> = {
     (event: T): void;
 }
 
+type EventHandlerTargets = null | EventTarget | (null|EventTarget)[];
+
 
 /**
  * Registers an event listener for the given events
  */
-export function on<T extends Event = Event> (element : null|EventTarget|EventTarget[], type : string|string[], handler : GenericEventListener<T>) : void
+export function on<T extends Event = Event> (element : EventHandlerTargets, type : string|string[], handler : GenericEventListener<T>) : void
 {
     const list = (Array.isArray(element) ? element : [element]);
     const types = splitStringValue(type);
@@ -68,7 +70,7 @@ export function on<T extends Event = Event> (element : null|EventTarget|EventTar
 /**
  * Removes an event listener for the given events
  */
-export function off<T extends Event = Event> (element : null|EventTarget|EventTarget[], type : string|string[], handler : GenericEventListener<T>) : void
+export function off<T extends Event = Event> (element : EventHandlerTargets, type : string|string[], handler : GenericEventListener<T>) : void
 {
     const list = (Array.isArray(element) ? element : [element]);
     const types = splitStringValue(type);

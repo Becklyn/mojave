@@ -42,6 +42,12 @@ export function on<T extends Event = Event> (element : null|EventTarget|EventTar
         for (let j = 0; j < types.length; j++)
         {
             const node = list[i];
+
+            if (null === node)
+            {
+                continue;
+            }
+
             const eventType = types[j];
 
             node.addEventListener(eventType, handler as EventListener);
@@ -82,6 +88,12 @@ export function off<T extends Event = Event> (element : null|EventTarget|EventTa
         for (let j = 0; j < types.length; j++)
         {
             const node = list[i];
+
+            if (null === node)
+            {
+                continue;
+            }
+
             const eventType = types[j];
 
             node.removeEventListener(eventType, handler as EventListener);

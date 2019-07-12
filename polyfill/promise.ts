@@ -1,5 +1,5 @@
 //@ts-ignore
-import Promise from "promiscuous";
+import Promise from "promise-polyfill";
 
 let globalWindow = window as any;
 

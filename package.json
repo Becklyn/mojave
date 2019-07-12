@@ -22,7 +22,7 @@
     "dependencies": {
         "mitt": "^1.1.3",
         "preact": "^10.0.0-beta.2",
-        "promiscuous": "^0.7.2",
+        "promise-polyfill": "8.1.3",
         "unfetch": "^4.1.0"
     },
     "devDependencies": {

@@ -18,6 +18,7 @@ import "../cases/dom/manipulate/empty";
 import "../cases/dom/manipulate/prepend";
 import "../cases/dom/manipulate/remove";
 import "../cases/dom/manipulate/replace";
+import "../cases/dom/manipulate/toggleClass";
 import "../cases/dom/traverse/children";
 import "../cases/dom/traverse/closest";
 import "../cases/dom/traverse/filter";

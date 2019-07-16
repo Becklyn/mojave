@@ -228,3 +228,12 @@ export function after (reference : Element, insert : InsertableElement) : void
         reference.nextElementSibling
     );
 }
+
+
+/**
+ * Adds or removes a class on the given Element, based on the `add` flag.
+ */
+export function toggleClass (element: Element, className: string, add: boolean) : void
+{
+    element.classList[add ? "add" : "remove"](className);
+}

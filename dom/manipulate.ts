@@ -235,12 +235,5 @@ export function after (reference : Element, insert : InsertableElement) : void
  */
 export function toggleClass (element: Element, className: string, add: boolean) : void
 {
-    if (add && !element.classList.contains(className))
-    {
-        element.classList.add(className);
-    }
-    else if (!add && element.classList.contains(className))
-    {
-        element.classList.remove(className);
-    }
+    element.classList[add ? "add" : "remove"](className);
 }

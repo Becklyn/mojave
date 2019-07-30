@@ -1,3 +1,5 @@
+import {hasOwnProperty} from "./runtime";
+
 /**
  * Combines all class names in the map to a single class string
  */
@@ -7,7 +9,7 @@ export function classes (map : {[key: string] : boolean}) : string
 
     for (let key in map)
     {
-        if (map.hasOwnProperty(key) && map[key])
+        if (hasOwnProperty(map, key) && map[key])
         {
             list.push(key);
         }

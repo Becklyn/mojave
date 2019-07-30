@@ -1,6 +1,7 @@
 import "./polyfill/promise";
 import {getStyle, setStyles} from "./dom/css";
 import {merge} from "./extend";
+import {hasOwnProperty} from "./runtime";
 
 // global map of active element animations
 const elementAnimations = new WeakMap<HTMLElement, AnimationDirector>();
@@ -181,7 +182,7 @@ function fetchPropertyValues (element : HTMLElement|Window, properties : {[name:
 
     for (const property in properties)
     {
-        if (!properties.hasOwnProperty(property))
+        if (!hasOwnProperty(properties, property))
         {
             continue;
         }
@@ -211,7 +212,7 @@ function applyAllInterpolatedValues (element : HTMLElement|Window, initialValues
 
     for (const property in initialValues)
     {
-        if (!initialValues.hasOwnProperty(property))
+        if (!hasOwnProperty(initialValues, property))
         {
             continue;
         }

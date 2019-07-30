@@ -7,3 +7,5 @@ node_js:
 before_script:
     - npm run-script build
     - npx kaba --debug --with-source-maps
+
+after_success: sizereport --config

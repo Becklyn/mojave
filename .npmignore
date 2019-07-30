@@ -9,6 +9,7 @@
 /kaba.js
 /node_modules
 /package-lock.json
+/sizereport.config.js
 /tests
 /tests-tsconfig.json
 /yarn.lock

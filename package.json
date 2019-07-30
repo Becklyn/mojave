@@ -31,6 +31,7 @@
         "glob": "^7.1.4",
         "kaba": "^8.1.0",
         "qunit": "^2.9.2",
+        "travis-size-report": "^1.1.0",
         "typescript": "^3.5.3"
     },
     "keywords": [

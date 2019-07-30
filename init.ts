@@ -17,7 +17,7 @@ export interface InitializableHandler
  *
  * The handler will be initialized for the initial data and for every update as well.
  */
-export function initFromGlobalData (key: string, initializable: InitializableHandler) : void
+export function initFromGlobalData<TInitializer extends InitializableHandler> (key: string, initializable: TInitializer) : TInitializer
 {
     let global = window as any;
     let init = global[key];
@@ -25,7 +25,7 @@ export function initFromGlobalData (key: string, initializable: InitializableHan
     if (!init || !init.data || !init.init)
     {
         console.error(`Can't initialize on key ${key}, as the structure is invalid.`);
-        return;
+        return initializable;
     }
 
     let previous = init.init.bind(global);
@@ -34,4 +34,5 @@ export function initFromGlobalData (key: string, initializable: InitializableHan
         initializable.init(data);
     };
     initializable.init(init.data);
+    return initializable;
 }

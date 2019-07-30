@@ -34,6 +34,7 @@ import "../cases/dom/utils/isElement";
 import "../cases/dom/utils/splitStringValue";
 import "../cases/extend/extend";
 import "../cases/extend/merge";
+import "../cases/init/initFromGlobalData";
 import "../cases/io/file";
 import "../cases/json/parseElementAsJson";
 import "../cases/json/safeParseJson";

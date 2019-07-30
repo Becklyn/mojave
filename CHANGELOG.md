@@ -1,3 +1,9 @@
+4.4.1
+=====
+
+*   Return initializer from `initFromGlobalData()`.
+
+
 4.4.0
 =====
 

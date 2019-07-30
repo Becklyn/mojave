@@ -13,7 +13,7 @@ QUnit.test(
         let handler = {
             init(data)
             {
-                assert.equal(5, data.a);
+                assert.equal(data.a, 5);
             }
         };
 
@@ -71,6 +71,43 @@ QUnit.test(
         initFromGlobalData("TestKey", secondHandler);
         window.TestKey.init({a: "7"});
         assert.verifySteps(["first: 5", "second: 5", "first: 7", "second: 7"]);
+    }
+);
+
+
+QUnit.test(
+    "return value",
+    (assert) =>
+    {
+        window.TestKey = {data: {a: "5"}, init: function (data) { this.data = data; }};
+
+        let handler = {
+            init(data)
+            {
+                assert.equal(data.a, 5);
+            }
+        };
+
+        let returnValue = initFromGlobalData("TestKey", handler);
+        assert.strictEqual(returnValue, handler);
+    }
+);
+
+
+QUnit.test(
+    "not called if global key not found",
+    (assert) =>
+    {
+        assert.expect(1);
+        let handler = {
+            init(data)
+            {
+                assert.ok(false, "should never be called");
+            }
+        };
+
+        initFromGlobalData("IAmAMissingGlobalKey", handler);
+        assert.ok(true, "not crashed");
     }
 );
 

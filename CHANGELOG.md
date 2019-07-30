@@ -1,3 +1,9 @@
+4.4.0
+=====
+
+*   Added `initFromGlobalData()`.
+
+
 4.3.0
 =====
 

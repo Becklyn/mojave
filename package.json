@@ -21,15 +21,18 @@
     },
     "dependencies": {
         "mitt": "^1.1.3",
-        "preact": "^10.0.0-beta.2",
-        "promise-polyfill": "8.1.3",
+        "preact": "^10.0.0-rc.0",
+        "promise-polyfill": "^8.1.3",
         "unfetch": "^4.1.0"
     },
     "devDependencies": {
+        "@types/qunit": "^2.9.0",
         "browserstack-runner": "^0.9.0",
-        "kaba": "^8.0.1",
+        "glob": "^7.1.4",
+        "kaba": "^8.1.0",
         "qunit": "^2.9.2",
-        "typescript": "^3.5.1"
+        "travis-size-report": "^1.1.0",
+        "typescript": "^3.5.3"
     },
     "keywords": [
         "becklyn",

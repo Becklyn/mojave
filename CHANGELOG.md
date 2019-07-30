@@ -2,6 +2,7 @@
 =====
 
 *   Added `initFromGlobalData()`.
+*   Added `toggleClass()`.
 
 
 4.3.0

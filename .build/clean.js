@@ -10,6 +10,7 @@ let compiledFiles = glob.sync("**/*.{d.ts,js}", {
         "node_modules/**/*",
         "tests/**/*",
         "kaba.js",
+        "sizereport.config.js",
     ],
 });
 

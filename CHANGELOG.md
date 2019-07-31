@@ -1,3 +1,9 @@
+4.4.2
+=====
+
+*   Consistently use mojave's own `hasOwnProperty()` in all of mojave's functions.
+
+
 4.4.1
 =====
 

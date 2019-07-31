@@ -1,3 +1,4 @@
+import {hasOwnProperty} from "./runtime";
 import {typeOf} from "./types";
 
 /**
@@ -51,7 +52,7 @@ export function merge (target : {[key: string]: any}, ...sources : {[key: string
         {
             for (const key in source)
             {
-                if (source.hasOwnProperty(key))
+                if (hasOwnProperty(source, key))
                 {
                     target[key] = (target[key] !== undefined)
                         ? merge(target[key], source[key])
@@ -88,7 +89,7 @@ export function extend (...sources : {[key: string]: any}[]) : {[key: string]: a
 
         for (const key in source)
         {
-            if (source.hasOwnProperty(key))
+            if (hasOwnProperty(source, key))
             {
                 target[key] = source[key];
             }

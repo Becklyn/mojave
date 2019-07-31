@@ -1,3 +1,5 @@
+import {hasOwnProperty} from "../runtime";
+
 const SPECIAL_ATTRIBUTE_SETTERS = /^(html|text|css)$/;
 
 /**
@@ -16,7 +18,7 @@ export function setAttrs (element: Element, attributes: OptionalKeyMap): void
 {
     for (const key in attributes)
     {
-        if (!attributes.hasOwnProperty(key))
+        if (!hasOwnProperty(attributes, key))
         {
             continue;
         }

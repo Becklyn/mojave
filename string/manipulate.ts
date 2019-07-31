@@ -1,3 +1,6 @@
+import {hasOwnProperty} from "../runtime";
+
+
 /**
  * Replaces all occurrences of substrings in the given string.
  */
@@ -5,7 +8,7 @@ export function replaceAll (text : string, replacements : {[key: string]: string
 {
     for (const key in replacements)
     {
-        if (!replacements.hasOwnProperty(key))
+        if (!hasOwnProperty(replacements, key))
         {
             continue;
         }

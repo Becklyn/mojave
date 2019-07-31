@@ -1,4 +1,5 @@
 import {safeParseJson} from "./json";
+import {hasOwnProperty} from "./runtime";
 
 
 export type CookieOptions = Partial<{
@@ -93,7 +94,7 @@ function encodeCookieOptions (options : {[key: string]: string|boolean}) : strin
         const optionValue = options[optionName];
 
         // Flags with a `false` value needs to be omitted
-        if (!options.hasOwnProperty(optionName) || optionValue === false)
+        if (!hasOwnProperty(options, optionName) || optionValue === false)
         {
             continue;
         }

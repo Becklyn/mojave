@@ -86,7 +86,7 @@ export function isJsonFailure (response: any): response is JsonFailureResponse
  */
 export function isStatusFailure (response: any): response is StatusFailureResponse
 {
-    return response.reason && "invalid_json" === response.reason;
+    return response.reason && "status" === response.reason;
 }
 
 

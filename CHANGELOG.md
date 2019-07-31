@@ -1,7 +1,8 @@
-4.4.2
+4.5.0
 =====
 
 *   Consistently use mojave's own `hasOwnProperty()` in all of mojave's functions.
+*   Added `inNextFrame()` timing function.
 
 
 4.4.1

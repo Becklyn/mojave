@@ -1,3 +1,9 @@
+4.5.1
+=====
+
+*   Only show error in `initFromGlobalData()` if the element is not missing, but has an invalid structure. Ignore missing keys.
+
+
 4.5.0
 =====
 

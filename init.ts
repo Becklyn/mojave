@@ -24,7 +24,12 @@ export function initFromGlobalData<TInitializer extends InitializableHandler> (k
 
     if (!init || !init.data || !init.init)
     {
-        console.error(`Can't initialize on key ${key}, as the structure is invalid.`);
+        if (init)
+        {
+            // only show error message if the key is not completely missing.
+            console.error(`Can't initialize on key ${key}, as the structure is invalid.`);
+        }
+
         return initializable;
     }
 

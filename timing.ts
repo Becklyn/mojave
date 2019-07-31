@@ -46,3 +46,17 @@ export function onNextAnimationFrame (run: (...args: any[]) => void) : (...args:
         }
     }
 }
+
+
+/**
+ * Runs the callback in one frame after the next, so that it can act on previously committed DOM.
+ *
+ * This function is especially useful if you first need to render DOM and then set a CSS class for a transition
+ * on it.
+ */
+export function inNextFrame (callback: () => void) : void
+{
+    window.requestAnimationFrame(
+        () => window.requestAnimationFrame(callback)
+    );
+}

@@ -1,3 +1,9 @@
+4.5.2
+=====
+
+*   Fixed broken enum check in `isStatusFailure()`.
+
+
 4.5.1
 =====
 

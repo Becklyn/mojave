@@ -1,15 +1,32 @@
-import {ComponentType, createElement, render} from "preact";
+import {Component, ComponentFactory, ComponentType, createElement, JSX, render} from "preact";
 import {mojave} from "../@types/mojave";
 import {find} from "../dom/traverse";
 import {extend} from "../extend";
 import {parseElementAsJson} from "../json";
 
 
+/**
+ * Mounts a Preact function or class component into all elements matching the given selector.
+ */
+export function mountJsx<T extends ComponentFactory<any>>(selector: string, mountable: T, options?: mojave.ComponentMountOptions<T>): void
+{
+    doMount(find(selector), mountable, options);
+}
 
-export function mount (selector: string, mountable: mojave.MountableFunction, options?: mojave.FunctionMountOptions): void;
-export function mount (selector: string, mountable: ComponentType<any>, options?: mojave.ComponentMountOptions): void;
-export function mount (selector: string, mountable: mojave.MountableClass, options?: mojave.ClassMountOptions): void;
-export function mount <T extends mojave.Mountable>(selector: string, mountable: mojave.Mountable, options?: mojave.MountOptions) : void
+
+/**
+ * Mounts a StandaloneComponent into all elements matching the given selector.
+ */
+export function mountClass<T extends mojave.MountableClass>(selector: string, mountable: T, options?: mojave.ClassMountOptions<T>): void
+{
+    doMount(find(selector), mountable, options);
+}
+
+
+/**
+ * Mounts a function into all elements matching the given selector.
+ */
+export function mount<T extends mojave.MountableFunction>(selector: string, mountable: T, options?: mojave.FunctionMountOptions<T>): void
 {
     doMount(find(selector), mountable, options);
 }
@@ -45,7 +62,6 @@ export function mountLazy <T extends mojave.Mountable>(selector: string, importe
  */
 function doMount (elements: HTMLElement[], mountable: mojave.Mountable, rawOptions?: mojave.MountOptions) : void
 {
-    let mountableAny = mountable as any;
     let options = extend({
         type: "func",
     }, rawOptions || {}) as mojave.MountOptions & {type: mojave.MountableType};
@@ -56,9 +72,9 @@ function doMount (elements: HTMLElement[], mountable: mojave.Mountable, rawOptio
             // check whether is a JSX component (i.e. it has no `init()` method).
             if ("jsx" === options.type)
             {
-                let opts = options as mojave.ComponentMountOptions;
+                let opts = options as mojave.ComponentMountOptions<any>;
                 let parent = node.parentElement;
-                let params = opts.params || {};
+                let params = (opts.params || {}) as {[key: string]: any};
 
                 if (!parent)
                 {
@@ -84,18 +100,16 @@ function doMount (elements: HTMLElement[], mountable: mojave.Mountable, rawOptio
             }
             else if ("class" === options.type)
             {
-                let standaloneOptions = options as mojave.ClassMountOptions;
-                const mounted = new mountableAny(node, ...(standaloneOptions.params || []));
+                let mountableClass = mountable as mojave.MountableClass;
+                let standaloneOptions = options as mojave.ClassMountOptions<any>;
+                const mounted = new mountableClass(node, ...(standaloneOptions.params || []));
                 mounted.init();
             }
             else
             {
-                let standaloneOptions = options as mojave.FunctionMountOptions;
+                let standaloneOptions = options as mojave.FunctionMountOptions<any>;
                 (mountable as Function)(node, ...(standaloneOptions.params || []));
             }
         }
     );
 }
-
-
-

@@ -1,4 +1,4 @@
-import {Component, ComponentFactory, ComponentType, createElement, JSX, render} from "preact";
+import {ComponentFactory, createElement, render} from "preact";
 import {mojave} from "../@types/mojave";
 import {find} from "../dom/traverse";
 import {extend} from "../extend";
@@ -10,25 +10,7 @@ import {parseElementAsJson} from "../json";
  */
 export function mountJsx<T extends ComponentFactory<any>>(selector: string, mountable: T, options?: mojave.ComponentMountOptions<T>): void
 {
-    doMount(find(selector), mountable, options);
-}
-
-
-/**
- * Mounts a StandaloneComponent into all elements matching the given selector.
- */
-export function mountClass<T extends mojave.MountableClass>(selector: string, mountable: T, options?: mojave.ClassMountOptions<T>): void
-{
-    doMount(find(selector), mountable, options);
-}
-
-
-/**
- * Mounts a function into all elements matching the given selector.
- */
-export function mount<T extends mojave.MountableFunction>(selector: string, mountable: T, options?: mojave.FunctionMountOptions<T>): void
-{
-    doMount(find(selector), mountable, options);
+    find(selector).forEach(node => doMountJsx<T>(node, mountable, options));
 }
 
 
@@ -40,7 +22,7 @@ export function mount<T extends mojave.MountableFunction>(selector: string, moun
  *
  *     mountLazy(".selector", () => import("./src/MyComp"));
  */
-export function mountLazy <T extends mojave.Mountable>(selector: string, importer: () => Promise<any>, options?: mojave.MountOptions) : void
+export function mountLazyJsx<T extends ComponentFactory<any>>(selector: string, importer: () => Promise<any>, options?: mojave.ComponentMountOptions<T>) : void
 {
     let elements = find(selector);
 
@@ -50,66 +32,143 @@ export function mountLazy <T extends mojave.Mountable>(selector: string, importe
     }
 
     importer().then(
-        module => doMount(elements, module.default, options),
+        module => {
+            elements.forEach(element => {
+                doMountJsx<T>(element, module.default, options);
+            });
+        },
         error => console.error(`Mounting of component of path '${selector}' failed: ${error.message}`, error)
     );
 }
 
 
+/**
+ * Mounts a Preact function or class component
+ */
+function doMountJsx<T extends ComponentFactory<any>>(node: HTMLElement, mountable: T, options?: mojave.ComponentMountOptions<T>): void
+{
+    options = options || {};
+    let parent = node.parentElement;
+    let params = (options.params || {});
+
+    if (!parent)
+    {
+        console.error("Can't mount on container without parent.");
+        return;
+    }
+
+    if (!options.hydrate)
+    {
+        // if the node should not be hydrated, try to use the content as JSON
+        params = extend(params, parseElementAsJson(node) || {});
+
+        // remove node before mount, so that we can ensure that preact doesn't reuse it.
+        parent.removeChild(node);
+    }
+
+    // render
+    render(
+        createElement(mountable, params),
+        parent,
+        options.hydrate ? node : undefined
+    );
+}
+
 
 /**
- * Actually mounts on the given elements
+ * Mounts a StandaloneComponent into all elements matching the given selector.
  */
-function doMount (elements: HTMLElement[], mountable: mojave.Mountable, rawOptions?: mojave.MountOptions) : void
+export function mountClass<T extends mojave.MountableClass>(selector: string, mountable: T, options?: mojave.ClassMountOptions<T>): void
 {
-    let options = extend({
-        type: "func",
-    }, rawOptions || {}) as mojave.MountOptions & {type: mojave.MountableType};
+    find(selector).forEach(node => {
+        doMountClass<T>(node, mountable, options);
+    });
+}
 
-    elements.forEach(
-        node =>
-        {
-            // check whether is a JSX component (i.e. it has no `init()` method).
-            if ("jsx" === options.type)
-            {
-                let opts = options as mojave.ComponentMountOptions<any>;
-                let parent = node.parentElement;
-                let params = (opts.params || {}) as {[key: string]: any};
 
-                if (!parent)
-                {
-                    console.error("Can't mount on container without parent.");
-                    return;
-                }
+/**
+ * Mounts the component lazily, if an element matching the selector exists.
+ *
+ * The importer must import the component.
+ * Example:
+ *
+ *     mountLazy(".selector", () => import("./src/MyComp"));
+ */
+export function mountLazyClass <T extends mojave.MountableClass>(selector: string, importer: () => Promise<any>, options?: mojave.ClassMountOptions<T>) : void
+{
+    let elements = find(selector);
 
-                if (!opts.hydrate)
-                {
-                    // if the node should not be hydrated, try to use the content as JSON
-                    params = extend(params, parseElementAsJson(node) || {});
+    if (!elements.length)
+    {
+        return;
+    }
 
-                    // remove node before mount, so that we can ensure that preact doesn't reuse it.
-                    parent.removeChild(node);
-                }
-
-                // render
-                render(
-                    createElement(mountable as ComponentType<any>, params),
-                    parent,
-                    opts.hydrate ? node : undefined
-                );
-            }
-            else if ("class" === options.type)
-            {
-                let mountableClass = mountable as mojave.MountableClass;
-                let standaloneOptions = options as mojave.ClassMountOptions<any>;
-                const mounted = new mountableClass(node, ...(standaloneOptions.params || []));
-                mounted.init();
-            }
-            else
-            {
-                let standaloneOptions = options as mojave.FunctionMountOptions<any>;
-                (mountable as Function)(node, ...(standaloneOptions.params || []));
-            }
-        }
+    importer().then(
+        module => {
+            elements.forEach(element => {
+                doMountClass<T>(element, module.default, options);
+            });
+        },
+        error => console.error(`Mounting of component of path '${selector}' failed: ${error.message}`, error)
     );
+}
+
+
+/**
+ * Mounts a StandaloneComponent
+ */
+function doMountClass<T extends mojave.MountableClass>(node: HTMLElement, mountable: T, options?: mojave.ClassMountOptions<T>): void
+{
+    options = options || {};
+    const mounted = new mountable(node, ...(options.params || []));
+    mounted.init();
+}
+
+
+/**
+ * Mounts a function into all elements matching the given selector.
+ */
+export function mount<T extends mojave.MountableFunction>(selector: string, mountable: T, options?: mojave.FunctionMountOptions<T>): void
+{
+    find(selector).forEach(node => {
+        doMountFunction<T>(node, mountable, options);
+    });
+}
+
+
+/**
+ * Mounts the component lazily, if an element matching the selector exists.
+ *
+ * The importer must import the component.
+ * Example:
+ *
+ *     mountLazy(".selector", () => import("./src/MyComp"));
+ */
+export function mountLazy <T extends mojave.MountableFunction>(selector: string, importer: () => Promise<any>, options?: mojave.FunctionMountOptions<T>) : void
+{
+    let elements = find(selector);
+
+    if (!elements.length)
+    {
+        return;
+    }
+
+    importer().then(
+        module => {
+            elements.forEach(element => {
+                doMountFunction<T>(element, module.default, options);
+            });
+        },
+        error => console.error(`Mounting of component of path '${selector}' failed: ${error.message}`, error)
+    );
+}
+
+
+/**
+ * Mounts a function
+ */
+function doMountFunction<T extends mojave.MountableFunction>(node: HTMLElement, mountable: T, options?: mojave.FunctionMountOptions<T>): void
+{
+    options = options || {};
+    mountable(node, ...(options.params || []));
 }

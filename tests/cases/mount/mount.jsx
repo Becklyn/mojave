@@ -1,6 +1,6 @@
 import {findOne} from "../../../dom/traverse";
 import QUnit from "qunit";
-import {mount} from "../../../mount";
+import {mount, mountClass, mountJsx} from "../../../mount";
 import {h} from "preact";
 
 
@@ -53,7 +53,7 @@ QUnit.test(
             init () {}
         }
 
-        mount(".fixture", ExampleMountComponent, {params: [42], context, type: "class"});
+        mountClass(".fixture", ExampleMountComponent, {params: [42], context});
     }
 );
 
@@ -71,7 +71,7 @@ QUnit.test(
 
         let fixture = findOne("#qunit-fixture");
         fixture.innerHTML = `<div id="container"></div>`;
-        mount("#container", TestComponent, {type: "jsx"});
+        mountJsx("#container", TestComponent);
 
         assert.strictEqual(
             document.getElementById("qunit-fixture").querySelectorAll(".test").length,
@@ -95,7 +95,7 @@ QUnit.test(
         let mountingPoint = fixture.firstElementChild;
 
         assert.strictEqual(mountingPoint.parentElement, fixture, "Parent is set beforehand");
-        mount("#container", TestComponent, {type: "jsx"});
+        mountJsx("#container", TestComponent);
         assert.strictEqual(mountingPoint.parentElement, null, "Parent isn't set anymore, as the node has been removed from the DOM");
     }
 );
@@ -116,7 +116,7 @@ QUnit.test(
         let mountingPoint = fixture.firstElementChild;
 
         assert.strictEqual(mountingPoint.parentElement, fixture, "Parent is set beforehand");
-        mount("#container", TestComponent, {type: "jsx", hydrate: true});
+        mountJsx("#container", TestComponent, {hydrate: true});
         // keep element in DOM
         assert.strictEqual(mountingPoint.parentElement, fixture, "Parent is set after, as the node hasn't been removed from the dom.");
         assert.strictEqual(fixture.childElementCount, 1, "The node was hydrated / reused and no new node was added.");
@@ -143,7 +143,7 @@ QUnit.test(
         };
 
         findOne("#qunit-fixture").innerHTML = `<div id="container"></div>`;
-        mount("#container", TestComponent, {type: "jsx", params});
+        mountJsx("#container", TestComponent, {params});
     }
 );
 

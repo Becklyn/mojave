@@ -1,4 +1,4 @@
-import {ComponentClass, ComponentFactory, FunctionComponent, VNode} from "preact";
+import {ComponentClass, FunctionComponent, VNode} from "preact";
 import {Tuple} from "ts-toolbelt";
 
 declare namespace mojave
@@ -8,9 +8,7 @@ declare namespace mojave
             init(): void;
         }
     };
-    export type MountableType = "func" | "jsx" | "class";
     export type MountableFunction = (element: HTMLElement, ...args: any[]) => any;
-    export type Mountable = MountableFunction|MountableClass|ComponentFactory<any>;
 
 
     export interface MountOptions
@@ -23,8 +21,6 @@ declare namespace mojave
 
     export interface ClassMountOptions<T extends mojave.MountableClass> extends MountOptions
     {
-        type: "class";
-
         /**
          * Additional parameters to pass as props / constructor arguments
          */
@@ -33,8 +29,6 @@ declare namespace mojave
 
     export interface FunctionMountOptions<T extends mojave.MountableFunction> extends MountOptions
     {
-        type?: "func";
-
         /**
          * Additional parameters to pass as props / constructor arguments
          */
@@ -43,8 +37,6 @@ declare namespace mojave
 
     export interface ComponentMountOptions<T extends ComponentClass<any> | FunctionComponent<any>> extends MountOptions
     {
-        type: "jsx";
-
         /**
          * Additional parameters to pass as props / constructor arguments
          */

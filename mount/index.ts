@@ -20,7 +20,7 @@ export function mountJsx<TPreactComponent extends ComponentFactory<any>>(selecto
  * The importer must import the component.
  * Example:
  *
- *     mountLazy(".selector", () => import("./src/MyComp"));
+ *     mountLazyJsx<MyPreactComp>(".selector", () => import("./src/MyPreactComp"));
  */
 export function mountLazyJsx<TPreactComponent extends ComponentFactory<any>>(selector: string, importer: () => Promise<any>, options?: mojave.ComponentMountOptions<TPreactComponent>) : void
 {
@@ -92,7 +92,7 @@ export function mountClass<TStandaloneComponent extends mojave.MountableClass>(s
  * The importer must import the component.
  * Example:
  *
- *     mountLazy(".selector", () => import("./src/MyComp"));
+ *     mountLazyClass<MyStandaloneComp>(".selector", () => import("./src/MyStandaloneComp"));
  */
 export function mountLazyClass <TStandaloneComponent extends mojave.MountableClass>(selector: string, importer: () => Promise<any>, options?: mojave.ClassMountOptions<TStandaloneComponent>) : void
 {
@@ -142,7 +142,7 @@ export function mount<TFunction extends mojave.MountableFunction>(selector: stri
  * The importer must import the component.
  * Example:
  *
- *     mountLazy(".selector", () => import("./src/MyComp"));
+ *     mountLazy<MyFunctionComp>(".selector", () => import("./src/MyFunctionComp"));
  */
 export function mountLazy <TFunction extends mojave.MountableFunction>(selector: string, importer: () => Promise<any>, options?: mojave.FunctionMountOptions<TFunction>) : void
 {

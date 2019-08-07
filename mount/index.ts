@@ -8,9 +8,9 @@ import {parseElementAsJson} from "../json";
 /**
  * Mounts a Preact function or class component into all elements matching the given selector.
  */
-export function mountJsx<T extends ComponentFactory<any>>(selector: string, mountable: T, options?: mojave.ComponentMountOptions<T>): void
+export function mountJsx<TPreactComponent extends ComponentFactory<any>>(selector: string, mountable: TPreactComponent, options?: mojave.ComponentMountOptions<TPreactComponent>): void
 {
-    find(selector).forEach(node => doMountJsx<T>(node, mountable, options));
+    find(selector).forEach(node => doMountJsx<TPreactComponent>(node, mountable, options));
 }
 
 
@@ -22,7 +22,7 @@ export function mountJsx<T extends ComponentFactory<any>>(selector: string, moun
  *
  *     mountLazy(".selector", () => import("./src/MyComp"));
  */
-export function mountLazyJsx<T extends ComponentFactory<any>>(selector: string, importer: () => Promise<any>, options?: mojave.ComponentMountOptions<T>) : void
+export function mountLazyJsx<TPreactComponent extends ComponentFactory<any>>(selector: string, importer: () => Promise<any>, options?: mojave.ComponentMountOptions<TPreactComponent>) : void
 {
     let elements = find(selector);
 
@@ -34,7 +34,7 @@ export function mountLazyJsx<T extends ComponentFactory<any>>(selector: string, 
     importer().then(
         module => {
             elements.forEach(element => {
-                doMountJsx<T>(element, module.default, options);
+                doMountJsx<TPreactComponent>(element, module.default, options);
             });
         },
         error => console.error(`Mounting of component of path '${selector}' failed: ${error.message}`, error)
@@ -45,7 +45,7 @@ export function mountLazyJsx<T extends ComponentFactory<any>>(selector: string, 
 /**
  * Mounts a Preact function or class component
  */
-function doMountJsx<T extends ComponentFactory<any>>(node: HTMLElement, mountable: T, options?: mojave.ComponentMountOptions<T>): void
+function doMountJsx<TPreactComponent extends ComponentFactory<any>>(node: HTMLElement, mountable: TPreactComponent, options?: mojave.ComponentMountOptions<TPreactComponent>): void
 {
     options = options || {};
     let parent = node.parentElement;
@@ -78,10 +78,10 @@ function doMountJsx<T extends ComponentFactory<any>>(node: HTMLElement, mountabl
 /**
  * Mounts a StandaloneComponent into all elements matching the given selector.
  */
-export function mountClass<T extends mojave.MountableClass>(selector: string, mountable: T, options?: mojave.ClassMountOptions<T>): void
+export function mountClass<TStandaloneComponent extends mojave.MountableClass>(selector: string, mountable: TStandaloneComponent, options?: mojave.ClassMountOptions<TStandaloneComponent>): void
 {
     find(selector).forEach(node => {
-        doMountClass<T>(node, mountable, options);
+        doMountClass<TStandaloneComponent>(node, mountable, options);
     });
 }
 
@@ -94,7 +94,7 @@ export function mountClass<T extends mojave.MountableClass>(selector: string, mo
  *
  *     mountLazy(".selector", () => import("./src/MyComp"));
  */
-export function mountLazyClass <T extends mojave.MountableClass>(selector: string, importer: () => Promise<any>, options?: mojave.ClassMountOptions<T>) : void
+export function mountLazyClass <TStandaloneComponent extends mojave.MountableClass>(selector: string, importer: () => Promise<any>, options?: mojave.ClassMountOptions<TStandaloneComponent>) : void
 {
     let elements = find(selector);
 
@@ -106,7 +106,7 @@ export function mountLazyClass <T extends mojave.MountableClass>(selector: strin
     importer().then(
         module => {
             elements.forEach(element => {
-                doMountClass<T>(element, module.default, options);
+                doMountClass<TStandaloneComponent>(element, module.default, options);
             });
         },
         error => console.error(`Mounting of component of path '${selector}' failed: ${error.message}`, error)
@@ -117,7 +117,7 @@ export function mountLazyClass <T extends mojave.MountableClass>(selector: strin
 /**
  * Mounts a StandaloneComponent
  */
-function doMountClass<T extends mojave.MountableClass>(node: HTMLElement, mountable: T, options?: mojave.ClassMountOptions<T>): void
+function doMountClass<TStandaloneComponent extends mojave.MountableClass>(node: HTMLElement, mountable: TStandaloneComponent, options?: mojave.ClassMountOptions<TStandaloneComponent>): void
 {
     options = options || {};
     const mounted = new mountable(node, ...(options.params || []));
@@ -128,10 +128,10 @@ function doMountClass<T extends mojave.MountableClass>(node: HTMLElement, mounta
 /**
  * Mounts a function into all elements matching the given selector.
  */
-export function mount<T extends mojave.MountableFunction>(selector: string, mountable: T, options?: mojave.FunctionMountOptions<T>): void
+export function mount<TFunction extends mojave.MountableFunction>(selector: string, mountable: TFunction, options?: mojave.FunctionMountOptions<TFunction>): void
 {
     find(selector).forEach(node => {
-        doMountFunction<T>(node, mountable, options);
+        doMountFunction<TFunction>(node, mountable, options);
     });
 }
 
@@ -144,7 +144,7 @@ export function mount<T extends mojave.MountableFunction>(selector: string, moun
  *
  *     mountLazy(".selector", () => import("./src/MyComp"));
  */
-export function mountLazy <T extends mojave.MountableFunction>(selector: string, importer: () => Promise<any>, options?: mojave.FunctionMountOptions<T>) : void
+export function mountLazy <TFunction extends mojave.MountableFunction>(selector: string, importer: () => Promise<any>, options?: mojave.FunctionMountOptions<TFunction>) : void
 {
     let elements = find(selector);
 
@@ -156,7 +156,7 @@ export function mountLazy <T extends mojave.MountableFunction>(selector: string,
     importer().then(
         module => {
             elements.forEach(element => {
-                doMountFunction<T>(element, module.default, options);
+                doMountFunction<TFunction>(element, module.default, options);
             });
         },
         error => console.error(`Mounting of component of path '${selector}' failed: ${error.message}`, error)
@@ -167,7 +167,7 @@ export function mountLazy <T extends mojave.MountableFunction>(selector: string,
 /**
  * Mounts a function
  */
-function doMountFunction<T extends mojave.MountableFunction>(node: HTMLElement, mountable: T, options?: mojave.FunctionMountOptions<T>): void
+function doMountFunction<TFunction extends mojave.MountableFunction>(node: HTMLElement, mountable: TFunction, options?: mojave.FunctionMountOptions<TFunction>): void
 {
     options = options || {};
     mountable(node, ...(options.params || []));

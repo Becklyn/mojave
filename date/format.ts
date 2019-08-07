@@ -108,6 +108,14 @@ export function formatDate (date : Date) : string
     return `${zeroFill(date.getDate())}.${zeroFill(date.getMonth() + 1)}.${date.getFullYear()}`;
 }
 
+/**
+ * Formats a date time
+ */
+export function formatDateTime (date: Date, withSeconds: boolean = true) : string
+{
+    return `${formatDate(date)} ${formatTime(date, withSeconds)}`;
+}
+
 
 /**
  * Formats the date in the little endian format (DD.MM.) without the year
@@ -115,6 +123,21 @@ export function formatDate (date : Date) : string
 export function formatDateShort (date : Date) : string
 {
     return `${zeroFill(date.getDate())}.${zeroFill(date.getMonth() + 1)}.`;
+}
+
+/**
+ * Formats a time
+ */
+export function formatTime (date: Date, withSeconds: boolean = true) : string
+{
+    let time = `${zeroFill(date.getHours())}:${zeroFill(date.getMinutes())}`;
+
+    if (withSeconds)
+    {
+        time += `:${zeroFill(date.getSeconds())}`;
+    }
+
+    return time;
 }
 
 

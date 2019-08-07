@@ -2,6 +2,7 @@
 =====
 
 *   Added more date formatter functions: `formatDateTime()` and `formatDateTime()`.
+*   Added a localized `DateFormatter`.
 
 
 4.5.2

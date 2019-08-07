@@ -1,4 +1,5 @@
-import {ComponentFactory} from "preact";
+import {ComponentClass, FunctionComponent, VNode} from "preact";
+import {Tuple} from "ts-toolbelt";
 
 declare namespace mojave
 {
@@ -7,9 +8,7 @@ declare namespace mojave
             init(): void;
         }
     };
-    export type MountableType = "func" | "jsx" | "class";
-    export type MountableFunction = (element: HTMLElement, ...args: any[]) => void;
-    export type Mountable = MountableFunction|MountableClass|ComponentFactory<any>;
+    export type MountableFunction = (element: HTMLElement, ...args: any[]) => any;
 
 
     export interface MountOptions
@@ -20,34 +19,32 @@ declare namespace mojave
         context?: Document|HTMLElement;
     }
 
-    export interface ClassMountOptions extends MountOptions
+    export interface ClassMountOptions<T extends mojave.MountableClass> extends MountOptions
     {
-        type: "class";
-
         /**
          * Additional parameters to pass as props / constructor arguments
          */
-        params?: any[];
+        params?: Tuple.Drop<ConstructorParameters<T>, "1", "->">;
     }
 
-    export interface FunctionMountOptions extends MountOptions
+    export interface FunctionMountOptions<T extends mojave.MountableFunction> extends MountOptions
     {
-        type?: "func";
-
         /**
          * Additional parameters to pass as props / constructor arguments
          */
-        params?: any[];
+        params?: Tuple.Drop<Parameters<T>, "1", "->">;
     }
 
-    export interface ComponentMountOptions extends MountOptions
+    export interface ComponentMountOptions<T extends ComponentClass<any> | FunctionComponent<any>> extends MountOptions
     {
-        type: "jsx";
-
         /**
          * Additional parameters to pass as props / constructor arguments
          */
-        params?: {[k: string]: any};
+        params?: T extends ComponentClass<infer TClassProps>
+            ? TClassProps
+            : T extends (props: infer TFunctionProps, context?: any) => VNode<any> | null
+                ? TFunctionProps
+                : never;
 
         /**
          * Flag whether the element should be hydrated (if possible) or the mounting element should be removed.

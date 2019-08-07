@@ -1,3 +1,21 @@
+5.0.0
+=====
+
+* Split `mount` into three methods:
+    * `mount` for mounting `function`s
+    * `mountClass` for mounting `StandaloneComponent`s
+    * `mountJsx` for mounting Preact components (functional and class)
+* Split `mountLazy` into three methods:
+    * `mountLazy` for mounting `function`s
+    * `mountLazyClass` for mounting `StandaloneComponent`s
+    * `mountLazyJsx` for mounting Preact components (functional and class)
+* Removed `{ type: "func"|"class"|"jsx" }` property from derived `mojave.MountOptions`s.
+* `mojave.MountOptions`'s specific implementations have been updated to add support for automatic parameter inference:
+    * `mojave.ClassMountOptions` has been made generic: `mojave.ClassMountOptions<TClass extends mojave.MountableClass>`
+    * `mojave.FunctionMountOptions` has been made generic: `mojave.FunctionMountOptions<TFunction extends mojave.MountableFunction>`
+    * `mojave.ComponentMountOptions` has been made generic: `mojave.ComponentMountOptions<TComponent extends ComponentClass<any> | FunctionComponent<any>>`
+
+
 4.5.2
 =====
 

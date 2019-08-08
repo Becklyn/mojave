@@ -8,7 +8,7 @@ declare namespace mojave
             init(): void;
         }
     };
-    export type MountableFunction = (element: HTMLElement, ...args: any[]) => any;
+    export type MountableFunction = (element: HTMLElement, ...args: any[]) => void;
 
 
     export interface MountOptions

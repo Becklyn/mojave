@@ -1,3 +1,9 @@
+3.1.4
+=====
+
+*   **Bugfix**: fix automatic cookie secure setting
+
+
 3.0.5
 =====
 

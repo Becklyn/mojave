@@ -164,7 +164,7 @@ export default class Sortable
     private onMouseOut (event : MouseEvent) : void
     {
         const html = findOne("html");
-        if (event.relatedTarget === html && event.toElement === html)
+        if (event.relatedTarget === html)
         {
             this.onDragEnd();
         }

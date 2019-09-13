@@ -14,6 +14,7 @@
     * `mojave.ClassMountOptions` has been made generic: `mojave.ClassMountOptions<TClass extends mojave.MountableClass>`
     * `mojave.FunctionMountOptions` has been made generic: `mojave.FunctionMountOptions<TFunction extends mojave.MountableFunction>`
     * `mojave.ComponentMountOptions` has been made generic: `mojave.ComponentMountOptions<TComponent extends ComponentClass<any> | FunctionComponent<any>>`
+* Fixed broken automatic secure setting for cookies 
 
 
 4.5.2

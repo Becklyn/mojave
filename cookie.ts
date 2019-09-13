@@ -28,7 +28,7 @@ export function formatCookieString (key : string, value : any, options : CookieO
     let config : {[key: string]: string|boolean} = {
         domain: options.domain || false,
         path: options.path || "/",
-        secure: options.secure || ( window.location.protocol === "https"),
+        secure: options.secure || (window.location.protocol === "https:"),
     };
 
     // if a Date is given, just use the date.

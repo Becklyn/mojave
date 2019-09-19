@@ -32,7 +32,7 @@
         "kaba": "^8.1.0",
         "qunit": "^2.9.2",
         "travis-size-report": "^1.1.0",
-        "ts-toolbelt": "^3.2.14",
+        "ts-toolbelt": "^4.0.0",
         "typescript": "^3.5.3"
     },
     "keywords": [

@@ -1,7 +1,7 @@
 /**
  * Wraps parsing of JSON, so that an error is logged, but no exception is thrown
  */
-export function safeParseJson (value?: string|false|null) : {[k: string]: any}|null
+export function safeParseJson<T extends {[k: string]: any}> (value?: string|false|null) : T|null
 {
     try
     {
@@ -24,7 +24,7 @@ export function safeParseJson (value?: string|false|null) : {[k: string]: any}|n
 /**
  * Parses JSON from the given element's content.
  */
-export function parseElementAsJson (element: HTMLElement) : {[k: string]: any}|null
+export function parseElementAsJson<T extends {[k: string]: any}> (element: HTMLElement) : T|null
 {
     return safeParseJson(
         (element.textContent || "")

@@ -2,6 +2,7 @@
 =====
 
 *   Added `dom/wire/wireSourceTargetLists()`
+*   Added `mediaQueryMatcher()` as a for attaching event listeners to `window.matchMedia()` without checking for the existence of `addListerer()` or `addEventListerer()` yourself.
 
 
 5.1.1

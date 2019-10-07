@@ -25,6 +25,13 @@ type GenericEventListener<T extends Event = Event> = {
 
 type EventHandlerTargets = null | EventTarget | (null|EventTarget)[];
 
+export type MediaQuery = {
+    eventHandler: GenericEventListener<MediaQueryListEvent>,
+    mediaQuery: MediaQueryList,
+    remove: () => void,
+    targetWindow: Window,
+};
+
 
 /**
  * Registers an event listener for the given events
@@ -204,6 +211,66 @@ export function trigger (element : null|EventTarget, type : string, data : any =
     });
 
     element.dispatchEvent(event);
+}
+
+
+/**
+ * Adds media query listener
+ */
+export function mediaQuery (
+    query: string,
+    callback: (mediaMatches: boolean, targetWindow: Window|null) => {},
+    executeImmediately: boolean = false,
+    targetWindow: Window = window
+) : MediaQuery|null
+{
+    if ("" === query)
+    {
+        return null;
+    }
+
+    let mediaQuery = targetWindow.matchMedia(query);
+
+    let eventHandler = (event: MediaQueryListEvent) => {
+        callback(event.matches, event.target as Window);
+    };
+
+    if (undefined !== mediaQuery.addEventListener)
+    {
+        mediaQuery.addEventListener("change", eventHandler);
+    }
+    else
+    {
+        mediaQuery.addListener(eventHandler);
+    }
+
+    if (executeImmediately)
+    {
+        callback(mediaQuery.matches, targetWindow);
+    }
+
+    return {
+        eventHandler: eventHandler,
+        mediaQuery: mediaQuery,
+        remove: () => {removeMediaQuery(mediaQuery, eventHandler)},
+        targetWindow: targetWindow,
+    };
+}
+
+
+/**
+ * Removes media query listener
+ */
+function removeMediaQuery (mediaQuery: MediaQueryList, eventHandler: (event: MediaQueryListEvent) => any) : void
+{
+    if (undefined !== mediaQuery.removeEventListener)
+    {
+        mediaQuery.removeEventListener("change", eventHandler);
+    }
+    else
+    {
+        mediaQuery.removeListener(eventHandler);
+    }
 }
 
 

@@ -6,7 +6,7 @@ import "../cases/dom/attr/setAttrs";
 import "../cases/dom/clone/clone";
 import "../cases/dom/clone/duplicate";
 import "../cases/dom/events/delegate";
-import "../cases/dom/events/mediaQuery";
+import "../cases/dom/events/matchMediaQuery";
 import "../cases/dom/events/off";
 import "../cases/dom/events/on";
 import "../cases/dom/events/once";

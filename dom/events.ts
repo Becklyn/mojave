@@ -215,27 +215,20 @@ export function trigger (element : null|EventTarget, type : string, data : any =
 
 
 /**
- * Adds media query listener
+ * Registers the given listener to a given media query and executes it straight away.
+ * Returns a callback to remove the listener.
  */
-export function mediaQuery (
+export function matchMediaQuery (
     query: string,
-    callback: (mediaMatches: boolean, targetWindow: Window|null) => {},
-    executeImmediately: boolean = false,
-    targetWindow: Window = window
-) : MediaQuery|null
+    listener: (matches: boolean) => void,
+    executeImmediately: boolean = true
+) : () => void
 {
-    if ("" === query)
-    {
-        return null;
-    }
+    let mediaQuery = window.matchMedia(query);
 
-    let mediaQuery = targetWindow.matchMedia(query);
+    let eventHandler = (event: MediaQueryListEvent) => listener(event.matches);
 
-    let eventHandler = (event: MediaQueryListEvent) => {
-        callback(event.matches, event.target as Window);
-    };
-
-    if (undefined !== mediaQuery.addEventListener)
+    if (mediaQuery.addEventListener)
     {
         mediaQuery.addEventListener("change", eventHandler);
     }
@@ -246,31 +239,19 @@ export function mediaQuery (
 
     if (executeImmediately)
     {
-        callback(mediaQuery.matches, targetWindow);
+        listener(mediaQuery.matches);
     }
 
-    return {
-        eventHandler: eventHandler,
-        mediaQuery: mediaQuery,
-        remove: () => {removeMediaQuery(mediaQuery, eventHandler)},
-        targetWindow: targetWindow,
+    return () => {
+        if (mediaQuery.removeEventListener)
+        {
+            mediaQuery.removeEventListener("change", eventHandler);
+        }
+        else
+        {
+            mediaQuery.removeListener(eventHandler);
+        }
     };
-}
-
-
-/**
- * Removes media query listener
- */
-function removeMediaQuery (mediaQuery: MediaQueryList, eventHandler: (event: MediaQueryListEvent) => any) : void
-{
-    if (undefined !== mediaQuery.removeEventListener)
-    {
-        mediaQuery.removeEventListener("change", eventHandler);
-    }
-    else
-    {
-        mediaQuery.removeListener(eventHandler);
-    }
 }
 
 

@@ -41,9 +41,9 @@ declare namespace mojave
          * Additional parameters to pass as props / constructor arguments
          */
         params?: T extends ComponentClass<infer TClassProps>
-            ? TClassProps
+            ? Partial<TClassProps>
             : T extends (props: infer TFunctionProps, context?: any) => VNode<any> | null
-                ? TFunctionProps
+                ? Partial<TFunctionProps>
                 : never;
 
         /**

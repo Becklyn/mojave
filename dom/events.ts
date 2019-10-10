@@ -106,6 +106,16 @@ export function off<T extends Event = Event> (element : EventHandlerTargets, typ
 
 
 /**
+ * Registers the elements as event listeners and returns a callback that removes the event listener.
+ */
+export function onOff<T extends Event = Event> (element : EventHandlerTargets, type : string|string[], handler : GenericEventListener<T>) : () => void
+{
+    on(element, type, handler);
+    return () => off(element, type, handler);
+}
+
+
+/**
  * Registers an event listener, that is automatically removed after it was executed once.
  *
  * Returns the intermediate function, so that the event listener can be removed:

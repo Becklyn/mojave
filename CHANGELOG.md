@@ -1,3 +1,9 @@
+5.1.0
+=====
+
+*   Added `onOff` for easy event use in (preact) hooks.
+
+
 5.0.0
 =====
 

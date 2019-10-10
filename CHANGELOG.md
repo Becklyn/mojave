@@ -1,3 +1,9 @@
+5.1.1
+=====
+
+*   If `params` are set in `mountJsx`, they only need to be a partial set of the props of the component now (as the rest can come from the mounted JSON container).
+
+
 5.1.0
 =====
 

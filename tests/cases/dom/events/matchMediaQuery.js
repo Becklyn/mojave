@@ -3,6 +3,7 @@ import QUnit from "qunit";
 import {findOne} from "../../../../dom/traverse";
 
 const matchQueryList = [];
+const realMatchMedia = window.matchMedia;
 
 QUnit.module("dom/events/matchMediaQuery()", {
     beforeEach: () => {
@@ -90,7 +91,6 @@ QUnit.test(
     "matchMediaQuery() window.matchMedia was called correctly",
     (assert) =>
     {
-        let realMatchMedia = window.matchMedia;
         assert.expect(1);
 
         window.matchMedia = (query) => {
@@ -113,7 +113,6 @@ QUnit.test(
     "matchMediaQuery() listener was called immediately and correctly",
     (assert) =>
     {
-        let realMatchMedia = window.matchMedia;
         assert.expect(1);
 
         window.matchMedia = () => {
@@ -136,7 +135,6 @@ QUnit.test(
     "matchMediaQuery() addListener was called immediately and correctly",
     (assert) =>
     {
-        let realMatchMedia = window.matchMedia;
         assert.expect(1);
 
         window.matchMedia = () => {
@@ -161,7 +159,6 @@ QUnit.test(
     "matchMediaQuery() addEventListener was called immediately and correctly",
     (assert) =>
     {
-        let realMatchMedia = window.matchMedia;
         assert.expect(2);
 
         window.matchMedia = () => {

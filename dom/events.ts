@@ -218,47 +218,6 @@ export function trigger (element : null|EventTarget, type : string, data : any =
 
 
 /**
- * Registers the given listener as a matchMedia handler. By default, the handler is executed after it has been registered as handler.
- * Returns a callback to remove the listener.
- */
-export function matchMediaQuery (
-    query: string,
-    listener: (matches: boolean) => void,
-    executeImmediately: boolean = true
-) : () => void
-{
-    let mediaQuery = window.matchMedia(query);
-
-    let eventHandler = (event: MediaQueryListEvent) => listener(event.matches);
-
-    if (mediaQuery.addEventListener)
-    {
-        mediaQuery.addEventListener("change", eventHandler);
-    }
-    else
-    {
-        mediaQuery.addListener(eventHandler);
-    }
-
-    if (executeImmediately)
-    {
-        listener(mediaQuery.matches);
-    }
-
-    return () => {
-        if (mediaQuery.removeEventListener)
-        {
-            mediaQuery.removeEventListener("change", eventHandler);
-        }
-        else
-        {
-            mediaQuery.removeListener(eventHandler);
-        }
-    };
-}
-
-
-/**
  * Creates an event
  *
  * @private

@@ -2,7 +2,7 @@
 =====
 
 *   Added `dom/wire/wireSourceTargetLists()`
-*   Added `mediaQueryMatcher()` as a for attaching event listeners to `window.matchMedia()` without checking for the existence of `addListerer()` or `addEventListerer()` yourself.
+*   Added `mediaQueryMatcher()` as a for attaching event listeners to `window.matchMedia()` without checking for the existence of `addListener()` or `addEventListener()` yourself.
 *   Added `storage/local-storage::persistedToggle`
 
 

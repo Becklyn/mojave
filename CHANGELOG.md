@@ -1,3 +1,9 @@
+5.2.0
+=====
+
+*   Added `dom/wire/wireSourceTargetLists()`
+
+
 5.1.1
 =====
 

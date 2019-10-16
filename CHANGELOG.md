@@ -1,3 +1,9 @@
+5.2.1
+=====
+
+*   Add missing export for type `MediaQueryMatcher`.
+
+
 5.2.0
 =====
 

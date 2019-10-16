@@ -1,7 +1,8 @@
-5.2.1
+5.3.0
 =====
 
 *   Add missing export for type `MediaQueryMatcher`.
+*   Added first Preact hook: `useMediaQueryMatcher(mediaQueryMatcher)`.
 
 
 5.2.0

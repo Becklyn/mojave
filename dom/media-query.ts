@@ -1,6 +1,6 @@
 export type MediaQueryChangeCallback = (matches: boolean) => void;
 
-interface MediaQueryMatcher
+export interface MediaQueryMatcher
 {
     on(callback: MediaQueryChangeCallback): void;
     off(callback: MediaQueryChangeCallback): void;

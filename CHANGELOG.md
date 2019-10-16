@@ -2,7 +2,7 @@
 =====
 
 *   Add missing export for type `MediaQueryMatcher`.
-*   Added first preact hook: `useMediaQueryMatcher(mediaQueryMatcher)`.
+*   Added first Preact hook: `useMediaQueryMatcher(mediaQueryMatcher)`.
 
 
 5.2.0

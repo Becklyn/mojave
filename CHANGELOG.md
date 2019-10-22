@@ -1,3 +1,12 @@
+5.5.0
+=====
+
+(parallel release to `4.6.0`)
+
+*   Added more date formatter functions: `formatDateTime()` and `formatDateTime()`.
+*   Added a localized `DateFormatter`.
+
+
 5.4.0
 =====
 

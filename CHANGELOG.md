@@ -1,3 +1,9 @@
+5.5.1
+=====
+
+*   `ts-toolbelt` is a required dependency.
+
+
 5.5.0
 =====
 

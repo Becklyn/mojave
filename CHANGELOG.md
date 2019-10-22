@@ -50,6 +50,13 @@
 *   Fixed broken automatic secure setting for cookies 
 
 
+4.6.0
+=====
+
+*   Added more date formatter functions: `formatDateTime()` and `formatDateTime()`.
+*   Added a localized `DateFormatter`.
+
+
 4.5.2
 =====
 

@@ -1,3 +1,9 @@
+5.5.2
+=====
+
+*   Improve variable name
+
+
 5.5.1
 =====
 

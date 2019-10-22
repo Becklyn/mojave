@@ -1,11 +1,11 @@
 import QUnit from "qunit";
-import {formatRelative} from "../../../date/format";
+import {formatDate, formatDateShort, formatDateTime, formatRelative, formatTime} from "../../../date/format";
 
 QUnit.module("date/format");
 
 QUnit.test(
     "relativeFormat() tests",
-    (assert) =>
+    assert =>
     {
         const referenceDate = new Date(2017, 11, 31, 12, 0, 0);
 
@@ -40,7 +40,7 @@ QUnit.test(
 
 QUnit.test(
     "relativeFormat() localized tests",
-    (assert) =>
+    assert =>
     {
         const referenceDate = new Date(2017, 11, 31, 12, 0, 0);
         const labels = {
@@ -90,5 +90,23 @@ QUnit.test(
         assert.strictEqual(formatRelative(referenceDate, new Date(2015, 5, 31, 11, 59, 0), labelFormatter), "in 3 years", "in multiple years");
         assert.strictEqual(formatRelative(new Date(1917, 11, 31, 12, 0, 0), referenceDate, labelFormatter), "100 years ago", "very far in the past");
         assert.strictEqual(formatRelative(new Date(2117, 11, 31, 12, 0, 0), referenceDate, labelFormatter), "in 100 years", "very far in the future");
+    }
+);
+
+
+QUnit.test(
+    "different format*() calls",
+    assert =>
+    {
+        const referenceDate = new Date(2017, 11, 31, 7, 4, 5);
+
+        assert.strictEqual(formatDate(referenceDate), "31.12.2017", "formatDate()");
+        assert.strictEqual(formatDateShort(referenceDate), "31.12.", "formatDateShort()");
+        assert.strictEqual(formatTime(referenceDate), "07:04:05", "formatTime() with default value");
+        assert.strictEqual(formatTime(referenceDate, true), "07:04:05", "formatTime() explicitly with seconds");
+        assert.strictEqual(formatTime(referenceDate, false), "07:04", "formatTime() explicitly without seconds");
+        assert.strictEqual(formatDateTime(referenceDate), "31.12.2017 07:04:05", "formatDateTime() with default value");
+        assert.strictEqual(formatDateTime(referenceDate, true), "31.12.2017 07:04:05", "formatDateTime() explicitly with seconds");
+        assert.strictEqual(formatDateTime(referenceDate, false), "31.12.2017 07:04", "formatDateTime() explicitly without seconds");
     }
 );

@@ -1,3 +1,9 @@
+5.4.0
+=====
+
+*   Added `popup-interaction::initDismissableContainer()` and `popup-interaction::registerBodyClickHandler()`.
+
+
 5.3.0
 =====
 

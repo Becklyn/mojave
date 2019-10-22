@@ -8,13 +8,13 @@ import {isChildElement} from "./dom/traverse";
  *
  * Returns a callback to remove the listener.
  */
-export function registerBodyClickHandler (allowedClickTarget: HTMLElement[], onInvalidTargetClick: () => void) : () => void
+export function registerBodyClickHandler (allowedClickTargets: HTMLElement[], onInvalidTargetClick: () => void) : () => void
 {
     let handler = (event: Event) => {
-        for (let i = 0; i < allowedClickTarget.length; i++)
+        for (let i = 0; i < allowedClickTargets.length; i++)
         {
             // if the click is in any of the allowed containers -> do nothing
-            if (isChildElement(allowedClickTarget[i], event.target as Node))
+            if (isChildElement(allowedClickTargets[i], event.target as Node))
             {
                 return;
             }
@@ -58,12 +58,11 @@ export function initDismissableContainer (trigger: HTMLElement, allowedContainer
             return;
         }
 
-        globalHandler = registerBodyClickHandler(allowedContainers, close);
+        globalHandler = registerBodyClickHandler([trigger].concat(allowedContainers), close);
         callback(true);
     };
 
     on(trigger, "click", event => {
-        event.stopPropagation();
         (globalHandler ? close : open)();
     });
 }

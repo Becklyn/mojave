@@ -1,3 +1,11 @@
+5.5.3
+=====
+
+*   `popup-interaction::initDismissableContainer()` now returns the close function. This way you can wire up your own close buttons, so 
+    that they are handled correctly.
+*   `popup-interaction::initDismissableContainer()` can now handle multiple opener triggers.
+
+
 5.5.2
 =====
 

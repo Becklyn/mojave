@@ -11,7 +11,7 @@ export function classes (...args: Array<string|{[key: string] : any}>) : string
 
         if (typeof entry === "string")
         {
-            list.push(args[i]);
+            list.push(entry);
         }
         else
         {

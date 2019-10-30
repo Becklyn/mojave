@@ -24,12 +24,14 @@ export function safeParseJson<T extends {[k: string]: any}> (value?: string|fals
 /**
  * Parses JSON from the given element's content.
  */
-export function parseElementAsJson<T extends {[k: string]: any}> (element: HTMLElement) : T|null
+export function parseElementAsJson<T extends {[k: string]: any}> (element: HTMLElement|null) : T|null
 {
-    return safeParseJson(
-        (element.textContent || "")
-            .replace(/&lt;/g, "<")
-            .replace(/&gt;/g, ">")
-            .replace(/&amp;/g, "&")
-    );
+    return null !== element
+        ? safeParseJson(
+            (element.textContent || "")
+                .replace(/&lt;/g, "<")
+                .replace(/&gt;/g, ">")
+                .replace(/&amp;/g, "&")
+        )
+        : null;
 }

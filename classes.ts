@@ -1,17 +1,27 @@
-import {hasOwnProperty} from "./runtime";
-
 /**
  * Combines all class names in the map to a single class string
  */
-export function classes (map : {[key: string] : boolean}) : string
+export function classes (...args: Array<string|{[key: string] : any}>) : string
 {
     let list = [];
 
-    for (let key in map)
+    for (let i = 0; i < args.length; i++)
     {
-        if (hasOwnProperty(map, key) && map[key])
+        let entry = args[i];
+
+        if (typeof entry === "string")
         {
-            list.push(key);
+            list.push(args[i]);
+        }
+        else
+        {
+            for (let key in entry)
+            {
+                if (entry[key])
+                {
+                    list.push(key);
+                }
+            }
         }
     }
 

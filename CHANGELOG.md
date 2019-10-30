@@ -1,3 +1,10 @@
+5.5.4
+=====
+
+*   `classes()` is now variadic and can also take string arguments. Also any truthy/falsy values are now supported in objects.
+*   Allow passing `null` as element to `parseElementAsJson()`
+
+
 5.5.3
 =====
 

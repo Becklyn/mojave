@@ -3,17 +3,22 @@
  */
 export function safeParseJson<T = unknown> (value?: string|false|null) : T|null
 {
-    try
+    if (value)
     {
-        const content = value ? value.trim() : "";
-        return (content !== "")
-            ? JSON.parse(content) as T
-            : null;
+        try
+        {
+            const content = value.trim();
+            return (content !== "")
+                ? JSON.parse(content) as T
+                : null;
+        }
+        catch (e)
+        {
+            console.error(`Could not parse JSON content: ${e.message}`, e);
+        }
     }
-    catch (e)
-    {
-        console.error(`Could not parse JSON content: ${e.message}`, e);
-    }
+
+    return null;
 }
 
 /**

@@ -1,3 +1,9 @@
+5.5.5
+=====
+
+*   Use better default types + simplify implementation in `json`
+
+
 5.5.4
 =====
 

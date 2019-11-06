@@ -1,21 +1,21 @@
 /**
  * Wraps parsing of JSON, so that an error is logged, but no exception is thrown
  */
-export function safeParseJson<T extends {[k: string]: any}> (value?: string|false|null) : T|null
+export function safeParseJson<T = unknown> (value?: string|false|null) : T|null
 {
-    try
+    if (value)
     {
-        if (value)
+        try
         {
             const content = value.trim();
             return (content !== "")
-                ? JSON.parse(content)
+                ? JSON.parse(content) as T
                 : null;
         }
-    }
-    catch (e)
-    {
-        console.error(`Could not parse JSON content: ${e.message}`, e);
+        catch (e)
+        {
+            console.error(`Could not parse JSON content: ${e.message}`, e);
+        }
     }
 
     return null;
@@ -24,10 +24,10 @@ export function safeParseJson<T extends {[k: string]: any}> (value?: string|fals
 /**
  * Parses JSON from the given element's content.
  */
-export function parseElementAsJson<T extends {[k: string]: any}> (element: HTMLElement|null) : T|null
+export function parseElementAsJson<T = unknown> (element: HTMLElement|null) : T|null
 {
     return null !== element
-        ? safeParseJson(
+        ? safeParseJson<T>(
             (element.textContent || "")
                 .replace(/&lt;/g, "<")
                 .replace(/&gt;/g, ">")

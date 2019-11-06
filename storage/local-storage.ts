@@ -1,3 +1,5 @@
+import {safeParseJson} from "../json";
+
 const storage = window.localStorage;
 
 type PersistedToggleActor = (value: boolean) => void;
@@ -29,4 +31,22 @@ export function persistedToggle (key: string, callback: PersistedToggleActor, de
             callback(value);
         }
     };
+}
+
+
+/**
+ * Stores the given value in local storage
+ */
+export function storeInLocalStorage (key: string, value: unknown) : void
+{
+    storage.setItem(key, JSON.stringify(value));
+}
+
+
+/**
+ * Fetches the value at the given key from local storage
+ */
+export function fetchFromLocalStorage<T = unknown> (key: string): T|null
+{
+    return safeParseJson<T>(storage.getItem(key));
 }

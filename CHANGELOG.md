@@ -1,3 +1,10 @@
+5.6.0
+=====
+
+*   Use better default types + simplify implementation in `json`
+*   Added `storeInLocalStorage()` and `fetchFromLocalStorage()`.
+
+
 5.5.4
 =====
 

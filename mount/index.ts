@@ -8,9 +8,16 @@ import {parseElementAsJson} from "../json";
 /**
  * Mounts a Preact function or class component into all elements matching the given selector.
  */
-export function mountJsx<TPreactComponent extends ComponentFactory<any>>(selector: string, mountable: TPreactComponent, options?: mojave.ComponentMountOptions<TPreactComponent>): void
+export function mountJsx<TPreactComponent extends ComponentFactory<any>>(selector: string|HTMLElement, mountable: TPreactComponent, options?: mojave.ComponentMountOptions<TPreactComponent>): void
 {
-    find(selector).forEach(node => doMountJsx<TPreactComponent>(node, mountable, options));
+    if (selector instanceof HTMLElement)
+    {
+        doMountJsx<TPreactComponent>(selector, mountable, options);
+    }
+    else
+    {
+        find(selector).forEach(node => doMountJsx<TPreactComponent>(node, mountable, options));
+    }
 }
 
 
@@ -22,9 +29,11 @@ export function mountJsx<TPreactComponent extends ComponentFactory<any>>(selecto
  *
  *     mountLazyJsx<MyPreactComp>(".selector", () => import("./src/MyPreactComp"));
  */
-export function mountLazyJsx<TPreactComponent extends ComponentFactory<any>>(selector: string, importer: () => Promise<any>, options?: mojave.ComponentMountOptions<TPreactComponent>) : void
+export function mountLazyJsx<TPreactComponent extends ComponentFactory<any>>(selector: string|HTMLElement, importer: () => Promise<any>, options?: mojave.ComponentMountOptions<TPreactComponent>) : void
 {
-    let elements = find(selector);
+    let elements = selector instanceof HTMLElement
+        ? [selector]
+        : find(selector);
 
     if (!elements.length)
     {
@@ -78,11 +87,18 @@ function doMountJsx<TPreactComponent extends ComponentFactory<any>>(node: HTMLEl
 /**
  * Mounts a StandaloneComponent into all elements matching the given selector.
  */
-export function mountClass<TStandaloneComponent extends mojave.MountableClass>(selector: string, mountable: TStandaloneComponent, options?: mojave.ClassMountOptions<TStandaloneComponent>): void
+export function mountClass<TStandaloneComponent extends mojave.MountableClass>(selector: string|HTMLElement, mountable: TStandaloneComponent, options?: mojave.ClassMountOptions<TStandaloneComponent>): void
 {
-    find(selector).forEach(node => {
-        doMountClass<TStandaloneComponent>(node, mountable, options);
-    });
+    if (selector instanceof HTMLElement)
+    {
+        doMountClass<TStandaloneComponent>(selector, mountable, options);
+    }
+    else
+    {
+        find(selector).forEach(node => {
+            doMountClass<TStandaloneComponent>(node, mountable, options);
+        });
+    }
 }
 
 
@@ -94,9 +110,11 @@ export function mountClass<TStandaloneComponent extends mojave.MountableClass>(s
  *
  *     mountLazyClass<MyStandaloneComp>(".selector", () => import("./src/MyStandaloneComp"));
  */
-export function mountLazyClass <TStandaloneComponent extends mojave.MountableClass>(selector: string, importer: () => Promise<any>, options?: mojave.ClassMountOptions<TStandaloneComponent>) : void
+export function mountLazyClass <TStandaloneComponent extends mojave.MountableClass>(selector: string|HTMLElement, importer: () => Promise<any>, options?: mojave.ClassMountOptions<TStandaloneComponent>) : void
 {
-    let elements = find(selector);
+    let elements = selector instanceof HTMLElement
+        ? [selector]
+        : find(selector);
 
     if (!elements.length)
     {
@@ -128,11 +146,18 @@ function doMountClass<TStandaloneComponent extends mojave.MountableClass>(node: 
 /**
  * Mounts a function into all elements matching the given selector.
  */
-export function mount<TFunction extends mojave.MountableFunction>(selector: string, mountable: TFunction, options?: mojave.FunctionMountOptions<TFunction>): void
+export function mount<TFunction extends mojave.MountableFunction>(selector: string|HTMLElement, mountable: TFunction, options?: mojave.FunctionMountOptions<TFunction>): void
 {
-    find(selector).forEach(node => {
-        doMountFunction<TFunction>(node, mountable, options);
-    });
+    if (selector instanceof HTMLElement)
+    {
+        doMountFunction<TFunction>(selector, mountable, options);
+    }
+    else
+    {
+        find(selector).forEach(node => {
+            doMountFunction<TFunction>(node, mountable, options);
+        });
+    }
 }
 
 
@@ -144,9 +169,11 @@ export function mount<TFunction extends mojave.MountableFunction>(selector: stri
  *
  *     mountLazy<MyFunctionComp>(".selector", () => import("./src/MyFunctionComp"));
  */
-export function mountLazy <TFunction extends mojave.MountableFunction>(selector: string, importer: () => Promise<any>, options?: mojave.FunctionMountOptions<TFunction>) : void
+export function mountLazy <TFunction extends mojave.MountableFunction>(selector: string|HTMLElement, importer: () => Promise<any>, options?: mojave.FunctionMountOptions<TFunction>) : void
 {
-    let elements = find(selector);
+    let elements = selector instanceof HTMLElement
+        ? [selector]
+        : find(selector);
 
     if (!elements.length)
     {

@@ -26,11 +26,9 @@ export function mountJsx<TPreactComponent extends ComponentFactory<any>>(selecto
  *
  *     mountLazyJsx<MyPreactComp>(".selector", () => import("./src/MyPreactComp"));
  */
-export function mountLazyJsx<TPreactComponent extends ComponentFactory<any>>(selector: string|HTMLElement, importer: () => Promise<any>, options?: mojave.ComponentMountOptions<TPreactComponent>) : void
+export function mountLazyJsx<TPreactComponent extends ComponentFactory<any>>(selector: string|HTMLElement[], importer: () => Promise<any>, options?: mojave.ComponentMountOptions<TPreactComponent>) : void
 {
-    let elements = selector instanceof HTMLElement
-        ? [selector]
-        : find(selector);
+    let elements = typeof selector === "string" ? find(selector) : selector;
 
     if (!elements.length)
     {

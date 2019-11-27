@@ -1,7 +1,7 @@
 5.7.0
 =====
 
-*   Allow passing in `HTMLElement` instead of a CSS selector into all `mount*` versions to directly mount on a specific element.
+*   Allow passing in `HTMLElement[]` instead of a CSS selector into all `mount*` versions to directly mount on specific elements.
 
 
 5.6.0

@@ -8,9 +8,23 @@ import SortableInteraction from "./Sortable/SortableInteraction";
 /**
  * Config object for working with ui/sortable
  */
-export type SortableConfig = {
+export interface SortableConfig {
     items: string,
     handle?: string,
+}
+
+export interface SortableResult {
+    item: HTMLElement;
+    before: HTMLElement|null;
+}
+
+/**
+ * Event data for the changed event
+ */
+export interface SortableOnChangedData
+{
+    items: HTMLElement[];
+    result: SortableResult;
 }
 
 
@@ -136,7 +150,7 @@ export default class Sortable
 
         endAction
             .then(
-                () => {
+                (result) => {
                     // check for state changes
                     // reload all items and check whether the order has changed
                     const currentItems = find(this.config.items, this.container);
@@ -156,9 +170,8 @@ export default class Sortable
 
                     if (orderHasChanged)
                     {
-                        this.emitter.emit("changed", {items: currentItems});
+                        this.emitter.emit("changed", {items: currentItems, result});
                     }
-
                 }
             );
     }

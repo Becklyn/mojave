@@ -1,4 +1,5 @@
 import "../../polyfill/promise";
+import {SortableResult} from "../Sortable";
 import TrHandler from "./GhostHandler/TrHandler";
 import {EASE_OUT_CUBIC, animate} from "../../animation";
 import {after, before} from "../../dom/manipulate";
@@ -323,7 +324,7 @@ export default class SortableInteraction
     /**
      * Handles the dropping of elements at specific coordinates
      */
-    drop (x : number, y : number) : Promise<any>
+    drop (x : number, y : number) : Promise<SortableResult|undefined>
     {
         const {centerLeft, centerTop} = this.calculateOffsets(x, y);
         const [list, itemIndex] = this.findIntersection(centerLeft, centerTop);
@@ -334,16 +335,28 @@ export default class SortableInteraction
         }
 
         const target = list[itemIndex];
-        const updateMethod = list === this.itemsBefore
-            ? before
-            : after;
+        let beforeItem: HTMLElement|null = target.element;
+        let updateMethod = before;
 
-        return this.resetStyles({
-            top: target.top,
-            left: target.left,
-        }, () => {
-            updateMethod(target.element, this.draggedItem);
-        });
+        if (list !== this.itemsBefore)
+        {
+            beforeItem = list[itemIndex + 1] !== undefined
+                ? list[itemIndex + 1].element
+                : null;
+            updateMethod = after;
+        }
+
+        return this.resetStyles(
+            {
+                top: target.top,
+                left: target.left,
+            },
+            () => updateMethod(target.element, this.draggedItem),
+            {
+                item: this.draggedItem,
+                before: beforeItem,
+            }
+        );
     }
 
 
@@ -363,10 +376,14 @@ export default class SortableInteraction
 
     /**
      */
-    private resetStyles (animateTo : Object, endAnimationCallback? : () => void) : Promise<any>
+    private resetStyles (
+        animateTo : Object,
+        endAnimationCallback? : () => void,
+        result?: SortableResult
+    ) : Promise<SortableResult|undefined>
     {
         return new Promise(
-            (resolve : () => void) => {
+            resolve => {
                 const endAnimation = animate(
                     this.draggedItem,
                     animateTo,
@@ -409,7 +426,7 @@ export default class SortableInteraction
                                 height: "",
                             });
 
-                            resolve();
+                            resolve(result);
                         }
                     );
             }

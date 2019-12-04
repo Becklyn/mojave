@@ -1,5 +1,5 @@
 import {closest, find, findOne} from "../dom/traverse";
-import {delegate, off, on} from "../dom/events";
+import {delegate, EventIntermediateToken, off, on} from "../dom/events";
 import {merge} from "../extend";
 //@ts-ignore
 import mitt from "mitt";
@@ -8,9 +8,23 @@ import SortableInteraction from "./Sortable/SortableInteraction";
 /**
  * Config object for working with ui/sortable
  */
-export type SortableConfig = {
+export interface SortableConfig {
     items: string,
     handle?: string,
+}
+
+export interface SortableResult {
+    item: HTMLElement;
+    before: HTMLElement|null;
+}
+
+/**
+ * Event data for the changed event
+ */
+export interface SortableOnChangedData
+{
+    items: HTMLElement[];
+    result: SortableResult;
 }
 
 
@@ -24,6 +38,7 @@ export default class Sortable
     private interaction : null|SortableInteraction;
     private readonly emitter : mitt.Emitter;
     private listeners : {[event: string]: EventListener};
+    private delegateHandler: EventIntermediateToken|null = null;
 
     /**
      */
@@ -49,7 +64,12 @@ export default class Sortable
      */
     public init (): void
     {
-        delegate<MouseEvent>(
+        if (this.delegateHandler)
+        {
+            this.destroy();
+        }
+
+        this.delegateHandler = delegate<MouseEvent>(
             this.container,
             `${this.config.items} ${this.config.handle}`,
             "mousedown",
@@ -130,7 +150,7 @@ export default class Sortable
 
         endAction
             .then(
-                () => {
+                (result) => {
                     // check for state changes
                     // reload all items and check whether the order has changed
                     const currentItems = find(this.config.items, this.container);
@@ -150,9 +170,8 @@ export default class Sortable
 
                     if (orderHasChanged)
                     {
-                        this.emitter.emit("changed", {items: currentItems});
+                        this.emitter.emit("changed", {items: currentItems, result});
                     }
-
                 }
             );
     }
@@ -187,8 +206,23 @@ export default class Sortable
     /**
      * Register an event listener
      */
-    on (event : string, callback : (...args : any[]) => void) : void
+    public on (event : string, callback : (...args : any[]) => void) : void
     {
         this.emitter.on(event, callback);
+    }
+
+
+    /**
+     * Destroys the instance
+     */
+    public destroy () : void
+    {
+        this.onDragEnd();
+
+        if (this.delegateHandler)
+        {
+            off(this.container, "mousedown", this.delegateHandler);
+            this.delegateHandler = null;
+        }
     }
 }

@@ -1,3 +1,9 @@
+4.6.1
+=====
+
+*   (bug) Use `MouseEvent.target` instead of `MouseEvent.toElement` in `Sortable`
+
+
 4.6.0
 =====
 

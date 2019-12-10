@@ -1,15 +1,10 @@
-5.8.0
-=====
-
-*   (improvement) Return the `item` + `before` in the `Sortable` result (to integrate with the new RAD bundle).
-*   (improvement) Added `Sortable::destroy()`.
-*   (feature) Added `useSortable()` hook.
-
-
 5.7.0
 =====
 
-*   Allow passing in `HTMLElement[]` instead of a CSS selector into all `mount*` versions to directly mount on specific elements.
+*   (feature) Allow passing in `HTMLElement[]` instead of a CSS selector into all `mount*` versions to directly mount on specific elements.
+*   (improvement) Return the `item` + `before` in the `Sortable` result (to integrate with the new RAD bundle).
+*   (improvement) Added `Sortable::destroy()`.
+*   (feature) Added `useSortable()` hook.
 
 
 5.6.0

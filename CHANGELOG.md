@@ -2,6 +2,7 @@
 =====
 
 *   (bug) Use `MouseEvent.target` instead of `MouseEvent.toElement` in `Sortable`
+*   (bug) Automatically remove trailing hyphens from generated slug.
 
 
 4.6.0

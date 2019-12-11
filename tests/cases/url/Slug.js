@@ -18,6 +18,8 @@ QUnit.test(
             ["abc(test)", "abc(test)"],
             ["a&-&b", "a-b"],
             ["a---b", "a-b"],
+            ["---a-b---", "a-b"],
+            ["---a---b---c---", "a-b-c"],
         ]
             .forEach(
                 ([raw, expected]) => assert.strictEqual(instance.transform(raw), expected)

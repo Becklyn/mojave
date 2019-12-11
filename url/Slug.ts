@@ -63,6 +63,6 @@ export class Slug
         return raw
             .replace(this.sanitize, "-")
             .replace(/-+/g, "-")
-            .replace(/^-+/, "");
+            .replace(/^-|-$/g, "");
     }
 }

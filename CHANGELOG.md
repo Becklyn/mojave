@@ -1,3 +1,9 @@
+5.7.1
+=====
+
+*   (bug) Automatically remove trailing hyphens from generated slug.
+
+
 5.7.0
 =====
 

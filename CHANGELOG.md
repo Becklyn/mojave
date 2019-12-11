@@ -1,4 +1,4 @@
-3.1.5
+3.1.7
 =====
 
 *   (bug) Automatically remove trailing hyphens from generated slug.

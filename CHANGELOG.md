@@ -1,3 +1,9 @@
+5.7.1
+=====
+
+*   (bug) Automatically remove trailing hyphens from generated slug.
+
+
 5.7.0
 =====
 
@@ -5,7 +11,6 @@
 *   (improvement) Return the `item` + `before` in the `Sortable` result (to integrate with the new RAD bundle).
 *   (improvement) Added `Sortable::destroy()`.
 *   (feature) Added `useSortable()` hook.
-*   (bug) Automatically remove trailing hyphens from generated slug.
 
 
 5.6.0

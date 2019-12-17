@@ -33,6 +33,16 @@ QUnit.test(
 
         toggleClass(element, "foo", false);
         assert.strictEqual(element.classList.length, 0, "class wasn't removed with toggleClass");
+
+        toggleClass(element, ["foo", "bar"], true);
+        assert.strictEqual(element.classList.length, 2, "adding an array of classes should add all classes");
+        assert.ok(element.classList.contains("foo"));
+        assert.ok(element.classList.contains("bar"));
+
+        toggleClass(element, ["foo", "bar"], false);
+        assert.strictEqual(element.classList.length, 0, "An array of classes should remove all classes");
+        assert.notOk(element.classList.contains("foo"));
+        assert.notOk(element.classList.contains("bar"));
     }
 );
 
@@ -53,5 +63,25 @@ QUnit.test(
         toggleClass(element, "foo", false);
         assert.strictEqual(element.classList.length, 1, "class wasn't removed with toggleClass");
         assert.notOk(element.classList.contains("foo"));
+
+        // Manually setting a single class in order to test partially adding classes
+        element.className = "foo";
+        assert.ok(element.classList.contains("foo"));
+        assert.notOk(element.classList.contains("bar"));
+
+        toggleClass(element, ["foo", "bar"], true);
+        assert.strictEqual(element.classList.length, 2, "adding an array of partially pre-existing classes should not create duplicates");
+        assert.ok(element.classList.contains("foo"));
+        assert.ok(element.classList.contains("bar"));
+
+        // Manually setting a single class in order to test partially removing classes
+        element.className = "foo";
+        assert.ok(element.classList.contains("foo"));
+        assert.notOk(element.classList.contains("bar"));
+
+        toggleClass(element, ["foo", "bar"], false);
+        assert.strictEqual(element.classList.length, 0, "An array of classes should remove all classes");
+        assert.notOk(element.classList.contains("foo"));
+        assert.notOk(element.classList.contains("bar"));
     }
 );

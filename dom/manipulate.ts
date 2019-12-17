@@ -231,9 +231,11 @@ export function after (reference : Element, insert : InsertableElement) : void
 
 
 /**
- * Adds or removes a class on the given Element, based on the `add` flag.
+ * Adds or removes a single class or a list of classes on the given Element, based on the `add` flag.
  */
-export function toggleClass (element: Element, className: string, add: boolean) : void
+export function toggleClass (element: Element, classNames: string|string[], add: boolean) : void
 {
-    element.classList[add ? "add" : "remove"](className);
+    let classes = Array.isArray(classNames) ? classNames : [classNames];
+
+    classes.forEach(className => element.classList[add ? "add" : "remove"](className));
 }

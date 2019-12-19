@@ -44,7 +44,7 @@ QUnit.test(
         let element = findOne("#test");
 
         toggleClass(element, ["foo", "bar"], true);
-        assert.strictEqual(element.classList.length, 2, "adding an array of classes should add all classes");
+        assert.strictEqual(element.classList.length, 2, "adding an array of classes sets all classes");
         assert.ok(element.classList.contains("foo"));
         assert.ok(element.classList.contains("bar"));
     }
@@ -71,15 +71,15 @@ QUnit.test(
     {
         let element = findOne("#has-class");
 
-        assert.strictEqual(element.classList.length, 1, "element doesn't contain class before toggleClass() was executed");
+        assert.strictEqual(element.classList.length, 1, "element contains a class before toggleClass() was executed");
         assert.notOk(element.classList.contains("foo"));
 
         toggleClass(element, "foo", true);
-        assert.strictEqual(element.classList.length, 2, "element doesn't have new class added by toggleClass()");
+        assert.strictEqual(element.classList.length, 2, "element has new class added by toggleClass()");
         assert.ok(element.classList.contains("foo"));
 
         toggleClass(element, "foo", false);
-        assert.strictEqual(element.classList.length, 1, "class wasn't removed with toggleClass");
+        assert.strictEqual(element.classList.length, 1, "element has new class removed by toggleClass()");
         assert.notOk(element.classList.contains("foo"));
 
         // Manually setting a single class in order to test partially adding classes

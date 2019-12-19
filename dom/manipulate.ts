@@ -236,6 +236,7 @@ export function after (reference : Element, insert : InsertableElement) : void
 export function toggleClass (element: Element, classNames: string|string[], add: boolean) : void
 {
     let classes = Array.isArray(classNames) ? classNames : [classNames];
+    let method = element.classList[add ? "add" : "remove"];
 
-    classes.forEach(className => element.classList[add ? "add" : "remove"](className));
+    classes.forEach(className => method(className));
 }

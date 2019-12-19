@@ -7,6 +7,7 @@ export type CookieOptions = Partial<{
     path: string,
     secure: boolean,
     expires: number|Date,
+    sameSite: "strict"|"lax"|null,
 }>;
 
 
@@ -29,6 +30,7 @@ export function formatCookieString (key : string, value : any, options : CookieO
         domain: options.domain || false,
         path: options.path || "/",
         secure: options.secure || (window.location.protocol === "https:"),
+        sameSite: options.sameSite || "strict",
     };
 
     // if a Date is given, just use the date.

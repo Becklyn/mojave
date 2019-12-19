@@ -1,3 +1,8 @@
+5.8.0
+=====
+
+*   (feature) Add sameSite option to `formatCookieString()` and `setCookie()`. Additionally `{sameSite: "strict"}` is set as a default.
+
 5.7.1
 =====
 

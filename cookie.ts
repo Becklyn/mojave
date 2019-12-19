@@ -7,6 +7,7 @@ export type CookieOptions = Partial<{
     path: string,
     secure: boolean,
     expires: number|Date,
+    sameSite: "strict"|"lax"|null,
 }>;
 
 
@@ -25,10 +26,11 @@ export function setCookie (key : string, value : any, options : CookieOptions = 
  */
 export function formatCookieString (key : string, value : any, options : CookieOptions = {}) : string
 {
-    let config : {[key: string]: string|boolean} = {
+    let config : {[key: string]: string|boolean|null} = {
         domain: options.domain || false,
         path: options.path || "/",
         secure: options.secure || (window.location.protocol === "https:"),
+        sameSite: options.sameSite !== undefined ? options.sameSite : "strict",
     };
 
     // if a Date is given, just use the date.
@@ -80,11 +82,11 @@ export function removeCookie (key : string) : void
 
 /**
  * @private
- * @param {Object.<string, string|boolean>} options
+ * @param {Object.<string, string|boolean|null>} options
  *
  * @return {string}
  */
-function encodeCookieOptions (options : {[key: string]: string|boolean}) : string
+function encodeCookieOptions (options : {[key: string]: string|boolean|null}) : string
 {
     const encodedOptions = [];
 
@@ -94,7 +96,7 @@ function encodeCookieOptions (options : {[key: string]: string|boolean}) : strin
         const optionValue = options[optionName];
 
         // Flags with a `false` value needs to be omitted
-        if (!hasOwnProperty(options, optionName) || optionValue === false)
+        if (!optionValue)
         {
             continue;
         }

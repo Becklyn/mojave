@@ -2,6 +2,7 @@
 =====
 
 *   (feature) Add sameSite option to `formatCookieString()` and `setCookie()`. Additionally `{sameSite: "strict"}` is set as a default. Other possible values include `"lax"` and `null`. `null` will hinder the `sameSite` attribute of being set in a cookie.
+*   (feature) Add support for passing in multiple classes to `toggleClass`.
 
 
 5.7.1

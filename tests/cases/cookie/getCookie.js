@@ -1,58 +1,40 @@
 import {getCookie, setCookie, removeCookie} from "../../../cookie";
 import QUnit from "qunit";
 
-QUnit.module("cookie/set");
+QUnit.module("cookie/get");
 
 QUnit.test(
     "valid getCookie() variations",
     (assert) =>
     {
-        /** @type {Array<{key: string, value: string, options: object, expected: RegExp}>} */
+        /** @type {Array<{value: string, expected: RegExp}>} */
         let cases = [
             // test default values
-            {
-                key: 'test',
-                value: 'value',
-                options: {},
-                expected: 'value',
-            },
-            {
-                key: 'test',
-                value: 5,
-                options: {},
-                expected: 5,
-            },
-            {
-                key: 'test',
-                value: true,
-                options: {},
-                expected: true,
-            },
-            {
-                key: 'test',
-                value: [],
-                options: {},
-                expected: [],
-            },
-            {
-                key: 'test',
-                value: {c: "c"},
-                options: {},
-                expected: {c: "c"},
-            },
-            {
-                key: 'test',
-                value: [1, 2, "", true, false, {}],
-                options: {},
-                expected: [1, 2, "", true, false, {}],
-            },
+            'value',
+            5,
+            true,
+            [],
+            {c: 'c'},
+            [
+                'value',
+                0,
+                true,
+                [false, 1, 2, 3],
+                {key: 'value'},
+            ],
         ];
 
         cases.forEach(
             (singleCase, index) => {
-                setCookie(singleCase.key, singleCase.value);
-                assert.deepEqual(singleCase.expected, getCookie(singleCase.key), `Test #${index}`);
-                removeCookie(singleCase.key);
+                let key = 'test';
+
+                assert.strictEqual(getCookie(key), null);
+
+                setCookie(key, singleCase);
+                assert.deepEqual(getCookie(key), singleCase, `Test #${index}`);
+                removeCookie(key);
+
+                assert.strictEqual(getCookie(key), null);
             }
         );
     }

@@ -1,5 +1,6 @@
 import "../cases/classes/classes";
 import "../cases/cookie/formatCookieString";
+import "../cases/cookie/getCookie";
 import "../cases/date/compare";
 import "../cases/date/DateFormatter";
 import "../cases/date/format";

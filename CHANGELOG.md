@@ -1,5 +1,5 @@
-V Next
-======
+5.8.1
+=====
 
 *   (bug) Fix `getCookie()` method to read a cookie string set with `formatCookieString()`.
 *   (internal) A test for `getCookie()` has been added.

@@ -1,3 +1,9 @@
+next patch
+==========
+
+*   (bug) Properly reset `z-index` in Sortable after drag.
+
+
 5.8.1
 =====
 

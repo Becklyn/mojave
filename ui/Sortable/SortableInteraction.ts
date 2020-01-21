@@ -416,6 +416,7 @@ export default class SortableInteraction
                                 height: "",
                                 position: "relative",
                                 margin: "",
+                                "z-index": "",
                             });
 
                             setStyles(this.containedIFrames, {

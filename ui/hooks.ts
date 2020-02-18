@@ -39,5 +39,5 @@ export function useSortable (
         });
 
         return () => sortable.destroy();
-    });
+    }, [ref.current]);
 }

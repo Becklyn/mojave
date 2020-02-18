@@ -1,3 +1,10 @@
+5.9.0
+=====
+
+*   (bug) Add missing hook dependency.
+*   (feature) Added `toStringArray`.
+
+
 5.8.2
 =====
 

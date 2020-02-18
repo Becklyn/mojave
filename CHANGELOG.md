@@ -1,3 +1,7 @@
+5.8.3
+=====
+
+*   (bug) Add missing hook dependency.
 5.8.2
 =====
 

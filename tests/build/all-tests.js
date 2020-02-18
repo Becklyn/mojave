@@ -46,6 +46,7 @@ import "../cases/json/safeParseJson";
 import "../cases/mount/mount";
 import "../cases/runtime/hasOwnProperty";
 import "../cases/string/manipulate/replaceAll";
+import "../cases/string/manipulate/toStringArray";
 import "../cases/timing/debounce";
 import "../cases/types/typeOf";
 import "../cases/url/Slug";

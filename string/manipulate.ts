@@ -18,3 +18,18 @@ export function replaceAll (text : string, replacements : {[key: string]: string
 
     return text;
 }
+
+/**
+ * Transforms the value to a string array.
+ */
+export function toStringArray (value: string|string[]|null|undefined) : string[]
+{
+    if (!value)
+    {
+        return [];
+    }
+
+    return typeof value == "string"
+        ? [value]
+        : value;
+}

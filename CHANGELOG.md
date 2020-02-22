@@ -1,3 +1,9 @@
+5.9.1
+=====
+
+*   (feature) Add `destroy` option in return value for `initDismissableContainer()`.
+
+
 5.9.0
 =====
 

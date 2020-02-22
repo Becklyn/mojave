@@ -1,5 +1,4 @@
 import {safeParseJson} from "./json";
-import {hasOwnProperty} from "./runtime";
 
 
 export type CookieOptions = Partial<{

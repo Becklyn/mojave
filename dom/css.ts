@@ -1,5 +1,4 @@
 import {mojave} from "../@types/mojave";
-import {hasOwnProperty} from "../runtime";
 
 const CUSTOM_PROPERTY_REGEX = /^--/;
 const DEFAULT_STYLES = document.createElement("div").style;
@@ -61,11 +60,6 @@ export function setStyles (elements : HTMLElement|HTMLElement[]|Window|Window[],
 
         for (let property in styles)
         {
-            if (!hasOwnProperty(styles, property))
-            {
-                continue;
-            }
-
             let value = styles[property];
 
             // handle directly accessible setters

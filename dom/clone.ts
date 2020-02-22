@@ -1,4 +1,3 @@
-import {hasOwnProperty} from "../runtime";
 import {getAllListeners, on} from "./events";
 
 
@@ -23,11 +22,6 @@ export function clone<T extends HTMLElement = HTMLElement> (element : T) : T
     // copy events
     for (const type in listeners)
     {
-        if (!hasOwnProperty(listeners, type))
-        {
-            continue;
-        }
-
         for (let i = 0; i < listeners[type].length; i++)
         {
             on(clonedElement, type, listeners[type][i]);

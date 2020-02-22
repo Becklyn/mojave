@@ -1,3 +1,10 @@
+5.9.1
+=====
+
+*   (improvement) Add `destroy` option in return value for `initDismissableContainer()`.
+*   (improvement) Removed overly pedantic use of `hasOwnProperty()`.
+
+
 5.9.0
 =====
 

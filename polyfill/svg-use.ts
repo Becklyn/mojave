@@ -1,4 +1,3 @@
-import {hasOwnProperty} from "../runtime";
 import fetch from "./fetch";
 import {find} from "../dom/traverse";
 
@@ -50,11 +49,6 @@ export default () =>
 
     for (const url in usages)
     {
-        if (!hasOwnProperty(usages, url))
-        {
-            continue;
-        }
-
         fetch(url)
             .then(response => response.text())
             .then((data) => {

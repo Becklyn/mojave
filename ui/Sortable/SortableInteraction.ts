@@ -417,14 +417,15 @@ export default class SortableInteraction
                             }
 
                             setStyles(this.allItems, {
-                                transition: "0s",
-                                transform: "translate(0, 0)",
-                                top: 0,
-                                left: 0,
-                                width: "",
                                 height: "",
-                                position: "relative",
+                                left: "",
                                 margin: "",
+                                position: "",
+                                top: "",
+                                transform: "",
+                                transition: "",
+                                width: "",
+                                "will-change": "",
                                 "z-index": "",
                             });
 

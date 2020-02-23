@@ -1,3 +1,8 @@
+5.9.4
+=====
+
+*   (improvement) Add `_mojave-dragged-item` class on dragged item in sortable.
+
 5.9.3
 =====
 

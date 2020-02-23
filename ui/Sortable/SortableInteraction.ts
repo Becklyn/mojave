@@ -161,6 +161,9 @@ export default class SortableInteraction
             margin: 0,
         });
 
+        // add marker class
+        this.draggedItem.classList.add("_mojave-dragged-item");
+
         setStyles(this.containedIFrames, {
             "pointer-events": "none",
         });
@@ -418,6 +421,9 @@ export default class SortableInteraction
                                 margin: "",
                                 "z-index": "",
                             });
+
+                            // remove marker class
+                            this.draggedItem.classList.remove("_mojave-dragged-item");
 
                             setStyles(this.containedIFrames, {
                                 "pointer-events": "",

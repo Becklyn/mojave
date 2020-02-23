@@ -1,3 +1,12 @@
+5.9.4
+=====
+
+*   (improvement) Add `_mojave-dragged-item` class on dragged item in sortable.
+*   (improvement) Add option to disable sortable hook easily (default is still "enabled").
+*   (bug) Warn when mounting a sortable directly on a table.
+*   (improvement) Improve properties reset in sortable items.
+
+
 5.9.3
 =====
 

@@ -56,6 +56,12 @@ export default class SortableInteraction
         this.hasMovedBefore = false;
         this.startScrollPosition = window.pageYOffset;
 
+        if (this.container.tagName.toLowerCase() === "table")
+        {
+            // @deprecated remove in mojave v7
+            console.error("To avoid render issues, you should never use a table as container. Wrap a div around the table to fix layout issues.");
+        }
+
         const displacement = this.calculateDisplacement();
 
         this.itemsBefore = this.allItems.slice(0, this.draggedIndex).map(item => this.prepareItem(item, 0, displacement));
@@ -160,6 +166,9 @@ export default class SortableInteraction
             height: this.draggedRect.height,
             margin: 0,
         });
+
+        // add marker class
+        this.draggedItem.classList.add("_mojave-dragged-item");
 
         setStyles(this.containedIFrames, {
             "pointer-events": "none",
@@ -408,16 +417,20 @@ export default class SortableInteraction
                             }
 
                             setStyles(this.allItems, {
-                                transition: "0s",
-                                transform: "translate(0, 0)",
-                                top: 0,
-                                left: 0,
-                                width: "",
                                 height: "",
-                                position: "relative",
+                                left: "",
                                 margin: "",
+                                position: "",
+                                top: "",
+                                transform: "",
+                                transition: "",
+                                width: "",
+                                "will-change": "",
                                 "z-index": "",
                             });
+
+                            // remove marker class
+                            this.draggedItem.classList.remove("_mojave-dragged-item");
 
                             setStyles(this.containedIFrames, {
                                 "pointer-events": "",

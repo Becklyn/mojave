@@ -10,6 +10,7 @@ import SortableInteraction from "./Sortable/SortableInteraction";
  */
 export interface SortableConfig {
     items: string,
+    enabled?: boolean;
     handle?: string,
 }
 

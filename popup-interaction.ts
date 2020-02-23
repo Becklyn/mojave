@@ -32,7 +32,7 @@ export function registerBodyClickHandler (allowedClickTargets: HTMLElement[], on
 }
 
 
-type DismissableContainerReturn = {
+export type DismissableContainerDirector = {
     (): void;
     destroy(): void;
 }
@@ -44,7 +44,7 @@ type DismissableContainerReturn = {
  * Returns a close function, with which you can close the container.
  * The close function has a property `.destroy`, which is a function that destroys the dismissable container
  */
-export function initDismissableContainer (trigger: HTMLElement|HTMLElement[], allowedContainers: HTMLElement[], callback: (isActive: boolean) => void) : DismissableContainerReturn
+export function initDismissableContainer (trigger: HTMLElement|HTMLElement[], allowedContainers: HTMLElement[], callback: (isActive: boolean) => void) : DismissableContainerDirector
 {
     let globalHandler: (() => void)|null = null;
     const triggers = Array.isArray(trigger) ? trigger : [trigger];

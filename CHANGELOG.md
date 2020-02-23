@@ -2,6 +2,7 @@
 =====
 
 *   (improvement) Add `_mojave-dragged-item` class on dragged item in sortable.
+*   (improvement) Add option to disable sortable hook easily (default is still "enabled").
 
 5.9.3
 =====

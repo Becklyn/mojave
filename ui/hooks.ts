@@ -6,7 +6,7 @@ import Sortable, {SortableConfig, SortableOnChangedData} from "./Sortable";
 /**
  * Hook to easily implement a sortable element.
  *
- * @param ref {RefObject<HTMLElement>}  the reference
+ * @param ref {RefObject<HTMLElement>}  the reference to the container
  * @param sortableOptions
  * @param onChange
  * @param idFetcher
@@ -21,7 +21,7 @@ export function useSortable (
     let fetcher = idFetcher || (element => parseInt(element.dataset.id || "", 10));
 
     useEffect(() => {
-        if (!ref.current)
+        if (!ref.current || false === sortableOptions.enabled)
         {
             return;
         }
@@ -39,5 +39,5 @@ export function useSortable (
         });
 
         return () => sortable.destroy();
-    }, [ref.current]);
+    }, [ref.current, sortableOptions]);
 }

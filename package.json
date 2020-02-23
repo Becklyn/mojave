@@ -11,7 +11,7 @@
     "bugs": {
         "url": "https://github.com/Becklyn/mojave/issues"
     },
-    "version": "5.9.2",
+    "version": "5.9.3",
     "scripts": {
         "build": "npm run-script clean && node_modules/.bin/tsc --version && node_modules/.bin/tsc -p tests-tsconfig.json --diagnostics --noEmitOnError --noErrorTruncation --listEmittedFiles --pretty",
         "clean": "node .build/clean.js",

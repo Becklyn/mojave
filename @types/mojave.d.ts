@@ -51,6 +51,12 @@ declare namespace mojave
          */
         hydrate?: boolean;
     }
+
+
+    export type DismissableContainerDirector = {
+        (): void;
+        destroy(): void;
+    }
 }
 
 declare namespace mojave.types

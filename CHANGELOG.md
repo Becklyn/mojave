@@ -1,3 +1,9 @@
+5.9.3
+=====
+
+*   (improvement) Fix export of return type of `initDismissableContainer()`.
+
+
 5.9.2
 =====
 

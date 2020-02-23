@@ -56,6 +56,12 @@ export default class SortableInteraction
         this.hasMovedBefore = false;
         this.startScrollPosition = window.pageYOffset;
 
+        if (this.container.tagName.toLowerCase() === "table")
+        {
+            // @deprecated remove in mojave v7
+            console.error("To avoid render issues, you should never use a table as container. Wrap a div around the table to fix layout issues.");
+        }
+
         const displacement = this.calculateDisplacement();
 
         this.itemsBefore = this.allItems.slice(0, this.draggedIndex).map(item => this.prepareItem(item, 0, displacement));

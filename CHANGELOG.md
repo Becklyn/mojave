@@ -1,3 +1,9 @@
+5.10.0
+======
+
+*   (feature) Add `useLiveRef()` hook.
+
+
 5.9.4
 =====
 

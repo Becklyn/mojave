@@ -39,5 +39,9 @@ export function useSortable (
         });
 
         return () => sortable.destroy();
-    }, [ref.current, sortableOptions]);
+    }, [ref.current, JSON.stringify(sortableOptions)]);
+    // note, that `useEffect` does a identity comparison. This will fail practically every time, because
+    // the options are normally always newly created in your component. But as the values don't change,
+    // the JSON representation won't change and this way the effect is only called if actually the config
+    // *values* changed.
 }

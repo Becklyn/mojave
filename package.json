@@ -30,7 +30,7 @@
         "@types/qunit": "^2.9.0",
         "browserstack-runner": "^0.9.1",
         "glob": "^7.1.6",
-        "kaba": "^8.1.0",
+        "kaba": "^9.0.0",
         "qunit": "^2.9.2",
         "travis-size-report": "^1.1.0",
         "typescript": "^3.8.3"

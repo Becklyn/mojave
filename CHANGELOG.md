@@ -1,3 +1,11 @@
+5.11.0
+======
+
+*   (improvement) Improve types in animation. 
+*   (improvement) Improve types in `extend()` + `merge()`.
+*   (feature) Add `useDebounced()` hook. 
+
+
 5.10.1
 ======
 

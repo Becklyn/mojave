@@ -68,7 +68,7 @@ export function inNextFrame (callback: () => void) : void
 /**
  * Hook that debounces the given value.
  */
-export default function useDebounce<TValue = any>(value: TValue, delay: number) : TValue
+export default function useDebounced <TValue = any> (value: TValue, delay: number) : TValue
 {
     // State and setters for debounced value
     const [debouncedValue, setDebouncedValue] = useState(value);

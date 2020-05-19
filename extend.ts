@@ -50,7 +50,7 @@ export function merge <T extends Record<string|number, any>> (target : T, ...sou
             {
                 target[key] = (target[key] !== undefined)
                     ? merge(target[key], source[key] as any)
-                    : source[key];
+                    : source[key] as any;
             }
 
             return target;
@@ -78,7 +78,7 @@ export function extend (
     ...sources : Array<Record<string|number, any>>
 ) : Record<string|number, any>
 {
-    const target = {};
+    const target: Record<string|number, any> = {};
     sources.unshift(source);
 
     for (let i = 0; i < sources.length; i++) {

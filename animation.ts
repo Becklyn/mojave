@@ -101,7 +101,7 @@ export function animateCallback (callback : (progress: number) => void, options 
     // first set default options,
     // then merge with given options,
     // then merge with context-specific parameters
-    const context : AnimationContext = merge({
+    const context : AnimationContext = merge<AnimationOptions>({
         duration: 400,
         easing: EASE_IN_OUT_CUBIC,
     }, options) as AnimationContext;

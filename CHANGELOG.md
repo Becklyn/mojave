@@ -1,3 +1,9 @@
+5.11.1
+======
+
+*   (bug) Remove invalid default export.
+
+
 5.11.0
 ======
 

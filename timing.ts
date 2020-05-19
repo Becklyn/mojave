@@ -1,3 +1,6 @@
+import {useEffect, useState} from "preact/hooks";
+
+
 /**
  * Debounces functions that are frequently invoked
  */
@@ -59,4 +62,29 @@ export function inNextFrame (callback: () => void) : void
     window.requestAnimationFrame(
         () => window.requestAnimationFrame(callback)
     );
+}
+
+
+/**
+ * Hook that debounces the given value.
+ */
+export default function useDebounced <TValue = any> (value: TValue, delay: number) : TValue
+{
+    // State and setters for debounced value
+    const [debouncedValue, setDebouncedValue] = useState(value);
+
+    useEffect(
+        () =>
+        {
+            const timer = window.setTimeout(
+                () => setDebouncedValue(value),
+                delay
+            );
+
+            return () => window.clearTimeout(timer);
+        },
+        [value]
+    );
+
+    return debouncedValue;
 }

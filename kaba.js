@@ -5,7 +5,6 @@ module.exports = (new Kaba())
         "all-tests": "tests/build/all-tests.js",
     })
     .setOutputPath("tests/dist")
-    .disableChunkSplitting()
     .disableFileNameHashing()
     .disableModuleConcatenation()
 ;

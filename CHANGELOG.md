@@ -1,3 +1,9 @@
+next minor
+==========
+
+*   (feature) Add `LocalRouter`.
+
+
 5.11.1
 ======
 

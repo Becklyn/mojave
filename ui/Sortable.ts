@@ -50,7 +50,7 @@ export default class Sortable
             handle: "",
         }, config) as SortableConfig;
         this.interaction = null;
-        this.emitter = new mitt();
+        this.emitter = mitt();
         this.listeners = {
             move: this.onDragMove.bind(this) as EventListener,
             end: this.onDragEnd.bind(this) as EventListener,

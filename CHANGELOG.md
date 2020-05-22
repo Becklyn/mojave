@@ -1,7 +1,8 @@
-next minor
-==========
+5.12.0
+======
 
 *   (feature) Add `LocalRouter`.
+*   (internal) Fixed type issue in `Sortable`.
 
 
 5.11.1

@@ -12,6 +12,7 @@
         "moduleResolution": "node",
         "experimentalDecorators": true,
         "alwaysStrict": false,
+        "allowSyntheticDefaultImports": true,
         "lib": [
             "dom",
             "es5",

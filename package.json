@@ -20,6 +20,7 @@
         "test": "node_modules/.bin/browserstack-runner"
     },
     "dependencies": {
+        "escape-string-regexp": "^4.0.0",
         "mitt": "^1.2.0",
         "preact": "^10.3.4",
         "promise-polyfill": "^8.1.3",

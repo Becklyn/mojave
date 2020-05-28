@@ -1,3 +1,9 @@
+next patch
+==========
+
+*   (bug) Prevent issues with cookie names containing a `.`.
+
+
 5.12.0
 ======
 

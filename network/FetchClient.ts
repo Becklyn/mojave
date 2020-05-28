@@ -16,11 +16,10 @@ export interface FetchOptions
     method?: string;
 
     /**
-     * undefined = use default message
-     * null      = silent mode, no loader
+     * undefined = silent mode, no loaderuse default message
      * string    = use the given string as message
      */
-    loading?: string|null;
+    loading?: string;
 
     /**
      * Flag whether to automatically handle generic request errors:
@@ -68,13 +67,12 @@ export class FetchClient
 
         let data = options.data;
         let method = options.method;
-        const shouldShowLoader = null !== options.loading;
         const showGenericRequestErrors = false !== options.handleGenericRequestErrors;
 
         // start loader, if needed
-        if (shouldShowLoader && this.loader)
+        if (options.loading && this.loader)
         {
-            this.loader.start(options.loading || "Loading...");
+            this.loader.start(options.loading);
         }
 
         // if JSON is passed, the data is overwritten
@@ -136,7 +134,7 @@ export class FetchClient
                         // endregion
                     )
                     .finally(() => {
-                        if (shouldShowLoader && this.loader)
+                        if (options.loading && this.loader)
                         {
                             this.loader.stop();
                         }

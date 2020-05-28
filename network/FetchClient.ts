@@ -11,8 +11,8 @@ import AjaxResponseData = mojave.AjaxResponseData;
 export interface FetchOptions
 {
     data?: BodyInit|null;
-    headers?:{[name: string]: string};
-    json?: {[name: string]: any}|Array<any>|null;
+    headers?: Record<string, string>;
+    json?: Record<string|number, any>|Array<any>|null;
     method?: string;
 
     /**

@@ -16,10 +16,10 @@ export interface FetchOptions
     method?: string;
 
     /**
-     * undefined = silent mode, no loaderuse default message
-     * string    = use the given string as message
+     * undefined|null = silent mode, no loader
+     * string         = use the given string as message
      */
-    loading?: string;
+    loading?: string|null;
 
     /**
      * Flag whether to automatically handle generic request errors:
@@ -29,6 +29,7 @@ export interface FetchOptions
      */
     handleGenericRequestErrors?: boolean;
 }
+
 
 /**
  * Automated fetch client, that transparently handles a large part of the fetch integration.
@@ -46,13 +47,14 @@ export class FetchClient
     public constructor (
         toasts: ToastManagerInterface,
         failureMessage: string,
-        loader: mojaveIntegration.LoaderInterface|null = null,
+        loader: mojaveIntegration.LoaderInterface|null = null
     )
     {
         this.toasts = toasts;
         this.failureMessage = failureMessage;
         this.loader = loader;
     }
+
 
 
     /**
@@ -103,7 +105,33 @@ export class FetchClient
                         {
                             return raw.json().then(
                                 // region valid response (with valid json)
-                                (data: AjaxResponse<TData>) => this.handleResponse(data),
+                                (response: AjaxResponse<TData>) =>
+                                {
+                                    // display toast message
+                                    const message = response.message;
+
+                                    if (message)
+                                    {
+                                        this.toasts.add(
+                                            message.text,
+                                            message.impact,
+                                            message.action
+                                        );
+                                    }
+
+                                    // handle redirect (must be the last entry)
+                                    if (response.redirect)
+                                    {
+                                        document.location.href = response.redirect;
+                                    }
+
+                                    // return response
+                                    resolve({
+                                        ok: response.ok,
+                                        status: response.status,
+                                        data: response.data,
+                                    });
+                                },
                                 // endregion
 
                                 // region Invalid JSON
@@ -112,7 +140,7 @@ export class FetchClient
                                     if (showGenericRequestErrors)
                                     {
                                         console.error("Request failed (json)", error);
-                                        this.toasts.show(this.failureMessage, "negative");
+                                        this.toasts.add(this.failureMessage, "negative");
                                     }
 
                                     reject();
@@ -126,7 +154,7 @@ export class FetchClient
                             if (showGenericRequestErrors)
                             {
                                 console.error("Request failed (generic)", error);
-                                this.toasts.show(this.failureMessage, "negative");
+                                this.toasts.add(this.failureMessage, "negative");
                             }
 
                             reject();
@@ -141,37 +169,5 @@ export class FetchClient
                     });
             }
         );
-    }
-
-
-    /**
-     * Handles the response and transforms it to the response data
-     */
-    protected handleResponse<TData extends object> (
-        response: AjaxResponse<TData>
-    ) : AjaxResponseData<TData>
-    {
-        // display toast message
-        if (response.message)
-        {
-            this.toasts.show(
-                response.message.text,
-                response.message.impact,
-                response.message.action
-            );
-        }
-
-        // handle redirect (must be the last entry)
-        if (response.redirect)
-        {
-            document.location.href = response.redirect;
-        }
-
-        // return response
-        return {
-            ok: response.ok,
-            status: response.status,
-            data: response.data,
-        };
     }
 }

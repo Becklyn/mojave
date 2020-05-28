@@ -3,8 +3,6 @@ import {Tuple} from "ts-toolbelt";
 
 declare namespace mojave
 {
-    export type Impact = "positive" | "negative" | "neutral";
-
     type MountableClass = {
         new(...args: any[]): {
             init(): void;
@@ -133,9 +131,9 @@ declare namespace mojave.types
  */
 export module mojaveIntegration
 {
-    //region Loader
-    import Impact = mojave.Impact;
+    export type Impact = "positive" | "negative" | "neutral";
 
+    //region Loader
     export interface LoaderInterface
     {
         start(message: string|null): void;
@@ -168,6 +166,7 @@ export module mojaveIntegration
     //endregion
 
     //region Toasts
+
     export interface ToastAction
     {
         label: string;
@@ -176,7 +175,10 @@ export module mojaveIntegration
 
     export interface ToastManagerInterface
     {
-        show(message: string, type: Impact, action?: ToastAction): void;
+        /**
+         * Adds a toast message
+         */
+        add(message: string, type: Impact, action?: ToastAction): void;
     }
     //endregion
 }

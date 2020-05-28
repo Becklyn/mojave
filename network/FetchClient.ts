@@ -164,7 +164,7 @@ export class FetchClient
                     .finally(() => {
                         if (options.loading && this.loader)
                         {
-                            this.loader.stop();
+                            this.loader.end();
                         }
                     });
             }

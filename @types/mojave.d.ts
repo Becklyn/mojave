@@ -134,7 +134,7 @@ export module mojaveIntegration
     export interface LoaderInterface
     {
         start(message: string|null): void;
-        stop(): void;
+        end(): void;
     }
     //endregion
 

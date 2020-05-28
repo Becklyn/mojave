@@ -57,6 +57,52 @@ declare namespace mojave
         (): void;
         destroy(): void;
     }
+
+
+    /**
+     * The generic AJAX protocol.
+     */
+    export interface AjaxResponse<TData extends object> extends AjaxResponseData<TData>
+    {
+        /**
+         * A redirect target, where the AJAX handler should
+         * redirect to.
+         */
+        redirect?: string;
+
+        /**
+         * A toast message with optional type and action target.
+         */
+        message?: {
+            text: string;
+            impact: mojaveIntegration.Impact;
+            action?: mojaveIntegration.ToastAction;
+        };
+    }
+
+    /**
+     * The actual data of the response.
+     *
+     * That's the value the promise of the FetchClient is resolved to.
+     */
+    export interface AjaxResponseData<TData extends object>
+    {
+        /**
+         * Whether the call succeeded.
+         */
+        ok: boolean;
+
+        /**
+         * Any string status, like "ok" or "invalid-id" that
+         * you can react to in your code (if you need to).
+         */
+        status: string;
+
+        /**
+         * The response data.
+         */
+        data: TData;
+    }
 }
 
 declare namespace mojave.types
@@ -75,4 +121,37 @@ declare namespace mojave.types
     interface StringIndexedCSSStyleDeclaration extends CSSStyleDeclaration {
         [index: string]: any;
     }
+}
+
+/**
+ * Defines integration interfaces
+ */
+export module mojaveIntegration
+{
+    export type Impact = "positive" | "negative" | "neutral";
+
+    //region Loader
+    export interface LoaderInterface
+    {
+        start(message: string|null): void;
+        stop(): void;
+    }
+    //endregion
+
+
+    //region Toasts
+    export interface ToastAction
+    {
+        label: string;
+        action: (() => void)|string;
+    }
+
+    export interface ToastManagerInterface
+    {
+        /**
+         * Adds a toast message
+         */
+        add(message: string, type: Impact, action?: ToastAction): void;
+    }
+    //endregion
 }

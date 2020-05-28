@@ -1,3 +1,11 @@
+5.13.0
+======
+
+*   (feature) Add `FetchClient`.
+*   (improvement) Add several integration type interfaces.
+*   (feature) Add `AjaxResponse` interface.
+
+
 5.12.1
 ======
 

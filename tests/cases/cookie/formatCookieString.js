@@ -14,7 +14,7 @@ QUnit.test(
                 key: 'test',
                 value: 'value',
                 options: {},
-                expected: /^test=%22value%22;path=\/ ;sameSite=strict ;expires=/,
+                expected: /^test=%22value%22;path=\/ ;sameSite=lax ;expires=/,
             },
 
             // explicitly secure + insecure test
@@ -24,7 +24,7 @@ QUnit.test(
                 options: {
                     secure: true,
                 },
-                expected: /^test=%22value%22;path=\/ ;secure ;sameSite=strict ;expires=/,
+                expected: /^test=%22value%22;path=\/ ;secure ;sameSite=lax ;expires=/,
             },
             {
                 key: 'test',
@@ -32,15 +32,15 @@ QUnit.test(
                 options: {
                     secure: false,
                 },
-                expected: /^test=%22value%22;path=\/ ;sameSite=strict ;expires=/,
+                expected: /^test=%22value%22;path=\/ ;sameSite=lax ;expires=/,
             },
             {
                 key: 'test',
                 value: 'value',
                 options: {
-                    sameSite: "lax",
+                    sameSite: "strict",
                 },
-                expected: /^test=%22value%22;path=\/ ;sameSite=lax ;expires=/,
+                expected: /^test=%22value%22;path=\/ ;sameSite=strict ;expires=/,
             },
             {
                 key: 'test',

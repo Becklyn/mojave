@@ -2,6 +2,7 @@ next patch
 ==========
 
 *   (bug) Prevent issues with cookie names containing a `.`.
+*   (improvement) Use `lax` as default `Same-Site` for cookies.
 
 
 5.12.0

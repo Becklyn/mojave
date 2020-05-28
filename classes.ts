@@ -3,11 +3,11 @@
  */
 export function classes (...args: Array<string|{[key: string] : any}>) : string
 {
-    let list = [];
+    const list: string[] = [];
 
     for (let i = 0; i < args.length; i++)
     {
-        let entry = args[i];
+        const entry = args[i];
 
         if (typeof entry === "string")
         {

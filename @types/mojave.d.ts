@@ -3,6 +3,8 @@ import {Tuple} from "ts-toolbelt";
 
 declare namespace mojave
 {
+    export type Impact = "positive" | "negative" | "neutral";
+
     type MountableClass = {
         new(...args: any[]): {
             init(): void;
@@ -57,6 +59,55 @@ declare namespace mojave
         (): void;
         destroy(): void;
     }
+
+
+    /**
+     * The generic AJAX protocol.
+     */
+    export interface AjaxResponse<TData extends object> extends AjaxResponseData<TData>
+    {
+        /**
+         * A redirect target, where the AJAX handler should
+         * redirect to.
+         */
+        redirect?: string;
+
+        /**
+         * A toast message with optional type and action target.
+         */
+        message?: {
+            text: string;
+            impact: Impact;
+            action?: {
+                label: string;
+                action: string;
+            };
+        };
+    }
+
+    /**
+     * The actual data of the response.
+     *
+     * That's the value the promise of the FetchClient is resolved to.
+     */
+    export interface AjaxResponseData<TData extends object>
+    {
+        /**
+         * Whether the call succeeded.
+         */
+        ok: boolean;
+
+        /**
+         * Any string status, like "ok" or "invalid-id" that
+         * you can react to in your code (if you need to).
+         */
+        status: string;
+
+        /**
+         * The response data.
+         */
+        data: TData;
+    }
 }
 
 declare namespace mojave.types
@@ -75,4 +126,57 @@ declare namespace mojave.types
     interface StringIndexedCSSStyleDeclaration extends CSSStyleDeclaration {
         [index: string]: any;
     }
+}
+
+/**
+ * Defines integration interfaces
+ */
+export module mojaveIntegration
+{
+    //region Loader
+    import Impact = mojave.Impact;
+
+    export interface LoaderInterface
+    {
+        start(message: string|null): void;
+        stop(): void;
+    }
+    //endregion
+
+
+    //region Router
+    export type RouterParameterType = string | number | boolean | null | undefined;
+
+    export interface RouteParameters {
+        [parameter: string]: RouterParameterType;
+    }
+
+    export enum RouterReferenceType {
+        ABSOLUTE_URL = 0,
+        ABSOLUTE_PATH = 1,
+        NETWORK_PATH = 3
+    }
+
+    export interface RouterInterface
+    {
+        generate(
+            name: string,
+            parameters?: Readonly<RouteParameters>,
+            referenceType?: RouterReferenceType
+        ): string;
+    }
+    //endregion
+
+    //region Toasts
+    export interface ToastAction
+    {
+        label: string;
+        action: (() => void)|string;
+    }
+
+    export interface ToastManagerInterface
+    {
+        show(message: string, type: Impact, action?: ToastAction): void;
+    }
+    //endregion
 }

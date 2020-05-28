@@ -1,4 +1,5 @@
 import {safeParseJson} from "./json";
+import escapeStringRegexp from "escape-string-regexp";
 
 
 export type CookieOptions = Partial<{
@@ -61,7 +62,7 @@ export function formatCookieString (key : string, value : any, options : CookieO
  */
 export function getCookie (key : string) : any
 {
-    const matcher = new RegExp(`; ${key}=([^;]+)`);
+    const matcher = new RegExp(`; ${escapeStringRegexp(key)}=([^;]+)`);
     const match = matcher.exec(`; ${document.cookie}`);
 
     return match ? safeParseJson(decodeURIComponent(match[1])) : null;

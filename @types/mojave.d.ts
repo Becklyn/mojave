@@ -75,11 +75,8 @@ declare namespace mojave
          */
         message?: {
             text: string;
-            impact: Impact;
-            action?: {
-                label: string;
-                action: string;
-            };
+            impact: mojaveIntegration.Impact;
+            action?: mojaveIntegration.ToastAction;
         };
     }
 
@@ -142,31 +139,7 @@ export module mojaveIntegration
     //endregion
 
 
-    //region Router
-    export type RouterParameterType = string | number | boolean | null | undefined;
-
-    export interface RouteParameters {
-        [parameter: string]: RouterParameterType;
-    }
-
-    export enum RouterReferenceType {
-        ABSOLUTE_URL = 0,
-        ABSOLUTE_PATH = 1,
-        NETWORK_PATH = 3
-    }
-
-    export interface RouterInterface
-    {
-        generate(
-            name: string,
-            parameters?: Readonly<RouteParameters>,
-            referenceType?: RouterReferenceType
-        ): string;
-    }
-    //endregion
-
     //region Toasts
-
     export interface ToastAction
     {
         label: string;

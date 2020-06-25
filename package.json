@@ -18,7 +18,7 @@
         "clean": "node .build/clean.js",
         "dev": "node_modules/.bin/tsc -p tests-tsconfig.json --noEmitOnError --noErrorTruncation --listEmittedFiles --pretty -w",
         "prepublishOnly": "npm run build",
-        "test": "npm run build && node_modules/.bin/browserstack-runner"
+        "test": "node_modules/.bin/browserstack-runner"
     },
     "dependencies": {
         "escape-string-regexp": "^4.0.0",

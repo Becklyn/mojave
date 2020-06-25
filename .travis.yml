@@ -5,7 +5,7 @@ node_js:
     - node
 
 before_script:
-    - npm run-script build
-    - npx kaba --debug --with-source-maps
+    - npm run build
+    - ./node_modules/.bin/kaba --debug --with-source-maps
 
 after_success: sizereport --config

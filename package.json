@@ -13,10 +13,11 @@
     },
     "version": "5.12.1",
     "scripts": {
-        "build": "npm run-script clean && node_modules/.bin/tsc --version && node_modules/.bin/tsc -p tests-tsconfig.json --diagnostics --noEmitOnError --noErrorTruncation --listEmittedFiles --pretty",
+        "build": "npm run clean && npm run build:ts",
+        "build:ts": "node_modules/.bin/tsc --version && node_modules/.bin/tsc -p tests-tsconfig.json --diagnostics --noEmitOnError --noErrorTruncation --listEmittedFiles --pretty",
         "clean": "node .build/clean.js",
         "dev": "node_modules/.bin/tsc -p tests-tsconfig.json --noEmitOnError --noErrorTruncation --listEmittedFiles --pretty -w",
-        "prepublishOnly": "npm run-script build",
+        "prepublishOnly": "npm run build",
         "test": "node_modules/.bin/browserstack-runner"
     },
     "dependencies": {

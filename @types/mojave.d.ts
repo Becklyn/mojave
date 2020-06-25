@@ -128,13 +128,14 @@ declare namespace mojave.types
  */
 export module mojaveIntegration
 {
+    import AjaxResponseData = mojave.AjaxResponseData;
     export type Impact = "positive" | "negative" | "neutral";
 
     //region Loader
     export interface LoaderInterface
     {
-        start(message: string|null): void;
-        end(): void;
+        start (message: string | null): void;
+        end (): void;
     }
     //endregion
 
@@ -143,7 +144,7 @@ export module mojaveIntegration
     export interface ToastAction
     {
         label: string;
-        action: (() => void)|string;
+        action: (() => void) | string;
     }
 
     export interface ToastManagerInterface
@@ -151,7 +152,37 @@ export module mojaveIntegration
         /**
          * Adds a toast message
          */
-        add(message: string, type: Impact, action?: ToastAction): void;
+        add (message: string, type: Impact, action?: ToastAction): void;
+    }
+
+    //endregion
+
+    //region Fetch Client
+    export interface FetchOptions
+    {
+        data?: BodyInit|null;
+        headers?: Record<string, string>;
+        json?: Record<string|number, any>|Array<any>|null;
+        method?: string;
+
+        /**
+         * undefined|null = silent mode, no loader
+         * string         = use the given string as message
+         */
+        loading?: string|null;
+
+        /**
+         * Flag whether to automatically handle generic request errors:
+         *
+         *      + posts an error to the console
+         *      + displays an error toast
+         */
+        handleGenericRequestErrors?: boolean;
+    }
+
+    export interface FetchClientInterface
+    {
+        request <TData extends object> (url: string, options: FetchOptions) : Promise<AjaxResponseData<TData>>
     }
     //endregion
 }

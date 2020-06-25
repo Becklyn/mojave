@@ -1,51 +1,22 @@
 import {mojave, mojaveIntegration} from "../@types/mojave";
 import {extend} from "../extend";
 import AjaxResponse = mojave.AjaxResponse;
-import ToastManagerInterface = mojaveIntegration.ToastManagerInterface;
-import AjaxResponseData = mojave.AjaxResponseData;
-
-
-/**
- * The options to create a fetch request with.
- */
-export interface FetchOptions
-{
-    data?: BodyInit|null;
-    headers?: Record<string, string>;
-    json?: Record<string|number, any>|Array<any>|null;
-    method?: string;
-
-    /**
-     * undefined|null = silent mode, no loader
-     * string         = use the given string as message
-     */
-    loading?: string|null;
-
-    /**
-     * Flag whether to automatically handle generic request errors:
-     *
-     *      + posts an error to the console
-     *      + displays an error toast
-     */
-    handleGenericRequestErrors?: boolean;
-}
 
 
 /**
  * Automated fetch client, that transparently handles a large part of the fetch integration.
  */
-export class FetchClient
+export class FetchClient implements mojaveIntegration.FetchClientInterface
 {
-    private toasts: ToastManagerInterface;
+    private toasts: mojaveIntegration.ToastManagerInterface;
     private loader: mojaveIntegration.LoaderInterface | null;
     private failureMessage: string;
-
 
     /**
      *
      */
     public constructor (
-        toasts: ToastManagerInterface,
+        toasts: mojaveIntegration.ToastManagerInterface,
         failureMessage: string,
         loader: mojaveIntegration.LoaderInterface|null = null
     )
@@ -60,7 +31,7 @@ export class FetchClient
     /**
      * Sends a request
      */
-    public request <TData extends object> (url: string, options: FetchOptions) : Promise<AjaxResponseData<TData>>
+    public request <TData extends object> (url: string, options: mojaveIntegration.FetchOptions) : Promise<mojave.AjaxResponseData<TData>>
     {
         const headers = extend(options.headers || {}, {
             Accept: "application/json",

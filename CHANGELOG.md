@@ -1,3 +1,9 @@
+5.13.1
+======
+
+*   (improvement) Add `mojaveIntegration.FetchClientInterface`.
+
+
 5.13.0
 ======
 

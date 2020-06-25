@@ -1,16 +1,11 @@
-5.14.0
-======
-
-*   (feature) Add `form-helpers`.
-*   (improvement) Make `Sortable` events more strict.
-
-
 5.13.0
 ======
 
 *   (feature) Add `FetchClient`.
 *   (improvement) Add several integration type interfaces.
 *   (feature) Add `AjaxResponse` interface.
+*   (feature) Add `form-helpers`.
+*   (improvement) Make `Sortable` events more strict.
 
 
 5.12.1

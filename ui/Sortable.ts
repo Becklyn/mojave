@@ -28,6 +28,8 @@ export interface SortableOnChangedData
     result: SortableResult;
 }
 
+type SortableEvents = "start" | "end" | "changed";
+
 
 /**
  * Generic sortable implementation
@@ -207,7 +209,7 @@ export default class Sortable
     /**
      * Register an event listener
      */
-    public on (event : string, callback : (...args : any[]) => void) : void
+    public on (event: SortableEvents, callback : (...args : any[]) => void) : void
     {
         this.emitter.on(event, callback);
     }

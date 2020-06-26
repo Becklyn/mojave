@@ -1,3 +1,9 @@
+5.14.0
+======
+
+*   (feature) Add `createComponentInitializer` + `ComponentManager`.
+
+
 5.13.1
 ======
 

@@ -1,4 +1,4 @@
-5.15.0 (unreleased)
+5.15.0
 ======
 
 *   (feature) Add `OverlayLoader` UI component.

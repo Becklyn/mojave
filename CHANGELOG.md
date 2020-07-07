@@ -2,6 +2,7 @@
 ======
 
 *   (feature) Add `OverlayLoader` UI component.
+*   (feature) Add `ToastManager` UI component.
 
 
 5.14.0

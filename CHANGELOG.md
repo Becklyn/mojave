@@ -1,4 +1,4 @@
-5.15.1 (unreleased)
+5.15.1
 ======
 
 *   (improvement) Improve default positioning of toast container.

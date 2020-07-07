@@ -69,7 +69,7 @@
 5.10.1
 ======
 
-*   (bug) Make the `useSortable()` hook more robust against heavily rerendered elements
+*   (bug) Make the `useSortable()` hook more robust against heavily re-rendered elements
 
 
 5.10.0

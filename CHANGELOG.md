@@ -3,6 +3,7 @@
 
 *   (feature) Add `OverlayLoader` UI component.
 *   (feature) Add `ToastManager` UI component.
+*   (improvement) Don't build JSX with "preserve" but compile to `preact` + update tsconfig.
 
 
 5.14.0

@@ -3,7 +3,7 @@ import {mojaveIntegration} from "../../@types/mojave";
 
 export interface DefaultToastProps
 {
-    impact?: mojaveIntegration.Impact;
+    impact: mojaveIntegration.Impact;
     action?: mojaveIntegration.ToastAction;
 }
 
@@ -23,10 +23,9 @@ export function DefaultToast (props: RenderableProps<DefaultToastProps>): JSX.El
     if (null != props.action)
     {
         let doAction = props.action.action;
-        // if 0 idea why we need to suddenly cast these, but without it, the TS compilation fails with
         action = (typeof doAction === "string")
-            ? <a href={doAction} class="toast-action-button">{props.action.label}</a> as any
-            : <button type="button" class="toast-action-button" onClick={doAction}>{props.action.label}</button> as any;
+            ? <a href={doAction} class="toast-action-button">{props.action.label}</a>
+            : <button type="button" class="toast-action-button" onClick={doAction}>{props.action.label}</button>;
     }
 
     return (

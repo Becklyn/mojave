@@ -1,3 +1,14 @@
+5.15.1 (unreleased)
+======
+
+*   (improvement) Improve default positioning of toast container.
+*   (improvement) Add `.neutral()`, `.positive()` and `.negative()` convenience method to `ToastManager`.
+*   (improvement) Make internal handling of toast impacts more strict.
+*   (improvement) Make it easier to use the loader standalone.
+*   (improvement) Improve text contrast for action on negative text.
+*   (improvement) Make `options` in `FetchClient.request()` optional.
+
+
 5.15.0
 ======
 
@@ -61,7 +72,7 @@
 5.10.1
 ======
 
-*   (bug) Make the `useSortable()` hook more robust against heavily rerendered elements
+*   (bug) Make the `useSortable()` hook more robust against heavily re-rendered elements
 
 
 5.10.0

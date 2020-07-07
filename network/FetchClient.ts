@@ -31,7 +31,7 @@ export class FetchClient implements mojaveIntegration.FetchClientInterface
     /**
      * Sends a request
      */
-    public request <TData extends object> (url: string, options: mojaveIntegration.FetchOptions) : Promise<mojave.AjaxResponseData<TData>>
+    public request <TData extends object> (url: string, options: mojaveIntegration.FetchOptions = {}) : Promise<mojave.AjaxResponseData<TData>>
     {
         const headers = extend(options.headers || {}, {
             Accept: "application/json",

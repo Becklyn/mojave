@@ -6,6 +6,7 @@
 *   (improvement) Make internal handling of toast impacts more strict.
 *   (improvement) Make it easier to use the loader standalone.
 *   (improvement) Improve text contrast for action on negative text.
+*   (improvement) Make `options` in `FetchClient.request()` optional.
 
 
 5.15.0

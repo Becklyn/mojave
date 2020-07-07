@@ -5,6 +5,7 @@
 *   (improvement) Add `.neutral()`, `.positive()` and `.negative()` convenience method to `ToastManager`.
 *   (improvement) Make internal handling of toast impacts more strict.
 *   (improvement) Make it easier to use the loader standalone.
+*   (improvement) Improve text contrast for action on negative text.
 
 
 5.15.0

@@ -38,6 +38,33 @@ export class ToastManager implements mojaveIntegration.ToastManagerInterface
 
 
     /**
+     * Adds a neutral toast.
+     */
+    public neutral (text: ComponentChildren, action?: mojaveIntegration.ToastAction) : void
+    {
+        this.add(text, "neutral", action);
+    }
+
+
+    /**
+     * Adds a positive toast.
+     */
+    public positive (text: ComponentChildren, action?: mojaveIntegration.ToastAction) : void
+    {
+        this.add(text, "positive", action);
+    }
+
+
+    /**
+     * Adds a negative toast.
+     */
+    public negative (text: ComponentChildren, action?: mojaveIntegration.ToastAction) : void
+    {
+        this.add(text, "negative", action);
+    }
+
+
+    /**
      * Adds a toast
      */
     public add (text: ComponentChildren, impact?: mojaveIntegration.Impact, action?: mojaveIntegration.ToastAction) : void

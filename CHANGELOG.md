@@ -2,6 +2,7 @@
 ======
 
 *   (improvement) Improve default positioning of toast container.
+*   (improvement) Add `.neutral()`, `.positive()` and `.negative()` convenience method to `ToastManager`.
 
 
 5.15.0

@@ -3,7 +3,7 @@ import {mojaveIntegration} from "../../@types/mojave";
 
 export interface DefaultToastProps
 {
-    impact?: mojaveIntegration.Impact;
+    impact: mojaveIntegration.Impact;
     action?: mojaveIntegration.ToastAction;
 }
 

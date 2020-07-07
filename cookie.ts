@@ -88,7 +88,7 @@ export function removeCookie (key : string) : void
  */
 function encodeCookieOptions (options : {[key: string]: string|boolean|null}) : string
 {
-    const encodedOptions = [];
+    const encodedOptions: string[] = [];
 
     // eslint-disable-next-line guard-for-in
     for (let optionName in options)

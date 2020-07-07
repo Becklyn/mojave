@@ -1,0 +1,100 @@
+$toast-text: #FFFFFF !default;
+$toast-bg: #9F9F9F !default;
+$toast-action: #4E4E4E !default;
+$toast-positive-text: #000000 !default;
+$toast-positive-bg: #65F5B2 !default;
+$toast-positive-action: #0D623E !default;
+$toast-negative-text: #FFFFFF !default;
+$toast-negative-bg: #EA395B !default;
+$toast-negative-action: #801127 !default;
+$toast-font-weight: 700 !default;
+$toast-action-font-weight: 700 !default;
+$toast-mobile-breakpoint: 900px;
+
+.toast {
+    background-color: $toast-bg;
+    color: $toast-text;
+    padding: 1rem 2rem;
+    max-width: 100%;
+    font-weight: $toast-font-weight;
+
+
+    &.toast-positive {
+        color: $toast-positive-text;
+        background-color: $toast-positive-bg;
+
+        .toast-action-button {
+            color: $toast-positive-action;
+        }
+    }
+
+    &.toast-negative {
+        color: $toast-negative-text;
+        background-color: $toast-negative-bg;
+
+        .toast-action-button {
+            color: $toast-negative-action;
+        }
+    }
+
+
+    .toast-action-button {
+        display: block;
+        flex-grow: 0;
+        flex-shrink: 0;
+        white-space: nowrap;
+        color: $toast-action;
+        margin: -1rem;
+        padding: 1rem;
+        font-weight: $toast-action-font-weight;
+
+        &:active,
+        &:focus,
+        &:hover {
+            color: currentColor;
+        }
+    }
+}
+
+.toast-container {
+    .toast {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        transform: translateY(0);
+        transition: .4s ease-in transform;
+        will-change: transform;
+    }
+
+    &.is-visible .toast {
+        transform: translateY(calc(100% + 2rem));
+        transition-timing-function: ease-out;
+    }
+}
+
+@media screen and (max-width: #{$toast-mobile-breakpoint - 1px}) {
+    .toast-action {
+        margin-top: 2rem;
+        display: flex;
+        justify-content: flex-end;
+    }
+}
+
+
+@media screen and (min-width: #{$toast-mobile-breakpoint}) {
+    .toast {
+        display: inline-flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .toast-action {
+        margin-left: 14rem;
+    }
+
+    .toast-container {
+        &.is-visible .toast {
+            transform: translateY(calc(100% + 4rem));
+        }
+    }
+}

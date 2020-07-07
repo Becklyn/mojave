@@ -1,0 +1,12 @@
+///
+/// Positions the `toast-container`
+///
+@mixin position-toast-container ($z-index) {
+    .toast-container {
+        position: absolute;
+        z-index: $z-index;
+        bottom: 100%;
+        right: 10%;
+        width: 80%;
+    }
+}

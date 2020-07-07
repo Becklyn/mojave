@@ -1,0 +1,47 @@
+///
+/// Default SCSS for the overlay loader
+///
+.overlay-loader {
+    $overlay-bg: rgba(#fff, .9);
+    will-change: background-color;
+    transition: background-color .15s ease-in-out;
+    display: none;
+    align-items: center;
+    justify-content: center;
+
+
+    // immediately block the UI
+    &.is-active {
+        display: flex;
+    }
+
+    .loader {
+        will-change: opacity;
+        transition: opacity .15s ease-in-out;
+        opacity: 0;
+        max-width: 80vw;
+    }
+
+    .loader-message {
+        margin-top: 2rem;
+        text-align: center;
+
+        span {
+            display: block;
+        }
+    }
+
+
+    // while the overlay that blocks the UI is there immediately, only show the
+    // spinner + background after 250ms, so that the UI doesn't flash hectically.
+    &.is-visible {
+        $delay: .25s;
+        background-color: $overlay-bg;
+        transition-delay: $delay;
+
+        .loader {
+            opacity: 1;
+            transition-delay: $delay;
+        }
+    }
+}

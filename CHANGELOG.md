@@ -1,3 +1,9 @@
+5.15.2
+======
+
+*   (improvement) Add `onSetCallback` to `useDebounced`. This callback is called every time the value is updated.
+
+
 5.15.1
 ======
 

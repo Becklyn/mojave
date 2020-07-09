@@ -67,8 +67,14 @@ export function inNextFrame (callback: () => void) : void
 
 /**
  * Hook that debounces the given value.
+ *
+ * The `onSetCallback` is called every time the value is actually set.
  */
-export function useDebounced <TValue = any> (value: TValue, delay: number) : TValue
+export function useDebounced <TValue = any> (
+    value: TValue,
+    delay: number,
+    onSetCallback?: () => void
+) : TValue
 {
     // State and setters for debounced value
     const [debouncedValue, setDebouncedValue] = useState(value);
@@ -77,7 +83,15 @@ export function useDebounced <TValue = any> (value: TValue, delay: number) : TVa
         () =>
         {
             const timer = window.setTimeout(
-                () => setDebouncedValue(value),
+                () =>
+                {
+                    setDebouncedValue(value);
+
+                    if (onSetCallback)
+                    {
+                        onSetCallback();
+                    }
+                },
                 delay
             );
 

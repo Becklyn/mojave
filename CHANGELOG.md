@@ -1,3 +1,9 @@
+5.15.4
+======
+
+*   (improvement) Add possibility to pass a list of messages as default loading message in `FetchClient`.
+
+
 5.15.3
 ======
 

@@ -11,7 +11,7 @@ export class FetchClient implements mojaveIntegration.FetchClientInterface
     private toasts: mojaveIntegration.ToastManagerInterface;
     private loader: mojaveIntegration.LoaderInterface | null;
     private failureMessage: string;
-    private defaultLoadingMessage: string;
+    private defaultLoadingMessage: string[];
 
     /**
      *
@@ -20,13 +20,15 @@ export class FetchClient implements mojaveIntegration.FetchClientInterface
         toasts: mojaveIntegration.ToastManagerInterface,
         loader: mojaveIntegration.LoaderInterface|null = null,
         failureMessage?: string,
-        defaultLoadingMessage?: string
+        defaultLoadingMessage?: string[]
     )
     {
         this.toasts = toasts;
         this.loader = loader;
         this.failureMessage = failureMessage || "Die Anfrage ist leider fehlgeschlagen. Bitte lade die Seite neu und versuche es noch einmal.";
-        this.defaultLoadingMessage = defaultLoadingMessage || "Lädt... bitte warten";
+        this.defaultLoadingMessage = undefined !== defaultLoadingMessage
+            ? defaultLoadingMessage
+            : ["Lädt... bitte warten"];
     }
 
 
@@ -50,7 +52,7 @@ export class FetchClient implements mojaveIntegration.FetchClientInterface
         {
             const loadingMessages = null !== options.loading
                 ? options.loading
-                : [this.defaultLoadingMessage];
+                : this.defaultLoadingMessage;
             this.loader.start(...loadingMessages);
         }
 

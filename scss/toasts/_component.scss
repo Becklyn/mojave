@@ -9,7 +9,7 @@ $toast-negative-bg: #EA395B !default;
 $toast-negative-action: #480411 !default;
 $toast-font-weight: 700 !default;
 $toast-action-font-weight: 700 !default;
-$toast-mobile-breakpoint: 900px;
+$toast-mobile-breakpoint: 900px !default;
 
 .toast {
     background-color: $toast-bg;

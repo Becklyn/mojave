@@ -1,3 +1,9 @@
+5.x to 5.15.3
+=============
+
+*   The order of the constructor arguments in `FetchClient` has changed.
+
+
 4.x to 5.0
 ==========
 

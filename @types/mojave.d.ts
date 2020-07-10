@@ -134,7 +134,7 @@ export module mojaveIntegration
     //region Loader
     export interface LoaderInterface
     {
-        start (message: string | null): void;
+        start (...messages: string[]): void;
         end (): void;
     }
     //endregion
@@ -166,10 +166,11 @@ export module mojaveIntegration
         method?: string;
 
         /**
-         * undefined|null = silent mode, no loader
-         * string         = use the given string as message
+         * undefined = use default message
+         * null      = silent mode, no loader
+         * string    = use the given strings as loading message
          */
-        loading?: string|null;
+        loading?: string[]|null;
 
         /**
          * Flag whether to automatically handle generic request errors:

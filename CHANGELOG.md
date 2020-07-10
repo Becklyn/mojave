@@ -1,3 +1,9 @@
+5.15.5
+======
+
+*   (bug) Fix internal check in `FetchClient`.
+
+
 5.15.4
 ======
 

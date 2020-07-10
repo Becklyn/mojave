@@ -48,11 +48,9 @@ export class FetchClient implements mojaveIntegration.FetchClientInterface
         const showGenericRequestErrors = false !== options.handleGenericRequestErrors;
 
         // start loader, if needed
-        if (undefined !== options.loading && this.loader)
+        if (null !== options.loading && this.loader)
         {
-            const loadingMessages = null !== options.loading
-                ? options.loading
-                : this.defaultLoadingMessage;
+            const loadingMessages = options.loading || this.defaultLoadingMessage;
             this.loader.start(...loadingMessages);
         }
 

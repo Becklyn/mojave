@@ -1,3 +1,9 @@
+5.15.3 (unreleased)
+======
+
+*   (bug) Add missing `!default` in toast SCSS.
+
+
 5.15.2
 ======
 

@@ -46,9 +46,10 @@ export class FetchClient implements mojaveIntegration.FetchClientInterface
         let data = options.data;
         let method = options.method;
         const showGenericRequestErrors = false !== options.handleGenericRequestErrors;
+        const showLoader = null !== options.loading;
 
         // start loader, if needed
-        if (null !== options.loading && this.loader)
+        if (showLoader && this.loader)
         {
             const loadingMessages = options.loading || this.defaultLoadingMessage;
             this.loader.start(...loadingMessages);
@@ -139,7 +140,7 @@ export class FetchClient implements mojaveIntegration.FetchClientInterface
                         // endregion
                     )
                     .finally(() => {
-                        if (options.loading && this.loader)
+                        if (showLoader && this.loader)
                         {
                             this.loader.end();
                         }

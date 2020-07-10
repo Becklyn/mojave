@@ -2,6 +2,9 @@
 ======
 
 *   (bug) Add missing `!default` in toast SCSS.
+*   (bug) Fix incorrect `LoaderInterface`.
+*   (bug) Fix incorrect call of loader in `FetchClient`.
+*   (bug) Add missing default loading message in fetch client.
 
 
 5.15.2

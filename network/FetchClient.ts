@@ -11,19 +11,22 @@ export class FetchClient implements mojaveIntegration.FetchClientInterface
     private toasts: mojaveIntegration.ToastManagerInterface;
     private loader: mojaveIntegration.LoaderInterface | null;
     private failureMessage: string;
+    private defaultLoadingMessage: string;
 
     /**
      *
      */
     public constructor (
         toasts: mojaveIntegration.ToastManagerInterface,
-        failureMessage: string,
-        loader: mojaveIntegration.LoaderInterface|null = null
+        loader: mojaveIntegration.LoaderInterface|null = null,
+        failureMessage?: string,
+        defaultLoadingMessage?: string
     )
     {
         this.toasts = toasts;
-        this.failureMessage = failureMessage;
         this.loader = loader;
+        this.failureMessage = failureMessage || "Die Anfrage ist leider fehlgeschlagen. Bitte lade die Seite neu und versuche es noch einmal.";
+        this.defaultLoadingMessage = defaultLoadingMessage || "Lädt... bitte warten";
     }
 
 
@@ -43,9 +46,12 @@ export class FetchClient implements mojaveIntegration.FetchClientInterface
         const showGenericRequestErrors = false !== options.handleGenericRequestErrors;
 
         // start loader, if needed
-        if (options.loading && this.loader)
+        if (undefined !== options.loading && this.loader)
         {
-            this.loader.start(options.loading);
+            const loadingMessages = null !== options.loading
+                ? options.loading
+                : [this.defaultLoadingMessage];
+            this.loader.start(...loadingMessages);
         }
 
         // if JSON is passed, the data is overwritten

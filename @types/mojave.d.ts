@@ -166,8 +166,9 @@ export module mojaveIntegration
         method?: string;
 
         /**
-         * undefined|null = silent mode, no loader
-         * string         = use the given string array as messages
+         * undefined = use default message
+         * null      = silent mode, no loader
+         * string    = use the given strings as loading message
          */
         loading?: string[]|null;
 

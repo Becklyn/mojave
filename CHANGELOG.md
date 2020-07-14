@@ -2,6 +2,7 @@
 ======
 
 *   (feature) Add `initializeDumpedToasts()`.
+*   (bug) Fix argument type of `message` in `ToastManagerInterface.add()`.
 
 
 5.15.6

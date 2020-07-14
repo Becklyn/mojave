@@ -1,4 +1,4 @@
-import {ComponentClass, FunctionComponent, VNode} from "preact";
+import {ComponentChildren, ComponentClass, FunctionComponent, VNode} from "preact";
 import {Tuple} from "ts-toolbelt";
 
 declare namespace mojave
@@ -152,7 +152,7 @@ export module mojaveIntegration
         /**
          * Adds a toast message
          */
-        add (message: string, type: Impact, action?: ToastAction): void;
+        add (message: ComponentChildren, type: Impact, action?: ToastAction): void;
     }
 
     //endregion

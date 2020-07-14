@@ -1,3 +1,9 @@
+5.16.0
+======
+
+*   (feature) Add `initializeDumpedToasts()`.
+
+
 5.15.6
 ======
 

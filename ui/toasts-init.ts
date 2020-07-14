@@ -2,8 +2,8 @@ import {mojaveIntegration} from "../@types/mojave";
 import {find} from "../dom/traverse";
 import {parseElementAsJson} from "../json";
 
-
-interface DumpedToast {
+interface DumpedToast
+{
     text: string;
     type: mojaveIntegration.Impact;
     action?: mojaveIntegration.ToastAction;
@@ -18,11 +18,11 @@ export function initializeDumpedToasts (selector: string, manager: mojaveIntegra
 {
     find(selector).forEach(toastContainer =>
     {
-        const data = parseElementAsJson<DumpedToast[]>(toastContainer);
+        const data = parseElementAsJson<{toasts: DumpedToast[]}>(toastContainer);
 
-        if (data && Array.isArray(data))
+        if (data && Array.isArray(data.toasts))
         {
-            data.forEach(toast => manager.add(toast.text, toast.type, toast.action));
+            data.toasts.forEach(toast => manager.add(toast.text, toast.type, toast.action));
         }
     });
 }

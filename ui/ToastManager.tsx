@@ -1,8 +1,10 @@
 import {ComponentChildren, ComponentFactory, h, render} from "preact";
+import {act} from "preact/test-utils";
 import {mojaveIntegration} from "../@types/mojave";
 import {createUnstyledElement} from "../dom/manipulate";
 import {inNextFrame} from "../timing";
 import {DefaultToast, DefaultToastProps} from "./Toast/DefaultToast";
+import {calculateToastDuration} from "./toasts-helper";
 
 interface ToastEntry
 {
@@ -13,8 +15,7 @@ interface ToastEntry
 
 // actual duration + buffer
 const TRANSITION_DURATION = 400 + 200;
-const SHOW_DURATION = 3000;
-const SHOW_DURATION_WITH_ACTION = 5000;
+
 
 export class ToastManager implements mojaveIntegration.ToastManagerInterface
 {
@@ -88,7 +89,7 @@ export class ToastManager implements mojaveIntegration.ToastManagerInterface
             return;
         }
 
-        let toast = this.queue.shift();
+        const toast = this.queue.shift();
 
         if (!toast)
         {
@@ -97,7 +98,6 @@ export class ToastManager implements mojaveIntegration.ToastManagerInterface
 
         this.hasVisible = true;
         let action = toast.action;
-        let hasAction = action !== undefined;
 
         if (action && typeof action.action === "function")
         {
@@ -118,7 +118,7 @@ export class ToastManager implements mojaveIntegration.ToastManagerInterface
             this.container
         );
 
-        inNextFrame(() => this.beforeShow(hasAction));
+        inNextFrame(() => this.beforeShow(toast));
     }
 
 
@@ -138,12 +138,12 @@ export class ToastManager implements mojaveIntegration.ToastManagerInterface
     /**
      * Callback on when the toast is about to be shown
      */
-    private beforeShow (hasAction: boolean) : void
+    private beforeShow (toast: ToastEntry) : void
     {
         this.container.classList.add("is-visible");
         this.hideTimeout = window.setTimeout(
             () => this.beforeHide(),
-            TRANSITION_DURATION + (hasAction ? SHOW_DURATION_WITH_ACTION : SHOW_DURATION)
+            TRANSITION_DURATION + calculateToastDuration(toast.text, toast.action)
         );
     }
 

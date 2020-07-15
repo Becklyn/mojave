@@ -49,6 +49,7 @@ import "../cases/string/manipulate/replaceAll";
 import "../cases/string/manipulate/toStringArray";
 import "../cases/timing/debounce";
 import "../cases/types/typeOf";
+import "../cases/ui/toasts-helper/extractTextFromComponentChildren";
 import "../cases/url/router-parameters";
 import "../cases/url/Slug";
 import QUnit from "qunit";

@@ -1,3 +1,9 @@
+5.16.1
+======
+
+*   (improvement) Instead of using a fixed "visible" duration, estimate the time to show a toast by its content length.
+
+
 5.16.0
 ======
 

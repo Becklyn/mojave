@@ -24,7 +24,6 @@ export class DataContainer
     {
         if (!this.data)
         {
-            console.log("load!");
             this.data = parseElementAsJson(document.getElementById(this.containerId)) || {};
         }
 

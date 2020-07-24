@@ -1,8 +1,8 @@
 module.exports = {
     repo: 'Becklyn/mojave',
     path: [
-        '{date,dom,io,mount,polyfill,string,ui,url}/*.js',
+        '{component,date,data,dom,form,hooks,io,mount,network,polyfill,preact,storage,string,ui,url}/*.js',
         '/*.js',
     ],
-    branch: 'master'
+    branch: '2.x'
 };

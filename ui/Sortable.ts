@@ -2,7 +2,7 @@ import {closest, find, findOne} from "../dom/traverse";
 import {delegate, EventIntermediateToken, off, on} from "../dom/events";
 import {merge} from "../extend";
 //@ts-ignore
-import mitt from "mitt";
+import mitt, {Emitter} from "mitt";
 import SortableInteraction from "./Sortable/SortableInteraction";
 
 /**
@@ -39,7 +39,7 @@ export default class Sortable
     private readonly container : HTMLElement;
     private readonly config : SortableConfig;
     private interaction : null|SortableInteraction;
-    private readonly emitter : mitt.Emitter;
+    private readonly emitter : Emitter;
     private listeners : {[event: string]: EventListener};
     private delegateHandler: EventIntermediateToken|null = null;
 

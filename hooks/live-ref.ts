@@ -1,4 +1,4 @@
-import {useCallback} from "preact/hooks";
+import {Inputs, useCallback} from "preact/hooks";
 
 type LiveRefCleanup = () => void;
 type LiveRefCallback = (node: HTMLElement) => LiveRefCleanup|null|undefined|void;
@@ -6,7 +6,7 @@ type LiveRefCallback = (node: HTMLElement) => LiveRefCleanup|null|undefined|void
 /**
  * A "live ref" hook, that is always updated if the ref is updated.
  */
-export function useLiveRef (callback: LiveRefCallback) : (node: HTMLElement|null) => void
+export function useLiveRef (callback: LiveRefCallback, inputs: Inputs = []) : (node: HTMLElement|null) => void
 {
     let cleanup: LiveRefCleanup|undefined|null;
 
@@ -21,5 +21,5 @@ export function useLiveRef (callback: LiveRefCallback) : (node: HTMLElement|null
         {
             cleanup = callback(node) as LiveRefCleanup;
         }
-    }, []);
+    }, inputs);
 }

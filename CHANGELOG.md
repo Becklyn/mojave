@@ -1,3 +1,9 @@
+5.17.2
+======
+
+*   (bug) Add option to properly forward inputs in `useLiveRef()`.
+
+
 5.17.1
 ======
 

@@ -25,3 +25,11 @@ export function toStringArray (value: string|string[]|null|undefined) : string[]
         ? [value]
         : value;
 }
+
+/**
+ * Escapes all special characters in a given string for usage in Regular Expressions.
+ */
+export function escapeStringRegexp (text: string) : string
+{
+    return text.replace(/[|\\{}()[\]^$+*?.]/g, '\\$&');
+}

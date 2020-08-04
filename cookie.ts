@@ -1,6 +1,5 @@
 import {safeParseJson} from "./json";
-import escapeStringRegexp from "escape-string-regexp";
-
+import {escapeStringRegexp} from "./string/manipulate";
 
 export type CookieOptions = Partial<{
     domain: string,

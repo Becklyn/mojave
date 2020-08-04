@@ -1,3 +1,9 @@
+5.17.3 (unreleased)
+======
+
+*   (internal) Remove dependency to `escape-string-regexp` since it is not compatible with IE11.
+
+
 5.17.2
 ======
 

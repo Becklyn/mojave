@@ -1,7 +1,7 @@
 5.17.3
 ======
 
-*   (improve) Add `escapeRegexp()` function and remove dependency to `escape-string-regexp` (since it is not compatible with IE 11).
+*   (improvement) Add `escapeRegexp()` function and remove dependency to `escape-string-regexp` (since it is not compatible with IE 11).
 
 
 5.17.2

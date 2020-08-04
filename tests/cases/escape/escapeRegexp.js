@@ -1,7 +1,7 @@
 import QUnit from "qunit";
-import {escapeStringRegexp} from "../../../../string/manipulate";
+import {escapeRegexp} from "../../../escape";
 
-QUnit.module("string/manipulate/escapeStringRegexp()");
+QUnit.module("escape/escapeRegexp()");
 
 
 QUnit.test(
@@ -9,7 +9,7 @@ QUnit.test(
     (assert) =>
     {
         const text = "How much $ for a 🦄?";
-        const resultText = escapeStringRegexp(text);
+        const resultText = escapeRegexp(text);
 
         assert.strictEqual(resultText, "How much \\$ for a 🦄\\?", "string was successfully escaped.");
     }

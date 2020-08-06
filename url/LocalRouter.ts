@@ -1,5 +1,5 @@
 import {parse, stringify} from "query-string";
-import { on } from "../dom/events";
+import {on} from "../dom/events";
 import {extend} from "../extend";
 
 
@@ -55,7 +55,10 @@ function normalizeParams (params: RouteParams, normalizers: RouteParamNormalizer
  */
 function generateQueryString (route: string, params: RouteParams) : string
 {
-    return "?" + stringify(extend({route}, params), {
+    // keep all existing parameters and only overwrite the known ones
+    const existingParameters = parseQueryString(document.location.search);
+
+    return "?" + stringify(extend(existingParameters, {route}, params), {
         skipNull: true,
         skipEmptyString: true,
         // sort parameters, so that "route" is always the first one

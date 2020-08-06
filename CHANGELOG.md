@@ -1,3 +1,9 @@
+5.17.4
+======
+
+*   (bug) `LocalRouter` must keep existing query parameters to not break any pages.
+
+
 5.17.3
 ======
 

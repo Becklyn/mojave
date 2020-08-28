@@ -1,3 +1,9 @@
+5.18.0
+======
+
+*   (feature) Add `mountJsxAndWrap` function.
+
+
 5.17.4
 ======
 

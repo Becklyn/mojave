@@ -1,6 +1,6 @@
 import {findOne} from "../../../dom/traverse";
 import QUnit from "qunit";
-import {mount, mountClass, mountJsx} from "../../../mount";
+import {mount, mountClass, mountJsx, mountJsxAndWrap} from "../../../mount";
 import {h} from "preact";
 
 
@@ -14,6 +14,50 @@ QUnit.module("mount()", {
         `;
     },
 });
+
+QUnit.test(
+    "with JSX and wrap",
+    assert =>
+    {
+        assert.expect(6);
+
+        let TestComponent = () =>
+        {
+            assert.ok(true, "render called");
+            return <div className="test"/>;
+        };
+
+        let fixture = findOne("#qunit-fixture");
+        fixture.innerHTML = `<div id="previous-sibling"></div><div id="container"></div><div id="next-sibling"></div>`;
+        mountJsxAndWrap("#container", TestComponent);
+
+        assert.strictEqual(
+            document.getElementById("qunit-fixture").children.length,
+            3,
+            "No sibling is destroyed"
+        );
+        assert.strictEqual(
+            document.getElementById("qunit-fixture").children[0].id,
+            "previous-sibling",
+            "Previous sibling is not moved"
+        );
+        assert.strictEqual(
+            document.getElementById("qunit-fixture").children[2].id,
+            "next-sibling",
+            "Next sibling is not moved"
+        );
+        assert.strictEqual(
+            document.getElementById("qunit-fixture").querySelectorAll(".test").length,
+            1,
+            "Component exists once"
+        );
+        assert.strictEqual(
+            document.getElementById("qunit-fixture").querySelectorAll(".test")[0].parentElement.className,
+            "component-container",
+            "Component is wrapped by `component-container`"
+        );
+    }
+);
 
 QUnit.test(
     "with class: the correct parameters are passed",

@@ -3,6 +3,31 @@ import {mojave} from "../@types/mojave";
 import {find} from "../dom/traverse";
 import {extend} from "../extend";
 import {parseElementAsJson} from "../json";
+import {createUnstyledElement} from "../dom/manipulate";
+
+
+/**
+ * Mounts a Preact function or class component into all elements matching the given selector.
+ */
+export function mountJsxAndWrap<TPreactComponent extends ComponentFactory<any>>(selector: string|HTMLElement[], mountable: TPreactComponent, options?: mojave.ComponentMountOptions<TPreactComponent>): void
+{
+    let elements = typeof selector === "string" ? find(selector) : selector;
+
+    elements.forEach(node => {
+        const parent = node.parentElement;
+        const componentContainer = createUnstyledElement("div", {
+            class: "component-container",
+        });
+
+        if (null !== parent)
+        {
+            parent.insertBefore(componentContainer, node.nextSibling);
+            componentContainer.appendChild(node);
+
+            doMountJsx<TPreactComponent>(node, mountable, options);
+        }
+    });
+}
 
 
 /**

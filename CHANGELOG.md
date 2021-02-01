@@ -1,3 +1,9 @@
+5.18.1
+======
+
+*   (bug) Correctly declare dependencies for initializing Sortable in `useSortable`.
+
+
 5.18.0
 ======
 

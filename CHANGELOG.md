@@ -1,3 +1,12 @@
+5.19.0
+======
+
+*   (feature) Add `mountDataContainer` and `mountLazyDataContainer`, which mounts on top of a data container (`<script type="application/json">{...}</script>`), 
+    which is parsed and passed in as the very first argument of the mountable data container function.
+    
+    Note: The mountable data container function does **not** receive a reference to the data container. It is intended to work independent of its data container.
+
+
 5.18.1
 ======
 

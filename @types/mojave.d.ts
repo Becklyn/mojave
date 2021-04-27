@@ -9,6 +9,8 @@ declare namespace mojave
         }
     };
     export type MountableFunction = (element: HTMLElement, ...args: any[]) => void;
+    export type MountableDataContainerFunction = (...args: any[]) => void;
+    export type MountableDataContainerAsyncFunction = (...args: any) => Promise<any>;
 
 
     export interface MountOptions
@@ -31,6 +33,16 @@ declare namespace mojave
     {
         /**
          * Additional parameters to pass as props / constructor arguments
+         */
+        params?: Tuple.Drop<Parameters<T>, "1", "->">;
+    }
+
+    export interface FunctionDataContainerMountOptions<T extends MountableDataContainerFunction | MountableDataContainerAsyncFunction> extends MountOptions
+    {
+        /**
+         * Additional parameters to pass function arguments.
+         *
+         * The first argument is skipped as it'll be parsed from the mounted data container.
          */
         params?: Tuple.Drop<Parameters<T>, "1", "->">;
     }

@@ -4,6 +4,7 @@ import {find} from "../dom/traverse";
 import {extend} from "../extend";
 import {parseElementAsJson} from "../json";
 import {createUnstyledElement} from "../dom/manipulate";
+import {Tuple} from "ts-toolbelt";
 
 
 /**
@@ -204,4 +205,80 @@ function doMountFunction<TFunction extends mojave.MountableFunction>(node: HTMLE
 {
     options = options || {};
     mountable(node, ...(options.params || []));
+}
+
+
+/**
+ * Mounts a function into all elements matching the given selector.
+ *
+ * The selector is expected to match `<script type="application/json">{…}</script>` elements,
+ * which will parse its content and pass in as a parameter to the functional component.
+ */
+export function mountDataContainer<TFunction extends mojave.MountableDataContainerFunction | mojave.MountableDataContainerAsyncFunction>(
+    selector: string|HTMLElement[],
+    mountable: TFunction,
+    options?: mojave.FunctionDataContainerMountOptions<TFunction>
+) : void
+{
+    let elements = typeof selector === "string" ? find(selector) : selector;
+
+    elements.forEach(node => {
+        doMountDataContainerFunction<TFunction>(node, mountable, options);
+    });
+}
+
+
+/**
+ * Mounts the component lazily, if an element matching the selector exists.
+ *
+ * The importer must import the component.
+ * Example:
+ *
+ *     mountLazyDataContainer<MyFunctionComp>(".selector", () => import("./src/MyFunctionComp"));
+ */
+export function mountLazyDataContainer <TFunction extends mojave.MountableDataContainerFunction | mojave.MountableDataContainerAsyncFunction>(
+    selector: string|HTMLElement[],
+    importer: () => Promise<any>,
+    options?: mojave.FunctionDataContainerMountOptions<TFunction>
+) : void
+{
+    let elements = typeof selector === "string" ? find(selector) : selector;
+
+    if (!elements.length)
+    {
+        return;
+    }
+
+    importer().then(
+        module => elements.forEach(element => doMountDataContainerFunction<TFunction>(element, module.default, options)),
+        error => console.error(`Mounting of component of path '${selector}' failed: ${error.message}`, error)
+    );
+}
+
+
+/**
+ * Mounts a function on a data container.
+ */
+function doMountDataContainerFunction<TFunction extends mojave.MountableDataContainerFunction | mojave.MountableDataContainerAsyncFunction>(
+    node: HTMLElement,
+    mountable: TFunction,
+    options?: mojave.FunctionDataContainerMountOptions<TFunction>
+) : void
+{
+    let parent = node.parentElement;
+
+    if (!parent)
+    {
+        console.error("Can't mount on container without parent.");
+        return;
+    }
+
+    options = options || {};
+    const params = (options.params || []) as Tuple.Drop<Parameters<TFunction>, "1", "->">;
+    const parsedMountableConfig =  (parseElementAsJson(node) || {}) as Tuple.Take<Parameters<TFunction>, "1", "->">
+
+    params.unshift(parsedMountableConfig);
+
+    parent.removeChild(node);
+    mountable(...params);
 }

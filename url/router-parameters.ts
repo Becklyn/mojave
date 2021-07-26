@@ -6,7 +6,7 @@ import {ParameterNormalizer} from "./LocalRouter";
  *
  * @internal
  */
-function typeError (expected: string, value: any): never
+function throwTypeError (expected: string, value: any): never
 {
     throw new Error(
         undefined === value
@@ -28,7 +28,7 @@ export function stringParameter (defaultValue?: string) : ParameterNormalizer<st
         if (null == value)
         {
             return defaultValue === undefined
-                ? typeError("string", value)
+                ? throwTypeError("string", value)
                 : defaultValue;
         }
 
@@ -59,7 +59,7 @@ export function numberParameter (defaultValue?: number) : ParameterNormalizer<nu
 
         // throw if required or invalid (non-empty) value given
         return (defaultValue === undefined || null != value)
-            ? typeError("number", value)
+            ? throwTypeError("number", value)
             : defaultValue;
     };
 }
@@ -87,7 +87,69 @@ export function booleanParameter (defaultValue?: boolean) : ParameterNormalizer<
 
         // throw if required or invalid (non-empty) value given
         return (defaultValue === undefined || null != value)
-            ? typeError("boolean", value)
+            ? throwTypeError("boolean", value)
             : defaultValue;
+    };
+}
+
+
+/**
+ * Normalizes the value into a nullable string.
+ *
+ * If the parameter is missing or an empty string, either the default value or `null` is returned.
+ */
+export function nullableStringParameter (defaultValue: string|null = null) : ParameterNormalizer<string|null>
+{
+    return (value) =>
+    {
+        if (typeof value === "number")
+        {
+            return "" + value;
+        }
+
+        if (null !== value && undefined !== value && typeof value !== "string")
+        {
+            throwTypeError("string or null", value);
+        }
+
+        return "" !== value && undefined !== value
+            ? value
+            : (defaultValue ?? null)
+    };
+}
+
+
+/**
+ * Normalizes the value into a nullable number.
+ *
+ * If the parameter is missing or , either the default value or `null` is returned.
+ */
+export function nullableNumberParameter (defaultValue: number|null = null) : ParameterNormalizer<number|null>
+{
+    return (value) =>
+    {
+        if (null === value)
+        {
+            return defaultValue;
+        }
+
+        if (typeof value === "number")
+        {
+            return value;
+        }
+
+        const parsed = parseInt(value, 10);
+
+        if (!isNaN(parsed))
+        {
+            return parsed;
+        }
+
+        if (defaultValue === undefined || null != value)
+        {
+            throwTypeError("number or null", value);
+        }
+
+        return defaultValue ?? null;
     };
 }

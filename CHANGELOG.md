@@ -1,3 +1,9 @@
+5.20.0
+======
+
+*   (feature) Add two new `LocalRouter` route parameter types: `nullableStringParameter` and `nullableNumberParameter`.
+
+
 5.19.0
 ======
 

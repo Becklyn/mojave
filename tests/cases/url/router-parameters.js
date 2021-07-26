@@ -1,5 +1,5 @@
 import QUnit from "qunit";
-import {booleanParameter, numberParameter, stringParameter} from "../../../url/router-parameters";
+import {booleanParameter, nullableNumberParameter, nullableStringParameter, numberParameter, stringParameter} from "../../../url/router-parameters";
 
 QUnit.module("url/router-parameters");
 
@@ -139,6 +139,62 @@ QUnit.test(
             ([input, defaultValue]) =>
             {
                 assert.throws(() => booleanParameter(defaultValue)(input));
+            }
+        );
+    }
+);
+
+QUnit.test(
+    "nullableStringParameter() valid cases",
+    (assert) =>
+    {
+        // input, defaultValue, expected
+        const cases = [
+            ["test", null, "test"],
+            ["test", undefined, "test"],
+            [null, null, null],
+            [null, undefined, null],
+            [undefined, null, null],
+            [undefined, undefined, null],
+            [null, "default", null],
+            [undefined, "default", "default"],
+            [123, null, "123"],
+            [123, undefined, "123"],
+            ["", null, null],
+            ["", undefined, null],
+        ];
+
+        cases.forEach(
+            ([input, defaultValue, expected]) =>
+            {
+                assert.strictEqual(nullableStringParameter(defaultValue)(input), expected);
+            }
+        );
+    }
+);
+
+QUnit.test(
+    "nullableNumberParameter() valid cases",
+    (assert) =>
+    {
+        // input, defaultValue, expected
+        const cases = [
+            [123, null, 123],
+            [123, undefined, 123],
+            ["123", null, 123],
+            ["123", undefined, 123],
+            [null, null, null],
+            [null, undefined, null],
+            [null, 432, 432],
+            [undefined, null, null],
+            [undefined, undefined, null],
+            [undefined, 432, 432],
+        ];
+
+        cases.forEach(
+            ([input, defaultValue, expected]) =>
+            {
+                assert.strictEqual(nullableNumberParameter(defaultValue)(input), expected);
             }
         );
     }

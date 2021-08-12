@@ -1,3 +1,9 @@
+5.20.1
+======
+
+*   (feature) Add `isOnMobileDevice`, which tries its best to detect whether the current user is running on a mobile device.
+
+
 5.20.0
 ======
 

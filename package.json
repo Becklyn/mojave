@@ -35,7 +35,7 @@
         "kaba": "^9.0.0",
         "qunit": "^2.10.1",
         "travis-size-report": "^1.1.0",
-        "typescript": "^3.9.7"
+        "typescript": "^5.0.0"
     },
     "keywords": [
         "becklyn",

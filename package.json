@@ -33,7 +33,7 @@
         "browserstack-runner": "^0.9.2",
         "glob": "^7.1.6",
         "kaba": "^9.0.0",
-        "qunit": "^2.10.1",
+        "qunit": "^3.0.0",
         "travis-size-report": "^1.1.0",
         "typescript": "^3.9.7"
     },
